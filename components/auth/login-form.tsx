@@ -1,5 +1,6 @@
 'use client'
 
+import type { Route } from 'next'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useState, useTransition } from 'react'
 
@@ -14,6 +15,14 @@ export function LoginForm() {
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
   const loadSession = useSessionStore((state) => state.loadSession)
+
+  function resolveNextPath(value: string | null): Route {
+    if (!value || !value.startsWith('/')) {
+      return '/perfil'
+    }
+
+    return value as Route
+  }
 
   async function handleSubmit(formData: FormData) {
     const email = String(formData.get('email') ?? '')
@@ -35,7 +44,7 @@ export function LoginForm() {
       }
 
       await loadSession()
-      const nextPath = searchParams.get('next') || '/perfil'
+      const nextPath = resolveNextPath(searchParams.get('next'))
       router.push(nextPath)
       router.refresh()
     })
@@ -61,4 +70,3 @@ export function LoginForm() {
     </Card>
   )
 }
-

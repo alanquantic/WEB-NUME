@@ -12,7 +12,7 @@ import type {
   SafeUser,
   UpdateUserInput
 } from '@/lib/api/contracts'
-import { deleteUser, updateUser } from '@/lib/api/users'
+import { deleteUser, updateUser } from '@/lib/api/users.client'
 import { cn } from '@/lib/utils'
 
 type UserEditFormProps = {

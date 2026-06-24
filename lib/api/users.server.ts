@@ -1,12 +1,8 @@
 import type {
   ApiListResponse,
-  AuthSession,
-  RegisterInput,
   Role,
-  SafeUser,
-  UpdateUserInput
+  SafeUser
 } from '@/lib/api/contracts'
-import { clientApiFetch } from '@/lib/api/client'
 import { serverApiFetch } from '@/lib/api/server'
 
 export type GetUsersParams = {
@@ -40,24 +36,4 @@ export async function getUsers(params: GetUsersParams): Promise<ApiListResponse<
 
 export async function getUserById(id: string): Promise<UserResponse> {
   return serverApiFetch<UserResponse>(`/users/${id}`)
-}
-
-export async function createUser(payload: RegisterInput): Promise<AuthSession> {
-  return clientApiFetch<AuthSession>('/auth/register', {
-    method: 'POST',
-    body: JSON.stringify(payload)
-  })
-}
-
-export async function updateUser(id: string, payload: UpdateUserInput): Promise<UserResponse> {
-  return clientApiFetch<UserResponse>(`/users/${id}`, {
-    method: 'PATCH',
-    body: JSON.stringify(payload)
-  })
-}
-
-export async function deleteUser(id: string): Promise<void> {
-  await clientApiFetch<void>(`/users/${id}`, {
-    method: 'DELETE'
-  })
 }

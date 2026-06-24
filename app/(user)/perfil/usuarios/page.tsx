@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import type { Role } from '@/lib/api/contracts'
-import { getUsers } from '@/lib/api/users'
+import { getUsers } from '@/lib/api/users.server'
 import { cn } from '@/lib/utils'
 
 type SearchParams = {

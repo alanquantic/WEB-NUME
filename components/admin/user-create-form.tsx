@@ -11,7 +11,7 @@ import type {
   Role,
   UpdateUserInput
 } from '@/lib/api/contracts'
-import { createUser, updateUser } from '@/lib/api/users'
+import { createUser, updateUser } from '@/lib/api/users.client'
 import { cn } from '@/lib/utils'
 
 type FormState = {

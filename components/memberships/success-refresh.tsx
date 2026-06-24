@@ -1,5 +1,6 @@
 'use client'
 
+import type { Route } from 'next'
 import { useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
@@ -10,10 +11,18 @@ export function SuccessRefresh() {
   const searchParams = useSearchParams()
   const loadSession = useSessionStore((state) => state.loadSession)
 
+  function resolveNextPath(value: string | null): Route {
+    if (!value || !value.startsWith('/')) {
+      return '/perfil/suscripcion'
+    }
+
+    return value as Route
+  }
+
   useEffect(() => {
     async function refreshSession() {
       await loadSession()
-      const nextPath = searchParams.get('next') || '/perfil/suscripcion'
+      const nextPath = resolveNextPath(searchParams.get('next'))
       router.replace(nextPath)
       router.refresh()
     }
@@ -23,4 +32,3 @@ export function SuccessRefresh() {
 
   return <p className="text-sm text-[hsl(var(--foreground))/0.7]">Actualizando tu sesión...</p>
 }
-

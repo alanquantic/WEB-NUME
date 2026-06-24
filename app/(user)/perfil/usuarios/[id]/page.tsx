@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { UserEditForm } from '@/components/admin/user-edit-form'
 import { Badge } from '@/components/ui/badge'
 import { ApiError } from '@/lib/api/errors'
-import { getUserById } from '@/lib/api/users'
+import { getUserById } from '@/lib/api/users.server'
 
 export default async function ProfileUserDetailPage({
   params

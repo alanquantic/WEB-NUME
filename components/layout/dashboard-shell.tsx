@@ -1,4 +1,5 @@
 import type { PropsWithChildren } from 'react'
+import type { Route } from 'next'
 import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
@@ -6,7 +7,7 @@ import { cn } from '@/lib/utils'
 type DashboardShellProps = PropsWithChildren<{
   title: string
   description: string
-  items: Array<{ href: string; label: string }>
+  items: Array<{ href: Route; label: string }>
 }>
 
 export function DashboardShell({
@@ -38,4 +39,3 @@ export function DashboardShell({
     </div>
   )
 }
-
