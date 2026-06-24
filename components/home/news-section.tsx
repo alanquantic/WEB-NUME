@@ -3,7 +3,6 @@ import Link from 'next/link'
 
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
 import { SearchIcon } from '@/components/ui/icons'
-import { getCategories } from '@/lib/api/taxonomy'
 
 type FeaturedNewsItem = {
   id: string
@@ -53,8 +52,6 @@ const FEATURED_NEWS: readonly FeaturedNewsItem[] = [
 ]
 
 export async function NewsSection() {
-  const categories = await getCategories(1, 8)
-
   return (
     <section className="mx-auto max-w-7xl px-6 py-12">
       <div className="grid gap-8 lg:grid-cols-[1.6fr_0.8fr]">
@@ -105,18 +102,9 @@ export async function NewsSection() {
               <h3 className="bg-gradient-brand px-5 py-3 text-sm font-semibold uppercase tracking-wide text-white">
                 Categorias
               </h3>
-              <ul className="divide-y divide-border">
-                {categories.data.map((category) => (
-                  <li key={category.id}>
-                    <Link
-                      href={`/categorias/${category.id}` as Route}
-                      className="flex items-center justify-between px-5 py-2.5 text-sm text-foreground/80 transition hover:bg-primary-soft hover:text-primary"
-                    >
-                      {category.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <div className="px-5 py-4 text-sm text-foreground/70">
+                Categorias en preparacion.
+              </div>
             </div>
           </ScrollReveal>
 
