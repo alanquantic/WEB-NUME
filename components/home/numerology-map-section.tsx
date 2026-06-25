@@ -286,7 +286,6 @@ export function NumerologyMapSection() {
                   placeholder="Tu nombre completo"
                   className="mt-2 h-11 w-full rounded-2xl border border-white/30 bg-white/92 px-4 text-sm text-[hsl(var(--foreground))] placeholder:text-[hsl(var(--gray))] outline-none transition focus:border-white/70 focus:bg-white"
                 />
-                <p className="mt-1.5 text-xs text-white/60">No utilizar tildes</p>
               </div>
               <div className="space-y-5">
                 <div>

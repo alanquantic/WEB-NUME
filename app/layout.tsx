@@ -7,8 +7,13 @@ import { TopBar } from '@/components/layout/top-bar'
 import '@/app/globals.css'
 
 export const metadata: Metadata = {
-  title: 'Nume',
-  description: 'Frontend base para numerologia, contenidos premium y membresias.'
+  title: 'Numerología Cotidiana de Laura L. Rodríguez',
+  description: 'Numerología Cotidiana de Laura L. Rodríguez',
+  icons: {
+    icon: '/images/logo_favicon.png',
+    shortcut: '/images/logo_favicon.png',
+    apple: '/images/logo_favicon.png'
+  }
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
