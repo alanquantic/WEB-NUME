@@ -1,13 +1,11 @@
+import Universal from '@/resources/universal'
+
 type CollectiveEnergy = {
   id: string
   label: string
+  value: number
+  valueClassName: string
 }
-
-const COLLECTIVE_ENERGY: readonly CollectiveEnergy[] = [
-  { id: 'dia', label: 'Dia' },
-  { id: 'semana', label: 'Sem' },
-  { id: 'mes', label: 'Mes' }
-]
 
 function formatToday(): string {
   return new Intl.DateTimeFormat('es-MX', {
@@ -17,7 +15,40 @@ function formatToday(): string {
   }).format(new Date())
 }
 
+function getCollectiveEnergy(): readonly CollectiveEnergy[] {
+  const today = new Date()
+  const universal = new Universal()
+  const params = {
+    day: today.getDate(),
+    month: today.getMonth() + 1,
+    year: today.getFullYear()
+  }
+
+  return [
+    {
+      id: 'dia',
+      label: 'Dia',
+      value: universal.calcUniversalDay(params),
+      valueClassName: 'text-[hsl(var(--accent))]'
+    },
+    {
+      id: 'semana',
+      label: 'Sem',
+      value: universal.calcCurrentUniversalWeek(params),
+      valueClassName: 'text-[hsl(var(--primary))]'
+    },
+    {
+      id: 'mes',
+      label: 'Mes',
+      value: universal.calcUniversalMonth(params),
+      valueClassName: 'text-[hsl(var(--fuchsia))]'
+    }
+  ] as const
+}
+
 export function TopBar() {
+  const collectiveEnergy = getCollectiveEnergy()
+
   return (
     <div className="bg-gradient-brand text-white">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-3 px-4 py-3 text-center sm:flex-row sm:justify-between sm:gap-4 sm:px-6 sm:py-2 sm:text-left">
@@ -29,10 +60,10 @@ export function TopBar() {
           data-calculator-slot="energia-colectiva"
           className="flex items-center gap-2 sm:gap-3"
         >
-          {COLLECTIVE_ENERGY.map((energy) => (
+          {collectiveEnergy.map((energy) => (
             <div key={energy.id} className="flex flex-col items-center">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 font-display text-base font-semibold ring-1 ring-white/30">
-                ?
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white font-display text-base font-semibold ring-1 ring-white/40 shadow-[0_8px_18px_hsl(var(--foreground)/0.14)]">
+                <span className={energy.valueClassName}>{energy.value}</span>
               </span>
               <span className="mt-0.5 text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-white/70">
                 {energy.label}

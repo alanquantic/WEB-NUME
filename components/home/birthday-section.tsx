@@ -27,7 +27,7 @@ export function BirthdaySection() {
           <ScrollReveal>
             <div>
               <h2 className="font-display text-[2.2rem] font-semibold text-gradient-brand sm:text-[2.65rem]">
-                Feliz cumpleanos
+                Feliz cumpleaños
               </h2>
               <p className="mt-3 max-w-md text-[1rem] leading-7 text-foreground/78 sm:text-[1.125rem] sm:leading-8">
                 Descubre la Proyeccion Numerologica para tu ano o el de alguien mas y
