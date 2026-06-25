@@ -18,21 +18,21 @@ type FeaturedNewsItem = {
 const FEATURED_NEWS: readonly FeaturedNewsItem[] = [
   {
     id: 'change-name',
-    title: 'Guia para cambiar tu nombre desde la numerologia (sin perder tu esencia)',
+    title: 'Guía para cambiar tu nombre desde la numerología (sin perder tu esencia)',
     excerpt:
-      'Guia para cambiar tu nombre desde la numerologia (sin perder tu esencia). Por que cambiar tu nombre desde la energia? Hacer un pequeno cambio en',
-    author: 'Laura Rodriguez',
+      'Guía para cambiar tu nombre desde la numerología (sin perder tu esencia). ¿Por qué cambiar tu nombre desde la energía? Hacer un pequeño cambio en',
+    author: 'Laura Rodríguez',
     date: '28 abril, 2025',
     href: '/blog/guia-cambiar-tu-nombre',
     imageSrc: '/images/Head-Nombre-750x375.webp',
-    imageAlt: 'Noticia sobre cambio de nombre en numerologia'
+    imageAlt: 'Noticia sobre cambio de nombre en numerología'
   },
   {
     id: 'personal-month',
-    title: 'Cual es tu Mes personal este mes y que significa?',
+    title: '¿Cuál es tu mes personal este mes y qué significa?',
     excerpt:
-      'Cual es tu Mes personal este mes y que significa? Que es el numero del mes personal? El Mes Personal te invita a trabajar una',
-    author: 'Laura Rodriguez',
+      '¿Cuál es tu mes personal este mes y qué significa? ¿Qué es el número del mes personal? El Mes Personal te invita a trabajar una',
+    author: 'Laura Rodríguez',
     date: '28 abril, 2025',
     href: '/blog/mes-personal',
     imageSrc: '/images/Head-Mes-Personal-750x375.webp',
@@ -40,14 +40,14 @@ const FEATURED_NEWS: readonly FeaturedNewsItem[] = [
   },
   {
     id: 'house-numerology',
-    title: 'Numerologia de casas: el poder energetico de tu direccion',
+    title: 'Numerología de casas: el poder energético de tu dirección',
     excerpt:
-      'Numerologia de casas: el poder energetico de tu direccion. Por que importa el numero de tu casa? La numerologia de los espacios es un tema intrigante',
-    author: 'Laura Rodriguez',
+      'Numerología de casas: el poder energético de tu dirección. ¿Por qué importa el número de tu casa? La numerología de los espacios es un tema intrigante',
+    author: 'Laura Rodríguez',
     date: '28 abril, 2025',
     href: '/blog/numerologia-de-casas',
     imageSrc: '/images/Head-Casas-750x375.webp',
-    imageAlt: 'Noticia sobre numerologia de casas'
+    imageAlt: 'Noticia sobre numerología de casas'
   }
 ]
 
@@ -58,7 +58,7 @@ export async function NewsSection() {
         <div>
           <ScrollReveal>
             <h2 className="border-b-2 border-fuchsia pb-2 font-display text-2xl font-semibold text-primary">
-              Noticias Destacadas
+              Noticias destacadas
             </h2>
           </ScrollReveal>
 
@@ -67,7 +67,7 @@ export async function NewsSection() {
               <ScrollReveal key={item.id} delay={80 + index * 70}>
                 <article className="group flex h-full flex-col overflow-hidden rounded-[1.9rem] border border-border/80 bg-card shadow-panel transition hover:-translate-y-1 hover:shadow-glow">
                   <div className="aspect-[16/10] overflow-hidden bg-secondary/70">
-                    {/* Cuando subas las imagenes manualmente, colocarlas en /public/images con estos nombres */}
+                    {/* Cuando subas las imágenes manualmente, colócalas en /public/images con estos nombres */}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={item.imageSrc}
@@ -87,7 +87,7 @@ export async function NewsSection() {
                       href={item.href as Route}
                       className="mt-6 inline-flex w-fit rounded-full border border-primary/20 px-4 py-2 text-sm font-semibold text-primary transition hover:bg-primary-soft"
                     >
-                      Leer mas
+                      Leer más
                     </Link>
                   </div>
                 </article>
@@ -100,10 +100,10 @@ export async function NewsSection() {
           <ScrollReveal delay={140}>
             <div className="overflow-hidden rounded-[1.5rem] border border-border bg-card shadow-panel">
               <h3 className="bg-gradient-brand px-5 py-3 text-sm font-semibold uppercase tracking-wide text-white">
-                Categorias
+                Categorías
               </h3>
               <div className="px-5 py-4 text-sm text-foreground/70">
-                Categorias en preparacion.
+                Categorías en preparación.
               </div>
             </div>
           </ScrollReveal>
@@ -111,7 +111,7 @@ export async function NewsSection() {
           <ScrollReveal delay={220}>
             <div className="overflow-hidden rounded-[1.5rem] border border-border bg-card shadow-panel">
               <h3 className="bg-gradient-brand px-5 py-3 text-sm font-semibold uppercase tracking-wide text-white">
-                Busca una publicacion
+                Busca una publicación
               </h3>
               <form action="/busqueda" className="flex items-center gap-2 p-4">
                 <input

@@ -30,8 +30,8 @@ export function BirthdaySection() {
                 Feliz cumpleaños
               </h2>
               <p className="mt-3 max-w-md text-[1rem] leading-7 text-foreground/78 sm:text-[1.125rem] sm:leading-8">
-                Descubre la Proyeccion Numerologica para tu ano o el de alguien mas y
-                compartesela.
+                Descubre la Proyección Numerológica para tu año o el de alguien más y
+                compártesela.
               </p>
 
               <div
@@ -39,7 +39,7 @@ export function BirthdaySection() {
                 className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-end"
               >
                 <label className="flex flex-col gap-1 text-base font-medium text-foreground/82">
-                  Dia de nacimiento
+                  Día de nacimiento
                   <select
                     disabled
                     className="h-11 rounded-2xl border border-border bg-card px-4 text-base text-foreground/70"
@@ -66,7 +66,7 @@ export function BirthdaySection() {
               </div>
 
               <p className="mt-6 text-base font-semibold text-foreground/82">
-                Compartelo con alguien especial
+                Compártelo con alguien especial
               </p>
               <ul className="mt-3 flex gap-3">
                 {SHARE_LINKS.map(({ id, label, Icon }, index) => (
@@ -91,7 +91,7 @@ export function BirthdaySection() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/feliz-cumpleanos.png"
-                alt="Ilustracion feliz cumpleanos"
+                alt="Ilustración de feliz cumpleaños"
                 className="h-full w-full object-cover"
               />
             </div>

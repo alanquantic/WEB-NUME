@@ -49,7 +49,7 @@ export function MembershipPlans({ plans }: MembershipPlansProps) {
       })
 
       if (!response.ok) {
-        setError('No se pudo iniciar el checkout todavía.')
+        setError('No se pudo iniciar el pago todavía.')
         return
       }
 
@@ -94,4 +94,3 @@ export function MembershipPlans({ plans }: MembershipPlansProps) {
     </div>
   )
 }
-

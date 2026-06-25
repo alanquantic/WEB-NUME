@@ -8,11 +8,11 @@ export function SchoolSection() {
       <div className="overflow-hidden rounded-[2rem] bg-gradient-brand shadow-glow">
         <div className="grid min-h-[18rem] items-center gap-8 bg-[url('/images/escuela-numerologia.png')] bg-cover bg-center p-8 md:min-h-[30rem] md:grid-cols-[auto_1fr] md:px-10 md:py-12">
           <ScrollReveal delay={40} className="flex self-stretch md:min-h-full">
-            <div className="mt-auto text-white text-center">
+            <div className="mt-auto text-center text-white">
               <h2 className="font-display text-3xl font-semibold leading-tight">
-                Escuela de Numerologia
+                Escuela de Numerología
               </h2>
-              <p className="text-sm text-white/80">de Laura L. Rodriguez</p>
+              <p className="text-sm text-white/80">de Laura L. Rodríguez</p>
             </div>
           </ScrollReveal>
 
@@ -22,17 +22,17 @@ export function SchoolSection() {
           >
             <div className="rounded-[1.5rem] border border-white/10 bg-[linear-gradient(135deg,hsl(var(--foreground)/0.14),transparent)] px-5 py-6 backdrop-blur-[2px] md:px-7 md:py-8">
               <h3 className="font-display text-2xl font-semibold leading-tight md:text-3xl">
-                Descifra tu codigo
+                Descifra tu código
               </h3>
               <p className="mt-3 max-w-xl text-base leading-8 text-white/88">
-              Encuentra cursos para conocerte y entender tu proceso de vida. O conviertete en
-              Consultor Numerologico con nuestra Especializacion.
+                Encuentra cursos para conocerte y entender tu proceso de vida. O conviértete en
+                Consultor Numerológico con nuestra Especialización.
               </p>
               <Link
                 href="/membresias"
                 className="mt-6 inline-flex rounded-full bg-accent px-7 py-3 text-sm font-semibold text-foreground transition hover:opacity-90"
               >
-                Conocer mas
+                Conocer más
               </Link>
             </div>
           </ScrollReveal>

@@ -6,13 +6,13 @@ import { getServerSessionUser } from '@/lib/auth/session'
 const profileItems: Array<{ href: Route; label: string }> = [
   { href: '/perfil', label: 'Resumen' },
   { href: '/perfil/datos', label: 'Datos personales' },
-  { href: '/perfil/ordenes', label: 'Ordenes' },
-  { href: '/perfil/suscripcion', label: 'Suscripcion' }
+  { href: '/perfil/ordenes', label: 'Órdenes' },
+  { href: '/perfil/suscripcion', label: 'Suscripción' }
 ]
 
 const adminItem: { href: Route; label: string } = {
   href: '/perfil/usuarios',
-  label: 'Gestion de usuarios'
+  label: 'Gestión de usuarios'
 }
 
 export default async function ProfileLayout({ children }: { children: React.ReactNode }) {
@@ -22,7 +22,7 @@ export default async function ProfileLayout({ children }: { children: React.Reac
   return (
     <DashboardShell
       title="Perfil"
-      description="Area privada para sesion, membresia, historial y datos personales."
+      description="Área privada para sesión, membresía, historial y datos personales."
       items={items}
     >
       {children}

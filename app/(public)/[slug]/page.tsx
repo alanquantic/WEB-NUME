@@ -27,13 +27,13 @@ export function generateMetadata({ params }: PageProps): Metadata {
 
   if (!config) {
     return {
-      title: 'Pagina no encontrada'
+      title: 'Página no encontrada'
     }
   }
 
   return {
     title: `${config.title} | Nume`,
-    description: config.description ?? 'Pagina en progreso dentro de Numerologia Cotidiana.'
+    description: config.description ?? 'Página en progreso dentro de Numerología Cotidiana.'
   }
 }
 

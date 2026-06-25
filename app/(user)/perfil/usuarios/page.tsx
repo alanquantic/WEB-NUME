@@ -97,7 +97,7 @@ export default async function ProfileUsersPage({
         <form method="get" className="mt-6 grid gap-4 md:grid-cols-[1fr_180px_180px_auto]">
           <Input
             name="search"
-            placeholder="Buscar por email"
+            placeholder="Buscar por correo electrónico"
             defaultValue={searchParams.search ?? ''}
           />
           <select name="role" className={selectClassName} defaultValue={searchParams.role ?? ''}>
@@ -131,7 +131,7 @@ export default async function ProfileUsersPage({
             <table className="w-full border-collapse text-sm">
               <thead>
                 <tr className="border-b border-[hsl(var(--border))] text-left text-[hsl(var(--foreground))/0.6]">
-                  <th className="px-3 py-3 font-semibold">Email</th>
+                  <th className="px-3 py-3 font-semibold">Correo electrónico</th>
                   <th className="px-3 py-3 font-semibold">Rol</th>
                   <th className="px-3 py-3 font-semibold">Membresía</th>
                   <th className="px-3 py-3 font-semibold">Consultor</th>

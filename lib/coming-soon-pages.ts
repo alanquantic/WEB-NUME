@@ -5,21 +5,21 @@ type ComingSoonConfig = {
 
 export const COMING_SOON_PAGES: Record<string, ComingSoonConfig> = {
   numerologia: {
-    title: 'Numerologia',
+    title: 'Numerología',
     description:
-      'Estamos construyendo esta seccion para reunir calculadoras, guias y recursos de lectura numerologica en una sola experiencia.'
+      'Estamos construyendo esta sección para reunir calculadoras, guías y recursos de lectura numerológica en una sola experiencia.'
   },
   vibraciondeltiempo: {
-    title: 'Vibracion del Tiempo'
+    title: 'Vibración del Tiempo'
   },
   labrujulanumerologica: {
-    title: 'La Brujula Numerologica'
+    title: 'La Brújula Numerológica'
   },
   etapapersonal: {
     title: 'Etapa Personal'
   },
   anopersonal: {
-    title: 'Ano Personal'
+    title: 'Año Personal'
   },
   mespersonal: {
     title: 'Mes Personal'
@@ -28,31 +28,31 @@ export const COMING_SOON_PAGES: Record<string, ComingSoonConfig> = {
     title: 'Semana Personal'
   },
   diapersonal: {
-    title: 'Dia Personal'
+    title: 'Día Personal'
   },
   vibracionescolectivas: {
     title: 'Vibraciones Colectivas'
   },
   calculatupinaculo: {
-    title: 'Calcula tu Pinaculo'
+    title: 'Calcula tu Pináculo'
   },
   significadodelosnumeros: {
-    title: 'Significado de los Numeros'
+    title: 'Significado de los Números'
   },
   numerologianombre: {
-    title: 'Numerologia Nombre'
+    title: 'Numerología Nombre'
   },
   numerodelnombre: {
-    title: 'Numero del Nombre'
+    title: 'Número del Nombre'
   },
   numerodelalma: {
-    title: 'Numero del Alma'
+    title: 'Número del Alma'
   },
   numerodeexpresiondelalma: {
-    title: 'Numero de Expresion del Alma'
+    title: 'Número de Expresión del Alma'
   },
   numerodelamadurez: {
-    title: 'Numero de la Madurez'
+    title: 'Número de la Madurez'
   },
   significadodeletras: {
     title: 'Significado de Letras'
@@ -64,10 +64,10 @@ export const COMING_SOON_PAGES: Record<string, ComingSoonConfig> = {
     title: 'Nombre Hereditario'
   },
   horoscopos: {
-    title: 'Horoscopos'
+    title: 'Horóscopos'
   },
   revisatuhoroscopomensual2026: {
-    title: 'Revisa Tu Horoscopo Mensual 2026'
+    title: 'Revisa tu horóscopo mensual 2026'
   },
   consultores: {
     title: 'Consultores'

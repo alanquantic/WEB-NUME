@@ -21,18 +21,6 @@ type FormState = {
   birthDate: string
 }
 
-type CalculationResult = {
-  personalNumber: number | string
-  soulNumber: number | string
-  personalYear: number | string
-  personalDay: number | string
-  personalWeek: number | string
-  personalMonth: number | string
-  pinnacleValues: Partial<Record<PinnacleLetter, number | string>>
-}
-
-type EnergyLabel = keyof typeof ENERGY_CARD_TONES
-
 type PinnacleLetter =
   | 'A'
   | 'B'
@@ -55,25 +43,35 @@ type PinnacleLetter =
   | 'S'
   | 'W'
 
+type CalculationResult = {
+  personalNumber: number | string
+  soulNumber: number | string
+  personalYear: number | string
+  personalDay: number | string
+  personalWeek: number | string
+  personalMonth: number | string
+  pinnacleValues: Partial<Record<PinnacleLetter, number | string>>
+}
+
 const RESULT_CARDS: readonly ResultCard[] = [
   {
     id: 'personal-number',
     heading: 'Mi esencia',
-    subtitle: 'Numero Personal',
+    subtitle: 'Número Personal',
     href: '/calculadoras/camino-de-vida',
     tone: 'essence'
   },
   {
     id: 'soul-number',
-    heading: 'Mi mision',
-    subtitle: 'Numero del Alma',
+    heading: 'Mi misión',
+    subtitle: 'Número del Alma',
     href: '/calculadoras/expresion',
     tone: 'mission'
   },
   {
     id: 'personal-year',
     heading: 'Mi año 2026',
-    subtitle: 'Ano Personal',
+    subtitle: 'Año Personal',
     href: '/calculadoras/camino-de-vida',
     tone: 'year'
   }
@@ -89,10 +87,12 @@ const CARD_STYLES: Record<ResultCard['tone'], string> = {
 }
 
 const ENERGY_CARD_TONES = {
-  Dia: 'text-[hsl(var(--accent))]',
+  'Día': 'text-[hsl(var(--accent))]',
   Semana: 'text-[hsl(var(--chart-4))]',
   Mes: 'text-[hsl(var(--fuchsia))]'
 } as const
+
+type EnergyLabel = keyof typeof ENERGY_CARD_TONES
 
 const PINNACLE_POSITIONS: Record<PinnacleLetter, string> = {
   A: 'left-[10.2%] top-[42%]',
@@ -138,17 +138,13 @@ function CardLink({ href }: { href: Route }) {
       href={href}
       className="mt-6 inline-flex items-center gap-2 text-sm font-semibold underline-offset-4 transition hover:underline"
     >
-      Ver mas
+      Ver más
     </Link>
   )
 }
 
 function sanitizeName(value: string): string {
-  return value
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/\s+/g, ' ')
-    .trim()
+  return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim()
 }
 
 function splitFullName(fullName: string): { name: string; lastName: string } {
@@ -263,8 +259,8 @@ export function NumerologyMapSection() {
     <section className="mx-auto max-w-7xl px-4 pb-6 pt-10 sm:px-6">
       <ScrollReveal className="mx-auto max-w-3xl text-center">
         <h1 className="font-display text-2xl font-semibold leading-tight text-balance sm:text-3xl md:text-5xl">
-          <span className="text-gradient-brand">Comienza a conocerte</span> a traves de
-          Numerologia Cotidiana
+          <span className="text-gradient-brand">Comienza a conocerte</span> a través de
+          Numerología Cotidiana
         </h1>
       </ScrollReveal>
 
@@ -275,7 +271,7 @@ export function NumerologyMapSection() {
             className="flex h-full min-h-[27rem] flex-col overflow-hidden rounded-[2rem] border border-border/70 bg-[linear-gradient(180deg,hsl(var(--foreground)/0.34),hsl(var(--primary)/0.24)),url('/images/form-bk.png')] bg-contain bg-center p-5 text-white shadow-[0_24px_60px_hsl(var(--foreground)/0.12)] backdrop-blur sm:min-h-[31rem] sm:p-6"
           >
             <h2 className="font-display text-[1.45rem] font-semibold uppercase tracking-[0.03em] text-white sm:text-[1.7rem]">
-              Mi Mapa <span className="block">Numerologico</span>
+              Mi Mapa <span className="block">Numerológico</span>
             </h2>
             <div className="mt-6 flex flex-1 flex-col justify-center gap-5">
               <div>
@@ -302,7 +298,7 @@ export function NumerologyMapSection() {
                     type="date"
                     value={formState.birthDate}
                     onChange={(event) => handleInputChange('birthDate', event.target.value)}
-                    className="mt-2 h-11 w-full rounded-2xl border border-white/30 bg-white/16 px-4 text-sm text-[#333] placeholder:text-white/50 focus:outline-none sm:text-[16px] outline-none transition focus:border-white/70 focus:bg-white/20"
+                    className="mt-2 h-11 w-full rounded-2xl border border-white/30 bg-white/92 px-4 text-sm text-[hsl(var(--foreground))] placeholder:text-[hsl(var(--gray))] outline-none transition focus:border-white/70 focus:bg-white sm:text-[16px]"
                   />
                 </div>
                 <div className="flex flex-col gap-3 pt-1 sm:flex-row">
@@ -340,7 +336,7 @@ export function NumerologyMapSection() {
               <ScrollReveal key={card.id} delay={120 + index * 80}>
                 <article
                   data-result={card.id}
-                  className={`group flex min-h-[13rem] h-full flex-col items-center justify-center rounded-[2rem] bg-cover bg-center bg-no-repeat px-5 py-6 text-center transition hover:-translate-y-1 sm:min-h-[15rem] sm:px-6 sm:py-7 ${CARD_STYLES[card.tone]}`}
+                  className={`group flex h-full min-h-[13rem] flex-col items-center justify-center rounded-[2rem] bg-cover bg-center bg-no-repeat px-5 py-6 text-center transition hover:-translate-y-1 sm:min-h-[15rem] sm:px-6 sm:py-7 ${CARD_STYLES[card.tone]}`}
                 >
                   <h3
                     className={`font-display text-[0.98rem] font-semibold uppercase tracking-[0.03em] sm:text-[1.05rem] ${
@@ -368,15 +364,15 @@ export function NumerologyMapSection() {
           <ScrollReveal delay={360}>
             <article
               data-result="energia-hoy"
-              className="group flex min-h-[13rem] h-full flex-col rounded-[2rem] bg-[radial-gradient(circle_at_top,hsl(var(--card)/0.24),transparent_42%),linear-gradient(180deg,hsl(var(--royal-blue)/0.72),hsl(var(--primary)/0.88))] px-5 py-6 text-white shadow-[0_24px_60px_hsl(var(--royal-blue)/0.16)] transition hover:-translate-y-1 sm:min-h-[15rem] sm:px-6 sm:py-7"
+              className="group flex h-full min-h-[13rem] flex-col rounded-[2rem] bg-[radial-gradient(circle_at_top,hsl(var(--card)/0.24),transparent_42%),linear-gradient(180deg,hsl(var(--royal-blue)/0.72),hsl(var(--primary)/0.88))] px-5 py-6 text-white shadow-[0_24px_60px_hsl(var(--royal-blue)/0.16)] transition hover:-translate-y-1 sm:min-h-[15rem] sm:px-6 sm:py-7"
             >
               <h3 className="font-display text-[1.2rem] font-semibold uppercase tracking-[0.03em] sm:text-[1.55rem]">
-                Mi energia de hoy
+                Mi energía de hoy
               </h3>
               <div className="mt-5 grid grid-cols-3 gap-2 text-center sm:mt-6 sm:gap-3">
                 {([
-                  { label: 'Dia', value: results.personalDay },
-                  { label: 'Sem', value: results.personalWeek },
+                  { label: 'Día', value: results.personalDay },
+                  { label: 'Semana', value: results.personalWeek },
                   { label: 'Mes', value: results.personalMonth }
                 ] as Array<{ label: EnergyLabel; value: number | string }>).map((item) => (
                   <div
@@ -398,7 +394,7 @@ export function NumerologyMapSection() {
                 href="/calculadoras"
                 className="mt-auto inline-flex w-fit text-sm font-semibold underline-offset-4 transition hover:underline"
               >
-                Ver mas
+                Ver más
               </Link>
             </article>
           </ScrollReveal>
@@ -410,15 +406,15 @@ export function NumerologyMapSection() {
             className="flex flex-col rounded-[2rem] border border-border/70 bg-[linear-gradient(180deg,hsl(var(--secondary)/0.74),hsl(var(--card)/0.94))] p-5 text-center shadow-[0_22px_55px_hsl(var(--primary)/0.08)] sm:p-6"
           >
             <h3 className="font-display text-[1.4rem] font-semibold uppercase tracking-[0.03em] text-primary sm:text-[1.7rem]">
-              Mi Pinaculo
+              Mi Pináculo
             </h3>
-            <p className="mt-1 text-sm text-[hsl(var(--gray))]">Descubre tu Pinaculo Personal</p>
+            <p className="mt-1 text-sm text-[hsl(var(--gray))]">Descubre tu Pináculo Personal</p>
             <div className="mt-5 overflow-hidden rounded-[1.65rem] bg-white/66 p-3 shadow-[inset_0_1px_0_hsl(var(--card)/0.6)]">
               <div className="relative overflow-hidden rounded-[1.35rem] bg-[linear-gradient(180deg,hsl(var(--card)/0.84),hsl(var(--secondary)/0.7))]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={isCalculated ? '/images/pinnacle.png' : '/images/pinnacle-pre.webp'}
-                  alt="Vista del pinaculo"
+                  alt="Vista del pináculo"
                   className="h-full w-full object-cover"
                 />
                 {isCalculated && (
@@ -442,7 +438,7 @@ export function NumerologyMapSection() {
               href="/calculadoras"
               className="mt-6 inline-flex justify-center text-sm font-semibold text-primary underline-offset-4 transition hover:underline"
             >
-              Ver mas
+              Ver más
             </Link>
           </div>
         </ScrollReveal>

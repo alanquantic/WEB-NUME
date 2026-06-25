@@ -19,40 +19,40 @@ type MenuContext = {
 
 const NAV_ITEMS: readonly NavItem[] = [
   {
-    label: 'Numerologia',
+    label: 'Numerología',
     href: '/numerologia',
     children: [
       {
         label: 'Vibraciones de Tiempo',
         href: '/vibraciondeltiempo',
         children: [
-          { label: 'La Brujula Numerologica', href: '/labrujulanumerologica' },
+          { label: 'La Brújula Numerológica', href: '/labrujulanumerologica' },
           { label: 'Etapa Personal', href: '/etapapersonal' },
-          { label: 'Ano Personal', href: '/anopersonal' },
+          { label: 'Año Personal', href: '/anopersonal' },
           { label: 'Mes Personal', href: '/mespersonal' },
           { label: 'Semana Personal', href: '/semanapersonal' },
-          { label: 'Dia Personal', href: '/diapersonal' },
+          { label: 'Día Personal', href: '/diapersonal' },
           { label: 'Vibraciones Colectivas', href: '/vibracionescolectivas' }
         ]
       },
       {
-        label: 'Calcula tu Pinaculo',
+        label: 'Calcula tu Pináculo',
         href: '/calculatupinaculo',
         children: [
-          { label: 'Significado de los Numeros', href: '/significadodelosnumeros' }
+          { label: 'Significado de los Números', href: '/significadodelosnumeros' }
         ]
       },
       {
-        label: 'Numerologia Nombre',
+        label: 'Numerología Nombre',
         href: '/numerologianombre',
         children: [
-          { label: 'Numero del Nombre', href: '/numerodelnombre' },
-          { label: 'Numero del Alma', href: '/numerodelalma' },
+          { label: 'Número del Nombre', href: '/numerodelnombre' },
+          { label: 'Número del Alma', href: '/numerodelalma' },
           {
-            label: 'Numero de Expresion del Alma',
+            label: 'Número de Expresión del Alma',
             href: '/numerodeexpresiondelalma'
           },
-          { label: 'Numero de la Madurez', href: '/numerodelamadurez' },
+          { label: 'Número de la Madurez', href: '/numerodelamadurez' },
           { label: 'Significado de Letras', href: '/significadodeletras' },
           { label: 'Nombre Activo', href: '/nombreactivo' },
           { label: 'Nombre Hereditario', href: '/nombrehereditario' }
@@ -63,7 +63,7 @@ const NAV_ITEMS: readonly NavItem[] = [
         href: '/perfil',
         children: [
           { label: 'Mi Perfil', href: '/perfil' },
-          { label: 'Cerrar Sesion', href: '/logout' }
+          { label: 'Cerrar Sesión', href: '/logout' }
         ]
       }
     ]
@@ -71,11 +71,11 @@ const NAV_ITEMS: readonly NavItem[] = [
   { label: 'Tienda', href: 'https://tienda.numerologia-cotidiana.com/' },
   { label: 'Blog', href: '/blog' },
   {
-    label: 'Horoscopos',
+    label: 'Horóscopos',
     href: '/horoscopos',
     children: [
       {
-        label: 'Revisa Tu Horoscopo Mensual 2026',
+        label: 'Revisa tu horóscopo mensual 2026',
         href: '/revisatuhoroscopomensual2026'
       }
     ]
@@ -292,7 +292,7 @@ export async function SiteHeader() {
 
         <div className="flex items-center justify-end gap-4">
           <span className="hidden text-sm italic text-foreground/70 lg:inline">
-            de Laura L. Rodriguez
+            de Laura L. Rodríguez
           </span>
           <Link
             href="/busqueda"
@@ -318,7 +318,7 @@ export async function SiteHeader() {
               href="/login"
               className="header-chip rounded-full bg-gradient-brand px-4 py-2 text-sm font-semibold text-white shadow-glow hover:opacity-95"
             >
-              <span className="relative z-10">Inicia sesion</span>
+              <span className="relative z-10">Inicia sesión</span>
             </Link>
           )}
         </div>
@@ -366,7 +366,7 @@ export async function SiteHeader() {
                 href="/login"
                 className="header-chip bg-gradient-brand block rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow-glow"
               >
-                <span className="relative z-10">Inicia sesion</span>
+                <span className="relative z-10">Inicia sesión</span>
               </Link>
             ) : null}
           </div>

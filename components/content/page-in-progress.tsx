@@ -7,7 +7,7 @@ type PageInProgressProps = {
 
 export function PageInProgress({
   title,
-  description = 'Estamos preparando esta experiencia para ti. Muy pronto encontraras aqui contenido y herramientas alineadas con Numerologia Cotidiana.'
+  description = 'Estamos preparando esta experiencia para ti. Muy pronto encontrarás aquí contenido y herramientas alineadas con Numerología Cotidiana.'
 }: PageInProgressProps) {
   return (
     <section className="mx-auto max-w-7xl px-6 py-12 md:py-16">
@@ -15,7 +15,7 @@ export function PageInProgress({
         <div className="grid items-center gap-8 px-6 py-8 md:grid-cols-[1.05fr_0.95fr] md:px-10 md:py-12">
           <div className="space-y-5">
             <span className="inline-flex rounded-full bg-primary-soft px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-              Pagina en progreso
+              Página en progreso
             </span>
             <h1 className="max-w-xl font-display text-4xl font-semibold leading-tight text-foreground md:text-5xl">
               {title}
@@ -45,7 +45,7 @@ export function PageInProgress({
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/preview-bk.png"
-                alt="Vista previa de pagina en progreso"
+                alt="Vista previa de página en progreso"
                 className="h-full w-full rounded-[1.2rem] object-cover"
               />
             </div>
