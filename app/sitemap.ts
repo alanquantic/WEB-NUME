@@ -4,6 +4,7 @@ const STATIC_ROUTES = [
   '',
   '/numerologia',
   '/explora',
+  '/numerologia-de-pareja',
   '/vibraciondeltiempo',
   '/labrujulanumerologica',
   '/etapapersonal',

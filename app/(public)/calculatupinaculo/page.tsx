@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <ToolPage
+      toolKey="calculatupinaculo"
       wide
       title="Calcula tu Pináculo"
       description="El pináculo personal reúne los números clave de tu mapa: karma, ciclos de vida, metas y más, a partir de tu fecha de nacimiento."

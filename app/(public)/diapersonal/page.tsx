@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <ToolPage
+      toolKey="diapersonal"
       title="Día personal"
       description="El día personal revela la vibración de tu jornada de hoy para que la aproveches mejor."
     >

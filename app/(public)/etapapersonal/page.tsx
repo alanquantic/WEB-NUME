@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <ToolPage
+      toolKey="etapapersonal"
       title="Etapa personal"
       description="Las etapas personales son los grandes ciclos de vida. Descubre en cuál te encuentras y qué energía la rige."
     >

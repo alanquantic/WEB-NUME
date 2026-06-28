@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <ToolPage
+      toolKey="numerodelalma"
       title="Número del Alma"
       description="Surge de las vocales de tu nombre y revela lo que tu corazón realmente anhela."
     >

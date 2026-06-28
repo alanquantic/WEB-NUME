@@ -68,7 +68,7 @@ export function articleJsonLd(input: ArticleJsonLdInput) {
   }
 }
 
-export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
+export function breadcrumbJsonLd(items: { name: string; path?: string }[]) {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -76,7 +76,7 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,
-      item: absoluteUrl(item.path)
+      ...(item.path ? { item: absoluteUrl(item.path) } : {})
     }))
   }
 }

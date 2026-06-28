@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <ToolPage
+      toolKey="significadodelosnumeros"
       wide
       title="Significado de los Números"
       description="Cada número del 1 al 9, más los maestros 11, 22 y 33, tiene una vibración propia. Esta es su esencia."

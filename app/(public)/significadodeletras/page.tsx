@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <ToolPage
+      toolKey="significadodeletras"
       wide
       title="Significado de Letras"
       description="El valor numérico de cada letra es la base para calcular los números de tu nombre."

@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <ToolPage
+      toolKey="semanapersonal"
       title="Semana personal"
       description="La semana personal te da un enfoque más cercano para organizar tus próximos días."
     >

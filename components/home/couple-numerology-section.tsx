@@ -26,7 +26,7 @@ export function CoupleNumerologySection() {
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link
-                  href="/calculadoras/compatibilidad"
+                  href="/numerologia-de-pareja"
                   className="inline-flex rounded-full bg-white px-6 py-3 text-sm font-semibold text-primary transition hover:opacity-90"
                 >
                   Calcula tu compatibilidad

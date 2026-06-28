@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <ToolPage
+      toolKey="nombrehereditario"
       title="Nombre Hereditario"
       description="Es la vibración de tus apellidos: la herencia familiar que traes contigo."
     >

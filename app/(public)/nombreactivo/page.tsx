@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <ToolPage
+      toolKey="nombreactivo"
       title="Nombre Activo"
       description="Es la energía de tu primer nombre, el que usas a diario y con el que te identificas."
     >

@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <ToolPage
+      toolKey="labrujulanumerologica"
       wide
       title="La Brújula Numerológica"
       description="Tus vibraciones de tiempo en un solo lugar: etapa, año, mes, semana y día personal a partir de tu fecha de nacimiento."

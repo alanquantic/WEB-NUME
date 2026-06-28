@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <ToolPage
+      toolKey="mespersonal"
       title="Mes personal"
       description="El mes personal afina la energía de tu año y te muestra en qué enfocarte este mes."
     >

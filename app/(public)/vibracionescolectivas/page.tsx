@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <ToolPage
+      toolKey="vibracionescolectivas"
       wide
       title="Vibraciones Colectivas"
       description="La energía universal que todos compartimos en una misma fecha: año, mes, semana y día universal."

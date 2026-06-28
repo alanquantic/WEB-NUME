@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <ToolPage
+      toolKey="anopersonal"
       title="Año personal"
       description="Tu año personal marca el tema y las oportunidades de tu ciclo anual. Se calcula con tu fecha de nacimiento y el año en curso."
     >

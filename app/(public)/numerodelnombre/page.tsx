@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <ToolPage
+      toolKey="numerodelnombre"
       title="Número del Nombre"
       description="También llamado número de expresión o destino. Resume tus talentos y la manera en que te muestras al mundo."
     >

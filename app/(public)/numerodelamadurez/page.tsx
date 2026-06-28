@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <ToolPage
+      toolKey="numerodelamadurez"
       title="Número de la Madurez"
       description="Combina tu camino de vida y tu número de expresión para mostrar hacia dónde madura tu propósito."
     >
