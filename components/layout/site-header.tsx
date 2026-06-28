@@ -4,6 +4,7 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 import { ChevronDownIcon, MenuIcon, SearchIcon } from '@/components/ui/icons'
+import { SocialLinks } from '@/components/ui/social-links'
 import { ACCESS_COOKIE, clearAccessCookie, clearRefreshCookie } from '@/lib/auth/cookies'
 import { API_BASE_URL, getServerSessionUser } from '@/lib/auth/session'
 
@@ -22,6 +23,7 @@ const NAV_ITEMS: readonly NavItem[] = [
     label: 'Numerología',
     href: '/numerologia',
     children: [
+      { label: 'Explora por número', href: '/explora' },
       {
         label: 'Vibraciones de Tiempo',
         href: '/vibraciondeltiempo',
@@ -294,6 +296,11 @@ export async function SiteHeader() {
           <span className="hidden text-sm italic text-foreground/70 lg:inline">
             de Laura L. Rodríguez
           </span>
+          <SocialLinks
+            className="hidden items-center gap-1.5 xl:flex"
+            itemClassName="header-chip flex h-9 w-9 items-center justify-center rounded-full border border-border text-primary hover:bg-primary-soft"
+            iconSize={16}
+          />
           <Link
             href="/busqueda"
             aria-label="Buscar"
@@ -369,6 +376,10 @@ export async function SiteHeader() {
                 <span className="relative z-10">Inicia sesión</span>
               </Link>
             ) : null}
+            <SocialLinks
+              className="flex gap-3 pt-2"
+              itemClassName="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-primary"
+            />
           </div>
         </div>
       </details>

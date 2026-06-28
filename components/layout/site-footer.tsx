@@ -1,18 +1,6 @@
 import Link from 'next/link'
 
-import {
-  FacebookIcon,
-  InstagramIcon,
-  TiktokIcon,
-  YoutubeIcon
-} from '@/components/ui/icons'
-
-const SOCIAL_LINKS = [
-  { id: 'tiktok', label: 'TikTok', Icon: TiktokIcon },
-  { id: 'youtube', label: 'YouTube', Icon: YoutubeIcon },
-  { id: 'instagram', label: 'Instagram', Icon: InstagramIcon },
-  { id: 'facebook', label: 'Facebook', Icon: FacebookIcon }
-] as const
+import { SocialLinks } from '@/components/ui/social-links'
 
 export function SiteFooter() {
   return (
@@ -34,19 +22,10 @@ export function SiteFooter() {
 
         <div className="flex flex-col gap-4 md:items-end">
           <p className="text-sm font-medium text-white/80">Nuevo León, México</p>
-          <ul className="flex gap-3">
-            {SOCIAL_LINKS.map(({ id, label, Icon }) => (
-              <li key={id}>
-                <Link
-                  href="#"
-                  aria-label={label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:bg-white/10"
-                >
-                  <Icon width={18} height={18} />
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <SocialLinks
+            className="flex gap-3"
+            itemClassName="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:bg-white/10"
+          />
         </div>
       </div>
     </footer>

@@ -88,7 +88,7 @@ const CARD_STYLES: Record<ResultCard['tone'], string> = {
 
 const ENERGY_CARD_TONES = {
   'Día': 'text-[hsl(var(--accent))]',
-  Semana: 'text-[hsl(var(--chart-4))]',
+  Semana: 'text-white',
   Mes: 'text-[hsl(var(--fuchsia))]'
 } as const
 

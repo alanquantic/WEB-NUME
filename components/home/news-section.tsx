@@ -3,11 +3,15 @@ import Link from 'next/link'
 
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
 import { SearchIcon } from '@/components/ui/icons'
+import type { Category } from '@/lib/api/contracts'
+import { getSamplePosts } from '@/lib/blog/sample-posts'
+import { getPosts } from '@/lib/api/posts'
+import { getCategories } from '@/lib/api/taxonomy'
+import { formatDate } from '@/lib/format'
 
-type FeaturedNewsItem = {
+type NewsCard = {
   id: string
   title: string
-  excerpt: string
   author: string
   date: string
   href: string
@@ -15,59 +19,73 @@ type FeaturedNewsItem = {
   imageAlt: string
 }
 
-const FEATURED_NEWS: readonly FeaturedNewsItem[] = [
-  {
-    id: 'change-name',
-    title: 'Guía para cambiar tu nombre desde la numerología (sin perder tu esencia)',
-    excerpt:
-      'Guía para cambiar tu nombre desde la numerología (sin perder tu esencia). ¿Por qué cambiar tu nombre desde la energía? Hacer un pequeño cambio en',
-    author: 'Laura Rodríguez',
-    date: '28 abril, 2025',
-    href: '/blog/guia-cambiar-tu-nombre',
-    imageSrc: '/images/Head-Nombre-750x375.webp',
-    imageAlt: 'Noticia sobre cambio de nombre en numerología'
-  },
-  {
-    id: 'personal-month',
-    title: '¿Cuál es tu mes personal este mes y qué significa?',
-    excerpt:
-      '¿Cuál es tu mes personal este mes y qué significa? ¿Qué es el número del mes personal? El Mes Personal te invita a trabajar una',
-    author: 'Laura Rodríguez',
-    date: '28 abril, 2025',
-    href: '/blog/mes-personal',
-    imageSrc: '/images/Head-Mes-Personal-750x375.webp',
-    imageAlt: 'Noticia sobre el mes personal'
-  },
-  {
-    id: 'house-numerology',
-    title: 'Numerología de casas: el poder energético de tu dirección',
-    excerpt:
-      'Numerología de casas: el poder energético de tu dirección. ¿Por qué importa el número de tu casa? La numerología de los espacios es un tema intrigante',
-    author: 'Laura Rodríguez',
-    date: '28 abril, 2025',
-    href: '/blog/numerologia-de-casas',
-    imageSrc: '/images/Head-Casas-750x375.webp',
-    imageAlt: 'Noticia sobre numerología de casas'
+function sampleCards(): NewsCard[] {
+  return getSamplePosts()
+    .slice(0, 3)
+    .map((post) => ({
+      id: post.slug,
+      title: post.title,
+      author: post.author,
+      date: formatDate(post.date),
+      href: `/blog/${post.slug}`,
+      imageSrc: post.image,
+      imageAlt: post.title
+    }))
+}
+
+async function loadNews(): Promise<NewsCard[]> {
+  try {
+    const posts = await getPosts({ page: 1, limit: 3 })
+    if (posts.data.length === 0) return sampleCards()
+
+    return posts.data.map((post) => ({
+      id: post.id,
+      title: post.title,
+      author: 'Numerología Cotidiana',
+      date: formatDate(post.published_at ?? post.created_at),
+      href: `/blog/${post.id}`,
+      imageSrc: post.featured_image_url ?? '/images/preview-bk.png',
+      imageAlt: post.title
+    }))
+  } catch {
+    return sampleCards()
   }
-]
+}
+
+async function loadCategories(): Promise<Category[]> {
+  try {
+    return (await getCategories(1, 8)).data
+  } catch {
+    return []
+  }
+}
 
 export async function NewsSection() {
+  const [news, categories] = await Promise.all([loadNews(), loadCategories()])
+
   return (
     <section className="mx-auto max-w-7xl px-6 py-12">
       <div className="grid gap-8 lg:grid-cols-[1.6fr_0.8fr]">
         <div>
           <ScrollReveal>
-            <h2 className="border-b-2 border-fuchsia pb-2 font-display text-2xl font-semibold text-primary">
-              Noticias destacadas
-            </h2>
+            <div className="flex items-end justify-between border-b-2 border-fuchsia pb-2">
+              <h2 className="font-display text-2xl font-semibold text-primary">
+                Noticias destacadas
+              </h2>
+              <Link
+                href="/blog"
+                className="text-sm font-semibold text-primary transition hover:underline"
+              >
+                Ver todo
+              </Link>
+            </div>
           </ScrollReveal>
 
           <div className="mt-6 grid gap-6 lg:grid-cols-3">
-            {FEATURED_NEWS.map((item, index) => (
+            {news.map((item, index) => (
               <ScrollReveal key={item.id} delay={80 + index * 70}>
                 <article className="group flex h-full flex-col overflow-hidden rounded-[1.9rem] border border-border/80 bg-card shadow-panel transition hover:-translate-y-1 hover:shadow-glow">
                   <div className="aspect-[16/10] overflow-hidden bg-secondary/70">
-                    {/* Cuando subas las imágenes manualmente, colócalas en /public/images con estos nombres */}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={item.imageSrc}
@@ -77,11 +95,11 @@ export async function NewsSection() {
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <h3 className="font-display text-[1.35rem] font-semibold leading-snug text-foreground group-hover:text-primary">
-                      {item.title}
+                      <Link href={item.href as Route}>{item.title}</Link>
                     </h3>
                     <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-semibold uppercase tracking-wide text-fuchsia">
                       <span>{item.author}</span>
-                      <span>{item.date}</span>
+                      {item.date ? <span>{item.date}</span> : null}
                     </div>
                     <Link
                       href={item.href as Route}
@@ -102,9 +120,25 @@ export async function NewsSection() {
               <h3 className="bg-gradient-brand px-5 py-3 text-sm font-semibold uppercase tracking-wide text-white">
                 Categorías
               </h3>
-              <div className="px-5 py-4 text-sm text-foreground/70">
-                Categorías en preparación.
-              </div>
+              {categories.length > 0 ? (
+                <ul className="divide-y divide-border/70">
+                  {categories.map((category) => (
+                    <li key={category.id}>
+                      <Link
+                        href={`/categorias/${category.id}` as Route}
+                        className="flex items-center justify-between px-5 py-3 text-sm text-foreground/75 transition hover:bg-primary-soft hover:text-primary"
+                      >
+                        <span>{category.name.trim()}</span>
+                        <span aria-hidden className="text-primary/50">›</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div className="px-5 py-4 text-sm text-foreground/70">
+                  Categorías en preparación.
+                </div>
+              )}
             </div>
           </ScrollReveal>
 
