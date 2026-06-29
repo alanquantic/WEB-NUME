@@ -1,6 +1,8 @@
 import type { Route } from 'next'
 import Link from 'next/link'
 
+import { ToolIconTile } from '@/components/ui/tool-icon'
+
 export type ExploreLink = {
   href: string
   title: string
@@ -18,7 +20,8 @@ function Card({ link }: { link: ExploreLink }) {
     'group flex h-full flex-col rounded-[1.5rem] border border-border/80 bg-card p-5 shadow-panel transition hover:-translate-y-1 hover:shadow-glow'
   const inner = (
     <>
-      <h3 className="font-display text-base font-semibold text-foreground group-hover:text-primary">
+      <ToolIconTile href={link.href} />
+      <h3 className="mt-4 font-display text-base font-semibold text-foreground group-hover:text-primary">
         {link.title}
       </h3>
       {link.description ? (

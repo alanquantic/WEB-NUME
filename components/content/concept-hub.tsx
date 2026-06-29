@@ -2,6 +2,8 @@ import type { Route } from 'next'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 
+import { ToolIconTile } from '@/components/ui/tool-icon'
+
 export type HubLink = {
   href: string
   title: string
@@ -22,7 +24,8 @@ function LinkCard({ link }: { link: HubLink }) {
 
   const inner = (
     <>
-      <h2 className="font-display text-xl font-semibold text-foreground group-hover:text-primary">
+      <ToolIconTile href={link.href} />
+      <h2 className="mt-4 font-display text-xl font-semibold text-foreground group-hover:text-primary">
         {link.title}
       </h2>
       {link.description ? (

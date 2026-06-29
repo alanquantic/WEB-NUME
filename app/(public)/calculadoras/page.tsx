@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import type { Route } from 'next'
 import Link from 'next/link'
 
+import { ToolIconTile } from '@/components/ui/tool-icon'
+
 export const metadata: Metadata = {
   title: 'Calculadoras'
 }
@@ -38,7 +40,8 @@ export default function CalculatorsPage() {
             href={calculator.href as Route}
             className="group flex flex-col rounded-[1.8rem] border border-border/80 bg-card p-6 shadow-panel transition hover:-translate-y-1 hover:shadow-glow"
           >
-            <h2 className="font-display text-xl font-semibold text-foreground group-hover:text-primary">
+            <ToolIconTile href={calculator.href} />
+            <h2 className="mt-4 font-display text-xl font-semibold text-foreground group-hover:text-primary">
               {calculator.title}
             </h2>
             <p className="mt-2 flex-1 text-sm leading-6 text-foreground/70">
