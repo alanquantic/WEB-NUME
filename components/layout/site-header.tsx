@@ -5,6 +5,8 @@ import { redirect } from 'next/navigation'
 
 import { ChevronDownIcon, MenuIcon, SearchIcon } from '@/components/ui/icons'
 import { SocialLinks } from '@/components/ui/social-links'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
+import { getToolIcon } from '@/components/ui/tool-icon'
 import { ACCESS_COOKIE, clearAccessCookie, clearRefreshCookie } from '@/lib/auth/cookies'
 import { API_BASE_URL, getServerSessionUser } from '@/lib/auth/session'
 
@@ -113,15 +115,26 @@ function renderDesktopLeaf(item: NavItem, level: number) {
     )
   }
 
+  if (level === 0) {
+    return (
+      <Link
+        href={(item.href ?? '#') as Route}
+        className="header-link-float flex items-center gap-1 text-foreground/82 hover:text-primary"
+      >
+        <span className="relative z-10">{item.label}</span>
+      </Link>
+    )
+  }
+
+  const LeafIcon = item.href ? getToolIcon(item.href) : null
   return (
     <Link
       href={(item.href ?? '#') as Route}
-      className={
-        level === 0
-          ? 'header-link-float flex items-center gap-1 text-foreground/82 hover:text-primary'
-          : 'header-chip block rounded-2xl px-4 py-3 text-sm text-foreground/80 hover:bg-primary-soft hover:text-primary'
-      }
+      className="header-chip flex items-center gap-2.5 rounded-2xl px-4 py-3 text-sm text-foreground/80 hover:bg-primary-soft hover:text-primary"
     >
+      {LeafIcon ? (
+        <LeafIcon size={16} strokeWidth={1.75} className="shrink-0 text-primary/70" aria-hidden />
+      ) : null}
       <span className="relative z-10">{item.label}</span>
     </Link>
   )
@@ -285,7 +298,7 @@ export async function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-card/85 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-border bg-card/70 backdrop-blur-xl backdrop-saturate-150 supports-[backdrop-filter]:bg-card/60">
       <div className="mx-auto hidden max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-3 px-6 py-2 md:grid">
         <nav className="hidden items-center gap-5 text-sm font-medium md:flex">
           {renderDesktopNav(NAV_ITEMS, menuContext)}
@@ -302,6 +315,7 @@ export async function SiteHeader() {
             itemClassName="header-chip flex h-9 w-9 items-center justify-center rounded-full border border-border text-primary hover:bg-primary-soft"
             iconSize={16}
           />
+          <ThemeToggle className="header-chip flex h-9 w-9 items-center justify-center rounded-full border border-border text-primary hover:bg-primary-soft" />
           <Link
             href="/busqueda"
             aria-label="Buscar"
@@ -377,10 +391,13 @@ export async function SiteHeader() {
                 <span className="relative z-10">Inicia sesión</span>
               </Link>
             ) : null}
-            <SocialLinks
-              className="flex gap-3 pt-2"
-              itemClassName="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-primary"
-            />
+            <div className="flex items-center gap-3 pt-2">
+              <SocialLinks
+                className="flex gap-3"
+                itemClassName="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-primary"
+              />
+              <ThemeToggle className="ml-auto flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-primary" />
+            </div>
           </div>
         </div>
       </details>

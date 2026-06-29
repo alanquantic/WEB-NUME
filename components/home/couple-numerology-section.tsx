@@ -1,12 +1,14 @@
 import Link from 'next/link'
 
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
+import { SparkleField } from '@/components/ui/sparkle-field'
 
 export function CoupleNumerologySection() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-      <div className="overflow-hidden rounded-[2.5rem] bg-[linear-gradient(135deg,hsl(var(--primary)/0.94),hsl(var(--fuchsia)/0.86))] shadow-glow">
-        <div className="grid items-center gap-8 px-6 py-10 md:grid-cols-[1.1fr_0.9fr] md:px-12 md:py-12">
+      <div className="relative overflow-hidden rounded-[2.5rem] bg-[linear-gradient(135deg,hsl(var(--primary)/0.94),hsl(var(--fuchsia)/0.86))] shadow-glow">
+        <SparkleField className="text-white" />
+        <div className="relative grid items-center gap-8 px-6 py-10 md:grid-cols-[1.1fr_0.9fr] md:px-12 md:py-12">
           <ScrollReveal>
             <div className="text-white">
               <span className="inline-flex rounded-full bg-white/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em]">

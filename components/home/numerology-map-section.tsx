@@ -4,7 +4,10 @@ import { useState, useTransition } from 'react'
 import type { Route } from 'next'
 import Link from 'next/link'
 
+import { Sparkles } from 'lucide-react'
+
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
+import { SparkleField } from '@/components/ui/sparkle-field'
 import Person from '@/resources/person'
 import Pinnacle from '@/resources/pinnacle'
 
@@ -257,8 +260,12 @@ export function NumerologyMapSection() {
 
   return (
     <section className="mx-auto max-w-7xl px-4 pb-6 pt-10 sm:px-6">
-      <ScrollReveal className="mx-auto max-w-3xl text-center">
-        <h1 className="font-display text-2xl font-semibold leading-tight text-balance sm:text-3xl md:text-5xl">
+      <ScrollReveal className="relative mx-auto max-w-3xl text-center">
+        <SparkleField className="text-primary" />
+        <span className="relative inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary-soft px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+          <Sparkles size={14} aria-hidden /> Tu mapa numerológico, gratis
+        </span>
+        <h1 className="relative mt-4 font-display text-2xl font-semibold leading-tight text-balance sm:text-3xl md:text-5xl">
           <span className="text-gradient-brand">Comienza a conocerte</span> a través de
           Numerología Cotidiana
         </h1>

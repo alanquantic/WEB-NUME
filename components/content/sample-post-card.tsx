@@ -1,4 +1,5 @@
 import type { Route } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 
 import type { SamplePost } from '@/lib/blog/sample-posts'
@@ -12,15 +13,16 @@ export function SamplePostCard({ post, featured = false }: { post: SamplePost; f
       }`}
     >
       <div
-        className={`overflow-hidden bg-secondary/70 ${
+        className={`relative overflow-hidden bg-secondary/70 ${
           featured ? 'aspect-[16/10] lg:aspect-auto lg:w-1/2' : 'aspect-[16/10]'
         }`}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={post.image}
           alt={post.title}
-          className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+          fill
+          sizes="(max-width: 768px) 100vw, 400px"
+          className="object-cover transition duration-500 group-hover:scale-[1.03]"
         />
       </div>
       <div className="flex flex-1 flex-col p-5 sm:p-6">

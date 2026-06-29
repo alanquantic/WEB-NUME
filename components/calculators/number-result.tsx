@@ -1,3 +1,4 @@
+import { CountUp } from '@/components/ui/count-up'
 import { getMeaning } from '@/lib/numerology/meanings'
 
 type NumberResultProps = {
@@ -9,10 +10,13 @@ export function NumberResult({ value, intro }: NumberResultProps) {
   const meaning = typeof value === 'number' ? getMeaning(value) : null
 
   return (
-    <div className="mt-6 rounded-[1.5rem] bg-[linear-gradient(135deg,hsl(var(--secondary)/0.82),hsl(var(--primary)/0.12))] p-6">
+    <div
+      key={String(value)}
+      className="animate-result-pop mt-6 rounded-[1.5rem] bg-[linear-gradient(135deg,hsl(var(--secondary)/0.82),hsl(var(--primary)/0.12))] p-6"
+    >
       <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:text-left">
         <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-gradient-brand font-display text-4xl font-semibold text-white shadow-glow">
-          {value}
+          <CountUp value={value} />
         </span>
         <div>
           {intro ? <p className="text-sm text-foreground/70">{intro}</p> : null}

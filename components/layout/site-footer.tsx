@@ -4,7 +4,7 @@ import { SocialLinks } from '@/components/ui/social-links'
 
 export function SiteFooter() {
   return (
-    <footer className="mt-8 bg-foreground text-white">
+    <footer className="mt-8 bg-[hsl(263_42%_11%)] text-white">
       <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-10 md:flex-row md:items-center md:justify-between">
         <div className="space-y-2">
           <Link href="/" className="flex items-center gap-2 font-display text-xl font-semibold">
