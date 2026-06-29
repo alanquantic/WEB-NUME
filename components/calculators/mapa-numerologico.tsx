@@ -1,10 +1,13 @@
 'use client'
 
+import { Share2 } from 'lucide-react'
 import type { Route } from 'next'
 import Link from 'next/link'
-import { startTransition, useState } from 'react'
+import { startTransition, useEffect, useState } from 'react'
 
+import { PinnacleDiagram } from '@/components/calculators/pinnacle-diagram'
 import { CountUp } from '@/components/ui/count-up'
+import { FacebookIcon, TelegramIcon, WhatsappIcon } from '@/components/ui/icons'
 import { SparkleField } from '@/components/ui/sparkle-field'
 import { getToolIcon } from '@/components/ui/tool-icon'
 import { Button } from '@/components/ui/button'
@@ -29,6 +32,7 @@ type MapGroup = {
 
 type MapData = {
   name: string
+  birthDate: string
   groups: MapGroup[]
 }
 
@@ -55,11 +59,7 @@ function buildMap(fullName: string, birthDate: string): MapData | null {
             value: clean(calculateLifePath({ birthDate }).lifePathNumber),
             href: '/calculadoras/camino-de-vida'
           },
-          {
-            label: 'Número personal',
-            value: clean(person.calcPersonalNumber()),
-            href: '/explora'
-          },
+          { label: 'Número personal', value: clean(person.calcPersonalNumber()), href: '/explora' },
           {
             label: 'Madurez',
             value: clean(calculateMaturity(name, birthDate)),
@@ -70,16 +70,8 @@ function buildMap(fullName: string, birthDate: string): MapData | null {
       {
         title: 'Tu nombre',
         items: [
-          {
-            label: 'Expresión',
-            value: clean(expression?.expression),
-            href: '/numerodelnombre'
-          },
-          {
-            label: 'Alma',
-            value: clean(expression?.soul),
-            href: '/numerodelalma'
-          },
+          { label: 'Expresión', value: clean(expression?.expression), href: '/numerodelnombre' },
+          { label: 'Alma', value: clean(expression?.soul), href: '/numerodelalma' },
           {
             label: 'Personalidad',
             value: clean(expression?.personality),
@@ -95,21 +87,13 @@ function buildMap(fullName: string, birthDate: string): MapData | null {
             value: clean(person.calcPersonalYear(new Date(now.getFullYear(), 0, 1))),
             href: '/anopersonal'
           },
-          {
-            label: 'Mes personal',
-            value: clean(person.calcPersonalMonth(now, now)),
-            href: '/mespersonal'
-          },
-          {
-            label: 'Día personal',
-            value: clean(person.calcPersonalDay(now)),
-            href: '/diapersonal'
-          }
+          { label: 'Mes personal', value: clean(person.calcPersonalMonth(now, now)), href: '/mespersonal' },
+          { label: 'Día personal', value: clean(person.calcPersonalDay(now)), href: '/diapersonal' }
         ]
       }
     ]
 
-    return { name: name.split(' ')[0] ?? name, groups }
+    return { name: name.split(' ')[0] ?? name, birthDate, groups }
   } catch {
     return null
   }
@@ -147,6 +131,11 @@ export function MapaNumerologico() {
   const [data, setData] = useState<MapData | null>(null)
   const [submitted, setSubmitted] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [origin, setOrigin] = useState('')
+
+  useEffect(() => {
+    setOrigin(window.location.origin)
+  }, [])
 
   function handleSubmit(formData: FormData) {
     const name = String(formData.get('fullName') ?? '')
@@ -168,6 +157,30 @@ export function MapaNumerologico() {
       })
     })
     setSaved(true)
+  }
+
+  const flatValues = data
+    ? data.groups.flatMap((group) =>
+        group.items.map((item) => (typeof item.value === 'number' ? String(item.value) : '?'))
+      )
+    : []
+  const imageUrl =
+    data && origin
+      ? `${origin}/mapa-imagen?name=${encodeURIComponent(data.name)}&n=${encodeURIComponent(flatValues.join(','))}`
+      : ''
+  const shareText = 'Mira mi mapa numerológico ✨'
+
+  function handleShare() {
+    if (!imageUrl) return
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({ title: 'Mi Mapa Numerológico', text: shareText, url: imageUrl }).catch(() => {})
+    } else {
+      window.open(
+        `https://wa.me/?text=${encodeURIComponent(`${shareText} ${imageUrl}`)}`,
+        '_blank',
+        'noopener,noreferrer'
+      )
+    }
   }
 
   return (
@@ -205,9 +218,7 @@ export function MapaNumerologico() {
         <div className="animate-result-pop relative mt-8 overflow-hidden rounded-[1.75rem] bg-[linear-gradient(135deg,hsl(var(--secondary)/0.7),hsl(var(--primary)/0.1))] p-6">
           <SparkleField className="text-primary" />
           <div className="relative">
-            <p className="font-display text-xl font-semibold text-primary">
-              El mapa de {data.name}
-            </p>
+            <p className="font-display text-xl font-semibold text-primary">El mapa de {data.name}</p>
             <p className="mt-1 text-sm text-foreground/70">
               Estos son tus números principales. Toca cualquiera para conocerlo a fondo.
             </p>
@@ -225,7 +236,16 @@ export function MapaNumerologico() {
               </div>
             ))}
 
-            <div className="mt-6">
+            <div className="mt-8">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-foreground/55">
+                Tu pináculo
+              </h3>
+              <div className="mx-auto mt-3 max-w-md">
+                <PinnacleDiagram birthDate={data.birthDate} />
+              </div>
+            </div>
+
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <button
                 type="button"
                 onClick={handleSave}
@@ -234,6 +254,46 @@ export function MapaNumerologico() {
               >
                 {saved ? 'Guardado en Mi carta ✓' : 'Guardar mi mapa'}
               </button>
+
+              <button
+                type="button"
+                onClick={handleShare}
+                className="inline-flex items-center gap-2 rounded-full border border-primary/25 px-5 py-2.5 text-sm font-semibold text-primary transition hover:bg-primary-soft"
+              >
+                <Share2 size={16} aria-hidden /> Compartir mi mapa
+              </button>
+
+              {imageUrl ? (
+                <div className="flex items-center gap-2">
+                  <a
+                    href={`https://wa.me/?text=${encodeURIComponent(`${shareText} ${imageUrl}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Compartir en WhatsApp"
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-brand text-white transition hover:opacity-90"
+                  >
+                    <WhatsappIcon width={16} height={16} />
+                  </a>
+                  <a
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(imageUrl)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Compartir en Facebook"
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-brand text-white transition hover:opacity-90"
+                  >
+                    <FacebookIcon width={16} height={16} />
+                  </a>
+                  <a
+                    href={`https://t.me/share/url?url=${encodeURIComponent(imageUrl)}&text=${encodeURIComponent(shareText)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Compartir en Telegram"
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-brand text-white transition hover:opacity-90"
+                  >
+                    <TelegramIcon width={16} height={16} />
+                  </a>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
