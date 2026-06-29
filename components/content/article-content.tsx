@@ -2,9 +2,11 @@ import Link from 'next/link'
 
 import type { ContentItem } from '@/lib/api/contracts'
 import { formatDate } from '@/lib/format'
+import { sanitizeArticleHtml } from '@/lib/sanitize'
 
 export function ArticleContent({ content }: { content: ContentItem }) {
   const date = formatDate(content.published_at ?? content.created_at)
+  const safeHtml = sanitizeArticleHtml(content.content_html)
 
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
@@ -34,8 +36,8 @@ export function ArticleContent({ content }: { content: ContentItem }) {
       ) : null}
 
       <div className="mt-8 text-base leading-8 text-foreground/80 [&_a]:text-primary [&_a]:underline [&_h2]:mt-6 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-semibold [&_h3]:mt-5 [&_h3]:font-display [&_h3]:text-xl [&_img]:my-4 [&_img]:rounded-2xl [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6">
-        {content.content_html ? (
-          <div dangerouslySetInnerHTML={{ __html: content.content_html }} />
+        {safeHtml ? (
+          <div dangerouslySetInnerHTML={{ __html: safeHtml }} />
         ) : (
           <p className="text-foreground/60">
             El contenido de este artículo estará disponible muy pronto.
