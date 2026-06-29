@@ -333,14 +333,14 @@ export async function SiteHeader() {
           {user ? (
             <Link
               href="/perfil"
-              className="header-chip rounded-full bg-gradient-brand px-4 py-2 text-sm font-semibold text-white shadow-glow hover:opacity-95"
+              className="header-chip inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-gradient-brand px-4 py-2 text-sm font-semibold text-white shadow-glow hover:opacity-95"
             >
               <span className="relative z-10">Mi perfil</span>
             </Link>
           ) : (
             <Link
               href="/login"
-              className="header-chip rounded-full bg-gradient-brand px-4 py-2 text-sm font-semibold text-white shadow-glow hover:opacity-95"
+              className="header-chip inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-gradient-brand px-4 py-2 text-sm font-semibold text-white shadow-glow hover:opacity-95"
             >
               <span className="relative z-10">Inicia sesión</span>
             </Link>
