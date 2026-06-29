@@ -291,7 +291,7 @@ export function NumerologyMapSection() {
                   value={formState.fullName}
                   onChange={(event) => handleInputChange('fullName', event.target.value)}
                   placeholder="Tu nombre completo"
-                  className="mt-2 h-11 w-full rounded-2xl border border-white/30 bg-white/92 px-4 text-sm text-[hsl(var(--foreground))] placeholder:text-[hsl(var(--gray))] outline-none transition focus:border-white/70 focus:bg-white"
+                  className="mt-2 h-11 w-full rounded-2xl border border-white/30 bg-white/92 px-4 text-sm text-[hsl(263_35%_18%)] placeholder:text-[hsl(255_10%_48%)] outline-none transition focus:border-white/70 focus:bg-white"
                 />
                 <p className="mt-1.5 text-xs text-white/60">No utilizar tildes</p>
               </div>
@@ -305,7 +305,7 @@ export function NumerologyMapSection() {
                     type="date"
                     value={formState.birthDate}
                     onChange={(event) => handleInputChange('birthDate', event.target.value)}
-                    className="mt-2 h-11 w-full rounded-2xl border border-white/30 bg-white/92 px-4 text-sm text-[hsl(var(--foreground))] placeholder:text-[hsl(var(--gray))] outline-none transition focus:border-white/70 focus:bg-white sm:text-[16px]"
+                    className="mt-2 h-11 w-full rounded-2xl border border-white/30 bg-white/92 px-4 text-sm text-[hsl(263_35%_18%)] placeholder:text-[hsl(255_10%_48%)] outline-none transition focus:border-white/70 focus:bg-white sm:text-[16px]"
                   />
                 </div>
                 <div className="flex flex-col gap-3 pt-1 sm:flex-row">
