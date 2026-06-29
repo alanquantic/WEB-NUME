@@ -3,6 +3,7 @@ import Link from 'next/link'
 
 import { JsonLd } from '@/components/seo/json-ld'
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
+import { SparkleField } from '@/components/ui/sparkle-field'
 
 type Faq = {
   q: string
@@ -47,11 +48,12 @@ export function HomeSeoSection() {
         }}
       />
 
-      <ScrollReveal>
-        <h2 className="font-display text-2xl font-semibold text-primary sm:text-3xl">
+      <ScrollReveal className="relative">
+        <SparkleField className="text-primary" />
+        <h2 className="relative font-display text-2xl font-semibold text-primary sm:text-3xl">
           Qué es Numerología Cotidiana
         </h2>
-        <div className="mt-4 space-y-4 text-base leading-8 text-foreground/78">
+        <div className="relative mt-4 space-y-4 text-base leading-8 text-foreground/78">
           <p>
             Numerología Cotidiana es el espacio de Laura L. Rodríguez para llevar la numerología a tu
             día a día. Aquí calculas gratis tu mapa numerológico —camino de vida, pináculo, números

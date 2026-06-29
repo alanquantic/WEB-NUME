@@ -57,6 +57,7 @@ export function MaturityCalculator() {
         <NumberResult
           value={result}
           intro="Tu número de madurez revela hacia dónde madura tu propósito en la segunda mitad de la vida."
+          saveLabel="Número de la madurez"
         />
       ) : (
         <p className="mt-4 text-sm text-foreground/60">

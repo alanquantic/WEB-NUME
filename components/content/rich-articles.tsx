@@ -2,6 +2,9 @@ import type { Route } from 'next'
 import Link from 'next/link'
 
 import { CompatibilityCalculator } from '@/components/calculators/compatibility-calculator'
+import { MaturityCalculator } from '@/components/calculators/maturity-calculator'
+import { NameNumberCalculator } from '@/components/calculators/name-number-calculator'
+import { PinnacleCalculator } from '@/components/calculators/pinnacle-calculator'
 import {
   ArticleCallout,
   ArticleH2,
@@ -167,6 +170,166 @@ export const RICH_ARTICLES: Record<string, RichArticle> = {
           <ArticleLink href="/calculadoras/compatibilidad">calculadora de compatibilidad</ArticleLink>{' '}
           o explora la página de{' '}
           <ArticleLink href="/numerologia-de-pareja">numerología de pareja</ArticleLink>.
+        </ArticleP>
+      </div>
+    )
+  },
+
+  'como-calcular-numero-del-nombre': {
+    minutes: 6,
+    Body: () => (
+      <div>
+        <ArticleLead>
+          Tu nombre no es casualidad: cada letra tiene un valor numérico y, al sumarlas, revela tu
+          número del nombre —también llamado de expresión o destino—.
+        </ArticleLead>
+
+        <ArticleH2>¿Qué es el número del nombre?</ArticleH2>
+        <ArticleP>
+          Es la vibración que resume tus talentos naturales y la forma en que te muestras al mundo.
+          Junto con el camino de vida, es uno de los pilares de tu carta numerológica.
+        </ArticleP>
+
+        <ArticleH2>Cómo se calcula, paso a paso</ArticleH2>
+        <ArticleList
+          items={[
+            'Escribe tu nombre completo (nombres y apellidos).',
+            'Asigna a cada letra su valor numérico del 1 al 9 (la K vale 11 y la V, 22).',
+            'Suma todos los valores.',
+            'Reduce el total a una sola cifra, salvo que dé 11 o 22.'
+          ]}
+        />
+        <ArticleP>
+          Si quieres ver la tabla de equivalencias, revisa el{' '}
+          <ArticleLink href="/significadodeletras">significado de las letras</ArticleLink>.
+        </ArticleP>
+
+        <section className="mt-10 rounded-[1.75rem] border border-primary/15 bg-primary-soft/40 p-6">
+          <h2 className="font-display text-2xl font-semibold text-primary">
+            Calcula tu número del nombre
+          </h2>
+          <p className="mt-2 text-sm leading-7 text-foreground/78">
+            Escribe tu nombre completo y obtén tu número de expresión al instante.
+          </p>
+          <div className="mt-5">
+            <NameNumberCalculator kind="expression" />
+          </div>
+        </section>
+
+        <ArticleH2>Alma, expresión y personalidad</ArticleH2>
+        <ArticleP>
+          El nombre guarda tres claves: el número del <strong>alma</strong> (las vocales), el de la{' '}
+          <strong>personalidad</strong> (las consonantes) y el de <strong>expresión</strong> (todas
+          las letras). Juntos describen tu mundo interior, tu fachada y tu destino.
+        </ArticleP>
+
+        <ArticleP>
+          Calcula los tres de una vez en la{' '}
+          <ArticleLink href="/calculadoras/expresion">calculadora de expresión</ArticleLink> o
+          empieza por tu{' '}
+          <ArticleLink href="/numerodelalma">número del alma</ArticleLink>.
+        </ArticleP>
+      </div>
+    )
+  },
+
+  'que-es-el-pinaculo-numerologico': {
+    minutes: 7,
+    Body: () => (
+      <div>
+        <ArticleLead>
+          Si el camino de vida es tu propósito en una palabra, el pináculo es el mapa completo: el
+          recorrido de tu vida en números, etapa por etapa.
+        </ArticleLead>
+
+        <ArticleH2>¿Qué es el pináculo?</ArticleH2>
+        <ArticleP>
+          El pináculo es el estudio más profundo de tu numerología. A partir de tu fecha de
+          nacimiento reúne tus números base, tus ciclos de vida, tus metas y tus lecciones.
+        </ArticleP>
+
+        <ArticleH2>Qué incluye</ArticleH2>
+        <ArticleList
+          items={[
+            'Números base: karma, número personal, vida pasada y personalidad.',
+            'Cuatro ciclos de vida que marcan las grandes etapas.',
+            'Las metas que persigues en cada periodo.',
+            'Los aprendizajes —conscientes e inconscientes— que vienes a integrar.'
+          ]}
+        />
+
+        <section className="mt-10 rounded-[1.75rem] border border-primary/15 bg-primary-soft/40 p-6">
+          <h2 className="font-display text-2xl font-semibold text-primary">Calcula tu pináculo</h2>
+          <p className="mt-2 text-sm leading-7 text-foreground/78">
+            Ingresa tu fecha de nacimiento y revela los números clave de tu mapa.
+          </p>
+          <div className="mt-5">
+            <PinnacleCalculator />
+          </div>
+        </section>
+
+        <ArticleH2>Cómo leerlo</ArticleH2>
+        <ArticleP>
+          No se lee de corrido: cada número cuenta una parte de tu historia. Empieza por tu camino de
+          vida para tener el marco y, desde ahí, observa cómo dialogan los ciclos y las metas. El{' '}
+          <ArticleLink href="/significadodelosnumeros">significado de los números</ArticleLink> te
+          servirá de diccionario.
+        </ArticleP>
+
+        <ArticleP>
+          ¿Listo para verlo completo? Calcula tu{' '}
+          <ArticleLink href="/calculatupinaculo">pináculo personal</ArticleLink> o tu{' '}
+          <ArticleLink href="/calculadoras/camino-de-vida">camino de vida</ArticleLink>.
+        </ArticleP>
+      </div>
+    )
+  },
+
+  'numero-de-la-madurez': {
+    minutes: 5,
+    Body: () => (
+      <div>
+        <ArticleLead>
+          Hay un número que no se activa del todo en la juventud: el número de la madurez, la meta
+          hacia la que converge tu vida con los años.
+        </ArticleLead>
+
+        <ArticleH2>¿Qué es el número de la madurez?</ArticleH2>
+        <ArticleP>
+          Es el regalo que la vida te prepara cuando integras tu esencia y tu destino. Muestra hacia
+          dónde madura tu propósito, sobre todo a partir de la segunda mitad de la vida.
+        </ArticleP>
+
+        <ArticleH2>Cómo se calcula</ArticleH2>
+        <ArticleP>
+          Se obtiene sumando tu número de camino de vida y tu número de expresión (el del nombre), y
+          reduciendo el resultado a una cifra. Por eso combina lo que traes de nacimiento con lo que
+          tu nombre activa.
+        </ArticleP>
+
+        <section className="mt-10 rounded-[1.75rem] border border-primary/15 bg-primary-soft/40 p-6">
+          <h2 className="font-display text-2xl font-semibold text-primary">
+            Calcula tu número de la madurez
+          </h2>
+          <p className="mt-2 text-sm leading-7 text-foreground/78">
+            Ingresa tu nombre completo y tu fecha de nacimiento.
+          </p>
+          <div className="mt-5">
+            <MaturityCalculator />
+          </div>
+        </section>
+
+        <ArticleH2>Cuándo se activa</ArticleH2>
+        <ArticleP>
+          Suele sentirse con fuerza a partir de los 35-45 años, cuando ya recorriste parte del
+          camino. No sustituye a tus otros números: los corona, dándoles una dirección madura.
+        </ArticleP>
+
+        <ArticleP>
+          Conoce primero tu{' '}
+          <ArticleLink href="/calculadoras/camino-de-vida">camino de vida</ArticleLink> y tu{' '}
+          <ArticleLink href="/numerodelnombre">número del nombre</ArticleLink>, los dos ingredientes
+          de tu madurez.
         </ArticleP>
       </div>
     )

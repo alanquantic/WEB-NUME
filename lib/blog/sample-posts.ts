@@ -283,6 +283,127 @@ export const SAMPLE_POSTS: SamplePost[] = [
 <p>Llegar a tu realización implica revisar creencias que adquiriste en la infancia. Conocer tu número personal es el primer paso para construir tu identidad con intención.</p>
 <p>Calcula la base de tu carta con tu <a href="/calculadoras/camino-de-vida">camino de vida</a> y ve todas tus energías en <a href="/labrujulanumerologica">La Brújula Numerológica</a>.</p>
 `
+  },
+  {
+    slug: 'numeros-maestros-11-22-33',
+    title: 'Números maestros 11, 22 y 33: significado y misión',
+    excerpt:
+      'Qué son los números maestros, qué representa cada uno (11, 22 y 33) y cómo se viven en la práctica, con su potencial y su lado de reto.',
+    date: '2026-05-02',
+    author: 'Laura L. Rodríguez',
+    image: '/images/pinnacle-pre.webp',
+    category: 'Significado de los Números',
+    tags: ['números maestros', '11', '22', '33'],
+    relatedSlugs: ['nacer-un-dia-11-o-29', 'numero-personal-tu-esencia'],
+    relatedTools: [
+      { href: '/explora', title: 'Explora por número', description: 'Descubre cada número a fondo.' },
+      { href: '/significadodelosnumeros', title: 'Significado de los números', description: 'La esencia del 1 al 33.' }
+    ],
+    sourceUrl: '',
+    html: `
+<p>Los números maestros —11, 22 y 33— son los más poderosos de la numerología. No se reducen a un solo dígito porque vibran en una frecuencia más alta, con un potencial y una exigencia mayores.</p>
+<h2>El 11: el inspirador</h2>
+<p>El 11 es la intuición del 2 elevada al máximo. Trae sensibilidad, visión espiritual y la misión de iluminar a otros. Su reto es la tensión nerviosa y el exceso de idealismo.</p>
+<h2>El 22: el constructor</h2>
+<p>El 22 une la visión del 11 con la estructura del 4. Puede convertir grandes sueños en realidades concretas que benefician a muchos. Su misión es construir un legado.</p>
+<h2>El 33: el maestro del amor</h2>
+<p>El 33 combina la creatividad del 3 con la entrega del 6. Es el maestro del amor incondicional, la enseñanza y la sanación a gran escala.</p>
+<h2>Vivir un número maestro</h2>
+<p>Tener un número maestro no garantiza nada: es un potencial que se conquista. Mientras no se desarrolla, suele expresarse en su versión reducida (el 11 como 2, el 22 como 4, el 33 como 6).</p>
+<p>¿Tienes números maestros en tu carta? Descúbrelo en <a href="/explora">Explora por número</a> o calcula tu <a href="/calculadoras/camino-de-vida">camino de vida</a>.</p>
+`
+  },
+  {
+    slug: 'como-calcular-numero-del-nombre',
+    title: 'Cómo calcular el número de tu nombre paso a paso',
+    excerpt:
+      'El número del nombre (o de expresión) revela tus talentos y tu destino. Aprende a calcularlo paso a paso, con calculadora incluida.',
+    date: '2026-04-18',
+    author: 'Laura L. Rodríguez',
+    image: '/images/Head-Nombre-750x375.webp',
+    category: 'Significado de los Números',
+    tags: ['número del nombre', 'expresión', 'nombre'],
+    relatedSlugs: ['como-calcular-el-numero-del-alma', 'que-es-el-pinaculo-numerologico'],
+    relatedTools: [
+      { href: '/numerodelnombre', title: 'Calcula tu número del nombre', description: 'Hazlo al instante.' },
+      { href: '/calculadoras/expresion', title: 'Tus números del nombre', description: 'Expresión, alma y personalidad.' }
+    ],
+    sourceUrl: '',
+    html: `
+<p>El número del nombre —también llamado número de expresión o de destino— resume tus talentos naturales y la forma en que te muestras al mundo. Se obtiene de todas las letras de tu nombre completo.</p>
+<p>Aquí aprenderás a calcularlo paso a paso y podrás obtenerlo al instante con la calculadora incluida.</p>
+`
+  },
+  {
+    slug: 'que-es-el-pinaculo-numerologico',
+    title: 'Qué es el pináculo numerológico y cómo leerlo',
+    excerpt:
+      'El pináculo es el mapa más completo de tu numerología: ciclos de vida, metas y lecciones. Te explicamos qué es y cómo interpretarlo, con calculadora.',
+    date: '2026-03-05',
+    author: 'Laura L. Rodríguez',
+    image: '/images/pinnacle.png',
+    category: 'El Blog de la Numerología',
+    tags: ['pináculo', 'mapa numerológico', 'ciclos'],
+    relatedSlugs: ['numero-personal-tu-esencia', 'numero-de-la-madurez'],
+    relatedTools: [
+      { href: '/calculatupinaculo', title: 'Calcula tu pináculo', description: 'Tu mapa completo en números.' },
+      { href: '/calculadoras/camino-de-vida', title: 'Tu camino de vida', description: 'La base de tu carta.' }
+    ],
+    sourceUrl: '',
+    html: `
+<p>El pináculo es el estudio más completo de tu numerología: reúne tus números base, tus cuatro ciclos de vida, tus metas y tus lecciones a partir de tu fecha de nacimiento.</p>
+<p>En esta guía verás qué significa cada parte y cómo leer tu pináculo, con una calculadora para obtener el tuyo.</p>
+`
+  },
+  {
+    slug: 'numero-de-la-madurez',
+    title: 'El número de la madurez: tu propósito en la segunda mitad de la vida',
+    excerpt:
+      'El número de la madurez combina tu camino de vida y tu expresión para mostrar hacia dónde madura tu propósito. Calcúlalo y descubre tu meta de fondo.',
+    date: '2026-02-26',
+    author: 'Laura L. Rodríguez',
+    image: '/images/personal-year-2.png',
+    category: 'Significado de los Números',
+    tags: ['número de la madurez', 'propósito'],
+    relatedSlugs: ['que-es-el-pinaculo-numerologico', 'para-que-sirve-la-numerologia'],
+    relatedTools: [
+      { href: '/numerodelamadurez', title: 'Calcula tu madurez', description: 'Nombre + fecha de nacimiento.' },
+      { href: '/calculadoras/camino-de-vida', title: 'Tu camino de vida', description: 'Uno de sus ingredientes.' }
+    ],
+    sourceUrl: '',
+    html: `
+<p>El número de la madurez combina tu camino de vida y tu número de expresión para mostrar hacia dónde madura tu propósito, sobre todo a partir de la segunda mitad de la vida.</p>
+<p>Es la meta que se va revelando con los años. Aquí te explicamos cómo se calcula y qué significa, con calculadora incluida.</p>
+`
+  },
+  {
+    slug: 'numerologia-y-abundancia',
+    title: 'Numerología y abundancia: el número 8 y el dinero',
+    excerpt:
+      'Tu relación con el dinero también tiene numerología. Descubre la energía del 8, cómo prospera cada número y el papel del nombre y la fecha en los negocios.',
+    date: '2026-01-22',
+    author: 'Laura L. Rodríguez',
+    image: '/images/Head-Casas-750x375.webp',
+    category: 'El Blog de la Numerología',
+    tags: ['abundancia', 'dinero', 'número 8', 'negocios'],
+    relatedSlugs: ['numerologia-para-el-exito-de-tu-negocio', 'para-que-sirve-la-numerologia'],
+    relatedTools: [
+      { href: '/calculadoras/camino-de-vida', title: 'Tu camino de vida', description: 'Tu forma natural de prosperar.' },
+      { href: '/significadodelosnumeros', title: 'Significado de los números', description: 'La energía de cada cifra.' }
+    ],
+    sourceUrl: '',
+    html: `
+<p>El dinero también tiene numerología. Más allá del esfuerzo, tu relación con la abundancia está teñida por tus números —y el 8 es la energía que mejor la representa.</p>
+<h2>El 8: la energía del poder y la abundancia</h2>
+<p>El 8 rige el mundo material: los negocios, la organización, el logro y el dinero. Quien lo trabaja bien tiene visión para generar riqueza; su sombra es la obsesión por el control o el estatus.</p>
+<h2>No necesitas ser un 8 para prosperar</h2>
+<p>Cada número tiene su camino hacia la abundancia: el 1 emprende, el 3 crea, el 6 sirve, el 9 da. Lo importante es alinear tu forma de generar dinero con tu energía natural.</p>
+<h2>El nombre y la fecha de tu negocio</h2>
+<p>En numerología, el nombre y la fecha de inicio de un proyecto cargan una vibración que puede favorecer o frenar su éxito. Por eso muchas empresas eligen ambos con cuidado.</p>
+<h2>Tu año personal y el dinero</h2>
+<p>Hay años para sembrar y años para cosechar. Conocer tu año personal te ayuda a saber cuándo invertir, cuándo consolidar y cuándo esperar.</p>
+<p>Empieza por tu <a href="/calculadoras/camino-de-vida">camino de vida</a> y revisa el <a href="/significadodelosnumeros">significado de los números</a> para entender tu relación con la abundancia.</p>
+`
   }
 ]
 

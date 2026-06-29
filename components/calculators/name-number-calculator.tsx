@@ -17,6 +17,14 @@ const KIND_HINT: Record<NameKind, string> = {
   hereditary: 'La energía de tus apellidos, tu herencia familiar.'
 }
 
+const KIND_LABEL: Record<NameKind, string> = {
+  expression: 'Número del nombre',
+  soul: 'Número del alma',
+  personality: 'Expresión del alma',
+  active: 'Nombre activo',
+  hereditary: 'Nombre hereditario'
+}
+
 function compute(kind: NameKind, fullName: string): number | null {
   const normalized = fullName.replace(/\s+/g, ' ').trim()
   if (!normalized) return null
@@ -71,7 +79,7 @@ export function NameNumberCalculator({ kind }: { kind: NameKind }) {
       </form>
 
       {submitted && result !== null ? (
-        <NumberResult value={result} intro={KIND_HINT[kind]} />
+        <NumberResult value={result} intro={KIND_HINT[kind]} saveLabel={KIND_LABEL[kind]} />
       ) : (
         <p className="mt-4 text-sm text-foreground/60">
           Escribe tu nombre completo para calcular este número.

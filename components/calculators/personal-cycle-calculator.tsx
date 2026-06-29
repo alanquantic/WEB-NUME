@@ -17,6 +17,14 @@ const KIND_HINT: Record<CycleKind, string> = {
   stage: 'La etapa de vida que atraviesas ahora.'
 }
 
+const KIND_LABEL: Record<CycleKind, string> = {
+  year: 'Año personal',
+  month: 'Mes personal',
+  week: 'Semana personal',
+  day: 'Día personal',
+  stage: 'Etapa personal'
+}
+
 function compute(kind: CycleKind, birthDate: string): number | string | null {
   try {
     const person = new Person({ birthDate })
@@ -83,7 +91,7 @@ export function PersonalCycleCalculator({ kind }: { kind: CycleKind }) {
       </form>
 
       {submitted && result !== null ? (
-        <NumberResult value={result} intro={KIND_HINT[kind]} />
+        <NumberResult value={result} intro={KIND_HINT[kind]} saveLabel={KIND_LABEL[kind]} />
       ) : submitted ? (
         <p className="mt-4 text-sm text-foreground/60">
           Revisa la fecha ingresada para poder calcular este número.

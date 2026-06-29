@@ -42,6 +42,7 @@ export function LifePathCalculator() {
         <NumberResult
           value={result.lifePathNumber}
           intro="Tu número de camino de vida revela el propósito esencial con el que llegaste a esta vida."
+          saveLabel="Camino de vida"
         />
       ) : (
         <p className="mt-4 text-sm text-foreground/60">

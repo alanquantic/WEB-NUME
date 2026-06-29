@@ -1,5 +1,6 @@
 import {
   ArrowUpRight,
+  Bookmark,
   BookOpen,
   CalendarClock,
   CalendarDays,
@@ -51,6 +52,7 @@ const KEY_ICONS: Record<string, LucideIcon> = {
   significadodelosnumeros: Hash,
   significadodeletras: Languages,
   explora: Telescope,
+  'mi-carta': Bookmark,
   numerologia: Sparkles,
   vibraciondeltiempo: Hourglass,
   numerologianombre: Signature,
