@@ -3,6 +3,7 @@ import type { MetadataRoute } from 'next'
 const STATIC_ROUTES = [
   '',
   '/numerologia',
+  '/mi-mapa',
   '/explora',
   '/numerologia-de-pareja',
   '/vibraciondeltiempo',

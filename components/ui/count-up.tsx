@@ -28,7 +28,12 @@ export function CountUp({ value, duration = 650 }: { value: number | string; dur
     }
 
     raf = requestAnimationFrame(step)
-    return () => cancelAnimationFrame(raf)
+    // Garantiza el valor final aunque requestAnimationFrame se pause (pestaña en segundo plano).
+    const fallback = setTimeout(() => setDisplay(target), duration + 80)
+    return () => {
+      cancelAnimationFrame(raf)
+      clearTimeout(fallback)
+    }
   }, [value, duration])
 
   return <>{display}</>

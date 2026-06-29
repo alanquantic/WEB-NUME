@@ -25,6 +25,7 @@ const NAV_ITEMS: readonly NavItem[] = [
     label: 'Numerología',
     href: '/numerologia',
     children: [
+      { label: 'Mi Mapa Numerológico', href: '/mi-mapa' },
       { label: 'Explora por número', href: '/explora' },
       { label: 'Mi carta', href: '/mi-carta' },
       { label: 'Numerología de Pareja', href: '/numerologia-de-pareja' },

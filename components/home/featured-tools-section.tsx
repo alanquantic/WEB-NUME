@@ -11,32 +11,32 @@ type Tool = {
 }
 
 const FEATURED = {
-  href: '/calculatupinaculo',
-  title: 'Tu Pináculo Personal',
+  href: '/mi-mapa',
+  title: 'Mi Mapa Numerológico',
   description:
-    'El mapa completo de tu vida en números: tus ciclos, metas y lecciones. El estudio más profundo de tu carta numerológica.'
+    'Todos tus números en una sola vista: camino de vida, los números de tu nombre, tu madurez y tus vibraciones del año. Gratis, al instante.'
 }
 
 const TOOLS: readonly Tool[] = [
   {
+    href: '/calculatupinaculo',
+    title: 'Tu Pináculo',
+    description: 'El estudio más profundo de tu carta.'
+  },
+  {
     href: '/calculadoras/camino-de-vida',
     title: 'Camino de Vida',
-    description: 'Tu propósito esencial desde tu fecha de nacimiento.'
+    description: 'Tu propósito esencial.'
   },
   {
     href: '/numerologia-de-pareja',
     title: 'Numerología de Pareja',
-    description: 'Tu compatibilidad en el amor y las relaciones.'
+    description: 'Tu compatibilidad en el amor.'
   },
   {
     href: '/anopersonal',
     title: 'Año Personal',
-    description: 'La energía que te acompaña durante todo el año.'
-  },
-  {
-    href: '/numerodelnombre',
-    title: 'Número del Nombre',
-    description: 'Lo que tu nombre revela sobre tu destino.'
+    description: 'La energía de tu año.'
   }
 ]
 
@@ -69,7 +69,7 @@ export function FeaturedToolsSection() {
               </p>
             </div>
             <span className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-primary">
-              Calcular mi pináculo →
+              Ver mi mapa →
             </span>
           </Link>
         </ScrollReveal>
