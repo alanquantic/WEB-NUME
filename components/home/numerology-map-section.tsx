@@ -391,7 +391,7 @@ export function NumerologyMapSection() {
                     >
                       {item.value}
                     </span>
-                    <span className="mt-2 block text-[0.58rem] font-semibold uppercase tracking-[0.12em] text-white/72 sm:text-[0.62rem] sm:tracking-[0.18em]">
+                    <span className="mt-2 block text-[0.56rem] font-semibold uppercase tracking-[0.04em] text-white/72 sm:text-[0.6rem] sm:tracking-[0.06em]">
                       {item.label}
                     </span>
                   </div>
