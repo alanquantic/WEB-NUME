@@ -64,22 +64,12 @@ class Pinnacle {
 
   calcLifeCycle(cycle = 0): number | undefined {
     const [yearBirthDate, monthBirthDate, dayBirthDate] = this.getBirthDateParts();
-    console.log("#1");
-    console.log(yearBirthDate);
-    console.log(monthBirthDate);
-    console.log(dayBirthDate);
 
     const reducedYear = this.reduceNumber(yearBirthDate);
     const reducedMonth = this.reduceNumber(monthBirthDate);
     const reducedDay = this.reduceNumber(dayBirthDate);
-    console.log("#2");
-    console.log(reducedYear);
-    console.log(reducedMonth);
-    console.log(reducedDay);
 
     const reduceSum = this.reduceNumber(reducedYear + reducedMonth + reducedDay);
-    console.log("#3");
-    console.log(reduceSum);
 
     const cycleOne = this.reduceNumber(reducedMonth + reducedDay);
     const cycleOneEnd = yearBirthDate + 36 - reduceSum;
