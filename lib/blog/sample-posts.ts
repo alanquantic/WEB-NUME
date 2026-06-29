@@ -21,6 +21,39 @@ export type SamplePost = {
 
 export const SAMPLE_POSTS: SamplePost[] = [
   {
+    slug: 'que-es-la-numerologia-de-pareja',
+    title: 'Qué es la numerología de pareja y cómo puede ayudar a tu relación',
+    excerpt:
+      'Guía completa de numerología de pareja: qué es, en qué se basa, cómo se calcula y cómo usarla para entender y fortalecer tu relación. Incluye calculadora gratis.',
+    date: '2026-06-20',
+    author: 'Laura L. Rodríguez',
+    image: '/images/my-mission.png',
+    category: 'Amor',
+    tags: ['numerología de pareja', 'compatibilidad', 'amor', 'relaciones'],
+    relatedSlugs: [
+      'como-se-relacionan-los-numeros-en-pareja',
+      'ano-personal-que-es-y-como-se-calcula'
+    ],
+    relatedTools: [
+      {
+        href: '/calculadoras/compatibilidad',
+        title: 'Calculadora de compatibilidad',
+        description: 'Compara dos fechas al instante.'
+      },
+      {
+        href: '/numerologia-de-pareja',
+        title: 'Numerología de pareja',
+        description: 'La página dedicada con todo el detalle.'
+      }
+    ],
+    sourceUrl: 'https://www.numerologia-cotidiana.com/numerologia-de-pareja',
+    html: `
+<p>La numerología de pareja —o sinastría numerológica— compara los números de dos personas para revelar su afinidad: qué energías comparten, dónde fluye la relación y dónde conviene poner conciencia.</p>
+<p>No se trata de saber si una relación va a "funcionar" o no, sino de entenderla mejor: conocer las fortalezas del vínculo y los retos que pide trabajar. Es una de las consultas más buscadas en numerología.</p>
+<p>En esta guía verás qué es, en qué se basa, cómo se calcula y, sobre todo, cómo usarla para mejorar tu relación día a día. Incluye una calculadora gratuita para que obtengas tu resultado al instante.</p>
+`
+  },
+  {
     slug: 'para-que-sirve-la-numerologia',
     title: '¿Para qué sirve la Numerología?',
     excerpt:

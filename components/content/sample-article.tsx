@@ -2,6 +2,7 @@ import type { Route } from 'next'
 import Link from 'next/link'
 
 import { KeepExploring } from '@/components/content/keep-exploring'
+import { RICH_ARTICLES } from '@/components/content/rich-articles'
 import { JsonLd } from '@/components/seo/json-ld'
 import { FacebookIcon, TelegramIcon, WhatsappIcon } from '@/components/ui/icons'
 import { getRelatedSamplePosts, type SamplePost } from '@/lib/blog/sample-posts'
@@ -10,7 +11,8 @@ import { absoluteUrl, articleJsonLd, breadcrumbJsonLd } from '@/lib/seo'
 
 export function SampleArticle({ post }: { post: SamplePost }) {
   const date = formatDate(post.date)
-  const reading = estimateReadingTime(post.html)
+  const rich = RICH_ARTICLES[post.slug]
+  const reading = rich?.minutes ?? estimateReadingTime(post.html)
   const related = getRelatedSamplePosts(post.slug)
   const url = absoluteUrl(`/blog/${post.slug}`)
   const shareText = encodeURIComponent(post.title)
@@ -75,10 +77,16 @@ export function SampleArticle({ post }: { post: SamplePost }) {
         <img src={post.image} alt={post.title} className="w-full object-cover" />
       </div>
 
-      <div
-        className="mt-8 text-base leading-8 text-foreground/80 [&_a]:font-medium [&_a]:text-primary [&_a]:underline [&_h2]:mt-8 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-foreground [&_p]:mb-4"
-        dangerouslySetInnerHTML={{ __html: post.html }}
-      />
+      {rich ? (
+        <div className="mt-8">
+          <rich.Body />
+        </div>
+      ) : (
+        <div
+          className="mt-8 text-base leading-8 text-foreground/80 [&_a]:font-medium [&_a]:text-primary [&_a]:underline [&_h2]:mt-8 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-foreground [&_p]:mb-4"
+          dangerouslySetInnerHTML={{ __html: post.html }}
+        />
+      )}
 
       <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-border/70 pt-6">
         <div className="flex flex-wrap gap-2">

@@ -1,3 +1,5 @@
+import { Award, FileText, GraduationCap, NotebookText, type LucideIcon } from 'lucide-react'
+
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
 import { STORE_URL } from '@/lib/site-config'
 
@@ -5,28 +7,33 @@ type StoreCategory = {
   id: string
   title: string
   description: string
+  Icon: LucideIcon
 }
 
 const STORE_CATEGORIES: readonly StoreCategory[] = [
   {
     id: 'agendas',
     title: 'Agendas',
-    description: 'Agenda numerológica para planear tu año con propósito.'
+    description: 'Agenda numerológica para planear tu año con propósito.',
+    Icon: NotebookText
   },
   {
     id: 'reportes',
     title: 'Reportes',
-    description: 'Reportes personalizados: pareja, nombre y proyección.'
+    description: 'Reportes personalizados: pareja, nombre y proyección.',
+    Icon: FileText
   },
   {
     id: 'cursos',
     title: 'Cursos',
-    description: 'Aprende numerología paso a paso, a tu ritmo.'
+    description: 'Aprende numerología paso a paso, a tu ritmo.',
+    Icon: GraduationCap
   },
   {
     id: 'certificaciones',
     title: 'Certificaciones',
-    description: 'Conviértete en Consultor Numerológico certificado.'
+    description: 'Conviértete en Consultor Numerológico certificado.',
+    Icon: Award
   }
 ]
 
@@ -64,7 +71,10 @@ export function StoreHighlightSection() {
                 rel="noopener noreferrer"
                 className="group flex h-full flex-col rounded-[1.6rem] border border-border/80 bg-[linear-gradient(180deg,hsl(var(--secondary)/0.5),hsl(var(--card)))] p-5 transition hover:-translate-y-1 hover:shadow-glow"
               >
-                <h3 className="font-display text-lg font-semibold text-foreground group-hover:text-primary">
+                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-soft text-primary transition duration-200 group-hover:bg-gradient-brand group-hover:text-white">
+                  <category.Icon size={22} strokeWidth={1.75} aria-hidden />
+                </span>
+                <h3 className="mt-4 font-display text-lg font-semibold text-foreground group-hover:text-primary">
                   {category.title}
                 </h3>
                 <p className="mt-2 flex-1 text-sm leading-6 text-foreground/70">
