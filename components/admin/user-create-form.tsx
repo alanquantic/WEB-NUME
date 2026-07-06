@@ -27,7 +27,7 @@ type FormState = {
   membership_expires_at: string
 }
 
-const roleOptions: Role[] = ['admin', 'subscriber', 'reader']
+const roleOptions: Role[] = ['admin', 'subscriber']
 const membershipOptions: MembershipTier[] = ['none', 'membresia_180', 'membresia_365']
 const consultantCategoryOptions: ConsultantCategory[] = [
   'Numerólogo Master',

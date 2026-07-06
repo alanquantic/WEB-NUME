@@ -34,6 +34,30 @@ export type PaymentStatus =
   | 'refunded'
   | 'partially_refunded'
 
+export type ConsultantTier = { slug: string; label: string }
+
+export type ConsultantProfile = {
+  description: string | null
+  specialization: string | null
+  public_email: string | null
+  phone: string | null
+  city: string | null
+  photo: string | null
+  languages: string | null
+  website: string | null
+  facebook: string | null
+  instagram: string | null
+  tiers: ConsultantTier[]
+}
+
+export type UserProfileMeta = {
+  first_name?: string
+  last_name?: string
+  nickname?: string
+  display_name?: string
+  bio?: string
+}
+
 export type SafeUser = {
   id: string
   email: string
@@ -46,6 +70,8 @@ export type SafeUser = {
   current_membership: MembershipTier
   membership_expires_at: string | null
   has_active_membership: boolean
+  metadata?: Record<string, unknown>
+  consultant_profile?: ConsultantProfile | null
   created_at: string
   updated_at: string
 }
@@ -79,12 +105,19 @@ export type Tag = {
 
 export type ConsultantDirectoryItem = {
   id: string
+  name: string | null
   consultant_category: ConsultantCategory | null
+  tiers: ConsultantTier[]
   nationality: string | null
+  city: string | null
   next_course: string | null
-  profile_picture_url: string | null
-  bio: string | null
-  redes: string | null
+  photo: string | null
+  description: string | null
+  specialization: string | null
+  languages: string | null
+  contact: { email: string | null; phone: string | null; website: string | null }
+  socials: { facebook: string | null; instagram: string | null }
+  created_at: string
 }
 
 export type ContentAuthor = {
@@ -292,6 +325,20 @@ export type RefreshInput = {
   refresh_token: string
 }
 
+export type ConsultantProfileInput = {
+  description?: string | null
+  specialization?: string | null
+  public_email?: string | null
+  phone?: string | null
+  city?: string | null
+  photo?: string | null
+  languages?: string | null
+  website?: string | null
+  facebook?: string | null
+  instagram?: string | null
+  tiers?: string[]
+}
+
 export type UpdateUserInput = {
   email?: string
   nationality?: string | null
@@ -300,10 +347,29 @@ export type UpdateUserInput = {
   metadata?: Record<string, unknown>
   is_consultant?: boolean
   consultant_category?: ConsultantCategory | null
+  consultant_profile?: ConsultantProfileInput | null
   current_membership?: MembershipTier
   membership_expires_at?: string | null
   role?: Role
 }
+
+// Catálogo de tiers de consultor (slug -> etiqueta legible).
+export const CONSULTANT_TIERS: ConsultantTier[] = [
+  { slug: 'master', label: 'Numerólogo Master' },
+  { slug: 'mentor', label: 'Mentor' },
+  { slug: 'consultor_certificado', label: 'Consultor Certificado' },
+  { slug: 'consultor_practicante_1', label: 'Consultor Practicante 1' },
+  { slug: 'consultor_practicante_2', label: 'Consultor Practicante 2' },
+  { slug: 'consultor_practicante_3', label: 'Consultor Practicante 3' },
+  { slug: 'consultor_practicante_4', label: 'Consultor Practicante 4' },
+  { slug: 'consultor_practicante_5', label: 'Consultor Practicante 5' },
+  { slug: 'instructor_certificado', label: 'Instructor Certificado' },
+  { slug: 'instructor_1', label: 'Instructor 1' },
+  { slug: 'instructor_2', label: 'Instructor 2' },
+  { slug: 'instructor_3', label: 'Instructor 3' },
+  { slug: 'instructor_4', label: 'Instructor 4' },
+  { slug: 'instructor_5', label: 'Instructor 5' }
+]
 
 export type UpsertTaxonomyInput = {
   name: string

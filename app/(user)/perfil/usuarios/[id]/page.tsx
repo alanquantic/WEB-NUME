@@ -47,15 +47,7 @@ export default async function ProfileUserDetailPage({
         </p>
       </div>
 
-      <div className="rounded-[2rem] bg-white p-6 shadow-panel">
-        <h2 className="font-display text-2xl font-semibold">Editar datos</h2>
-        <p className="mt-2 text-sm text-[hsl(var(--foreground))/0.72]">
-          Actualiza el perfil del usuario.
-        </p>
-        <div className="mt-6">
-          <UserEditForm user={user} />
-        </div>
-      </div>
+      <UserEditForm user={user} />
     </div>
   )
 }
