@@ -4,7 +4,10 @@ import { useState, useTransition } from 'react'
 import type { Route } from 'next'
 import Link from 'next/link'
 
+import { Sparkles } from 'lucide-react'
+
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
+import { SparkleField } from '@/components/ui/sparkle-field'
 import Person from '@/resources/person'
 import Pinnacle from '@/resources/pinnacle'
 
@@ -88,7 +91,7 @@ const CARD_STYLES: Record<ResultCard['tone'], string> = {
 
 const ENERGY_CARD_TONES = {
   'Día': 'text-[hsl(var(--accent))]',
-  Semana: 'text-[hsl(var(--chart-4))]',
+  Semana: 'text-white',
   Mes: 'text-[hsl(var(--fuchsia))]'
 } as const
 
@@ -257,8 +260,12 @@ export function NumerologyMapSection() {
 
   return (
     <section className="mx-auto max-w-7xl px-4 pb-6 pt-10 sm:px-6">
-      <ScrollReveal className="mx-auto max-w-3xl text-center">
-        <h1 className="font-display text-2xl font-semibold leading-tight text-balance sm:text-3xl md:text-5xl">
+      <ScrollReveal className="relative mx-auto max-w-3xl text-center">
+        <SparkleField className="text-primary" />
+        <span className="relative inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary-soft px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+          <Sparkles size={14} aria-hidden /> Tu mapa numerológico, gratis
+        </span>
+        <h1 className="relative mt-4 font-display text-2xl font-semibold leading-tight text-balance sm:text-3xl md:text-5xl">
           <span className="text-gradient-brand">Comienza a conocerte</span> a través de
           Numerología Cotidiana
         </h1>
@@ -284,7 +291,7 @@ export function NumerologyMapSection() {
                   value={formState.fullName}
                   onChange={(event) => handleInputChange('fullName', event.target.value)}
                   placeholder="Tu nombre completo"
-                  className="mt-2 h-11 w-full rounded-2xl border border-white/30 bg-white/92 px-4 text-sm text-[hsl(var(--foreground))] placeholder:text-[hsl(var(--gray))] outline-none transition focus:border-white/70 focus:bg-white"
+                  className="mt-2 h-11 w-full rounded-2xl border border-white/30 bg-white/92 px-4 text-sm text-[hsl(263_35%_18%)] placeholder:text-[hsl(255_10%_48%)] outline-none transition focus:border-white/70 focus:bg-white"
                 />
               </div>
               <div className="space-y-5">
@@ -297,7 +304,7 @@ export function NumerologyMapSection() {
                     type="date"
                     value={formState.birthDate}
                     onChange={(event) => handleInputChange('birthDate', event.target.value)}
-                    className="mt-2 h-11 w-full rounded-2xl border border-white/30 bg-white/92 px-4 text-sm text-[hsl(var(--foreground))] placeholder:text-[hsl(var(--gray))] outline-none transition focus:border-white/70 focus:bg-white sm:text-[16px]"
+                    className="mt-2 h-11 w-full rounded-2xl border border-white/30 bg-white/92 px-4 text-sm text-[hsl(263_35%_18%)] placeholder:text-[hsl(255_10%_48%)] outline-none transition focus:border-white/70 focus:bg-white sm:text-[16px]"
                   />
                 </div>
                 <div className="flex flex-col gap-3 pt-1 sm:flex-row">
@@ -383,7 +390,7 @@ export function NumerologyMapSection() {
                     >
                       {item.value}
                     </span>
-                    <span className="mt-2 block text-[0.58rem] font-semibold uppercase tracking-[0.12em] text-white/72 sm:text-[0.62rem] sm:tracking-[0.18em]">
+                    <span className="mt-2 block text-[0.56rem] font-semibold uppercase tracking-[0.04em] text-white/72 sm:text-[0.6rem] sm:tracking-[0.06em]">
                       {item.label}
                     </span>
                   </div>

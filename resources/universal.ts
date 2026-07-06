@@ -1,9 +1,8 @@
-import {
-  getDate, getMonth, getYear,
-} from 'date-fns';
-import _ from 'lodash';
-
 import { reduceNumber, reduceNumberISK } from './utils';
+
+function isNil(value: unknown): boolean {
+  return value === null || value === undefined;
+}
 
 export type SplittedDate = {
   day: number,
@@ -53,8 +52,8 @@ export class Universal {
    * 2. 9 <= 9, regresar 9
    */
   calcUniversalYear(year?: number): number {
-    const yearToCalculate = _.isNil(year) ? getYear(this.NOW) : year;
-    return reduceNumber(yearToCalculate);
+    const yearToCalculate = isNil(year) ? this.NOW.getFullYear() : year;
+    return reduceNumber(yearToCalculate as number);
   }
 
   /**
@@ -83,9 +82,9 @@ export class Universal {
    * 2. 2025 <= 9, regresar 2025
    */
   calcUniversalDay(opts: SplittedDate): number {
-    const monthToCalculate: number = _.isNil(opts?.month) ? getMonth(this.NOW) + 1 : opts.month;
-    const dayToCalculate = _.isNil(opts?.day) ? getDate(this.NOW) : opts.day;
-    const yearToCalculate = _.isNil(opts?.year) ? getYear(this.NOW) : opts.year;
+    const monthToCalculate: number = isNil(opts?.month) ? this.NOW.getMonth() + 1 : opts.month;
+    const dayToCalculate = isNil(opts?.day) ? this.NOW.getDate() : opts.day;
+    const yearToCalculate = isNil(opts?.year) ? this.NOW.getFullYear() : opts.year;
     return reduceNumber(
       this.calcUniversalYear(yearToCalculate)
       + monthToCalculate
@@ -125,9 +124,9 @@ export class Universal {
    * 8. Regresar 2023
    */
   calcCurrentUniversalWeek(opts: SplittedDate): number {
-    const monthToCalculate: number = _.isNil(opts?.month) ? getMonth(this.NOW) + 1 : opts.month;
-    const dayToCalculate = _.isNil(opts?.day) ? getDate(this.NOW) : opts.day;
-    const yearToCalculate = _.isNil(opts?.year) ? getYear(this.NOW) : opts.year;
+    const monthToCalculate: number = isNil(opts?.month) ? this.NOW.getMonth() + 1 : opts.month;
+    const dayToCalculate = isNil(opts?.day) ? this.NOW.getDate() : opts.day;
+    const yearToCalculate = isNil(opts?.year) ? this.NOW.getFullYear() : opts.year;
     const sumUniversalWeekOne = reduceNumber(reduceNumber(yearToCalculate) + reduceNumber(monthToCalculate));
     if (dayToCalculate >= 1 && dayToCalculate <= 7) {
       return sumUniversalWeekOne;
@@ -148,9 +147,9 @@ export class Universal {
    * @returns {string} - Current Universal week with Karmic Symbol
    */
   calcCurrentUniversalWeekISK(opts: SplittedDate): string {
-    const monthToCalculate: number = _.isNil(opts?.month) ? getMonth(this.NOW) + 1 : opts.month;
-    const dayToCalculate = _.isNil(opts?.day) ? getDate(this.NOW) : opts.day;
-    const yearToCalculate = _.isNil(opts?.year) ? getYear(this.NOW) : opts.year;
+    const monthToCalculate: number = isNil(opts?.month) ? this.NOW.getMonth() + 1 : opts.month;
+    const dayToCalculate = isNil(opts?.day) ? this.NOW.getDate() : opts.day;
+    const yearToCalculate = isNil(opts?.year) ? this.NOW.getFullYear() : opts.year;
     const sumUniversalWeekOne = reduceNumberISK(yearToCalculate + monthToCalculate);
     if (dayToCalculate >= 1 && dayToCalculate <= 7) {
       return this.karmicos.includes(sumUniversalWeekOne) ? '*' : '';
@@ -174,8 +173,8 @@ export class Universal {
    * @returns {number} - Universal Week
    */
   calcUniversalWeek(weekToCalculate: 1 | 2 | 3 | 4, opts: SplittedDate): number {
-    const monthToCalculate: number = _.isNil(opts?.month) ? getMonth(this.NOW) + 1 : opts.month;
-    const yearToCalculate = _.isNil(opts?.year) ? getYear(this.NOW) : opts.year;
+    const monthToCalculate: number = isNil(opts?.month) ? this.NOW.getMonth() + 1 : opts.month;
+    const yearToCalculate = isNil(opts?.year) ? this.NOW.getFullYear() : opts.year;
     const weekOne = reduceNumber(reduceNumber(monthToCalculate) + reduceNumber(yearToCalculate));
     if (weekToCalculate === 1) {
       return weekOne;
@@ -193,8 +192,8 @@ export class Universal {
   }
 
   calcUniversalWeekISK(weekToCalculate: 1 | 2 | 3 | 4, opts: SplittedDate): string {
-    const monthToCalculate: number = _.isNil(opts?.month) ? getMonth(this.NOW) + 1 : opts.month;
-    const yearToCalculate = _.isNil(opts?.year) ? getYear(this.NOW) : opts.year;
+    const monthToCalculate: number = isNil(opts?.month) ? this.NOW.getMonth() + 1 : opts.month;
+    const yearToCalculate = isNil(opts?.year) ? this.NOW.getFullYear() : opts.year;
     const weekOne = monthToCalculate + this.calcUniversalYear(yearToCalculate);
     if (weekToCalculate === 1) {
       const universalWeekOne = reduceNumberISK(weekOne);
@@ -227,8 +226,8 @@ export class Universal {
   }
 
   calcUniversalMonthISK(opts: SplittedDate): string {
-    const monthToCalculate: number = _.isNil(opts?.month) ? getMonth(this.NOW) + 1 : opts.month;
-    const yearToCalculate = _.isNil(opts?.year) ? getYear(this.NOW) : opts.year;
+    const monthToCalculate: number = isNil(opts?.month) ? this.NOW.getMonth() + 1 : opts.month;
+    const yearToCalculate = isNil(opts?.year) ? this.NOW.getFullYear() : opts.year;
     const universalMonth = reduceNumberISK(this.calcUniversalYear(yearToCalculate) + monthToCalculate);
     return this.karmicos.includes(universalMonth) ? '*' : '';
   }
