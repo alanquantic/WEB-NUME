@@ -2,8 +2,8 @@
 
 import { startTransition, useState } from 'react'
 
+import { NumberResult } from '@/components/calculators/number-result'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { calculateLifePath } from '@/lib/numerology/life-path'
 import type { LifePathResult } from '@/lib/numerology/types'
@@ -20,34 +20,35 @@ export function LifePathCalculator() {
   }
 
   return (
-    <Card className="max-w-2xl">
-      <CardTitle>Calculadora de camino de vida</CardTitle>
-      <CardDescription>
-        La lógica numerológica vive fuera del componente para que sea testeable y reusable.
-      </CardDescription>
-      <CardContent className="grid gap-4">
-        <form action={handleSubmit} className="grid gap-4">
+    <div className="rounded-[2rem] border border-border/70 bg-card p-6 shadow-panel sm:p-8">
+      <form action={handleSubmit} className="flex flex-col gap-3 sm:flex-row sm:items-end">
+        <label className="flex-1 text-sm font-medium text-foreground/80">
+          Fecha de nacimiento
           <Input
             name="birthDate"
             type="date"
             required
             value={birthDate}
             onChange={(event) => setBirthDate(event.target.value)}
+            className="mt-2"
           />
-          <Button type="submit">Calcular</Button>
-        </form>
-        {result ? (
-          <div className="rounded-3xl bg-[hsl(var(--secondary))] p-5">
-            <p className="font-display text-3xl font-semibold">{result.lifePathNumber}</p>
-            <p className="mt-2 text-sm text-[hsl(var(--foreground))/0.72]">
-              Suma base: {result.reducedFrom}
-            </p>
-            <p className="mt-1 text-sm text-[hsl(var(--foreground))/0.72]">
-              Clave interpretativa: {result.explanationKey}
-            </p>
-          </div>
-        ) : null}
-      </CardContent>
-    </Card>
+        </label>
+        <Button type="submit" className="sm:w-auto">
+          Calcular
+        </Button>
+      </form>
+
+      {result ? (
+        <NumberResult
+          value={result.lifePathNumber}
+          intro="Tu número de camino de vida revela el propósito esencial con el que llegaste a esta vida."
+          saveLabel="Camino de vida"
+        />
+      ) : (
+        <p className="mt-4 text-sm text-foreground/60">
+          Ingresa tu fecha de nacimiento para descubrir tu número de camino de vida.
+        </p>
+      )}
+    </div>
   )
 }
