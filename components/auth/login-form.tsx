@@ -39,7 +39,9 @@ export function LoginForm() {
       })
 
       if (!response.ok) {
-        setError('No se pudo iniciar sesión. Revisa tus credenciales.')
+        // Muestra el mensaje del servidor (credenciales, servicio no disponible, etc.).
+        const data = (await response.json().catch(() => null)) as { message?: string } | null
+        setError(data?.message ?? 'No se pudo iniciar sesión. Revisa tus credenciales.')
         return
       }
 

@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const API_BASE_URL =
+const API_BASE_URL = (
   process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://api-nume-production.up.railway.app/api/v1'
+)
+  .trim()
+  .replace(/\/+$/, '')
 const ACCESS_COOKIE = process.env.AUTH_ACCESS_COOKIE ?? 'nume_at'
 const REFRESH_COOKIE = process.env.AUTH_REFRESH_COOKIE ?? 'nume_rt'
 

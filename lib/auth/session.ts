@@ -5,8 +5,15 @@ import type { AuthSession, RefreshInput, SafeUser } from '@/lib/api/contracts'
 import { ApiError, parseProblemDetails } from '@/lib/api/errors'
 import { ACCESS_COOKIE } from '@/lib/auth/cookies'
 
-export const API_BASE_URL =
+// Quita slashes finales para evitar rutas con doble slash (p. ej. `//auth/login`)
+// si la variable de entorno se configura con `/` al final.
+function normalizeBaseUrl(url: string): string {
+  return url.trim().replace(/\/+$/, '')
+}
+
+export const API_BASE_URL = normalizeBaseUrl(
   process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://api-nume-production.up.railway.app/api/v1'
+)
 
 export async function fetchBackend<T>(
   path: string,
