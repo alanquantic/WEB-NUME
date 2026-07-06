@@ -23,7 +23,11 @@ async function proxy(request: NextRequest, path: string[]) {
 
   const text = await response.text()
 
-  return new NextResponse(text, {
+  // Las respuestas 204/304 no pueden llevar body (undici lanza si se le pasa uno,
+  // incluso ''). Los DELETE de la API responden 204, así que devolvemos null.
+  const hasNoBody = response.status === 204 || response.status === 304
+
+  return new NextResponse(hasNoBody ? null : text, {
     status: response.status,
     headers: {
       'Content-Type': response.headers.get('Content-Type') ?? 'application/json'

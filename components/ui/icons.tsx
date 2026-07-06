@@ -39,6 +39,100 @@ export function MenuIcon(props: IconProps) {
   )
 }
 
+export function ChevronLeftIcon(props: IconProps) {
+  return (
+    <svg {...base(props)} fill="none" stroke="currentColor" strokeWidth={2}>
+      <path d="m14 6-6 6 6 6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+// Icono de barra lateral (para el botón de colapsar/expandir el panel)
+export function SidebarIcon(props: IconProps) {
+  return (
+    <svg {...base(props)} fill="none" stroke="currentColor" strokeWidth={2}>
+      <rect x="3" y="4" width="18" height="16" rx="2" />
+      <path d="M9 4v16" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+// ── Iconos de navegación del panel ───────────────────────────────────────────
+export function HomeIcon(props: IconProps) {
+  return (
+    <svg {...base(props)} fill="none" stroke="currentColor" strokeWidth={2}>
+      <path d="M4 11 12 4l8 7" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M6 10v9h12v-9" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+export function UserIcon(props: IconProps) {
+  return (
+    <svg {...base(props)} fill="none" stroke="currentColor" strokeWidth={2}>
+      <circle cx="12" cy="8" r="4" />
+      <path d="M5 20c0-3.3 3.1-6 7-6s7 2.7 7 6" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+export function BagIcon(props: IconProps) {
+  return (
+    <svg {...base(props)} fill="none" stroke="currentColor" strokeWidth={2}>
+      <path d="M6 8h12l-1 12H7L6 8Z" strokeLinejoin="round" />
+      <path d="M9 8a3 3 0 0 1 6 0" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+export function StarIcon(props: IconProps) {
+  return (
+    <svg {...base(props)} fill="none" stroke="currentColor" strokeWidth={2}>
+      <path
+        d="m12 4 2.4 4.9 5.4.8-3.9 3.8.9 5.3L12 16.9 7.2 19l.9-5.3L4.2 9.7l5.4-.8L12 4Z"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+export function FileTextIcon(props: IconProps) {
+  return (
+    <svg {...base(props)} fill="none" stroke="currentColor" strokeWidth={2}>
+      <path d="M6 3h8l4 4v14H6V3Z" strokeLinejoin="round" />
+      <path d="M14 3v4h4M9 12h6M9 16h6" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+export function LayersIcon(props: IconProps) {
+  return (
+    <svg {...base(props)} fill="none" stroke="currentColor" strokeWidth={2}>
+      <path d="m12 4 8 4-8 4-8-4 8-4Z" strokeLinejoin="round" />
+      <path d="m4 12 8 4 8-4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+export function TagIcon(props: IconProps) {
+  return (
+    <svg {...base(props)} fill="none" stroke="currentColor" strokeWidth={2}>
+      <path d="M4 4h7l9 9-7 7-9-9V4Z" strokeLinejoin="round" />
+      <circle cx="8" cy="8" r="1.3" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
+
+export function UsersIcon(props: IconProps) {
+  return (
+    <svg {...base(props)} fill="none" stroke="currentColor" strokeWidth={2}>
+      <circle cx="9" cy="8" r="3.2" />
+      <path d="M3.5 20c0-3 2.5-5 5.5-5s5.5 2 5.5 5" strokeLinecap="round" />
+      <path d="M16 5.2A3.2 3.2 0 0 1 16 11m2 9c0-2.4-1-4-2.6-4.6" strokeLinecap="round" />
+    </svg>
+  )
+}
+
 export function FacebookIcon(props: IconProps) {
   return (
     <svg {...base(props)} fill="currentColor">

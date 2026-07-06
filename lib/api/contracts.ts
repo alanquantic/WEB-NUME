@@ -112,6 +112,63 @@ export type ContentItem = {
   author: ContentAuthor | null
 }
 
+// Admin content shapes — reflejan la respuesta REAL de la API para posts/pages.
+// La lista (`GET /posts`) devuelve category_id + tag_ids (no anidados) y el
+// detalle (`GET /posts/:id`) llega envuelto en `{ item }` con content_json/html.
+export type AdminContentListItem = {
+  id: string
+  type: ContentType
+  title: string
+  slug: string
+  featured_image_url: string | null
+  category_id: number | null
+  tag_ids: number[]
+  status: PostStatus
+  requires_membership: boolean
+  comment_count: number
+  published_at: string | null
+  created_at: string
+  updated_at: string
+}
+
+export type AdminContentDetail = {
+  id: string
+  author_id: string | null
+  last_editor_id: string | null
+  category_id: number | null
+  tag_ids: number[]
+  title: string
+  slug: string
+  featured_image_url: string | null
+  content_json: unknown | null
+  content_html: string | null
+  type: ContentType
+  status: PostStatus
+  requires_membership: boolean
+  comment_count: number
+  published_at: string | null
+  created_at: string
+  updated_at: string
+}
+
+export type ContentDetailResponse = {
+  item: AdminContentDetail
+}
+
+// Payload aceptado por `POST`/`PATCH` de /posts y /pages (ver content.schemas.ts).
+export type ContentMutationInput = {
+  title?: string
+  slug?: string
+  featured_image_url?: string | null
+  content_json?: unknown | null
+  content_html?: string | null
+  category_id?: number | null
+  tag_ids?: number[]
+  status?: PostStatus
+  requires_membership?: boolean
+  published_at?: string | null
+}
+
 export type CommentItem = {
   id: string
   post_id: string

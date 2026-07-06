@@ -1,4 +1,9 @@
-import type { ApiListResponse, ContentItem, PostStatus } from '@/lib/api/contracts'
+import type {
+  ApiListResponse,
+  ContentDetailResponse,
+  ContentItem,
+  PostStatus
+} from '@/lib/api/contracts'
 import { serverApiFetch } from '@/lib/api/server'
 
 export type GetPagesParams = {
@@ -26,8 +31,10 @@ export async function getPages(params: GetPagesParams = {}) {
 }
 
 export async function getPageById(id: string) {
-  return serverApiFetch<ContentItem>(`/pages/${id}`, {
+  // La API devuelve el detalle envuelto en `{ item }`; lo desanidamos.
+  const response = await serverApiFetch<ContentDetailResponse>(`/pages/${id}`, {
     next: { tags: [`page:${id}`] }
   })
+  return response.item
 }
 

@@ -2,6 +2,7 @@ import type {
   ApiDetailResponse,
   ApiListResponse,
   CommentItem,
+  ContentDetailResponse,
   ContentItem,
   CreateCommentInput,
   PostStatus
@@ -38,9 +39,11 @@ export async function getPosts(params: GetPostsParams = {}) {
 }
 
 export async function getPostById(id: string) {
-  return serverApiFetch<ContentItem>(`/posts/${id}`, {
+  // La API devuelve el detalle envuelto en `{ item }`; lo desanidamos.
+  const response = await serverApiFetch<ContentDetailResponse>(`/posts/${id}`, {
     next: { tags: [`post:${id}`] }
   })
+  return response.item
 }
 
 export async function getPostComments(id: string, page = 1, limit = 10) {

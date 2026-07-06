@@ -1,29 +1,44 @@
-import type { Route } from 'next'
-
-import { DashboardShell } from '@/components/layout/dashboard-shell'
+import { DashboardShell, type NavSection } from '@/components/layout/dashboard-shell'
 import { getServerSessionUser } from '@/lib/auth/session'
 
-const profileItems: Array<{ href: Route; label: string }> = [
-  { href: '/perfil', label: 'Resumen' },
-  { href: '/perfil/datos', label: 'Datos personales' },
-  { href: '/perfil/ordenes', label: 'Órdenes' },
-  { href: '/perfil/suscripcion', label: 'Suscripción' }
-]
+const accountSection: NavSection = {
+  title: 'Mi cuenta',
+  items: [
+    { href: '/perfil', label: 'Resumen', icon: 'home' },
+    { href: '/perfil/datos', label: 'Datos personales', icon: 'user' },
+    { href: '/perfil/ordenes', label: 'Órdenes', icon: 'orders' },
+    { href: '/perfil/suscripcion', label: 'Suscripción', icon: 'subscription' }
+  ]
+}
 
-const adminItem: { href: Route; label: string } = {
-  href: '/perfil/usuarios',
-  label: 'Gestión de usuarios'
+// Solo visible para admins: gestión de contenido, taxonomías y usuarios.
+const adminSection: NavSection = {
+  title: 'Administración',
+  items: [
+    { href: '/perfil/posts', label: 'Posts', icon: 'posts' },
+    { href: '/perfil/pages', label: 'Páginas', icon: 'pages' },
+    { href: '/perfil/taxonomias', label: 'Taxonomías', icon: 'taxonomy' },
+    { href: '/perfil/usuarios', label: 'Usuarios', icon: 'users' }
+  ]
 }
 
 export default async function ProfileLayout({ children }: { children: React.ReactNode }) {
   const user = await getServerSessionUser()
-  const items = user?.role === 'admin' ? [...profileItems, adminItem] : profileItems
+  const isAdmin = user?.role === 'admin'
+
+  const sections: NavSection[] = isAdmin
+    ? [accountSection, adminSection]
+    : [accountSection]
 
   return (
     <DashboardShell
-      title="Perfil"
-      description="Área privada para sesión, membresía, historial y datos personales."
-      items={items}
+      title="Panel"
+      description={
+        isAdmin
+          ? 'Tu cuenta y la administración del sitio en un solo lugar.'
+          : 'Área privada para sesión, membresía, historial y datos personales.'
+      }
+      sections={sections}
     >
       {children}
     </DashboardShell>

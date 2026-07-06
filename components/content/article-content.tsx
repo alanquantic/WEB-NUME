@@ -1,7 +1,8 @@
 import { Badge } from '@/components/ui/badge'
-import type { ContentItem } from '@/lib/api/contracts'
+import type { AdminContentDetail } from '@/lib/api/contracts'
+import { sanitizeHtml } from '@/lib/html/sanitize'
 
-export function ArticleContent({ content }: { content: ContentItem }) {
+export function ArticleContent({ content }: { content: AdminContentDetail }) {
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
       <div className="mb-6 flex flex-wrap items-center gap-3">
@@ -11,7 +12,7 @@ export function ArticleContent({ content }: { content: ContentItem }) {
       <h1 className="font-display text-4xl font-semibold leading-tight">{content.title}</h1>
       <div className="mt-6 text-base leading-8 text-[hsl(var(--foreground))/0.8]">
         {content.content_html ? (
-          <div dangerouslySetInnerHTML={{ __html: content.content_html }} />
+          <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(content.content_html) }} />
         ) : (
           <p>El backend aún no devolvió HTML renderizable para este contenido.</p>
         )}

@@ -1,10 +1,7 @@
 import type { ReactNode } from 'react'
 
 import { PageBannerWidget } from '@/components/content/page-banner-widget'
-import {
-  PageSidebarWidget,
-  type SidebarWidgetGroup
-} from '@/components/content/page-sidebar-widget'
+import { PageSidebarWidget } from '@/components/content/page-sidebar-widget'
 
 type ContentPageTemplateProps = {
   banner: {
@@ -14,8 +11,7 @@ type ContentPageTemplateProps = {
     imageSrc: string
   }
   sidebar: {
-    groups: SidebarWidgetGroup[]
-    note?: string
+    title?: string
   }
   children: ReactNode
 }
@@ -36,7 +32,7 @@ export function ContentPageTemplate({
 
       <div className="grid gap-6 lg:grid-cols-[19rem_minmax(0,1fr)] lg:items-start">
         <div className="lg:sticky lg:top-[11.5rem]">
-          <PageSidebarWidget groups={sidebar.groups} note={sidebar.note} />
+          <PageSidebarWidget title={sidebar.title} />
         </div>
 
         <article className="rounded-[2rem] border border-border/80 bg-card/94 p-6 shadow-panel sm:p-8">

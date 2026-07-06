@@ -302,7 +302,7 @@ export async function SiteHeader() {
             <SearchIcon width={18} height={18} className="relative z-10 transition duration-200 hover:scale-105" />
           </Link>
           {user?.role === 'admin' ? (
-            <Link href="/admin" className="header-link-float text-sm font-medium hover:text-primary">
+            <Link href="/perfil" className="header-link-float text-sm font-medium hover:text-primary">
               Admin
             </Link>
           ) : null}
@@ -355,7 +355,7 @@ export async function SiteHeader() {
             ))}
             {user?.role === 'admin' ? (
               <Link
-                href="/admin"
+                href="/perfil"
                 className="header-chip block rounded-2xl px-4 py-3 text-sm font-medium text-foreground/85 hover:bg-primary-soft hover:text-primary"
               >
                 <span className="relative z-10">Admin</span>

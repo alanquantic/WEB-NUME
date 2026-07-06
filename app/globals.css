@@ -120,6 +120,88 @@ a {
     }
 }
 
+/* Contenido del editor Tiptap (admin) */
+.prose-editor:focus {
+    outline: none;
+}
+.prose-editor h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 1.1rem 0 0.5rem;
+}
+.prose-editor h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 1rem 0 0.4rem;
+}
+.prose-editor p {
+    margin: 0.5rem 0;
+    line-height: 1.7;
+}
+.prose-editor ul,
+.prose-editor ol {
+    margin: 0.5rem 0 0.5rem 1.4rem;
+}
+.prose-editor ul {
+    list-style: disc;
+}
+.prose-editor ol {
+    list-style: decimal;
+}
+.prose-editor blockquote {
+    border-left: 3px solid hsl(var(--primary) / 0.4);
+    padding-left: 1rem;
+    margin: 0.75rem 0;
+    color: hsl(var(--foreground) / 0.75);
+    font-style: italic;
+}
+.prose-editor a {
+    color: hsl(var(--primary));
+    text-decoration: underline;
+}
+.prose-editor img {
+    max-width: 100%;
+    border-radius: 0.75rem;
+    margin: 0.75rem 0;
+}
+.prose-editor p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+    color: hsl(var(--foreground) / 0.4);
+}
+
+/* Theming del editor Puck para alinearlo con la marca (púrpura NUME) */
+.nume-puck {
+    --puck-font-family: 'Inter', system-ui, sans-serif;
+    /* Acento (Puck usa la escala azure como color primario) → púrpura marca */
+    --puck-color-azure-03: hsl(263 67% 28%);
+    --puck-color-azure-04: hsl(263 67% 35%);
+    --puck-color-azure-05: hsl(263 60% 45%);
+    --puck-color-azure-06: hsl(263 55% 56%);
+    --puck-color-azure-07: hsl(270 60% 70%);
+    --puck-button-primary-color-bg: hsl(263 67% 35%);
+    --puck-button-primary-color-bg-hover: hsl(263 67% 30%);
+    --puck-button-primary-color-bg-active: hsl(263 67% 25%);
+    /* Formas más suaves para combinar con el resto de la UI */
+    --puck-field-radius: 0.85rem;
+    --puck-button-radius: 999px;
+    --puck-drawer-item-radius: 0.85rem;
+    --puck-iconbutton-radius: 0.7rem;
+    --puck-canvas-color-bg: hsl(270 60% 98%);
+    height: 100%;
+}
+/* El item de bloque en el panel izquierdo, un poco más “tarjeta” */
+.nume-puck [class*='PuckDrawerItem'] {
+    transition: transform 140ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+.nume-puck [class*='PuckDrawerItem']:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px hsl(var(--primary) / 0.1);
+    border-color: hsl(var(--primary) / 0.25);
+}
+
 @media (prefers-reduced-motion: reduce) {
     .header-chip,
     .header-chip::after,

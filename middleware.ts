@@ -82,13 +82,29 @@ function clearSessionCookies(response: NextResponse) {
   })
 }
 
+// Subrutas de /perfil reservadas a admins (gestión de contenido y usuarios).
+const ADMIN_ONLY_PREFIXES = [
+  '/perfil/posts',
+  '/perfil/pages',
+  '/perfil/taxonomias',
+  '/perfil/usuarios'
+]
+
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
-  const isAdminPath = pathname.startsWith('/admin')
-  const isProfilePath = pathname.startsWith('/perfil')
-  const isProfileUsersPath = pathname.startsWith('/perfil/usuarios')
 
-  if (!isAdminPath && !isProfilePath) {
+  // El panel se unificó bajo /perfil: cualquier /admin heredado redirige allí.
+  if (pathname === '/admin' || pathname.startsWith('/admin/')) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/perfil'
+    url.search = ''
+    return NextResponse.redirect(url)
+  }
+
+  const isProfilePath = pathname.startsWith('/perfil')
+  const isAdminOnlyPath = ADMIN_ONLY_PREFIXES.some((prefix) => pathname.startsWith(prefix))
+
+  if (!isProfilePath) {
     return NextResponse.next()
   }
 
@@ -127,14 +143,19 @@ export async function middleware(request: NextRequest) {
     }
 
     const me = (await meResponse.json()) as MeResponse
-    const nextResponse = NextResponse.next()
+
+    // Propaga los tokens nuevos al MISMO request para que los Server Components
+    // (y sus fetch al backend) usen el access token fresco en este render, en
+    // lugar del expirado. Sin esto, la petición del borde de expiración
+    // renderizaría con 401 y rompería la página.
+    request.cookies.set(ACCESS_COOKIE, refreshed.access_token)
+    request.cookies.set(REFRESH_COOKIE, refreshed.refresh_token)
+    const nextResponse = NextResponse.next({
+      request: { headers: request.headers }
+    })
     setSessionCookies(nextResponse, refreshed)
 
-    if (isAdminPath && me.role !== 'admin') {
-      return redirectToHome(request)
-    }
-
-    if (isProfileUsersPath && me.role !== 'admin') {
+    if (isAdminOnlyPath && me.role !== 'admin') {
       return redirectToHome(request)
     }
 
@@ -149,11 +170,7 @@ export async function middleware(request: NextRequest) {
 
   const me = (await meResponse.json()) as MeResponse
 
-  if (isAdminPath && me.role !== 'admin') {
-    return redirectToHome(request)
-  }
-
-  if (isProfileUsersPath && me.role !== 'admin') {
+  if (isAdminOnlyPath && me.role !== 'admin') {
     return redirectToHome(request)
   }
 
