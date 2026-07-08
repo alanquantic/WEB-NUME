@@ -1,10 +1,11 @@
 import Link from 'next/link'
 import type { Route } from 'next'
 import { notFound } from 'next/navigation'
-import { Globe2 } from 'lucide-react'
+import { Globe2, Mail } from 'lucide-react'
 
-import { FacebookIcon, InstagramIcon } from '@/components/ui/icons'
+import { FacebookIcon, InstagramIcon, WhatsappIcon } from '@/components/ui/icons'
 import { getConsultantById } from '@/lib/api/directory'
+import { getWhatsAppHref, normalizeExternalUrl } from '@/lib/contact'
 import { isProblemDetails } from '@/lib/api/server'
 
 function initials(name: string | null): string {
@@ -33,15 +34,23 @@ export async function ConsultantDetailPage({
   }
 
   const place = [consultant.city, consultant.nationality].filter(Boolean).join(' · ')
+  const whatsappHref = getWhatsAppHref(consultant.contact.phone, consultant.nationality)
+  const websiteHref = normalizeExternalUrl(consultant.contact.website)
   const socials = [
-    consultant.contact.website
-      ? { label: 'Sitio web', href: consultant.contact.website, icon: Globe2 }
+    consultant.contact.email
+      ? { label: 'Email', href: `mailto:${consultant.contact.email}`, icon: Mail }
+      : null,
+    whatsappHref
+      ? { label: 'WhatsApp', href: whatsappHref, icon: WhatsappIcon }
       : null,
     consultant.socials.facebook
       ? { label: 'Facebook', href: consultant.socials.facebook, icon: FacebookIcon }
       : null,
     consultant.socials.instagram
       ? { label: 'Instagram', href: consultant.socials.instagram, icon: InstagramIcon }
+      : null,
+    websiteHref
+      ? { label: 'Sitio web', href: websiteHref, icon: Globe2 }
       : null
   ].filter(Boolean) as Array<{
     label: string
