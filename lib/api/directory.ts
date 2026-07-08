@@ -8,6 +8,7 @@ export type GetConsultantsParams = {
   consultant_category?: string
   nationality?: string
   tier?: string
+  has_next_course?: boolean
 }
 
 export async function getConsultants(params: GetConsultantsParams = {}) {
@@ -18,6 +19,7 @@ export async function getConsultants(params: GetConsultantsParams = {}) {
   if (params.consultant_category) query.set('consultant_category', params.consultant_category)
   if (params.nationality) query.set('nationality', params.nationality)
   if (params.tier) query.set('tier', params.tier)
+  if (params.has_next_course) query.set('has_next_course', 'true')
 
   return serverApiFetch<ApiListResponse<ConsultantDirectoryItem>>(
     `/directory/consultants?${query.toString()}`,
