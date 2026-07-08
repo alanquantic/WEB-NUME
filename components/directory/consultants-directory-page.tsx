@@ -274,7 +274,7 @@ export async function ConsultantsDirectoryPage({
               ) : null}
             </div>
           ) : (
-            <div className="mt-6 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+            <div className="mt-6 grid gap-x-8 gap-y-28 md:grid-cols-2 xl:grid-cols-3">
               {consultants.data.map((consultant) => (
                 <ConsultantCard key={consultant.id} consultant={consultant} hrefBase={hrefBase} />
               ))}
