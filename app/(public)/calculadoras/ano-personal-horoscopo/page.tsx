@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { Route } from "next";
 import Link from "next/link";
 
 import { PersonalCycleCalculator } from "@/components/calculators/personal-cycle-calculator";
@@ -233,7 +234,7 @@ export default function Page() {
                     ))}
                     {item.url ? (
                       <Link
-                        href={item.url}
+                        href={item.url as Route}
                         className="inline-flex items-center font-semibold text-primary transition hover:opacity-80"
                       >
                         Leer más
