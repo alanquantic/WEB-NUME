@@ -32,12 +32,6 @@ export default async function ProfileLayout({ children }: { children: React.Reac
 
   return (
     <DashboardShell
-      title="Panel"
-      description={
-        isAdmin
-          ? 'Tu cuenta y la administración del sitio en un solo lugar.'
-          : 'Área privada para sesión, membresía, historial y datos personales.'
-      }
       sections={sections}
     >
       {children}

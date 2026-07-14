@@ -4,15 +4,12 @@ import type { ComponentType, PropsWithChildren, SVGProps } from 'react'
 import type { Route } from 'next'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
 
 import {
   BagIcon,
-  ChevronLeftIcon,
   FileTextIcon,
   HomeIcon,
   LayersIcon,
-  SidebarIcon,
   StarIcon,
   TagIcon,
   UserIcon,
@@ -44,8 +41,6 @@ const iconMap: Record<NavIconName, ComponentType<SVGProps<SVGSVGElement>>> = {
   users: UsersIcon
 }
 
-const STORAGE_KEY = 'nume-panel-collapsed'
-
 function isActive(pathname: string, href: string): boolean {
   if (pathname === href) return true
   // /perfil es el índice: no debe marcarse activo en todas las subrutas.
@@ -53,74 +48,26 @@ function isActive(pathname: string, href: string): boolean {
 }
 
 type DashboardShellProps = PropsWithChildren<{
-  title: string
-  description: string
   items?: NavItem[]
   sections?: NavSection[]
 }>
 
 export function DashboardShell({
-  title,
-  description,
   items,
   sections,
   children
 }: DashboardShellProps) {
   const pathname = usePathname()
-  const [collapsed, setCollapsed] = useState(false)
-
-  // Restaura la preferencia guardada tras el montaje (evita mismatch de hidratación).
-  useEffect(() => {
-    setCollapsed(window.localStorage.getItem(STORAGE_KEY) === '1')
-  }, [])
-
-  function toggle() {
-    setCollapsed((prev) => {
-      const next = !prev
-      window.localStorage.setItem(STORAGE_KEY, next ? '1' : '0')
-      return next
-    })
-  }
 
   const resolvedSections: NavSection[] = sections ?? (items ? [{ items }] : [])
 
   return (
-    <div
-      className={cn(
-        'mx-auto grid max-w-7xl gap-8 px-6 py-10',
-        collapsed ? 'lg:grid-cols-[76px_minmax(0,1fr)]' : 'lg:grid-cols-[240px_minmax(0,1fr)]'
-      )}
-    >
-      <aside className="h-fit space-y-4 rounded-[2rem] border border-[hsl(var(--border))] bg-white p-4 shadow-panel lg:sticky lg:top-6">
-        {/* Header del panel con botón para colapsar */}
-        <div className={cn('flex items-center gap-2', collapsed ? 'justify-center' : 'justify-between')}>
-          {!collapsed ? (
-            <div className="min-w-0">
-              <h2 className="font-display text-2xl font-semibold">{title}</h2>
-              <p className="mt-1 text-sm text-[hsl(var(--foreground))/0.68]">{description}</p>
-            </div>
-          ) : null}
-          <button
-            type="button"
-            onClick={toggle}
-            aria-label={collapsed ? 'Expandir panel' : 'Colapsar panel'}
-            aria-expanded={!collapsed}
-            title={collapsed ? 'Expandir panel' : 'Colapsar panel'}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[hsl(var(--border))] text-[hsl(var(--foreground))/0.65] transition hover:bg-[hsl(var(--secondary))] hover:text-[hsl(var(--primary))]"
-          >
-            {collapsed ? <SidebarIcon /> : <ChevronLeftIcon />}
-          </button>
-        </div>
-
+    <div className="mx-auto grid max-w-7xl grid-cols-[76px_minmax(0,1fr)] gap-3 px-3 py-10 sm:gap-8 sm:px-6">
+      <aside className="h-fit w-[76px] space-y-4 rounded-[2rem] border border-[hsl(var(--border))] bg-white p-4 text-[hsl(263_35%_18%)] shadow-panel lg:sticky lg:top-6">
         <div className="grid gap-5">
           {resolvedSections.map((section, index) => (
             <div key={section.title ?? `section-${index}`} className="grid gap-1.5">
-              {section.title && !collapsed ? (
-                <span className="px-3 text-xs font-semibold uppercase tracking-wide text-[hsl(var(--foreground))/0.45]">
-                  {section.title}
-                </span>
-              ) : null}
-              {section.title && collapsed && index > 0 ? (
+              {section.title && index > 0 ? (
                 <span className="mx-auto my-1 h-px w-8 bg-[hsl(var(--border))]" />
               ) : null}
               <nav className="grid gap-1.5">
@@ -131,13 +78,13 @@ export function DashboardShell({
                     <Link
                       key={item.href}
                       href={item.href}
-                      title={collapsed ? item.label : undefined}
+                      title={item.label}
+                      aria-label={item.label}
                       className={cn(
-                        'flex items-center rounded-2xl text-sm font-medium transition',
-                        collapsed ? 'h-11 w-11 justify-center' : 'gap-3 px-3 py-2.5',
+                        'flex h-11 w-11 items-center justify-center rounded-2xl text-sm font-medium transition',
                         active
-                          ? 'bg-[hsl(var(--primary))] text-white shadow-panel'
-                          : 'text-[hsl(var(--foreground))/0.8] hover:bg-[hsl(var(--secondary))]'
+                          ? 'bg-[hsl(263_67%_35%)] text-white shadow-panel'
+                          : 'text-[hsl(263_35%_18%)] hover:bg-[hsl(270_100%_96%)] hover:text-[hsl(263_35%_18%)]'
                       )}
                     >
                       {Icon ? (
@@ -145,7 +92,7 @@ export function DashboardShell({
                           <Icon width={19} height={19} />
                         </span>
                       ) : null}
-                      {!collapsed ? <span className="truncate">{item.label}</span> : null}
+                      <span className="sr-only">{item.label}</span>
                     </Link>
                   )
                 })}
@@ -154,7 +101,7 @@ export function DashboardShell({
           ))}
         </div>
       </aside>
-      <div className="min-w-0">{children}</div>
+      <div className="profile-content min-w-0 max-w-full">{children}</div>
     </div>
   )
 }

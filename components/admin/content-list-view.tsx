@@ -19,7 +19,7 @@ const statusLabels: Record<PostStatus, string> = {
 const statusValues: PostStatus[] = ['draft', 'published', 'scheduled', 'archived']
 
 const selectClassName = cn(
-  'h-11 w-full rounded-2xl border border-[hsl(var(--border))] bg-white px-4 text-sm',
+  'h-11 min-w-0 w-full rounded-2xl border border-[hsl(var(--border))] bg-white px-4 text-sm',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]'
 )
 
@@ -74,7 +74,7 @@ export function ContentListView({ kind, result, searchParams }: ContentListViewP
           </Link>
         </div>
 
-        <form method="get" className="mt-6 grid gap-4 md:grid-cols-[1fr_200px_auto]">
+        <form method="get" className="mt-6 grid min-w-0 grid-cols-[minmax(0,1fr)] gap-4 md:grid-cols-[1fr_200px_auto]">
           <Input name="search" placeholder="Buscar por título o slug" defaultValue={searchParams.search ?? ''} />
           <select name="status" className={selectClassName} defaultValue={searchParams.status ?? ''}>
             <option value="">Todos los estados</option>
