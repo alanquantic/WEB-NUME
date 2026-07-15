@@ -1,3 +1,4 @@
+import { MembershipTierBadge } from '@/components/memberships/membership-tier-badge'
 import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card'
 import { getMySubscription } from '@/lib/api/subscriptions'
 import { getServerSessionUser } from '@/lib/auth/session'
@@ -16,7 +17,10 @@ export default async function SubscriptionPage() {
         `GET /subscriptions/me`.
       </CardDescription>
       <CardContent className="grid gap-2 text-sm">
-        <p>Tier: {user?.current_membership}</p>
+        <p className="flex flex-wrap items-center gap-2">
+          <span>Tier:</span>
+          <MembershipTierBadge tier={user?.current_membership} />
+        </p>
         <p>Activa: {user?.has_active_membership ? 'Sí' : 'No'}</p>
         <p>Estado backend: {subscription.status}</p>
         <p>Renovación automática: {subscription.auto_renew ? 'Sí' : 'No'}</p>
@@ -24,4 +28,3 @@ export default async function SubscriptionPage() {
     </Card>
   )
 }
-

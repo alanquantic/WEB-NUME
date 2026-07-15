@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { UrlObject } from 'url'
 
+import { MembershipTierBadge } from '@/components/memberships/membership-tier-badge'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -19,7 +20,7 @@ const roleValues: Role[] = ['admin', 'subscriber', 'reader']
 const pageLimit = 10
 
 const selectClassName = cn(
-  'h-11 w-full rounded-2xl border border-[hsl(var(--border))] bg-white px-4 text-sm',
+  'h-11 min-w-0 w-full rounded-2xl border border-[hsl(var(--border))] bg-white px-4 text-sm',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]'
 )
 
@@ -94,7 +95,7 @@ export default async function ProfileUsersPage({
           </Link>
         </div>
 
-        <form method="get" className="mt-6 grid gap-4 md:grid-cols-[1fr_180px_180px_auto]">
+        <form method="get" className="mt-6 grid min-w-0 grid-cols-[minmax(0,1fr)] gap-4 md:grid-cols-[1fr_180px_180px_auto]">
           <Input
             name="search"
             placeholder="Buscar por correo electrónico"
@@ -145,7 +146,9 @@ export default async function ProfileUsersPage({
                     <td className="px-3 py-3">
                       <Badge>{user.role}</Badge>
                     </td>
-                    <td className="px-3 py-3">{user.current_membership}</td>
+                    <td className="px-3 py-3">
+                      <MembershipTierBadge tier={user.current_membership} />
+                    </td>
                     <td className="px-3 py-3">{user.is_consultant ? 'Sí' : 'No'}</td>
                     <td className="px-3 py-3 text-right">
                       <Link
