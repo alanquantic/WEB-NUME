@@ -32,3 +32,6 @@ Thumbs.db
 # local tooling / temp
 .vercel/
 .claude/
+
+# material fuente de contenido (no versionar: pesado y es el libro completo)
+contenido-fuente/

@@ -1,5 +1,7 @@
 import type { MetadataRoute } from 'next'
 
+import { getSignificadoParams } from '@/lib/significados/data'
+
 const STATIC_ROUTES = [
   '',
   '/numerologia',
@@ -48,7 +50,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const lastModified = new Date()
 
-  return STATIC_ROUTES.map((path) => ({
+  const significadosRoutes = getSignificadoParams().map(
+    ({ concepto, numero }) => `/significadodelosnumeros/${concepto}/${numero}`
+  )
+
+  return [...STATIC_ROUTES, ...significadosRoutes].map((path) => ({
     url: `${base}${path}`,
     lastModified,
     changeFrequency: 'weekly',

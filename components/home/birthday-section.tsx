@@ -1,7 +1,10 @@
 'use client'
 
+import type { Route } from 'next'
+import Link from 'next/link'
 import { useState } from 'react'
 
+import perfilesData from '@/components/jsons/significados/perfil-cumpleanos.json'
 import {
   FacebookIcon,
   LinkedinIcon,
@@ -11,6 +14,22 @@ import {
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
 import Universal from '@/resources/universal'
 import { reduceNumber } from '@/resources/utils'
+
+type PerfilCumpleanos = {
+  numero: number
+  titulo: string
+  planeta?: string
+  color?: string
+  palabrasClave?: string
+  puntoDebil?: string
+  descripcion: string[]
+  reto: string[]
+  cualidades: string[]
+  debilidades: string[]
+  afirmacion?: string
+}
+
+const PERFILES = perfilesData as Record<string, PerfilCumpleanos>
 
 const SHARE_LINKS = [
   { id: 'facebook', label: 'Facebook', Icon: FacebookIcon },
@@ -31,6 +50,7 @@ type BirthdayResult = {
   energy: number
   dayNumber: number
   year: number
+  monthName: string
 }
 
 function buildShareHref(network: ShareNetwork, url: string, text: string): string {
@@ -51,6 +71,132 @@ function buildShareHref(network: ShareNetwork, url: string, text: string): strin
   }
 }
 
+function ClaveChip({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-2xl border border-border/70 bg-background/70 px-4 py-2.5">
+      <p className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-primary">{label}</p>
+      <p className="mt-0.5 text-sm font-medium text-foreground/82">{value}</p>
+    </div>
+  )
+}
+
+function BirthdayProfile({ numero, monthName }: { numero: number; monthName: string }) {
+  const perfil = PERFILES[String(numero)]
+  if (!perfil) return null
+
+  const claves = [
+    perfil.palabrasClave ? { label: 'Palabras clave', value: perfil.palabrasClave } : null,
+    perfil.planeta ? { label: 'Planeta', value: perfil.planeta } : null,
+    perfil.color ? { label: 'Color', value: perfil.color } : null,
+    perfil.puntoDebil ? { label: 'Punto débil', value: perfil.puntoDebil } : null
+  ].filter(Boolean) as { label: string; value: string }[]
+
+  return (
+    <div className="mt-8 overflow-hidden rounded-[2rem] border border-border/70 bg-card shadow-panel">
+      {/* Encabezado del perfil */}
+      <div className="flex flex-col gap-5 border-b border-border/70 bg-[linear-gradient(135deg,hsl(var(--secondary)/0.5),hsl(var(--card)))] p-6 sm:flex-row sm:items-center sm:p-8">
+        <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-gradient-brand font-display text-4xl font-semibold text-white shadow-glow">
+          {numero}
+        </span>
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
+            Si naciste un día como este…
+          </p>
+          <h3 className="mt-1 font-display text-2xl font-semibold text-foreground sm:text-3xl">
+            Tu Número Personal es {numero}
+          </h3>
+          {perfil.titulo ? (
+            <p className="mt-1 text-base italic leading-7 text-foreground/72">“{perfil.titulo}”</p>
+          ) : null}
+        </div>
+      </div>
+
+      <div className="space-y-8 p-6 sm:p-8">
+        {claves.length > 0 ? (
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {claves.map((clave) => (
+              <ClaveChip key={clave.label} label={clave.label} value={clave.value} />
+            ))}
+          </div>
+        ) : null}
+
+        {perfil.descripcion.length > 0 ? (
+          <div className="space-y-4">
+            <h4 className="font-display text-xl font-semibold text-primary">Tu esencia</h4>
+            <div className="space-y-4 text-base leading-8 text-foreground/78">
+              {perfil.descripcion.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
+        <div className="grid gap-6 md:grid-cols-2">
+          {perfil.cualidades.length > 0 ? (
+            <div className="space-y-3 rounded-2xl border border-border/70 bg-background/60 p-5">
+              <h4 className="font-display text-lg font-semibold text-primary">Tus cualidades</h4>
+              <ul className="grid gap-2 text-sm leading-6 text-foreground/78">
+                {perfil.cualidades.map((item, index) => (
+                  <li key={index} className="flex gap-2.5">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-brand" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
+          {perfil.debilidades.length > 0 ? (
+            <div className="space-y-3 rounded-2xl border border-border/70 bg-background/60 p-5">
+              <h4 className="font-display text-lg font-semibold text-fuchsia">Tus retos</h4>
+              <ul className="grid gap-2 text-sm leading-6 text-foreground/78">
+                {perfil.debilidades.map((item, index) => (
+                  <li key={index} className="flex gap-2.5">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-fuchsia/70" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+        </div>
+
+        {perfil.reto.length > 0 ? (
+          <div className="space-y-3">
+            <h4 className="font-display text-xl font-semibold text-primary">Tu lección</h4>
+            <div className="space-y-4 text-base leading-8 text-foreground/78">
+              {perfil.reto.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
+        {perfil.afirmacion ? (
+          <blockquote className="rounded-2xl border border-primary/16 bg-[linear-gradient(135deg,hsl(var(--secondary)/0.4),hsl(var(--card)))] p-5 text-center font-display text-lg italic leading-8 text-primary">
+            “{perfil.afirmacion}”
+          </blockquote>
+        ) : null}
+
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <Link
+            href={`/significadodelosnumeros/numero-personal/${numero}` as Route}
+            className="inline-flex h-11 items-center justify-center rounded-full bg-gradient-brand px-7 text-sm font-semibold text-white shadow-glow transition hover:opacity-90"
+          >
+            Ver el significado completo del {numero}
+          </Link>
+          <Link
+            href={`/significadodelosnumeros/karma/${reduceNumber(MONTHS.indexOf(monthName) + 1)}` as Route}
+            className="inline-flex h-11 items-center justify-center rounded-full border border-border/80 bg-background px-7 text-sm font-semibold text-primary transition hover:border-primary/40 hover:bg-primary-soft"
+          >
+            Tu Karma de {monthName}
+          </Link>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export function BirthdaySection() {
   const [day, setDay] = useState(1)
   const [monthIndex, setMonthIndex] = useState(0)
@@ -60,7 +206,7 @@ export function BirthdaySection() {
     const year = new Date().getFullYear()
     const universal = new Universal()
     const energy = universal.calcUniversalDay({ day, month: monthIndex + 1, year })
-    setResult({ energy, dayNumber: reduceNumber(day), year })
+    setResult({ energy, dayNumber: reduceNumber(day), year, monthName: MONTHS[monthIndex] })
   }
 
   const shareUrl =
@@ -175,6 +321,10 @@ export function BirthdaySection() {
           </ScrollReveal>
         </div>
       </div>
+
+      {result ? (
+        <BirthdayProfile numero={result.dayNumber} monthName={result.monthName} />
+      ) : null}
     </section>
   )
 }

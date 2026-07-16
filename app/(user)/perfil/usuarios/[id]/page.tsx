@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { UserEditForm } from '@/components/admin/user-edit-form'
+import { MembershipTierBadge } from '@/components/memberships/membership-tier-badge'
 import { Badge } from '@/components/ui/badge'
 import { ApiError } from '@/lib/api/errors'
 import { getUserById } from '@/lib/api/users.server'
@@ -36,6 +37,7 @@ export default async function ProfileUserDetailPage({
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <h1 className="font-display text-3xl font-semibold">{user.email}</h1>
           <Badge>{user.role}</Badge>
+          <MembershipTierBadge tier={user.current_membership} />
           {user.has_active_membership ? (
             <Badge className="bg-[hsl(var(--primary))/0.15] text-[hsl(var(--primary))]">
               Membresía activa
