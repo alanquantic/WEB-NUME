@@ -19,7 +19,7 @@ export default function Page() {
     >
       <div className="space-y-10">
         <NameNumberCalculator kind="active" />
-        <ConceptExplainer concept={NOMBRE_ACTIVO} draft />
+        <ConceptExplainer concept={NOMBRE_ACTIVO} />
       </div>
     </ToolPage>
   )

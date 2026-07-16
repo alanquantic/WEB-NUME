@@ -19,7 +19,7 @@ export default function Page() {
     >
       <div className="space-y-10">
         <PersonalCycleCalculator kind="day" />
-        <ConceptExplainer concept={DIA_PERSONAL} draft />
+        <ConceptExplainer concept={DIA_PERSONAL} />
       </div>
     </ToolPage>
   )

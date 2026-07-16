@@ -19,7 +19,7 @@ export default function Page() {
     >
       <div className="space-y-10">
         <NameNumberCalculator kind="hereditary" />
-        <ConceptExplainer concept={NOMBRE_HEREDITARIO} draft />
+        <ConceptExplainer concept={NOMBRE_HEREDITARIO} />
       </div>
     </ToolPage>
   )
