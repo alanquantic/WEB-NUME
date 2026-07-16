@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import type { AdminContentListItem, ApiListResponse, PostStatus } from '@/lib/api/contracts'
 import type { ContentKind } from '@/lib/api/content.client'
+import { excerptFromHtml } from '@/lib/format'
 import { cn } from '@/lib/utils'
 
 const statusLabels: Record<PostStatus, string> = {
@@ -52,6 +53,7 @@ export function ContentListView({ kind, result, searchParams }: ContentListViewP
   const newHref = isPost ? '/perfil/posts/nuevo' : '/perfil/pages/nuevo'
   const heading = isPost ? 'Posts' : 'Páginas'
   const newLabel = isPost ? 'Nuevo post' : 'Nueva página'
+  const publicBasePath = isPost ? '/blog' : '/paginas'
 
   const page = Number(searchParams.page) > 0 ? Number(searchParams.page) : 1
   const totalPages = Math.max(1, Math.ceil(result.pagination.total / result.pagination.limit))
@@ -109,8 +111,42 @@ export function ContentListView({ kind, result, searchParams }: ContentListViewP
                 {result.data.map((item) => (
                   <tr key={item.id} className="border-b border-[hsl(var(--border))/0.6]">
                     <td className="px-3 py-3">
-                      <span className="font-medium">{item.title}</span>
-                      <span className="block text-xs text-[hsl(var(--foreground))/0.5]">/{item.slug}</span>
+                      <div className="flex items-start gap-3">
+                        <div className="h-16 w-16 shrink-0 overflow-hidden rounded-2xl bg-[hsl(var(--secondary))]">
+                          {item.featured_image_url ? (
+                            <img
+                              src={item.featured_image_url}
+                              alt={`Vista previa de ${item.title}`}
+                              className="h-full w-full object-cover"
+                            />
+                          ) : (
+                            <div className="flex h-full items-center justify-center text-[10px] font-semibold uppercase tracking-wide text-[hsl(var(--foreground))/0.4]">
+                              Sin imagen
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="min-w-0">
+                          <span className="block font-medium">{item.title}</span>
+                          <span className="block text-xs text-[hsl(var(--foreground))/0.5]">
+                            /{item.slug}
+                          </span>
+                          {item.content_html ? (
+                            <p className="mt-1 line-clamp-2 text-xs leading-5 text-[hsl(var(--foreground))/0.65]">
+                              {excerptFromHtml(item.content_html, 120)}
+                            </p>
+                          ) : null}
+                          {item.status === 'published' ? (
+                            <Link
+                              href={`${publicBasePath}/${item.slug}`}
+                              target="_blank"
+                              className="mt-2 inline-flex text-xs font-semibold text-[hsl(var(--primary))] hover:underline"
+                            >
+                              Ver publicación
+                            </Link>
+                          ) : null}
+                        </div>
+                      </div>
                     </td>
                     <td className="px-3 py-3">
                       <Badge>{statusLabels[item.status]}</Badge>
