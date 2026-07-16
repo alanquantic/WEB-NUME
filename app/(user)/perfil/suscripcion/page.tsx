@@ -1,29 +1,28 @@
-import { MembershipTierBadge } from '@/components/memberships/membership-tier-badge'
+import Link from 'next/link'
+
 import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card'
-import { getMySubscription } from '@/lib/api/subscriptions'
-import { getServerSessionUser } from '@/lib/auth/session'
 
-export default async function SubscriptionPage() {
-  const [user, subscription] = await Promise.all([
-    getServerSessionUser(),
-    getMySubscription()
-  ])
-
+export default function SubscriptionPage() {
   return (
     <Card>
-      <CardTitle>Suscripción actual</CardTitle>
-      <CardDescription>
-        El estado visible de membresía sale primero de `GET /auth/me` y puede enriquecerse con
-        `GET /subscriptions/me`.
-      </CardDescription>
-      <CardContent className="grid gap-2 text-sm">
-        <p className="flex flex-wrap items-center gap-2">
-          <span>Tier:</span>
-          <MembershipTierBadge tier={user?.current_membership} />
-        </p>
-        <p>Activa: {user?.has_active_membership ? 'Sí' : 'No'}</p>
-        <p>Estado backend: {subscription.status}</p>
-        <p>Renovación automática: {subscription.auto_renew ? 'Sí' : 'No'}</p>
+      <CardTitle>Suscripción</CardTitle>
+      <CardDescription>El estado de tu membresía y su renovación.</CardDescription>
+      <CardContent>
+        <div className="rounded-3xl border border-dashed border-border/80 bg-[hsl(var(--secondary)/0.4)] px-6 py-12 text-center">
+          <p className="font-display text-xl font-semibold text-primary">
+            No tienes una suscripción activa
+          </p>
+          <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-foreground/70">
+            Con una membresía desbloqueas contenido exclusivo, reportes extendidos y
+            herramientas premium. Aquí verás el estado y la renovación de tu plan.
+          </p>
+          <Link
+            href="/membresias"
+            className="mt-6 inline-flex h-11 items-center justify-center rounded-full bg-gradient-brand px-7 text-sm font-semibold text-white shadow-glow transition hover:opacity-90"
+          >
+            Conocer los planes
+          </Link>
+        </div>
       </CardContent>
     </Card>
   )

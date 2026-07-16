@@ -86,81 +86,81 @@ export function ConsultantCard({
   }>
 
   return (
-    <div className="relative">
-      <article className="group relative flex h-full flex-col rounded-[2.1rem] border border-[#f0ddbb] bg-[#fff2d2] p-6 shadow-[0_16px_40px_rgba(105,48,97,0.12)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_60px_rgba(105,48,97,0.18)]">
-        <Link
-          href={profileHref}
-          aria-label={`Ver perfil de ${c.name ?? 'Consultor'}`}
-          className="absolute inset-0 z-0 rounded-[2.1rem]"
-        />
-        <div className="flex flex-1 flex-col gap-5">
-          <div className="flex flex-col items-center text-center">
-            {c.photo ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={c.photo}
-                alt={c.name ?? 'Consultor'}
-                className="h-40 w-40 shrink-0 rounded-full border-[6px] border-white object-cover shadow-[0_18px_36px_rgba(105,48,97,0.16)]"
-              />
-            ) : (
-              <div className="flex h-40 w-40 shrink-0 items-center justify-center rounded-full border-[6px] border-white bg-[hsl(var(--secondary))] font-display text-4xl font-semibold text-[hsl(var(--primary))] shadow-[0_18px_36px_rgba(105,48,97,0.16)]">
-                {initials(c.name)}
-              </div>
-            )}
-            <div className="mt-5 min-w-0">
-              <div className="flex items-center justify-center gap-2">
-                <h3 className="font-display text-[1.35rem] font-semibold leading-tight text-[#693061]">
-                  {c.name ?? 'Consultor'}
-                </h3>
-                {flag ? (
-                  <span className="text-2xl leading-none" aria-label={c.nationality ?? 'Bandera'}>
-                    {flag}
-                  </span>
-                ) : null}
-              </div>
-              {c.specialization ? (
-                <p className="mt-2 text-sm font-medium leading-5 text-[#7b5a63]">{c.specialization}</p>
+    <article className="group relative flex h-full flex-col rounded-[2rem] border border-border/70 bg-card p-6 shadow-panel transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_60px_hsl(var(--primary)/0.14)]">
+      <Link
+        href={profileHref}
+        aria-label={`Ver perfil de ${c.name ?? 'Consultor'}`}
+        className="absolute inset-0 z-0 rounded-[2rem]"
+      />
+      <div className="flex flex-1 flex-col gap-5">
+        <div className="flex flex-col items-center text-center">
+          {c.photo ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={c.photo}
+              alt={c.name ?? 'Consultor'}
+              className="h-32 w-32 shrink-0 rounded-full border-4 border-background object-cover shadow-glow"
+            />
+          ) : (
+            <div className="flex h-32 w-32 shrink-0 items-center justify-center rounded-full border-4 border-background bg-[hsl(var(--secondary))] font-display text-4xl font-semibold text-primary shadow-glow">
+              {initials(c.name)}
+            </div>
+          )}
+          <div className="mt-4 min-w-0">
+            <div className="flex items-center justify-center gap-2">
+              <h3 className="font-display text-xl font-semibold leading-tight text-primary">
+                {c.name ?? 'Consultor'}
+              </h3>
+              {flag ? (
+                <span className="text-xl leading-none" aria-label={c.nationality ?? 'Bandera'}>
+                  {flag}
+                </span>
               ) : null}
             </div>
+            {c.specialization ? (
+              <p className="mt-2 text-sm font-medium leading-5 text-foreground/70">
+                {c.specialization}
+              </p>
+            ) : null}
           </div>
+        </div>
 
-          {badges.length ? (
-            <div className="flex min-h-[5.5rem] flex-wrap items-center justify-center gap-3">
-              {badges.slice(0, 2).map((tier) => (
-                <div key={tier.slug} className="flex items-center justify-center">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={tier.image} alt={tier.label} className="h-16 w-auto object-contain" />
-                </div>
-              ))}
-            </div>
-          ) : null}
-
-          <div className="relative z-10 mt-auto flex flex-wrap items-center justify-center gap-2">
-            {socialLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target={link.href.startsWith('mailto:') ? undefined : '_blank'}
-                rel={link.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#d7c0a8] bg-white/75 text-[#693061]"
-                aria-label={link.label}
-                title={link.label}
-              >
-                <link.icon className="h-4 w-4" width={16} height={16} />
-              </a>
+        {badges.length ? (
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {badges.slice(0, 2).map((tier) => (
+              <div key={tier.slug} className="flex items-center justify-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={tier.image} alt={tier.label} className="h-14 w-auto object-contain" />
+              </div>
             ))}
           </div>
-        </div>
-      </article>
+        ) : null}
 
-      {nextCourse ? (
-        <div className="pointer-events-none absolute inset-x-0 -bottom-20 z-10 flex justify-center">
-          <div className="w-[calc(100%-3rem)] rounded-[1.35rem] bg-[#B38A25] px-5 py-4 text-center text-white shadow-[0_10px_24px_rgba(179,138,37,0.28)]">
-            <p className="text-sm font-semibold uppercase tracking-[0.12em]">Próximo curso</p>
-            <p className="mt-1 text-base font-medium leading-6">{nextCourse}</p>
-          </div>
+        <div className="relative z-10 mt-auto flex flex-wrap items-center justify-center gap-2">
+          {socialLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target={link.href.startsWith('mailto:') ? undefined : '_blank'}
+              rel={link.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/80 bg-background text-primary transition hover:border-primary/40 hover:bg-primary-soft"
+              aria-label={link.label}
+              title={link.label}
+            >
+              <link.icon className="h-4 w-4" width={16} height={16} />
+            </a>
+          ))}
         </div>
-      ) : null}
-    </div>
+
+        {nextCourse ? (
+          <div className="rounded-2xl bg-[linear-gradient(135deg,hsl(var(--secondary)/0.72),hsl(var(--primary-soft)))] px-5 py-3 text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">
+              Próximo curso
+            </p>
+            <p className="mt-0.5 text-sm font-medium leading-6 text-foreground/80">{nextCourse}</p>
+          </div>
+        ) : null}
+      </div>
+    </article>
   )
 }

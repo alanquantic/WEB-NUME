@@ -83,7 +83,7 @@ const NAV_ITEMS: readonly NavItem[] = [
     children: [
       {
         label: 'Revisa tu horóscopo mensual 2026',
-        href: '/revisatuhoroscopomensual2026'
+        href: '/horoscopos'
       }
     ]
   },
