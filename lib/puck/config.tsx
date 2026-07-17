@@ -21,96 +21,141 @@ const cls = {
   btn: 'inline-flex items-center rounded-full bg-[hsl(var(--primary))] px-5 py-2.5 text-sm font-semibold text-white no-underline'
 }
 
+type CreatePuckConfigOptions = {
+  openImageLibrary?: (args: { currentValue: string; onSelect: (url: string) => void }) => void
+}
+
 // ── Configuración del editor (canvas) ───────────────────────────────────────
-export const puckConfig: Config = {
-  // Sin campos en la raíz: el título/slug se gestionan fuera del canvas, así
-  // el panel derecho no muestra un campo "title" redundante.
-  root: {
-    fields: {},
-    render: ({ children }: Record<string, any>) => <>{children}</>
-  },
-  // Agrupa los bloques del panel izquierdo para una navegación más clara.
-  categories: {
-    texto: { title: 'Texto', components: ['Titulo', 'Parrafo', 'Cita', 'Lista'] },
-    medios: { title: 'Medios', components: ['Imagen'] },
-    elementos: { title: 'Elementos', components: ['Separador', 'Boton'] }
-  },
-  components: {
-    Titulo: {
-      label: 'Título',
-      fields: {
-        text: { type: 'text' },
-        level: {
-          type: 'select',
-          options: [
-            { label: 'H2', value: '2' },
-            { label: 'H3', value: '3' }
-          ]
-        }
-      },
-      defaultProps: { text: 'Nuevo título', level: '2' },
-      render: ({ text, level }: Record<string, any>) =>
-        level === '3' ? <h3 className={cls.h3}>{text}</h3> : <h2 className={cls.h2}>{text}</h2>
-    },
-    Parrafo: {
-      label: 'Párrafo',
-      fields: { text: { type: 'textarea' } },
-      defaultProps: { text: 'Escribe aquí…' },
-      render: ({ text }: Record<string, any>) => <p className={cls.p}>{text}</p>
-    },
-    Imagen: {
-      label: 'Imagen',
-      fields: { src: { type: 'text' }, alt: { type: 'text' } },
-      defaultProps: { src: '', alt: '' },
-      render: ({ src, alt }: Record<string, any>) =>
-        src ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={src} alt={alt} className={cls.img} />
-        ) : (
-          <div className="my-4 rounded-2xl border border-dashed border-[hsl(var(--border))] p-6 text-center text-sm text-[hsl(var(--foreground))/0.5]">
-            Define la URL de la imagen
-          </div>
-        )
-    },
-    Lista: {
-      label: 'Lista',
-      fields: {
-        items: {
-          type: 'array',
-          arrayFields: { text: { type: 'text' } },
-          defaultItemProps: { text: 'Elemento' },
-          getItemSummary: (item: { text: string }) => item.text || 'Elemento'
-        }
-      },
-      defaultProps: { items: [{ text: 'Elemento' }] },
-      render: ({ items }: Record<string, any>) => (
-        <ul className={cls.ul}>
-          {((items ?? []) as Array<{ text: string }>).map((item, index: number) => (
-            <li key={index}>{item.text}</li>
-          ))}
-        </ul>
-      )
-    },
-    Cita: {
-      label: 'Cita',
-      fields: { text: { type: 'textarea' } },
-      defaultProps: { text: 'Cita destacada' },
-      render: ({ text }: Record<string, any>) => <blockquote className={cls.quote}>{text}</blockquote>
-    },
-    Separador: {
-      label: 'Separador',
+export function createPuckConfig({ openImageLibrary }: CreatePuckConfigOptions = {}): Config {
+  return {
+    // Sin campos en la raíz: el título/slug se gestionan fuera del canvas, así
+    // el panel derecho no muestra un campo "title" redundante.
+    root: {
       fields: {},
-      render: () => <hr className={cls.hr} />
+      render: ({ children }: Record<string, any>) => <>{children}</>
     },
-    Boton: {
-      label: 'Botón',
-      fields: { label: { type: 'text' }, href: { type: 'text' } },
-      defaultProps: { label: 'Ver más', href: '#' },
-      render: ({ label, href }: Record<string, any>) => (
-        <a href={href} className={cls.btn}>
-          {label}
-        </a>
-      )
+    // Agrupa los bloques del panel izquierdo para una navegación más clara.
+    categories: {
+      texto: { title: 'Texto', components: ['Titulo', 'Parrafo', 'Cita', 'Lista'] },
+      medios: { title: 'Medios', components: ['Imagen'] },
+      elementos: { title: 'Elementos', components: ['Separador', 'Boton'] }
+    },
+    components: {
+      Titulo: {
+        label: 'Título',
+        fields: {
+          text: { type: 'text' },
+          level: {
+            type: 'select',
+            options: [
+              { label: 'H2', value: '2' },
+              { label: 'H3', value: '3' }
+            ]
+          }
+        },
+        defaultProps: { text: 'Nuevo título', level: '2' },
+        render: ({ text, level }: Record<string, any>) =>
+          level === '3' ? <h3 className={cls.h3}>{text}</h3> : <h2 className={cls.h2}>{text}</h2>
+      },
+      Parrafo: {
+        label: 'Párrafo',
+        fields: { text: { type: 'textarea' } },
+        defaultProps: { text: 'Escribe aquí…' },
+        render: ({ text }: Record<string, any>) => <p className={cls.p}>{text}</p>
+      },
+      Imagen: {
+        label: 'Imagen',
+        fields: {
+          src: {
+            type: 'custom',
+            render: ({ value, onChange }) => (
+              <div className="grid gap-3">
+                <div className="flex gap-2">
+                  <input
+                    value={value ?? ''}
+                    onChange={(event) => onChange(event.target.value)}
+                    placeholder="https://…"
+                    className="h-11 w-full rounded-2xl border border-[hsl(var(--border))] bg-white px-4 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))]"
+                  />
+                  <button
+                    type="button"
+                    className="rounded-2xl border border-[hsl(var(--border))] px-4 text-sm font-semibold transition hover:bg-[hsl(var(--secondary))]"
+                    onClick={() =>
+                      openImageLibrary?.({
+                        currentValue: String(value ?? ''),
+                        onSelect: (url) => onChange(url)
+                      })
+                    }
+                  >
+                    Media
+                  </button>
+                </div>
+                {value ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={String(value)}
+                    alt="Vista previa"
+                    className="max-h-40 w-full rounded-2xl object-cover"
+                  />
+                ) : null}
+              </div>
+            )
+          },
+          alt: { type: 'text' }
+        },
+        defaultProps: { src: '', alt: '' },
+        render: ({ src, alt }: Record<string, any>) =>
+          src ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={src} alt={alt} className={cls.img} />
+          ) : (
+            <div className="my-4 rounded-2xl border border-dashed border-[hsl(var(--border))] p-6 text-center text-sm text-[hsl(var(--foreground))/0.5]">
+              Define la URL de la imagen
+            </div>
+          )
+      },
+      Lista: {
+        label: 'Lista',
+        fields: {
+          items: {
+            type: 'array',
+            arrayFields: { text: { type: 'text' } },
+            defaultItemProps: { text: 'Elemento' },
+            getItemSummary: (item: { text: string }) => item.text || 'Elemento'
+          }
+        },
+        defaultProps: { items: [{ text: 'Elemento' }] },
+        render: ({ items }: Record<string, any>) => (
+          <ul className={cls.ul}>
+            {((items ?? []) as Array<{ text: string }>).map((item, index: number) => (
+              <li key={index}>{item.text}</li>
+            ))}
+          </ul>
+        )
+      },
+      Cita: {
+        label: 'Cita',
+        fields: { text: { type: 'textarea' } },
+        defaultProps: { text: 'Cita destacada' },
+        render: ({ text }: Record<string, any>) => (
+          <blockquote className={cls.quote}>{text}</blockquote>
+        )
+      },
+      Separador: {
+        label: 'Separador',
+        fields: {},
+        render: () => <hr className={cls.hr} />
+      },
+      Boton: {
+        label: 'Botón',
+        fields: { label: { type: 'text' }, href: { type: 'text' } },
+        defaultProps: { label: 'Ver más', href: '#' },
+        render: ({ label, href }: Record<string, any>) => (
+          <a href={href} className={cls.btn}>
+            {label}
+          </a>
+        )
+      }
     }
   }
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { PersonalCycleCalculator } from "@/components/calculators/personal-cycle-calculator";
+import { PersonalMonthCalculator } from "@/components/calculators/personal-month-calculator";
 import { ToolPage } from "@/components/content/tool-page";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export default function Page() {
       wide
       description="El mes personal afina la energía de tu año y te muestra en qué enfocarte este mes."
     >
-      <PersonalCycleCalculator kind="month" />
+      <PersonalMonthCalculator />
 
       <div className="space-y-10">
         <section className="space-y-4 rounded-[2rem] border border-border/70 bg-card p-6 shadow-panel sm:p-8">

@@ -154,6 +154,7 @@ export type AdminContentListItem = {
   title: string
   slug: string
   featured_image_url: string | null
+  content_html: string | null
   category_id: number | null
   tag_ids: number[]
   status: PostStatus
@@ -200,6 +201,35 @@ export type ContentMutationInput = {
   status?: PostStatus
   requires_membership?: boolean
   published_at?: string | null
+}
+
+export type MediaImageItem = {
+  id: string
+  public_id: string
+  url: string
+  width: number | null
+  height: number | null
+  bytes: number | null
+  format: string | null
+  original_filename: string | null
+  created_at: string | null
+}
+
+export type MediaLibraryResponse = {
+  items: MediaImageItem[]
+  next_cursor: string | null
+  folder: string
+}
+
+export type MediaUploadSignatureResponse = {
+  api_key: string
+  cloud_name: string
+  folder: string
+  public_id: string
+  signature: string
+  tags: string
+  timestamp: number
+  upload_url: string
 }
 
 export type CommentItem = {
@@ -406,4 +436,3 @@ export type CreateCheckoutInput = {
 }
 
 export type CheckoutSessionResponse = Record<string, unknown>
-
