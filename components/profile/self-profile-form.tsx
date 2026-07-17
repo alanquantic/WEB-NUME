@@ -99,7 +99,9 @@ export function SelfProfileForm({ user }: { user: SafeUser }) {
               onChange={(e) => setForm((p) => ({ ...p, nationality: e.target.value }))} />
           </div>
           <div className="grid gap-2">
-            <label className="text-sm font-semibold" htmlFor="next_course">Próximo curso</label>
+            <label className="text-sm font-semibold" htmlFor="next_course">
+              Próximo curso <span className="font-normal text-[hsl(var(--foreground))/0.5]">(opcional)</span>
+            </label>
             <Input id="next_course" value={form.next_course}
               onChange={(e) => setForm((p) => ({ ...p, next_course: e.target.value }))} />
           </div>
