@@ -19,6 +19,8 @@ export type ProfileFieldsValue = {
   first_name: string
   last_name: string
   nickname: string
+  phone: string
+  birth_date: string
   bio: string
 }
 
@@ -38,6 +40,23 @@ export function ProfileFields({
         </Labeled>
         <Labeled label="Apellidos">
           <Input value={value.last_name} onChange={(e) => set({ last_name: e.target.value })} />
+        </Labeled>
+      </div>
+      <div className="grid gap-4 md:grid-cols-2">
+        <Labeled label="Teléfono">
+          <Input
+            type="tel"
+            value={value.phone}
+            onChange={(e) => set({ phone: e.target.value })}
+            placeholder="Ej. 5512345678"
+          />
+        </Labeled>
+        <Labeled label="Fecha de nacimiento">
+          <Input
+            type="date"
+            value={value.birth_date}
+            onChange={(e) => set({ birth_date: e.target.value })}
+          />
         </Labeled>
       </div>
       <Labeled label="Nombre visible / apodo">
@@ -146,13 +165,23 @@ export function ConsultantFields({
 
 // ── Helpers para construir/leer los valores ──────────────────────────────────
 export function readProfile(metadata: Record<string, unknown> | undefined): ProfileFieldsValue {
-  const p = ((metadata ?? {}).profile ?? {}) as Record<string, string>
+  const meta = metadata ?? {}
+  const p = (meta.profile ?? {}) as Record<string, string>
+  // Datos que la tienda dejó en metadata.customer al crear la cuenta por webhook;
+  // se usan como respaldo para pre-llenar el formulario si el perfil aún está vacío.
+  const c = (meta.customer ?? {}) as Record<string, string>
   return {
-    first_name: p.first_name ?? '',
-    last_name: p.last_name ?? '',
+    first_name: p.first_name ?? c.first_name ?? '',
+    last_name: p.last_name ?? c.last_name ?? '',
     nickname: p.nickname ?? '',
+    phone: p.phone ?? c.phone ?? '',
+    birth_date: p.birth_date ?? c.birth_date ?? '',
     bio: p.bio ?? ''
   }
+}
+
+export function emptyProfile(): ProfileFieldsValue {
+  return { first_name: '', last_name: '', nickname: '', phone: '', birth_date: '', bio: '' }
 }
 
 export function emptyConsultant(): ConsultantFieldsValue {

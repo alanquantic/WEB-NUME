@@ -3,6 +3,12 @@
 import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 
+import {
+  ProfileFields,
+  emptyProfile,
+  mergeMetadata,
+  type ProfileFieldsValue
+} from '@/components/profile/user-fields'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import type {
@@ -25,6 +31,7 @@ type FormState = {
   consultant_category: ConsultantCategory | ''
   current_membership: MembershipTier
   membership_expires_at: string
+  profile: ProfileFieldsValue
 }
 
 const roleOptions: Role[] = ['admin', 'subscriber']
@@ -48,7 +55,8 @@ const initialState: FormState = {
   is_consultant: false,
   consultant_category: '',
   current_membership: 'none',
-  membership_expires_at: ''
+  membership_expires_at: '',
+  profile: emptyProfile()
 }
 
 const fieldClassName = cn(
@@ -71,7 +79,8 @@ function buildProfilePayload(form: FormState): UpdateUserInput {
     current_membership: form.current_membership,
     membership_expires_at: form.membership_expires_at
       ? new Date(form.membership_expires_at).toISOString()
-      : null
+      : null,
+    metadata: mergeMetadata(undefined, form.profile)
   }
 }
 
@@ -203,6 +212,14 @@ export function UserCreateForm() {
         />
       </div>
 
+      <div className="grid gap-4 rounded-[2rem] border border-[hsl(var(--border))] bg-[hsl(var(--secondary))/0.3] p-5">
+        <h2 className="font-display text-lg font-semibold">Datos personales</h2>
+        <ProfileFields
+          value={form.profile}
+          onChange={(profile) => setForm((prev) => ({ ...prev, profile }))}
+        />
+      </div>
+
       <div className="grid gap-2 md:grid-cols-2 md:gap-4">
         <div className="grid gap-2">
           <label className="text-sm font-semibold" htmlFor="nationality">
@@ -219,7 +236,8 @@ export function UserCreateForm() {
 
         <div className="grid gap-2">
           <label className="text-sm font-semibold" htmlFor="next_course">
-            Próximo curso
+            Próximo curso{' '}
+            <span className="font-normal text-[hsl(var(--foreground))/0.5]">(opcional)</span>
           </label>
           <Input
             id="next_course"

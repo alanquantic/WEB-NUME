@@ -5,9 +5,54 @@ import { MembershipTierBadge } from '@/components/memberships/membership-tier-ba
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import type { Role } from '@/lib/api/contracts'
+import type { Role, SafeUser } from '@/lib/api/contracts'
 import { getUsers } from '@/lib/api/users.server'
 import { cn } from '@/lib/utils'
+
+function formatShortDate(value: string | null): string {
+  if (!value) return ''
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return ''
+  return new Intl.DateTimeFormat('es-MX', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric'
+  }).format(date)
+}
+
+function readMetaField(metadata: Record<string, unknown> | undefined, key: string): string {
+  const meta = metadata ?? {}
+  const profile = (meta.profile ?? {}) as Record<string, string>
+  const customer = (meta.customer ?? {}) as Record<string, string>
+  return profile[key] ?? customer[key] ?? ''
+}
+
+function formatBirthDate(value: string): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(value)
+  return match ? `${match[3]}/${match[2]}/${match[1]}` : value
+}
+
+function MembershipStatus({ user }: { user: SafeUser }) {
+  if (user.current_membership === 'none') {
+    return null
+  }
+
+  const date = formatShortDate(user.membership_expires_at)
+
+  if (user.has_active_membership) {
+    return (
+      <span className="mt-1 block text-xs font-medium text-emerald-700">
+        Activa{date ? ` · vence ${date}` : ''}
+      </span>
+    )
+  }
+
+  return (
+    <span className="mt-1 block text-xs font-medium text-red-600">
+      {date ? `Vencida el ${date}` : 'Inactiva'}
+    </span>
+  )
+}
 
 type SearchParams = {
   page?: string
@@ -135,6 +180,8 @@ export default async function ProfileUsersPage({
                   <th className="px-3 py-3 font-semibold">Correo electrónico</th>
                   <th className="px-3 py-3 font-semibold">Rol</th>
                   <th className="px-3 py-3 font-semibold">Membresía</th>
+                  <th className="px-3 py-3 font-semibold">Teléfono</th>
+                  <th className="px-3 py-3 font-semibold">Nacimiento</th>
                   <th className="px-3 py-3 font-semibold">Consultor</th>
                   <th className="px-3 py-3 font-semibold" />
                 </tr>
@@ -148,6 +195,19 @@ export default async function ProfileUsersPage({
                     </td>
                     <td className="px-3 py-3">
                       <MembershipTierBadge tier={user.current_membership} />
+                      <MembershipStatus user={user} />
+                    </td>
+                    <td className="px-3 py-3 whitespace-nowrap">
+                      {readMetaField(user.metadata, 'phone') || (
+                        <span className="text-[hsl(var(--foreground))/0.4]">—</span>
+                      )}
+                    </td>
+                    <td className="px-3 py-3 whitespace-nowrap">
+                      {readMetaField(user.metadata, 'birth_date') ? (
+                        formatBirthDate(readMetaField(user.metadata, 'birth_date'))
+                      ) : (
+                        <span className="text-[hsl(var(--foreground))/0.4]">—</span>
+                      )}
                     </td>
                     <td className="px-3 py-3">{user.is_consultant ? 'Sí' : 'No'}</td>
                     <td className="px-3 py-3 text-right">
