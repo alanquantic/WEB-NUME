@@ -4,8 +4,18 @@ import Link from 'next/link'
 import { useRef, useState } from 'react'
 
 export type HoroscopoMesContenido = {
-  titulo?: string
+  /** Frase corta de energía del mes (heading superior). */
+  energia?: string
+  /** Número de Mes Personal (p. ej. "2"). */
+  mesPersonal?: string
+  /** Cuerpo completo del horóscopo (solo miembros). */
   parrafos?: string[]
+  /** Viñetas de "Energía Activa" (solo miembros). */
+  energiaActiva?: string[]
+  /** Bloque "Mes excelente para" (solo miembros). */
+  mesExcelente?: string[]
+  /** Adelanto recortado del cuerpo (se envía a no-miembros en lugar del contenido completo). */
+  teaser?: string
 }
 
 export type HoroscopoContenido = Record<string, Record<string, HoroscopoMesContenido>>
@@ -22,7 +32,10 @@ export function HoroscopoMensualExplorer({
   anio: number
   numeros: string[]
   meses: string[]
-  /** Solo llega con datos cuando el usuario tiene membresía activa (gating en servidor). */
+  /**
+   * A miembros les llega el contenido completo; a no-miembros, una versión
+   * recortada (solo energía, mes personal y teaser) generada en el servidor.
+   */
   contenido: HoroscopoContenido | null
   isMember: boolean
 }) {
@@ -128,44 +141,106 @@ export function HoroscopoMensualExplorer({
             Año Personal {numero} · {mesNombre} {anio}
           </p>
 
-          {!isMember ? (
-            <div className="mt-5 rounded-[1.5rem] border border-dashed border-primary/30 bg-[hsl(var(--secondary)/0.4)] px-6 py-10 text-center">
-              <h3 className="font-display text-2xl font-semibold text-primary">
-                Contenido exclusivo para miembros
-              </h3>
-              <p className="mx-auto mt-3 max-w-md text-base leading-8 text-foreground/72">
-                El horóscopo mensual de tu año personal es parte del contenido premium. Hazte
-                miembro para leer la guía completa de cada mes.
-              </p>
-              <div className="mt-6 flex flex-wrap justify-center gap-3">
-                <a
-                  href={TIENDA_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-11 items-center justify-center rounded-full bg-gradient-brand px-7 text-sm font-semibold text-white shadow-glow transition hover:opacity-90"
-                >
-                  Ir a la tienda
-                </a>
-                <Link
-                  href="/login?next=/horoscopos"
-                  className="inline-flex h-11 items-center justify-center rounded-full border border-border/80 bg-background px-7 text-sm font-semibold text-primary transition hover:border-primary/40 hover:bg-primary-soft"
-                >
-                  Ya soy miembro
-                </Link>
-              </div>
-            </div>
-          ) : entrada && (entrada.parrafos?.length || entrada.titulo) ? (
-            <div className="mt-4">
-              {entrada.titulo ? (
+          {entrada ? (
+            <div className="mt-4 space-y-5">
+              {/* Preview visible para todos: energía + mes personal */}
+              {entrada.energia ? (
                 <h3 className="font-display text-2xl font-semibold text-foreground sm:text-3xl">
-                  {entrada.titulo}
+                  {entrada.energia}
                 </h3>
               ) : null}
-              <div className="mt-4 space-y-4 text-base leading-8 text-foreground/78">
-                {(entrada.parrafos ?? []).map((parrafo, index) => (
-                  <p key={index}>{parrafo}</p>
-                ))}
-              </div>
+              {entrada.mesPersonal ? (
+                <span className="inline-flex items-center rounded-full border border-primary/25 bg-primary-soft px-4 py-1.5 text-sm font-semibold text-primary">
+                  Año {numero} · Mes Personal {entrada.mesPersonal}
+                </span>
+              ) : null}
+
+              {isMember ? (
+                <>
+                  {/* Cuerpo completo */}
+                  {entrada.parrafos?.length ? (
+                    <div className="space-y-4 text-base leading-8 text-foreground/78">
+                      {entrada.parrafos.map((parrafo, index) => (
+                        <p key={index}>{parrafo}</p>
+                      ))}
+                    </div>
+                  ) : null}
+
+                  {/* Energía Activa */}
+                  {entrada.energiaActiva?.length ? (
+                    <div className="rounded-[1.5rem] border border-border/60 bg-secondary/40 p-5 sm:p-6">
+                      <h4 className="font-display text-lg font-semibold text-primary">
+                        Energía Activa
+                      </h4>
+                      <ul className="mt-3 space-y-2.5 text-base leading-7 text-foreground/78">
+                        {entrada.energiaActiva.map((item, index) => (
+                          <li key={index} className="flex gap-2.5">
+                            <span aria-hidden className="mt-1 text-primary">
+                              📌
+                            </span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+
+                  {/* Mes excelente para */}
+                  {entrada.mesExcelente?.length ? (
+                    <div>
+                      <h4 className="font-display text-lg font-semibold text-primary">
+                        Mes excelente para
+                      </h4>
+                      <div className="mt-3 space-y-3 text-base leading-8 text-foreground/78">
+                        {entrada.mesExcelente.map((parrafo, index) => (
+                          <p key={index}>{parrafo}</p>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
+                </>
+              ) : (
+                <>
+                  {/* Teaser (adelanto) para no-miembros */}
+                  {entrada.teaser ? (
+                    <div className="relative">
+                      <p className="text-base leading-8 text-foreground/78">{entrada.teaser}</p>
+                      <div
+                        aria-hidden
+                        className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-b from-transparent to-card"
+                      />
+                    </div>
+                  ) : null}
+
+                  {/* Muro de membresía */}
+                  <div className="rounded-[1.5rem] border border-dashed border-primary/30 bg-[hsl(var(--secondary)/0.4)] px-6 py-9 text-center">
+                    <h4 className="font-display text-2xl font-semibold text-primary">
+                      Sigue leyendo con tu membresía
+                    </h4>
+                    <p className="mx-auto mt-3 max-w-md text-base leading-8 text-foreground/72">
+                      Hazte miembro para desbloquear el horóscopo completo de {mesNombre}: el resto
+                      de la lectura, la <strong>Energía Activa</strong> del mes y para qué es un{' '}
+                      <strong>mes excelente</strong>.
+                    </p>
+                    <div className="mt-6 flex flex-wrap justify-center gap-3">
+                      <a
+                        href={TIENDA_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex h-11 items-center justify-center rounded-full bg-gradient-brand px-7 text-sm font-semibold text-white shadow-glow transition hover:opacity-90"
+                      >
+                        Ir a la tienda
+                      </a>
+                      <Link
+                        href="/login?next=/horoscopos"
+                        className="inline-flex h-11 items-center justify-center rounded-full border border-border/80 bg-background px-7 text-sm font-semibold text-primary transition hover:border-primary/40 hover:bg-primary-soft"
+                      >
+                        Ya soy miembro
+                      </Link>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           ) : (
             <p className="mt-4 text-base leading-8 text-foreground/72">
