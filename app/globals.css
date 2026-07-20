@@ -200,6 +200,16 @@ a {
     }
 }
 
+@media (min-width: 768px) and (max-height: 700px) {
+    .desktop-submenu-shell {
+        top: -2rem !important;
+    }
+
+    .desktop-submenu-shell.desktop-submenu-long {
+        top: -5rem !important;
+    }
+}
+
 /* Contenido del editor Tiptap (admin) */
 .prose-editor:focus {
     outline: none;

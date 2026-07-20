@@ -153,12 +153,12 @@ function renderDesktopBranch(item: NavItem, context: MenuContext, level: number)
   const panelShellClass = isTopLevel
     ? 'invisible absolute left-0 top-full z-50 min-w-[19rem] pt-2 opacity-0 transition duration-200 group-hover:visible group-hover:opacity-100'
     : cn(
-        'invisible absolute left-full top-0 z-50 min-w-[19rem] pl-2 opacity-0 transition duration-200 group-hover/nested:visible group-hover/nested:opacity-100',
-        isLongNestedMenu && 'w-[26rem]'
+        'desktop-submenu-shell invisible absolute left-full top-0 z-50 min-w-[19rem] pl-2 opacity-0 transition duration-200 group-hover/nested:visible group-hover/nested:opacity-100',
+        isLongNestedMenu && 'desktop-submenu-long w-[26rem]'
       )
   const panelClass = cn(
     'desktop-menu-panel header-panel rounded-3xl border border-border/80 bg-card/95 p-3 shadow-2xl shadow-black/10 backdrop-blur',
-    !isTopLevel && 'max-h-[calc(100dvh-7rem)] overflow-y-auto overscroll-contain'
+    !isTopLevel && 'mb-4 max-h-[calc(100dvh-9rem)] overflow-y-auto overscroll-contain'
   )
 
   return (
