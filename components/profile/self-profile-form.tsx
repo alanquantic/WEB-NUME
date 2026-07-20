@@ -49,6 +49,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 export function SelfProfileForm({ user }: { user: SafeUser }) {
   const router = useRouter()
+  const isConsultant = user.is_consultant === true
   const [form, setForm] = useState<FormState>(() => buildInitial(user))
   const [feedback, setFeedback] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -67,7 +68,7 @@ export function SelfProfileForm({ user }: { user: SafeUser }) {
       profile_picture_url: form.profile_picture_url.trim() ? form.profile_picture_url.trim() : null,
       metadata: mergeMetadata(user.metadata, form.profile)
     }
-    if (user.is_consultant) {
+    if (isConsultant) {
       payload.consultant_profile = toConsultantInput(form.consultant)
     }
 
@@ -113,7 +114,7 @@ export function SelfProfileForm({ user }: { user: SafeUser }) {
         </div>
       </Section>
 
-      {user.is_consultant ? (
+      {isConsultant ? (
         <Section title="Mi ficha de consultor">
           <ConsultantFields value={form.consultant} onChange={(consultant) => setForm((p) => ({ ...p, consultant }))} />
         </Section>

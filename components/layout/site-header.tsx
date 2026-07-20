@@ -9,6 +9,7 @@ import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { getToolIcon } from '@/components/ui/tool-icon'
 import { ACCESS_COOKIE, clearAccessCookie, clearRefreshCookie } from '@/lib/auth/cookies'
 import { API_BASE_URL, getServerSessionUser } from '@/lib/auth/session'
+import { cn } from '@/lib/utils'
 
 type NavItem = {
   label: string
@@ -109,7 +110,7 @@ function renderDesktopLeaf(item: NavItem, level: number) {
       <form action={logoutAction}>
         <button
           type="submit"
-          className="header-chip block w-full rounded-2xl px-4 py-3 text-left text-sm text-foreground/80 hover:bg-primary-soft hover:text-primary"
+          className="desktop-menu-item header-chip block w-full rounded-2xl px-4 py-3 text-left text-sm text-foreground/80 hover:bg-primary-soft hover:text-primary"
         >
           <span className="relative z-10">{item.label}</span>
         </button>
@@ -132,7 +133,7 @@ function renderDesktopLeaf(item: NavItem, level: number) {
   return (
     <Link
       href={(item.href ?? '#') as Route}
-      className="header-chip flex items-center gap-2.5 rounded-2xl px-4 py-3 text-sm text-foreground/80 hover:bg-primary-soft hover:text-primary"
+      className="desktop-menu-item header-chip flex items-center gap-2.5 rounded-2xl px-4 py-3 text-sm text-foreground/80 hover:bg-primary-soft hover:text-primary"
     >
       {LeafIcon ? (
         <LeafIcon size={16} strokeWidth={1.75} className="shrink-0 text-primary/70" aria-hidden />
@@ -144,15 +145,21 @@ function renderDesktopLeaf(item: NavItem, level: number) {
 
 function renderDesktopBranch(item: NavItem, context: MenuContext, level: number) {
   const isTopLevel = level === 0
+  const isLongNestedMenu = !isTopLevel && (item.children?.length ?? 0) > 5
   const wrapperClass = isTopLevel ? 'group relative' : 'group/nested relative'
   const triggerClass = isTopLevel
     ? 'header-link-float flex items-center gap-1 py-3 text-foreground/82 hover:text-primary'
-    : 'header-chip flex w-full items-center justify-between gap-3 rounded-2xl px-4 py-3 text-sm text-foreground/80 hover:bg-primary-soft hover:text-primary'
+    : 'desktop-menu-item header-chip flex w-full items-center justify-between gap-3 rounded-2xl px-4 py-3 text-sm text-foreground/80 hover:bg-primary-soft hover:text-primary'
   const panelShellClass = isTopLevel
     ? 'invisible absolute left-0 top-full z-50 min-w-[19rem] pt-2 opacity-0 transition duration-200 group-hover:visible group-hover:opacity-100'
-    : 'invisible absolute left-full top-0 z-50 min-w-[19rem] pl-2 opacity-0 transition duration-200 group-hover/nested:visible group-hover/nested:opacity-100'
-  const panelClass =
-    'header-panel rounded-3xl border border-border/80 bg-card/95 p-3 shadow-2xl shadow-black/10 backdrop-blur'
+    : cn(
+        'desktop-submenu-shell invisible absolute left-full top-0 z-50 min-w-[19rem] pl-2 opacity-0 transition duration-200 group-hover/nested:visible group-hover/nested:opacity-100',
+        isLongNestedMenu && 'desktop-submenu-long w-[26rem]'
+      )
+  const panelClass = cn(
+    'desktop-menu-panel header-panel rounded-3xl border border-border/80 bg-card/95 p-3 shadow-2xl shadow-black/10 backdrop-blur',
+    !isTopLevel && 'mb-4 max-h-[calc(100dvh-9rem)] overflow-y-auto overscroll-contain'
+  )
 
   return (
     <div key={`${level}-${item.label}`} className={wrapperClass}>
@@ -167,7 +174,9 @@ function renderDesktopBranch(item: NavItem, context: MenuContext, level: number)
 
       <div className={panelShellClass}>
         <div className={panelClass}>
-          <div className="space-y-1">{renderDesktopNav(item.children ?? [], context, level + 1)}</div>
+          <div className={cn(isLongNestedMenu ? 'grid grid-cols-2 gap-1' : 'space-y-1')}>
+            {renderDesktopNav(item.children ?? [], context, level + 1)}
+          </div>
         </div>
       </div>
     </div>
@@ -367,7 +376,7 @@ export async function SiteHeader() {
           </span>
         </summary>
 
-        <div className="border-t border-border bg-card/95 px-4 pb-5 pt-3 shadow-lg backdrop-blur">
+        <div className="max-h-[calc(100dvh-68px)] overflow-y-auto overscroll-contain border-t border-border bg-card/95 px-4 pb-5 pt-3 shadow-lg backdrop-blur">
           <div className="space-y-3">
             {NAV_ITEMS.map((item) => (
               <MobileMenuItem
