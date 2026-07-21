@@ -16,6 +16,7 @@ export type GetPostsParams = {
   search?: string
   category_id?: number
   tag_id?: number
+  author_id?: string
   status?: PostStatus
 }
 

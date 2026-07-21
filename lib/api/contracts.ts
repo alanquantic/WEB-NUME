@@ -170,6 +170,8 @@ export type AdminContentDetail = {
   author_id: string | null
   last_editor_id: string | null
   category_id: number | null
+  category?: Category | null
+  author?: PostAuthor | null
   tag_ids: number[]
   title: string
   slug: string
@@ -183,6 +185,14 @@ export type AdminContentDetail = {
   published_at: string | null
   created_at: string
   updated_at: string
+}
+
+export type PostAuthor = {
+  id: string
+  email: string
+  profile_picture_url: string | null
+  name: string
+  bio: string | null
 }
 
 export type ContentDetailResponse = {
