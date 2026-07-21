@@ -2,11 +2,12 @@ import type { Metadata } from 'next'
 import type { Route } from 'next'
 import Link from 'next/link'
 
-import { SamplePostCard } from '@/components/content/sample-post-card'
+import { PostCard } from '@/components/content/post-card'
+import { EmptyState } from '@/components/ui/empty-state'
 import { SearchIcon } from '@/components/ui/icons'
-import type { Category } from '@/lib/api/contracts'
+import type { Category, ContentItem } from '@/lib/api/contracts'
+import { getPosts } from '@/lib/api/posts'
 import { getCategories } from '@/lib/api/taxonomy'
-import { getSamplePosts } from '@/lib/blog/sample-posts'
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -14,18 +15,35 @@ export const metadata: Metadata = {
     'Artículos y guías de numerología para tu día a día: nombre, año personal, números maestros y más.'
 }
 
+const PAGE_SIZE = 12
+
 async function loadCategories(): Promise<Category[]> {
   try {
-    return (await getCategories(1, 8)).data
+    return (await getCategories(1, 100)).data
   } catch {
     return []
   }
 }
 
-export default async function BlogPage() {
-  const posts = getSamplePosts()
-  const categories = await loadCategories()
-  const [featured, ...rest] = posts
+async function loadPosts(page: number): Promise<{ posts: ContentItem[]; total: number }> {
+  try {
+    const res = await getPosts({ page, limit: PAGE_SIZE })
+    return { posts: res.data, total: res.pagination?.total ?? res.data.length }
+  } catch {
+    return { posts: [], total: 0 }
+  }
+}
+
+export default async function BlogPage({
+  searchParams
+}: {
+  searchParams?: { page?: string }
+}) {
+  const page = Math.max(1, Number(searchParams?.page ?? '1') || 1)
+  const [{ posts, total }, categories] = await Promise.all([loadPosts(page), loadCategories()])
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE))
+  const hasPrev = page > 1
+  const hasNext = page < totalPages
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-12">
@@ -55,6 +73,9 @@ export default async function BlogPage() {
 
       {categories.length > 0 ? (
         <div className="mt-6 flex flex-wrap gap-2">
+          <span className="rounded-full border border-primary/30 bg-primary-soft px-4 py-1.5 text-sm font-semibold text-primary">
+            Todo
+          </span>
           {categories.map((category) => (
             <Link
               key={category.id}
@@ -67,17 +88,55 @@ export default async function BlogPage() {
         </div>
       ) : null}
 
-      {featured ? (
-        <div className="mt-8">
-          <SamplePostCard post={featured} featured />
-        </div>
-      ) : null}
+      {posts.length > 0 ? (
+        <>
+          <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {posts.map((post) => (
+              <PostCard key={post.id} post={post} />
+            ))}
+          </div>
 
-      <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-        {rest.map((post) => (
-          <SamplePostCard key={post.slug} post={post} />
-        ))}
-      </div>
+          {totalPages > 1 ? (
+            <nav
+              className="mt-12 flex items-center justify-between gap-4"
+              aria-label="Paginación del blog"
+            >
+              {hasPrev ? (
+                <Link
+                  href={(page - 1 === 1 ? '/blog' : `/blog?page=${page - 1}`) as Route}
+                  className="rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold text-foreground/80 transition hover:bg-primary-soft hover:text-primary"
+                >
+                  ← Anteriores
+                </Link>
+              ) : (
+                <span />
+              )}
+
+              <span className="text-sm font-medium text-foreground/60">
+                Página {page} de {totalPages}
+              </span>
+
+              {hasNext ? (
+                <Link
+                  href={`/blog?page=${page + 1}` as Route}
+                  className="rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold text-foreground/80 transition hover:bg-primary-soft hover:text-primary"
+                >
+                  Siguientes →
+                </Link>
+              ) : (
+                <span />
+              )}
+            </nav>
+          ) : null}
+        </>
+      ) : (
+        <div className="mt-8">
+          <EmptyState
+            title="Sin publicaciones aún"
+            description="Muy pronto encontrarás aquí los artículos del blog."
+          />
+        </div>
+      )}
     </div>
   )
 }

@@ -1,5 +1,7 @@
 import type { Config, Data } from '@puckeditor/core'
 
+import { sanitizeHtml } from '@/lib/html/sanitize'
+
 // ── Tipos de props por bloque ──────────────────────────────────────────────
 type HeadingProps = { text: string; level: '2' | '3' }
 type TextProps = { text: string }
@@ -7,6 +9,7 @@ type ImageProps = { src: string; alt: string }
 type ListProps = { items: Array<{ text: string }> }
 type QuoteProps = { text: string }
 type ButtonProps = { label: string; href: string }
+type HtmlProps = { html: string }
 
 // Clases Tailwind compartidas entre el canvas del editor y el HTML público,
 // para que se vea igual en ambos lados.
@@ -38,7 +41,7 @@ export function createPuckConfig({ openImageLibrary }: CreatePuckConfigOptions =
     categories: {
       texto: { title: 'Texto', components: ['Titulo', 'Parrafo', 'Cita', 'Lista'] },
       medios: { title: 'Medios', components: ['Imagen'] },
-      elementos: { title: 'Elementos', components: ['Separador', 'Boton'] }
+      elementos: { title: 'Elementos', components: ['Separador', 'Boton', 'Html'] }
     },
     components: {
       Titulo: {
@@ -155,6 +158,21 @@ export function createPuckConfig({ openImageLibrary }: CreatePuckConfigOptions =
             {label}
           </a>
         )
+      },
+      // Bloque para HTML editorial (p. ej. contenido migrado desde WordPress/Elementor).
+      // Preserva el formato inline (<strong>, <a>, listas…) sin romperlo en bloques.
+      // Se sanitiza al render (defensa en profundidad); el HTML público se
+      // vuelve a sanitizar en el servidor con lib/sanitize.ts.
+      Html: {
+        label: 'HTML (migrado)',
+        fields: { html: { type: 'textarea' } },
+        defaultProps: { html: '' },
+        render: ({ html }: Record<string, any>) => (
+          <div
+            className="[&_p]:my-3 [&_p]:leading-8 [&_h2]:font-display [&_h2]:text-3xl [&_h2]:font-semibold [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:font-display [&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:mt-5 [&_ul]:my-3 [&_ul]:ml-6 [&_ul]:list-disc [&_ol]:my-3 [&_ol]:ml-6 [&_ol]:list-decimal [&_li]:my-1 [&_a]:text-[hsl(var(--primary))] [&_a]:underline [&_blockquote]:my-4 [&_blockquote]:border-l-4 [&_blockquote]:pl-4 [&_blockquote]:italic [&_img]:my-4 [&_img]:max-w-full [&_img]:rounded-2xl"
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(String(html ?? '')) }}
+          />
+        )
       }
     }
   }
@@ -218,6 +236,10 @@ function blockToHtml(item: { type: string; props?: Record<string, unknown> }): s
       return `<a href="${safeUrl(String(p.href ?? '#'))}" class="${cls.btn}">${escapeHtml(
         String(p.label ?? '')
       )}</a>`
+    case 'Html':
+      // Contenido ya HTML (migrado). No se escapa: el HTML público se sanitiza
+      // en el servidor (lib/sanitize.ts) antes de inyectarse.
+      return String(p.html ?? '')
     default:
       return ''
   }
