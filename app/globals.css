@@ -185,6 +185,31 @@ a {
     }
 }
 
+/* Mantiene accesibles todos los niveles del menú cuando la ventana es baja
+   (por ejemplo, con las herramientas de desarrollo abiertas). */
+@media (min-width: 768px) and (max-height: 600px) {
+    .desktop-menu-panel {
+        padding: 0.5rem;
+        border-radius: 1.25rem;
+    }
+
+    .desktop-menu-item {
+        min-height: 2rem;
+        padding-top: 0.375rem;
+        padding-bottom: 0.375rem;
+    }
+}
+
+@media (min-width: 768px) and (max-height: 700px) {
+    .desktop-submenu-shell {
+        top: -2rem !important;
+    }
+
+    .desktop-submenu-shell.desktop-submenu-long {
+        top: -5rem !important;
+    }
+}
+
 /* Contenido del editor Tiptap (admin) */
 .prose-editor:focus {
     outline: none;
