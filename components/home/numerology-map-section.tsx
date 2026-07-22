@@ -269,6 +269,10 @@ export function NumerologyMapSection() {
           <span className="text-gradient-brand">Comienza a conocerte</span> a través de
           Numerología Cotidiana
         </h1>
+        <p className="relative mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+          Ingresa tu nombre y fecha de nacimiento para descubrir tus principales números de energía
+          y lo que revelan sobre ti.
+        </p>
       </ScrollReveal>
 
       <div className="mt-10 grid gap-4 lg:grid-cols-[1fr_1.5fr_1.02fr]">
