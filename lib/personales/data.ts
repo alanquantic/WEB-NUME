@@ -1,6 +1,7 @@
 import almaData from '@/components/jsons/personales/alma.json'
 import anoPersonalData from '@/components/jsons/personales/ano-personal.json'
 import diaPersonalData from '@/components/jsons/personales/dia-personal.json'
+import guiasData from '@/components/jsons/personales/guias.json'
 import mesPersonalData from '@/components/jsons/personales/mes-personal.json'
 import numeroPersonalData from '@/components/jsons/personales/numero-personal.json'
 import semanaData from '@/components/jsons/personales/semana.json'
@@ -103,10 +104,62 @@ export function getPersonalCategorias(): PersonalCategoria[] {
   return CATEGORIAS
 }
 
+export function getPersonalCategoria(key: PersonalCategoriaKey): PersonalCategoria | null {
+  return CATEGORIAS.find((categoria) => categoria.key === key) ?? null
+}
+
 export function getPersonalEntryBySlug(slug: string) {
   return ENTRIES_BY_SLUG.get(slug) ?? null
 }
 
 export function getPersonalSlugs(): string[] {
   return [...ENTRIES_BY_SLUG.keys()]
+}
+
+// ── Páginas guía (destino de los botones "Leer Más") ────────────────────────
+
+export type GuiaBloque =
+  | { tipo: 'titulo'; texto: string }
+  | { tipo: 'html'; html: string }
+  | { tipo: 'acordeon'; items: { titulo: string; html: string }[] }
+
+export type GuiaPersonal = {
+  slug: string
+  titulo: string
+  bloques: GuiaBloque[]
+}
+
+const GUIAS = (guiasData as unknown as { guias: GuiaPersonal[] }).guias
+
+// Metadatos por guía: descripción SEO y categoría cuyos números se enlazan.
+export const GUIA_META: Record<
+  string,
+  { descripcion: string; categoria: PersonalCategoriaKey; toolKey: string }
+> = {
+  'numerologia-cotidiana-horoscopo-ano-personal': {
+    descripcion:
+      'Qué es el Año Personal, cómo marca los ciclos de 9 años y qué lección te acompaña este 2026.',
+    categoria: 'ano-personal',
+    toolKey: 'personales-ano-personal'
+  },
+  'mes-personal': {
+    descripcion:
+      'Qué es el Mes Personal y qué energía vibra en cada uno de tus meses del año.',
+    categoria: 'mes-personal',
+    toolKey: 'personales-mes-personal'
+  },
+  'semana-personal': {
+    descripcion:
+      'Qué es la Semana Personal, cómo se calcula y qué vibración trae cada semana del mes.',
+    categoria: 'semana',
+    toolKey: 'personales-semana'
+  }
+}
+
+export function getGuiaBySlug(slug: string): GuiaPersonal | null {
+  return GUIAS.find((guia) => guia.slug === slug) ?? null
+}
+
+export function getGuiaSlugs(): string[] {
+  return GUIAS.map((guia) => guia.slug)
 }

@@ -1,3 +1,6 @@
+import type { Route } from 'next'
+import Link from 'next/link'
+
 import { SaveResultButton } from '@/components/calculators/save-result-button'
 import { CountUp } from '@/components/ui/count-up'
 import { getMeaning } from '@/lib/numerology/meanings'
@@ -6,9 +9,22 @@ type NumberResultProps = {
   value: number | string
   intro?: string
   saveLabel?: string
+  /** Datos usados en el cálculo (legibles) que se guardan junto al resultado. */
+  saveDetail?: string
+  /** Ruta al cálculo con datos precargados que se guarda junto al resultado. */
+  saveHref?: string
+  /** Página de contenido del número obtenido ("Ver más"). */
+  verMasHref?: string | null
 }
 
-export function NumberResult({ value, intro, saveLabel }: NumberResultProps) {
+export function NumberResult({
+  value,
+  intro,
+  saveLabel,
+  saveDetail,
+  saveHref,
+  verMasHref
+}: NumberResultProps) {
   const meaning = typeof value === 'number' ? getMeaning(value) : null
 
   return (
@@ -66,9 +82,24 @@ export function NumberResult({ value, intro, saveLabel }: NumberResultProps) {
         </div>
       ) : null}
 
-      {saveLabel ? (
-        <div className="mt-5">
-          <SaveResultButton label={saveLabel} value={value} />
+      {saveLabel || verMasHref ? (
+        <div className="mt-5 flex flex-wrap items-center gap-3">
+          {verMasHref ? (
+            <Link
+              href={verMasHref as Route}
+              className="inline-flex items-center rounded-full bg-gradient-brand px-5 py-2 text-sm font-semibold text-white shadow-glow transition hover:opacity-95"
+            >
+              Ver más
+            </Link>
+          ) : null}
+          {saveLabel ? (
+            <SaveResultButton
+              label={saveLabel}
+              value={value}
+              detail={saveDetail}
+              href={saveHref}
+            />
+          ) : null}
         </div>
       ) : null}
     </div>

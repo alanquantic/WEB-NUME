@@ -16,6 +16,7 @@ import { calculateExpression } from '@/lib/numerology/expression'
 import { calculateLifePath } from '@/lib/numerology/life-path'
 import { calculateMaturity } from '@/lib/numerology/maturity'
 import { getMeaning } from '@/lib/numerology/meanings'
+import { personalPagePath, type PersonalCategoriaKey } from '@/lib/personales/routes'
 import { addSavedResult } from '@/lib/saved-results'
 import Person from '@/resources/person'
 
@@ -23,6 +24,8 @@ type MapItem = {
   label: string
   value: number | string
   href: string
+  /** Ruta base de la herramienta: se usa para el icono y como fallback del link. */
+  iconHref: string
 }
 
 type MapGroup = {
@@ -41,6 +44,22 @@ function clean(value: number | string | false | null | undefined): number | stri
   return value
 }
 
+/**
+ * Construye un item del mapa. Si el número obtenido tiene página de contenido
+ * propia (categoría "personales"), el link apunta a ella; si no, a la
+ * herramienta genérica.
+ */
+function mapItem(
+  label: string,
+  rawValue: number | string | false | null | undefined,
+  toolHref: string,
+  categoria?: PersonalCategoriaKey
+): MapItem {
+  const value = clean(rawValue)
+  const personalHref = categoria ? personalPagePath(categoria, value) : null
+  return { label, value, href: personalHref ?? toolHref, iconHref: toolHref }
+}
+
 function buildMap(fullName: string, birthDate: string): MapData | null {
   const name = fullName.replace(/\s+/g, ' ').trim()
   if (!name || !birthDate) return null
@@ -54,41 +73,34 @@ function buildMap(fullName: string, birthDate: string): MapData | null {
       {
         title: 'Tu esencia',
         items: [
-          {
-            label: 'Camino de vida',
-            value: clean(calculateLifePath({ birthDate }).lifePathNumber),
-            href: '/calculadoras/camino-de-vida'
-          },
-          { label: 'Número personal', value: clean(person.calcPersonalNumber()), href: '/explora' },
-          {
-            label: 'Madurez',
-            value: clean(calculateMaturity(name, birthDate)),
-            href: '/numerodelamadurez'
-          }
+          mapItem(
+            'Camino de vida',
+            calculateLifePath({ birthDate }).lifePathNumber,
+            '/calculadoras/camino-de-vida'
+          ),
+          mapItem('Número personal', person.calcPersonalNumber(), '/explora', 'numero-personal'),
+          mapItem('Madurez', calculateMaturity(name, birthDate), '/numerodelamadurez')
         ]
       },
       {
         title: 'Tu nombre',
         items: [
-          { label: 'Expresión', value: clean(expression?.expression), href: '/numerodelnombre' },
-          { label: 'Alma', value: clean(expression?.soul), href: '/numerodelalma' },
-          {
-            label: 'Personalidad',
-            value: clean(expression?.personality),
-            href: '/numerodeexpresiondelalma'
-          }
+          mapItem('Expresión', expression?.expression, '/numerodelnombre'),
+          mapItem('Alma', expression?.soul, '/numerodelalma', 'alma'),
+          mapItem('Personalidad', expression?.personality, '/numerodeexpresiondelalma')
         ]
       },
       {
         title: 'Tu momento (2026)',
         items: [
-          {
-            label: 'Año personal',
-            value: clean(person.calcPersonalYear(new Date(now.getFullYear(), 0, 1))),
-            href: '/anopersonal'
-          },
-          { label: 'Mes personal', value: clean(person.calcPersonalMonth(now, now)), href: '/mespersonal' },
-          { label: 'Día personal', value: clean(person.calcPersonalDay(now)), href: '/diapersonal' }
+          mapItem(
+            'Año personal',
+            person.calcPersonalYear(new Date(now.getFullYear(), 0, 1)),
+            '/anopersonal',
+            'ano-personal'
+          ),
+          mapItem('Mes personal', person.calcPersonalMonth(now, now), '/mespersonal', 'mes-personal'),
+          mapItem('Día personal', person.calcPersonalDay(now), '/diapersonal', 'dia-personal')
         ]
       }
     ]
@@ -100,7 +112,7 @@ function buildMap(fullName: string, birthDate: string): MapData | null {
 }
 
 function MapTile({ item }: { item: MapItem }) {
-  const Icon = getToolIcon(item.href)
+  const Icon = getToolIcon(item.iconHref)
   const meaning = typeof item.value === 'number' ? getMeaning(item.value).title : ''
 
   return (

@@ -134,12 +134,43 @@ function Bloque({ bloque }: { bloque: PersonalBloque }) {
   }
 }
 
+function MembershipWall({ next }: { next: string }) {
+  return (
+    <section className="rounded-[2rem] border border-primary/20 bg-[linear-gradient(135deg,hsl(var(--secondary)/0.85),hsl(var(--primary-soft)))] p-8 text-center shadow-panel sm:p-10">
+      <p className="font-display text-2xl font-semibold text-primary">
+        Sigue leyendo con tu membresía
+      </p>
+      <p className="mx-auto mt-3 max-w-xl text-base leading-8 text-foreground/75">
+        Este contenido es exclusivo para miembros. Únete para desbloquear el reporte completo
+        de cada uno de tus números y todo el contenido premium.
+      </p>
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+        <Link
+          href={`/membresias?next=${encodeURIComponent(next)}` as Route}
+          className="inline-flex items-center rounded-full bg-gradient-brand px-6 py-3 text-sm font-semibold text-white shadow-glow transition hover:opacity-95"
+        >
+          Hazte miembro
+        </Link>
+        <Link
+          href={`/login?next=${encodeURIComponent(next)}` as Route}
+          className="inline-flex items-center rounded-full border border-primary/25 px-6 py-3 text-sm font-semibold text-primary transition hover:bg-primary-soft"
+        >
+          Ya soy miembro, iniciar sesión
+        </Link>
+      </div>
+    </section>
+  )
+}
+
 export function PersonalPageView({
   categoria,
-  entry
+  entry,
+  locked = false
 }: {
   categoria: PersonalCategoria
   entry: PersonalNumero
+  /** true → solo llega el preview del contenido y se muestra el muro de membresía. */
+  locked?: boolean
 }) {
   return (
     <ToolPage
@@ -171,12 +202,20 @@ export function PersonalPageView({
           </div>
         </section>
 
-        {/* Contenido */}
-        <section className="space-y-6">
+        {/* Contenido (preview con desvanecido cuando está bloqueado) */}
+        <section className="relative space-y-6">
           {entry.bloques.map((bloque, index) => (
             <Bloque key={index} bloque={bloque} />
           ))}
+          {locked ? (
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background"
+            />
+          ) : null}
         </section>
+
+        {locked ? <MembershipWall next={`/${entry.slug}`} /> : null}
 
         {/* Navegación entre números de la misma categoría */}
         {categoria.numeros.length > 1 ? (

@@ -89,10 +89,10 @@ export default function Page() {
                   evolución anual.
                 </p>
                 <Link
-                  href="/horoscopoanopersonal"
+                  href="/mes-personal"
                   className="mt-10 inline-flex items-center justify-center rounded-full bg-gradient-brand px-8 py-4 text-lg font-semibold text-white shadow-[0_18px_36px_hsl(var(--primary)/0.18)] transition hover:translate-y-[-1px] hover:shadow-[0_22px_44px_hsl(var(--primary)/0.24)]"
                 >
-                  Calcula tu Mes Personal
+                  Leer Más
                 </Link>
               </section>
             </div>

@@ -5,11 +5,23 @@ import { useState } from 'react'
 
 import { addSavedResult } from '@/lib/saved-results'
 
-export function SaveResultButton({ label, value }: { label: string; value: number | string }) {
+export function SaveResultButton({
+  label,
+  value,
+  detail,
+  href
+}: {
+  label: string
+  value: number | string
+  /** Datos usados en el cálculo, legibles, para mostrarse en Mi carta. */
+  detail?: string
+  /** Ruta al cálculo con los datos precargados; Mi carta la usa como link. */
+  href?: string
+}) {
   const [saved, setSaved] = useState(false)
 
   function handleSave() {
-    addSavedResult({ label, value: String(value) })
+    addSavedResult({ label, value: String(value), detail, href })
     setSaved(true)
   }
 

@@ -102,10 +102,10 @@ export default function Page() {
                   acontecimientos para tu siguiente año.
                 </p>
                 <Link
-                  href="/horoscopoanopersonal"
+                  href="/numerologia-cotidiana-horoscopo-ano-personal"
                   className="mt-10 inline-flex items-center justify-center rounded-full bg-gradient-brand px-8 py-4 text-lg font-semibold text-white shadow-[0_18px_36px_hsl(var(--primary)/0.18)] transition hover:translate-y-[-1px] hover:shadow-[0_22px_44px_hsl(var(--primary)/0.24)]"
                 >
-                  Calcula tu Año Personal
+                  Leer Más
                 </Link>
               </section>
             </div>
