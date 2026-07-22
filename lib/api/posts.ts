@@ -34,8 +34,10 @@ function toQueryString(params: Record<string, string | number | undefined>) {
 
 export async function getPosts(params: GetPostsParams = {}) {
   const query = toQueryString(params)
+  // Listado público: cacheable, revalida cada 60 s. Invalidable vía tag `posts`.
   return serverApiFetch<ApiListResponse<ContentItem>>(`/posts${query ? `?${query}` : ''}`, {
-    next: { tags: ['posts'] }
+    cache: 'force-cache',
+    next: { revalidate: 60, tags: ['posts'] }
   })
 }
 

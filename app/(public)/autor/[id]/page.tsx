@@ -33,7 +33,6 @@ export default async function AuthorProfilePage({ params }: { params: { id: stri
   // que aquí ya no aplica) y renderizamos el bio completo sanitizado.
   const bioWithoutLinks = (author.bio ?? '').replace(/<a\b[^>]*>[\s\S]*?<\/a>/gi, '')
   const bioHtml = sanitizeArticleHtml(bioWithoutLinks) ?? ''
-  const initial = author.name?.trim().charAt(0).toUpperCase() ?? ''
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 text-center">
@@ -45,16 +44,12 @@ export default async function AuthorProfilePage({ params }: { params: { id: stri
       </Link>
 
       <div className="mx-auto mt-8 flex h-40 w-40 items-center justify-center overflow-hidden rounded-full bg-primary-soft text-5xl font-semibold text-primary shadow-panel">
-        {author.profile_picture_url ? (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
-            src={author.profile_picture_url}
-            alt={author.name}
-            className="h-full w-full object-cover"
-          />
-        ) : (
-          <span aria-hidden="true">{initial}</span>
-        )}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/mini-laura.png"
+          alt={author.name}
+          className="h-full w-full object-cover"
+        />
       </div>
 
       <h1 className="mt-6 font-display text-4xl font-semibold text-foreground sm:text-5xl">

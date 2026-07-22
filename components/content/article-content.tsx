@@ -37,7 +37,6 @@ export function ArticleContent({
   const date = formatDate(content.published_at ?? content.created_at)
   const safeHtml = sanitizeArticleHtml(content.content_html)
   const author = content.author ?? null
-  const authorInitial = author?.name?.trim().charAt(0).toUpperCase() ?? ''
   // Los <a> del bio apuntan a rutas /author/... del sitio antiguo, así que los
   // quitamos y sustituimos por nuestro propio enlace al perfil del autor.
   const bioWithoutLinks = (author?.bio ?? '').replace(/<a\b[^>]*>[\s\S]*?<\/a>/gi, '')
@@ -90,16 +89,12 @@ export function ArticleContent({
           className="mt-12 flex flex-col gap-4 rounded-[1.75rem] border border-border/70 bg-card p-6 shadow-panel sm:flex-row sm:items-center sm:gap-6"
         >
           <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary-soft text-2xl font-semibold text-primary">
-            {author.profile_picture_url ? (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img
-                src={author.profile_picture_url}
-                alt={author.name}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <span aria-hidden="true">{authorInitial}</span>
-            )}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/mini-laura.png"
+              alt={author.name}
+              className="h-full w-full object-cover"
+            />
           </div>
           <div className="flex-1">
             <p className="text-xs font-semibold uppercase tracking-wide text-foreground/55">
