@@ -1,12 +1,15 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import type { Route } from 'next'
+import Link from 'next/link'
+import { useEffect, useRef, useState } from 'react'
 
 import mesPersonalData from '@/components/jsons/significados/mes-personal.json'
 import { SaveResultButton } from '@/components/calculators/save-result-button'
 import { Button } from '@/components/ui/button'
 import { CountUp } from '@/components/ui/count-up'
 import { Input } from '@/components/ui/input'
+import { personalPagePath } from '@/lib/personales/routes'
 import Person from '@/resources/person'
 
 const MONTHS = [
@@ -76,6 +79,23 @@ function MeaningBlocks({ entry }: { entry: MesPersonalEntry }) {
   )
 }
 
+function computeMonth(birthDate: string, monthIndex: number): CalcResult | null {
+  try {
+    const now = new Date()
+    const person = new Person({ birthDate })
+    const targetMonth = new Date(Date.UTC(now.getFullYear(), monthIndex, 1, 12))
+    const value = person.calcPersonalMonth(targetMonth, now)
+    return typeof value === 'number' ? { value, monthIndex } : null
+  } catch {
+    return null
+  }
+}
+
+function formatShortDate(value: string): string {
+  const [year, month, day] = value.split('-')
+  return day && month && year ? `${day}/${month}/${year}` : value
+}
+
 export function PersonalMonthCalculator() {
   const now = new Date()
   const [birthDate, setBirthDate] = useState('')
@@ -85,18 +105,28 @@ export function PersonalMonthCalculator() {
   const [showMeaning, setShowMeaning] = useState(false)
   const meaningRef = useRef<HTMLDivElement | null>(null)
 
+  // Precarga desde Mi carta: /mespersonal?nacimiento=YYYY-MM-DD&mes=<0-11>
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const nacimiento = params.get('nacimiento')
+    if (!nacimiento) return
+    const mesParam = Number(params.get('mes'))
+    const nextMonthIndex =
+      Number.isInteger(mesParam) && mesParam >= 0 && mesParam <= 11
+        ? mesParam
+        : new Date().getMonth()
+
+    setBirthDate(nacimiento)
+    setMonthIndex(nextMonthIndex)
+    setResult(computeMonth(nacimiento, nextMonthIndex))
+    setSubmitted(true)
+  }, [])
+
   const handleSubmit = (formData: FormData) => {
     const nextBirthDate = String(formData.get('birthDate') ?? '')
     const nextMonthIndex = Number(formData.get('targetMonth') ?? monthIndex)
 
-    try {
-      const person = new Person({ birthDate: nextBirthDate })
-      const targetMonth = new Date(Date.UTC(now.getFullYear(), nextMonthIndex, 1, 12))
-      const value = person.calcPersonalMonth(targetMonth, now)
-      setResult(typeof value === 'number' ? { value, monthIndex: nextMonthIndex } : null)
-    } catch {
-      setResult(null)
-    }
+    setResult(computeMonth(nextBirthDate, nextMonthIndex))
     setSubmitted(true)
     setShowMeaning(false)
   }
@@ -176,8 +206,29 @@ export function PersonalMonthCalculator() {
                 </button>
               </div>
             </div>
-            <div className="mt-5">
-              <SaveResultButton label="Mes personal" value={result.value} />
+            <div className="mt-5 flex flex-wrap items-center gap-3">
+              {personalPagePath('mes-personal', result.value) ? (
+                <Link
+                  href={personalPagePath('mes-personal', result.value) as Route}
+                  className="inline-flex items-center rounded-full bg-gradient-brand px-5 py-2 text-sm font-semibold text-white shadow-glow transition hover:opacity-95"
+                >
+                  Ver más
+                </Link>
+              ) : null}
+              <SaveResultButton
+                label="Mes personal"
+                value={result.value}
+                detail={
+                  birthDate
+                    ? `Nacimiento: ${formatShortDate(birthDate)} · Mes: ${MONTHS[result.monthIndex]}`
+                    : undefined
+                }
+                href={
+                  birthDate
+                    ? `/mespersonal?nacimiento=${birthDate}&mes=${result.monthIndex}`
+                    : undefined
+                }
+              />
             </div>
           </div>
         ) : submitted ? (
