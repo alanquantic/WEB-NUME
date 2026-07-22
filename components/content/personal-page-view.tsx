@@ -88,20 +88,8 @@ function Bloque({ bloque }: { bloque: PersonalBloque }) {
         </figure>
       )
     case 'galeria':
-      return (
-        <div className="flex flex-wrap justify-center gap-4">
-          {bloque.items.map((item, index) => (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              key={index}
-              src={item.src}
-              alt={item.alt ?? ''}
-              loading="lazy"
-              className="w-full max-w-[280px] rounded-2xl shadow-panel"
-            />
-          ))}
-        </div>
-      )
+      // Las galerías heredadas de estas páginas corresponden a espacios publicitarios.
+      return null
     case 'descripcion': {
       const Icono = DESCRIPCION_ICONOS[bloque.icono] ?? Sparkles
       return (
