@@ -55,30 +55,51 @@ export function MiCarta() {
   return (
     <div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((item) => (
-          <div
-            key={item.id}
-            className="flex items-center gap-4 rounded-[1.5rem] border border-border/80 bg-card p-5 shadow-panel"
-          >
-            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-brand font-display text-2xl font-semibold text-white shadow-glow">
-              {item.value}
-            </span>
-            <div className="min-w-0 flex-1">
-              <p className="truncate font-display text-base font-semibold text-foreground">
-                {item.label}
-              </p>
-              <p className="text-xs text-foreground/55">{formatDate(item.date)}</p>
-            </div>
-            <button
-              type="button"
-              onClick={() => handleRemove(item.id)}
-              aria-label={`Eliminar ${item.label}`}
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-foreground/50 transition hover:bg-danger/10 hover:text-danger"
+        {items.map((item) => {
+          const content = (
+            <>
+              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-brand font-display text-2xl font-semibold text-white shadow-glow">
+                {item.value}
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="truncate font-display text-base font-semibold text-foreground">
+                  {item.label}
+                </p>
+                {item.detail ? (
+                  <p className="truncate text-xs text-foreground/65">{item.detail}</p>
+                ) : null}
+                <p className="text-xs text-foreground/55">{formatDate(item.date)}</p>
+              </div>
+            </>
+          )
+
+          return (
+            <div
+              key={item.id}
+              className="flex items-center gap-4 rounded-[1.5rem] border border-border/80 bg-card p-5 shadow-panel"
             >
-              <Trash2 size={16} aria-hidden />
-            </button>
-          </div>
-        ))}
+              {item.href ? (
+                <Link
+                  href={item.href as Route}
+                  className="flex min-w-0 flex-1 items-center gap-4 rounded-[1rem] transition hover:opacity-85"
+                  aria-label={`Abrir ${item.label} con tus datos guardados`}
+                >
+                  {content}
+                </Link>
+              ) : (
+                <div className="flex min-w-0 flex-1 items-center gap-4">{content}</div>
+              )}
+              <button
+                type="button"
+                onClick={() => handleRemove(item.id)}
+                aria-label={`Eliminar ${item.label}`}
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-foreground/50 transition hover:bg-danger/10 hover:text-danger"
+              >
+                <Trash2 size={16} aria-hidden />
+              </button>
+            </div>
+          )
+        })}
       </div>
 
       <button

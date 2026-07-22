@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { PersonalCycleCalculator } from "@/components/calculators/personal-cycle-calculator";
 import { ToolPage } from "@/components/content/tool-page";
 
 export const metadata: Metadata = {
@@ -17,7 +16,6 @@ export default function Page() {
       description="Las etapas personales son los grandes ciclos de vida. Descubre en cuál te encuentras y qué energía la rige."
     >
       <div className="space-y-10">
-        <PersonalCycleCalculator kind="stage" />
         <section className="space-y-4 p-6 sm:p-8">
           <h2 className="font-display text-2xl font-semibold text-primary">
             ¿Cuál es el curso de acción que te propone la vida?

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
 import { CollectiveVibrations } from "@/components/calculators/collective-vibrations";
 import { ToolPage } from "@/components/content/tool-page";
@@ -83,12 +82,6 @@ export default function Page() {
                   vibraciones energéticas que influyen directamente en nuestro
                   desarrollo personal y crecimiento espiritual.
                 </p>
-                <Link
-                  href="/labrujulanumerologica"
-                  className="mt-10 inline-flex items-center justify-center rounded-full bg-gradient-brand px-8 py-4 text-lg font-semibold text-white shadow-[0_18px_36px_hsl(var(--primary)/0.18)] transition hover:translate-y-[-1px] hover:shadow-[0_22px_44px_hsl(var(--primary)/0.24)]"
-                >
-                  Vibraciones Colectivas
-                </Link>
               </section>
             </div>
           </div>
