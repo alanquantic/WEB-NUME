@@ -34,6 +34,7 @@ const STATIC_ROUTES = [
   '/cursos',
   '/calculadoras',
   '/calculadoras/camino-de-vida',
+  '/calculadoras/desafios-de-vida',
   '/calculadoras/expresion',
   '/calculadoras/compatibilidad',
   '/blog',

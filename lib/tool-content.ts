@@ -215,6 +215,17 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       { href: '/significadodelosnumeros', title: 'Significado de los números' }
     ]
   },
+  'desafios-de-vida': {
+    seo: [
+      'Los desafíos de vida ocupan la parte inferior de tu pináculo (posiciones K, L, M y N) y señalan los retos que acompañan cada una de tus realizaciones: lo que viniste a sanar, confrontar y conquistar.',
+      'Se calculan a partir de tu fecha de nacimiento y, a diferencia de otros números de tu carta, se leen del 0 al 8.'
+    ],
+    related: [
+      { href: '/calculadoras/camino-de-vida', title: 'Tu camino de vida' },
+      { href: '/calculatupinaculo', title: 'Calcula tu pináculo' },
+      { href: '/significadodelosnumeros', title: 'Significado de los números' }
+    ]
+  },
   // Páginas de contenido "personales" (réplicas del sitio original), una clave
   // por categoría. Ver lib/personales/data.ts.
   'personales-numero-personal': {
