@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 
+import { getPersonalSlugs } from '@/lib/personales/data'
 import { getSignificadoParams } from '@/lib/significados/data'
 
 const STATIC_ROUTES = [
@@ -54,7 +55,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ({ concepto, numero }) => `/significadodelosnumeros/${concepto}/${numero}`
   )
 
-  return [...STATIC_ROUTES, ...significadosRoutes].map((path) => ({
+  const personalesRoutes = getPersonalSlugs().map((slug) => `/${slug}`)
+
+  return [...STATIC_ROUTES, ...significadosRoutes, ...personalesRoutes].map((path) => ({
     url: `${base}${path}`,
     lastModified,
     changeFrequency: 'weekly',

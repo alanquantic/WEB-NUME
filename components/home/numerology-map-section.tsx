@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import type { Route } from 'next'
 import Link from 'next/link'
 
@@ -8,14 +8,19 @@ import { Sparkles } from 'lucide-react'
 
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
 import { SparkleField } from '@/components/ui/sparkle-field'
+import { personalPagePath, type PersonalCategoriaKey } from '@/lib/personales/routes'
 import Person from '@/resources/person'
 import Pinnacle from '@/resources/pinnacle'
+import { useNumerologyMapStore } from '@/stores/numerology-map-store'
 
 type ResultCard = {
   id: 'personal-number' | 'soul-number' | 'personal-year'
   heading: string
   subtitle: string
-  href: Route
+  // Página de contenido según el número calculado; si no hay cálculo (o el
+  // número no tiene página) se usa fallbackHref.
+  categoria: PersonalCategoriaKey
+  fallbackHref: Route
   tone: 'essence' | 'mission' | 'year'
 }
 
@@ -61,21 +66,24 @@ const RESULT_CARDS: readonly ResultCard[] = [
     id: 'personal-number',
     heading: 'Mi esencia',
     subtitle: 'Número Personal',
-    href: '/calculadoras/camino-de-vida',
+    categoria: 'numero-personal',
+    fallbackHref: '/calculadoras/camino-de-vida',
     tone: 'essence'
   },
   {
     id: 'soul-number',
     heading: 'Mi misión',
     subtitle: 'Número del Alma',
-    href: '/calculadoras/expresion',
+    categoria: 'alma',
+    fallbackHref: '/calculadoras/expresion',
     tone: 'mission'
   },
   {
     id: 'personal-year',
     heading: 'Mi año 2026',
     subtitle: 'Año Personal',
-    href: '/calculadoras/camino-de-vida',
+    categoria: 'ano-personal',
+    fallbackHref: '/calculadoras/camino-de-vida',
     tone: 'year'
   }
 ] as const
@@ -118,11 +126,6 @@ const PINNACLE_POSITIONS: Record<PinnacleLetter, string> = {
   R: 'left-[38.2%] top-[91.4%]',
   S: 'left-[52.5%] top-[91.4%]',
   W: 'left-[6%] top-[67.9%]'
-}
-
-const INITIAL_FORM_STATE: FormState = {
-  fullName: '',
-  birthDate: ''
 }
 
 const INITIAL_RESULTS: CalculationResult = {
@@ -225,25 +228,43 @@ function buildCalculationResult(formState: FormState): CalculationResult {
 }
 
 export function NumerologyMapSection() {
-  const [formState, setFormState] = useState(INITIAL_FORM_STATE)
+  // Formulario y snapshot calculado persistidos en sessionStorage: los datos
+  // se conservan al navegar entre páginas durante la sesión.
+  const fullName = useNumerologyMapStore((state) => state.fullName)
+  const birthDate = useNumerologyMapStore((state) => state.birthDate)
+  const calculated = useNumerologyMapStore((state) => state.calculated)
+  const setField = useNumerologyMapStore((state) => state.setField)
+  const saveCalculation = useNumerologyMapStore((state) => state.calculate)
+  const clearStore = useNumerologyMapStore((state) => state.clear)
+
   const [results, setResults] = useState(INITIAL_RESULTS)
   const [isCalculated, setIsCalculated] = useState(false)
   const [isPending, startTransition] = useTransition()
 
-  const isFormComplete =
-    formState.fullName.trim().length > 0 && formState.birthDate.trim().length > 0
+  const formState: FormState = { fullName, birthDate }
+
+  const isFormComplete = fullName.trim().length > 0 && birthDate.trim().length > 0
+
+  // Deriva los resultados del snapshot persistido: cubre el click en
+  // "Calcular" y la rehidratación al volver a la página con datos de sesión.
+  useEffect(() => {
+    if (calculated) {
+      startTransition(() => {
+        setResults(buildCalculationResult(calculated))
+        setIsCalculated(true)
+      })
+    } else {
+      setResults(INITIAL_RESULTS)
+      setIsCalculated(false)
+    }
+  }, [calculated])
 
   const handleInputChange = (field: keyof FormState, value: string) => {
-    setFormState((currentState) => ({
-      ...currentState,
-      [field]: value
-    }))
+    setField(field, value)
   }
 
   const handleReset = () => {
-    setFormState(INITIAL_FORM_STATE)
-    setResults(INITIAL_RESULTS)
-    setIsCalculated(false)
+    clearStore()
   }
 
   const handleCalculate = () => {
@@ -251,11 +272,7 @@ export function NumerologyMapSection() {
       return
     }
 
-    startTransition(() => {
-      const nextResults = buildCalculationResult(formState)
-      setResults(nextResults)
-      setIsCalculated(true)
-    })
+    saveCalculation()
   }
 
   return (
@@ -269,6 +286,10 @@ export function NumerologyMapSection() {
           <span className="text-gradient-brand">Comienza a conocerte</span> a través de
           Numerología Cotidiana
         </h1>
+        <p className="relative mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+          Ingresa tu nombre y fecha de nacimiento para descubrir tus principales números de energía
+          y lo que revelan sobre ti.
+        </p>
       </ScrollReveal>
 
       <div className="mt-10 grid gap-4 lg:grid-cols-[1fr_1.5fr_1.02fr]">
@@ -338,6 +359,8 @@ export function NumerologyMapSection() {
                   ? results.soulNumber
                   : results.personalYear
 
+            const personalHref = isCalculated ? personalPagePath(card.categoria, value) : null
+
             return (
               <ScrollReveal key={card.id} delay={120 + index * 80}>
                 <article
@@ -361,7 +384,7 @@ export function NumerologyMapSection() {
                   <span className="mt-5 font-display text-5xl font-semibold leading-none sm:mt-6 sm:text-6xl">
                     {value}
                   </span>
-                  <CardLink href={card.href} />
+                  <CardLink href={(personalHref ?? card.fallbackHref) as Route} />
                 </article>
               </ScrollReveal>
             )
@@ -377,31 +400,57 @@ export function NumerologyMapSection() {
               </h3>
               <div className="mt-5 grid grid-cols-3 gap-2 text-center sm:mt-6 sm:gap-3">
                 {([
-                  { label: 'Día', value: results.personalDay },
-                  { label: 'Semana', value: results.personalWeek },
-                  { label: 'Mes', value: results.personalMonth }
-                ] as Array<{ label: EnergyLabel; value: number | string }>).map((item) => (
-                  <div
-                    key={item.label}
-                    className="rounded-2xl bg-white/8 px-2 py-3 backdrop-blur-sm"
-                  >
-                    <span
-                      className={`block font-display text-3xl font-semibold leading-none sm:text-4xl ${ENERGY_CARD_TONES[item.label]}`}
+                  {
+                    label: 'Día',
+                    value: results.personalDay,
+                    categoria: 'dia-personal',
+                    fallbackHref: '/diapersonal'
+                  },
+                  {
+                    label: 'Semana',
+                    value: results.personalWeek,
+                    categoria: 'semana',
+                    fallbackHref: '/semanapersonal'
+                  },
+                  {
+                    label: 'Mes',
+                    value: results.personalMonth,
+                    categoria: 'mes-personal',
+                    fallbackHref: '/mespersonal'
+                  }
+                ] as Array<{
+                  label: EnergyLabel
+                  value: number | string
+                  categoria: PersonalCategoriaKey
+                  fallbackHref: Route
+                }>).map((item) => {
+                  const personalHref = isCalculated
+                    ? personalPagePath(item.categoria, item.value)
+                    : null
+
+                  return (
+                    <div
+                      key={item.label}
+                      className="flex flex-col rounded-2xl bg-white/8 px-2 py-3 backdrop-blur-sm"
                     >
-                      {item.value}
-                    </span>
-                    <span className="mt-2 block text-[0.56rem] font-semibold uppercase tracking-[0.04em] text-white/72 sm:text-[0.6rem] sm:tracking-[0.06em]">
-                      {item.label}
-                    </span>
-                  </div>
-                ))}
+                      <span
+                        className={`block font-display text-3xl font-semibold leading-none sm:text-4xl ${ENERGY_CARD_TONES[item.label]}`}
+                      >
+                        {item.value}
+                      </span>
+                      <span className="mt-2 block text-[0.56rem] font-semibold uppercase tracking-[0.04em] text-white/72 sm:text-[0.6rem] sm:tracking-[0.06em]">
+                        {item.label}
+                      </span>
+                      <Link
+                        href={(personalHref ?? item.fallbackHref) as Route}
+                        className="mt-2 inline-flex justify-center text-[0.7rem] font-semibold underline-offset-4 transition hover:underline"
+                      >
+                        Ver más
+                      </Link>
+                    </div>
+                  )
+                })}
               </div>
-              <Link
-                href="/calculadoras"
-                className="mt-auto inline-flex w-fit text-sm font-semibold underline-offset-4 transition hover:underline"
-              >
-                Ver más
-              </Link>
             </article>
           </ScrollReveal>
         </div>
@@ -441,7 +490,7 @@ export function NumerologyMapSection() {
               </div>
             </div>
             <Link
-              href="/calculadoras"
+              href="/calculatupinaculo"
               className="mt-6 inline-flex justify-center text-sm font-semibold text-primary underline-offset-4 transition hover:underline"
             >
               Ver más

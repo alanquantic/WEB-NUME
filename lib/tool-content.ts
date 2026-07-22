@@ -214,5 +214,55 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       { href: '/numerodelalma', title: 'Número del Alma' },
       { href: '/significadodelosnumeros', title: 'Significado de los números' }
     ]
+  },
+  // Páginas de contenido "personales" (réplicas del sitio original), una clave
+  // por categoría. Ver lib/personales/data.ts.
+  'personales-numero-personal': {
+    seo: [],
+    related: [
+      { href: '/mi-mapa', title: 'Mi mapa numerológico' },
+      { href: '/calculatupinaculo', title: 'Calcula tu pináculo' },
+      { href: '/significadodelosnumeros', title: 'Significado de los números' }
+    ]
+  },
+  'personales-alma': {
+    seo: [],
+    related: [
+      { href: '/numerodelalma', title: 'Número del Alma' },
+      { href: '/mi-mapa', title: 'Mi mapa numerológico' },
+      { href: '/significadodelosnumeros', title: 'Significado de los números' }
+    ]
+  },
+  'personales-dia-personal': {
+    seo: [],
+    related: [
+      { href: '/diapersonal', title: 'Calcula tu Día Personal' },
+      { href: '/semanapersonal', title: 'Tu Semana Personal' },
+      { href: '/mespersonal', title: 'Tu Mes Personal' }
+    ]
+  },
+  'personales-semana': {
+    seo: [],
+    related: [
+      { href: '/semanapersonal', title: 'Calcula tu Semana Personal' },
+      { href: '/diapersonal', title: 'Tu Día Personal' },
+      { href: '/mespersonal', title: 'Tu Mes Personal' }
+    ]
+  },
+  'personales-mes-personal': {
+    seo: [],
+    related: [
+      { href: '/mespersonal', title: 'Calcula tu Mes Personal' },
+      { href: '/anopersonal', title: 'Tu Año Personal' },
+      { href: '/horoscopos', title: 'Horóscopo de tu Año Personal' }
+    ]
+  },
+  'personales-ano-personal': {
+    seo: [],
+    related: [
+      { href: '/anopersonal', title: 'Calcula tu Año Personal' },
+      { href: '/horoscopos', title: 'Horóscopo de tu Año Personal' },
+      { href: '/mespersonal', title: 'Tu Mes Personal' }
+    ]
   }
 }
