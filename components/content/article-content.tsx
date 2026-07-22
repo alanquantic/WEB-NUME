@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 import { AuthorBio } from '@/components/content/author-bio'
 import { PostCard } from '@/components/content/post-card'
+import { ShareButtons } from '@/components/content/share-buttons'
 import type { ContentItem } from '@/lib/api/contracts'
 import { excerptFromHtml, formatDate } from '@/lib/format'
 import { sanitizeArticleHtml } from '@/lib/sanitize'
@@ -10,6 +11,7 @@ import { sanitizeArticleHtml } from '@/lib/sanitize'
 // (lo que el API devuelve en /posts/:id y /pages/:id). `category` es opcional.
 type ArticleData = {
   title: string
+  slug: string
   content_html: string | null
   featured_image_url: string | null
   requires_membership: boolean
@@ -47,7 +49,11 @@ export function ArticleContent({
         ← Volver al blog
       </Link>
 
-      <div className="mt-4 flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-wide text-fuchsia">
+      <div className="mt-6">
+        <ShareButtons slug={content.slug} title={content.title} />
+      </div>
+
+      <div className="mt-6 flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-wide text-fuchsia">
         {content.category ? <span>{content.category.name.trim()}</span> : null}
         {date ? <span className="text-foreground/55">{date}</span> : null}
         {content.requires_membership ? (
