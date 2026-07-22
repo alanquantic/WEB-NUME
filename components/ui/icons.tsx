@@ -183,6 +183,14 @@ export function TelegramIcon(props: IconProps) {
   )
 }
 
+export function XIcon(props: IconProps) {
+  return (
+    <svg {...base(props)} fill="currentColor">
+      <path d="M17.5 3h3.2l-7 8 8.3 10h-6.5l-5-6.3L4.7 21H1.5l7.5-8.6L1 3h6.6l4.5 5.9L17.5 3Zm-1.1 16h1.8L7.7 4.9H5.8L16.4 19Z" />
+    </svg>
+  )
+}
+
 export function LinkedinIcon(props: IconProps) {
   return (
     <svg {...base(props)} fill="currentColor">
