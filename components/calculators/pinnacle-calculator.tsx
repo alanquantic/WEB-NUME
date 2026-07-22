@@ -1,12 +1,13 @@
 'use client'
 
-import { startTransition, useState } from 'react'
+import { startTransition, useEffect, useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { SignificadoModal, type ModalTarget } from '@/components/pinaculo/significado-modal'
 import { cn } from '@/lib/utils'
 import Pinnacle from '@/resources/pinnacle'
+import { useNumerologyMapStore } from '@/stores/numerology-map-store'
 
 type Valor = number | string
 type Valores = Record<string, Valor>
@@ -112,6 +113,24 @@ export function PinnacleCalculator({ isMember = false }: { isMember?: boolean })
   const [submitted, setSubmitted] = useState(false)
   const [hoverKey, setHoverKey] = useState<string | null>(null)
   const [modalTarget, setModalTarget] = useState<ModalTarget | null>(null)
+
+  // Si el usuario ya calculó su mapa en el home, llega con la fecha lista:
+  // se precarga y se muestra el pináculo calculado. Solo una vez por visita
+  // para no pisar interacciones posteriores (p. ej. tras "Borrar").
+  const calculated = useNumerologyMapStore((state) => state.calculated)
+  const prefilledRef = useRef(false)
+
+  useEffect(() => {
+    if (prefilledRef.current || submitted || birthDate) return
+    if (!calculated?.birthDate) return
+
+    prefilledRef.current = true
+    startTransition(() => {
+      setBirthDate(calculated.birthDate)
+      setValues(computeAll(calculated.birthDate))
+      setSubmitted(true)
+    })
+  }, [calculated, submitted, birthDate])
 
   function handleSubmit(formData: FormData) {
     const next = String(formData.get('birthDate') ?? '')
