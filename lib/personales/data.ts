@@ -3,6 +3,10 @@ import anoPersonalData from '@/components/jsons/personales/ano-personal.json'
 import diaPersonalData from '@/components/jsons/personales/dia-personal.json'
 import guiasData from '@/components/jsons/personales/guias.json'
 import mesPersonalData from '@/components/jsons/personales/mes-personal.json'
+import nombreActivoData from '@/components/jsons/personales/nombre-activo.json'
+import nombreActivoGuiaData from '@/components/jsons/personales/nombre-activo-guia.json'
+import numeroDelNombreData from '@/components/jsons/personales/numero-del-nombre.json'
+import numeroDelNombreGuiaData from '@/components/jsons/personales/numero-del-nombre-guia.json'
 import numeroPersonalData from '@/components/jsons/personales/numero-personal.json'
 import semanaData from '@/components/jsons/personales/semana.json'
 
@@ -90,6 +94,22 @@ const CATEGORIAS: PersonalCategoria[] = [
     descripcion:
       'La lección que te toca vivir este 2026 según tu Año Personal: claves y aprendizajes.',
     numeros: numerosDe(anoPersonalData)
+  },
+  {
+    key: 'nombre-activo',
+    nombre: 'Nombre Activo',
+    etiqueta: 'La energía de tu primer nombre',
+    descripcion:
+      'La señal que envía tu Nombre Activo a los demás: la vibración del nombre que usas a diario.',
+    numeros: numerosDe(nombreActivoData)
+  },
+  {
+    key: 'numero-del-nombre',
+    nombre: 'El Poder del Nombre',
+    etiqueta: 'Tu realización en el mundo',
+    descripcion:
+      'El número de tu nombre completo revela tu poder de realización en el mundo: talentos, retos y vocación.',
+    numeros: numerosDe(numeroDelNombreData)
   }
 ]
 
@@ -162,4 +182,14 @@ export function getGuiaBySlug(slug: string): GuiaPersonal | null {
 
 export function getGuiaSlugs(): string[] {
   return GUIAS.map((guia) => guia.slug)
+}
+
+/** Guía del Nombre Activo (post del sitio original), embebida en /nombreactivo. */
+export function getNombreActivoGuia(): GuiaPersonal {
+  return nombreActivoGuiaData as unknown as GuiaPersonal
+}
+
+/** Guía del Significado del Nombre (página del sitio original), embebida en /numerodelnombre. */
+export function getNumeroDelNombreGuia(): GuiaPersonal {
+  return numeroDelNombreGuiaData as unknown as GuiaPersonal
 }

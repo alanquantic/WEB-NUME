@@ -1,79 +1,85 @@
 'use client'
 
-import type { Route } from 'next'
 import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
 import { useState, useTransition } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { useSessionStore } from '@/stores/session-store'
 
-export function LoginForm() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
+export function ForgotPasswordForm() {
   const [error, setError] = useState<string | null>(null)
+  const [sent, setSent] = useState(false)
   const [isPending, startTransition] = useTransition()
-  const loadSession = useSessionStore((state) => state.loadSession)
-
-  function resolveNextPath(value: string | null): Route {
-    if (!value || !value.startsWith('/')) {
-      return '/perfil'
-    }
-
-    return value as Route
-  }
 
   async function handleSubmit(formData: FormData) {
     const email = String(formData.get('email') ?? '')
-    const password = String(formData.get('password') ?? '')
     setError(null)
 
     startTransition(async () => {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch('/api/auth/forgot-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email })
       })
 
       if (!response.ok) {
-        // Muestra el mensaje del servidor (credenciales, servicio no disponible, etc.).
         const data = (await response.json().catch(() => null)) as { message?: string } | null
-        setError(data?.message ?? 'No se pudo iniciar sesión. Revisa tus credenciales.')
+        setError(data?.message ?? 'No fue posible procesar la solicitud. Intenta de nuevo.')
         return
       }
 
-      await loadSession()
-      const nextPath = resolveNextPath(searchParams.get('next'))
-      router.push(nextPath)
-      router.refresh()
+      setSent(true)
     })
+  }
+
+  if (sent) {
+    return (
+      <Card className="mx-auto max-w-md">
+        <CardTitle>Revisa tu correo</CardTitle>
+        <CardDescription>
+          Si el correo está registrado, recibirás un enlace para restablecer tu contraseña. El
+          enlace es válido durante 30 minutos.
+        </CardDescription>
+        <CardContent>
+          <p className="text-sm text-[hsl(var(--foreground))/0.72]">
+            ¿No llegó? Revisa tu carpeta de spam o{' '}
+            <button
+              type="button"
+              onClick={() => setSent(false)}
+              className="font-semibold text-[hsl(var(--primary))] underline-offset-2 hover:underline"
+            >
+              intenta de nuevo
+            </button>
+            .
+          </p>
+        </CardContent>
+      </Card>
+    )
   }
 
   return (
     <Card className="mx-auto max-w-md">
-      <CardTitle>Accede a tu cuenta</CardTitle>
+      <CardTitle>¿Olvidaste tu contraseña?</CardTitle>
       <CardDescription>
-        Tu sesión queda centralizada en cookies seguras y el cliente solo conserva el estado
-        visible del usuario.
+        Escribe el correo con el que te registraste y te enviaremos un enlace para crear una
+        contraseña nueva.
       </CardDescription>
       <CardContent>
         <form action={handleSubmit} className="grid gap-4">
           <Input type="email" name="email" placeholder="correo@ejemplo.com" required />
-          <Input type="password" name="password" placeholder="••••••••" required />
           {error ? <p className="text-sm text-[hsl(var(--danger))]">{error}</p> : null}
           <Button type="submit" disabled={isPending}>
-            {isPending ? 'Ingresando...' : 'Ingresar'}
+            {isPending ? 'Enviando...' : 'Enviar enlace'}
           </Button>
           <p className="text-center text-sm text-[hsl(var(--foreground))/0.72]">
             <Link
-              href="/olvide-contrasena"
+              href="/login"
               className="font-semibold text-[hsl(var(--primary))] underline-offset-2 hover:underline"
             >
-              ¿Olvidaste tu contraseña?
+              Volver a iniciar sesión
             </Link>
           </p>
         </form>
