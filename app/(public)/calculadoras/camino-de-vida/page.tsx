@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 
-import { LifePathCalculator } from "@/components/calculators/life-path-calculator";
+import { LifeStagesCalculator } from "@/components/calculators/life-stages-calculator";
 import { ToolPage } from "@/components/content/tool-page";
+import { getServerSessionUser } from "@/lib/auth/session";
 
 export const metadata: Metadata = {
   title: "Camino de vida",
 };
 
-export default function LifePathPage() {
+export default async function LifePathPage() {
+  const user = await getServerSessionUser();
+  const isMember = Boolean(user?.has_active_membership);
+
   return (
     <ToolPage
       toolKey="camino-de-vida"
@@ -74,7 +78,7 @@ export default function LifePathPage() {
             </div>
           </div>
         </section>
-        <LifePathCalculator />
+        <LifeStagesCalculator isMember={isMember} />
         <section className="space-y-4 p-6 sm:p-8">
           <h2 className="font-display text-2xl font-semibold">
             Las 4 realizaciones de vida
