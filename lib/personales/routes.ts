@@ -14,6 +14,7 @@ export type PersonalCategoriaKey =
   | 'mes-personal'
   | 'ano-personal'
   | 'nombre-activo'
+  | 'numero-del-nombre'
 
 const SLUG_BUILDERS: Record<PersonalCategoriaKey, (numero: number) => string> = {
   'numero-personal': (numero) => `numero-personal-${numero}`,
@@ -22,7 +23,8 @@ const SLUG_BUILDERS: Record<PersonalCategoriaKey, (numero: number) => string> = 
   semana: (numero) => `semana-${numero}`,
   'mes-personal': (numero) => `mes-personal-${numero}`,
   'ano-personal': (numero) => `ano-personal-${numero}-para-2026`,
-  'nombre-activo': (numero) => `nombre-activo-numero-${numero}`
+  'nombre-activo': (numero) => `nombre-activo-numero-${numero}`,
+  'numero-del-nombre': (numero) => `significado-${numero}-elpoderdelnombre`
 }
 
 // El sitio original no publica todas las combinaciones: mes 2 y año 2/22 no
@@ -34,7 +36,8 @@ const NUMEROS_DISPONIBLES: Record<PersonalCategoriaKey, readonly number[]> = {
   semana: [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22],
   'mes-personal': [1, 3, 4, 5, 6, 7, 8, 9, 11, 22],
   'ano-personal': [1, 3, 4, 5, 6, 7, 8, 9, 11],
-  'nombre-activo': [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22]
+  'nombre-activo': [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22],
+  'numero-del-nombre': [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22]
 }
 
 /**

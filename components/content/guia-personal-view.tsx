@@ -15,10 +15,10 @@ function Prosa({ html }: { html: string }) {
   return <div className={PROSE_CLASSES} dangerouslySetInnerHTML={{ __html: safeHtml }} />
 }
 
-// Enlaza "Mes Personal 7" → /mes-personal-7 cuando el título del ítem termina
-// en un número con página propia.
+// Enlaza títulos tipo "Mes Personal 7" o "NÚMERO 7 «…»" → página del número:
+// toma el primer número entero del título.
 function numeroDeTitulo(titulo: string): number | null {
-  const match = titulo.trim().match(/(\d+)$/)
+  const match = titulo.trim().match(/\b(\d+)\b/)
   return match ? Number(match[1]) : null
 }
 

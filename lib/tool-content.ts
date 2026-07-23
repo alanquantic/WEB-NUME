@@ -283,5 +283,13 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       { href: '/nombrehereditario', title: 'Tu Nombre Hereditario' },
       { href: '/numerodelnombre', title: 'Número del Nombre' }
     ]
+  },
+  'personales-numero-del-nombre': {
+    seo: [],
+    related: [
+      { href: '/numerodelnombre', title: 'Calcula tu Número del Nombre' },
+      { href: '/nombreactivo', title: 'Tu Nombre Activo' },
+      { href: '/significadodeletras', title: 'Significado de Letras' }
+    ]
   }
 }

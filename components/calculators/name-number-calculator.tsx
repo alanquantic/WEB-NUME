@@ -111,7 +111,13 @@ export function NameNumberCalculator({ kind }: { kind: NameKind }) {
               ? `${KIND_PATH[kind]}?nombre=${encodeURIComponent(fullName.trim())}`
               : undefined
           }
-          verMasHref={kind === 'active' ? personalPagePath('nombre-activo', result) : null}
+          verMasHref={
+            kind === 'active'
+              ? personalPagePath('nombre-activo', result)
+              : kind === 'expression'
+                ? personalPagePath('numero-del-nombre', result)
+                : null
+          }
         />
       ) : (
         <p className="mt-4 text-sm text-foreground/60">
