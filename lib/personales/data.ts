@@ -3,6 +3,8 @@ import anoPersonalData from '@/components/jsons/personales/ano-personal.json'
 import diaPersonalData from '@/components/jsons/personales/dia-personal.json'
 import guiasData from '@/components/jsons/personales/guias.json'
 import mesPersonalData from '@/components/jsons/personales/mes-personal.json'
+import nombreActivoData from '@/components/jsons/personales/nombre-activo.json'
+import nombreActivoGuiaData from '@/components/jsons/personales/nombre-activo-guia.json'
 import numeroPersonalData from '@/components/jsons/personales/numero-personal.json'
 import semanaData from '@/components/jsons/personales/semana.json'
 
@@ -90,6 +92,14 @@ const CATEGORIAS: PersonalCategoria[] = [
     descripcion:
       'La lección que te toca vivir este 2026 según tu Año Personal: claves y aprendizajes.',
     numeros: numerosDe(anoPersonalData)
+  },
+  {
+    key: 'nombre-activo',
+    nombre: 'Nombre Activo',
+    etiqueta: 'La energía de tu primer nombre',
+    descripcion:
+      'La señal que envía tu Nombre Activo a los demás: la vibración del nombre que usas a diario.',
+    numeros: numerosDe(nombreActivoData)
   }
 ]
 
@@ -162,4 +172,9 @@ export function getGuiaBySlug(slug: string): GuiaPersonal | null {
 
 export function getGuiaSlugs(): string[] {
   return GUIAS.map((guia) => guia.slug)
+}
+
+/** Guía del Nombre Activo (post del sitio original), embebida en /nombreactivo. */
+export function getNombreActivoGuia(): GuiaPersonal {
+  return nombreActivoGuiaData as unknown as GuiaPersonal
 }

@@ -1,10 +1,12 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { startTransition, useState } from 'react'
 
 import { NumberResult } from '@/components/calculators/number-result'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { personalPagePath } from '@/lib/personales/routes'
 import Person from '@/resources/person'
 
 export type NameKind = 'expression' | 'soul' | 'personality' | 'active' | 'hereditary'
@@ -46,14 +48,26 @@ function compute(kind: NameKind, fullName: string): number | null {
 }
 
 export function NameNumberCalculator({ kind }: { kind: NameKind }) {
+  const router = useRouter()
   const [fullName, setFullName] = useState('')
   const [result, setResult] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
 
   function handleSubmit(formData: FormData) {
     const next = String(formData.get('fullName') ?? '')
+    const value = compute(kind, next)
+
+    // Nombre activo: el resultado lleva directo a la página de su número.
+    if (kind === 'active' && value !== null) {
+      const href = personalPagePath('nombre-activo', value)
+      if (href) {
+        router.push(href as Parameters<typeof router.push>[0])
+        return
+      }
+    }
+
     startTransition(() => {
-      setResult(compute(kind, next))
+      setResult(value)
       setSubmitted(true)
     })
   }

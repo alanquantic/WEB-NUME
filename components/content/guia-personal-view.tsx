@@ -30,8 +30,26 @@ function Bloque({
   categoria: PersonalCategoria
 }) {
   switch (bloque.tipo) {
-    case 'titulo':
+    case 'titulo': {
+      // Títulos tipo "Nombre Activo 7" enlazan a la página de ese número.
+      const numero = numeroDeTitulo(bloque.texto)
+      const destino = numero !== null
+        ? categoria.numeros.find((n) => n.numero === numero)
+        : null
+      if (destino) {
+        return (
+          <h2 className="font-display text-2xl font-semibold text-primary">
+            <Link
+              href={`/${destino.slug}` as Route}
+              className="underline-offset-4 transition hover:underline"
+            >
+              {bloque.texto} →
+            </Link>
+          </h2>
+        )
+      }
       return <h2 className="font-display text-2xl font-semibold text-primary">{bloque.texto}</h2>
+    }
     case 'html':
       return (
         <section className="rounded-[2rem] border border-border/70 bg-card p-6 shadow-panel sm:p-8">
@@ -78,6 +96,24 @@ function Bloque({
   }
 }
 
+/** Lista de bloques de una guía, reutilizable fuera de la vista completa
+ *  (p. ej. contenido embebido en páginas de herramienta como /nombreactivo). */
+export function GuiaBloquesList({
+  bloques,
+  categoria
+}: {
+  bloques: GuiaBloque[]
+  categoria: PersonalCategoria
+}) {
+  return (
+    <section className="space-y-6">
+      {bloques.map((bloque, index) => (
+        <Bloque key={index} bloque={bloque} categoria={categoria} />
+      ))}
+    </section>
+  )
+}
+
 export function GuiaPersonalView({
   guia,
   categoria,
@@ -92,11 +128,7 @@ export function GuiaPersonalView({
   return (
     <ToolPage toolKey={toolKey} wide title={guia.titulo} description={descripcion}>
       <div className="space-y-8">
-        <section className="space-y-6">
-          {guia.bloques.map((bloque, index) => (
-            <Bloque key={index} bloque={bloque} categoria={categoria} />
-          ))}
-        </section>
+        <GuiaBloquesList bloques={guia.bloques} categoria={categoria} />
 
         {/* Acceso directo a la página de cada número de la categoría */}
         <section className="space-y-4 rounded-[2rem] border border-border/70 bg-card p-6 shadow-panel sm:p-8">
