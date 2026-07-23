@@ -89,15 +89,20 @@ function formatShortDate(value: string): string {
   return day && month && year ? `${day}/${month}/${year}` : value
 }
 
-/** Curva de las 7 etapas con años, rangos de edad y etapa activa resaltada. */
+export type LifeStagesVariant = 'etapas' | 'desafios'
+
+/** Curva de las 7 etapas con años, rangos de edad y etapa activa resaltada.
+ *  variant 'etapas' → nodos E-H (verde); 'desafios' → nodos K-N (rojo). */
 function LifeStagesChart({
   valores,
   activa,
-  onSelect
+  onSelect,
+  variant
 }: {
   valores: Valores
   activa: number
   onSelect: (etapaIndex: number) => void
+  variant: LifeStagesVariant
 }) {
   const W = 760
   const H = 330
@@ -216,7 +221,9 @@ function LifeStagesChart({
       {ETAPAS.map((etapa, i) => {
         const x = xs[i]
         const y = ys[i]
-        // Verde más oscuro hacia la cima (como el original).
+        const letra = variant === 'etapas' ? etapa.etapa : etapa.desafio
+        const color = variant === 'etapas' ? VERDE : ROJO
+        // Tono más oscuro hacia la cima (como el original).
         const shade = [0.55, 0.7, 0.85, 1, 0.85, 0.7, 0.55][i]
         return (
           <g
@@ -224,16 +231,16 @@ function LifeStagesChart({
             onClick={() => onSelect(i)}
             className="cursor-pointer"
             role="button"
-            aria-label={`${etapa.ordinal} Etapa: vibración ${valores.letras[etapa.etapa]}`}
+            aria-label={`${etapa.ordinal} ${variant === 'etapas' ? 'Etapa' : 'Meta'}: vibración ${valores.letras[letra]}`}
           >
             <text
               x={x}
               y={y - 26}
               textAnchor="middle"
-              style={{ fill: VERDE }}
+              style={{ fill: color }}
               className="font-display text-[20px] font-bold"
             >
-              {etapa.etapa}
+              {letra}
             </text>
             <rect
               x={x - 17}
@@ -241,7 +248,7 @@ function LifeStagesChart({
               width={34}
               height={34}
               rx={9}
-              style={{ fill: VERDE, opacity: shade }}
+              style={{ fill: color, opacity: shade }}
               stroke="white"
               strokeWidth={2}
             />
@@ -251,11 +258,13 @@ function LifeStagesChart({
               textAnchor="middle"
               className="fill-white font-display text-[16px] font-semibold"
             >
-              {valores.letras[etapa.etapa]}
+              {valores.letras[letra]}
             </text>
-            <text x={x} y={y + 34} textAnchor="middle" className="fill-foreground/60 text-[11px]">
-              {ETAPA_CAPTION[i]} Etapa
-            </text>
+            {variant === 'etapas' ? (
+              <text x={x} y={y + 34} textAnchor="middle" className="fill-foreground/60 text-[11px]">
+                {ETAPA_CAPTION[i]} Etapa
+              </text>
+            ) : null}
           </g>
         )
       })}
@@ -276,7 +285,20 @@ function LifeStagesChart({
   )
 }
 
-export function LifeStagesCalculator({ isMember = false }: { isMember?: boolean }) {
+export function LifeStagesCalculator({
+  isMember = false,
+  variant = 'etapas'
+}: {
+  isMember?: boolean
+  /** 'etapas' → curva con E-H (camino de vida); 'desafios' → curva con K-N (metas). */
+  variant?: LifeStagesVariant
+}) {
+  const isDesafios = variant === 'desafios'
+  const desafioTitulo = isDesafios ? 'Meta' : 'Desafío'
+  const calculadoraPath = isDesafios
+    ? '/calculadoras/desafios-de-vida'
+    : '/calculadoras/camino-de-vida'
+
   const [birthDate, setBirthDate] = useState('')
   const [valores, setValores] = useState<Valores | null>(null)
   const [submitted, setSubmitted] = useState(false)
@@ -330,7 +352,7 @@ export function LifeStagesCalculator({ isMember = false }: { isMember?: boolean 
     const etapa = ETAPAS[index]
     setModalTarget({
       key: etapa.desafio,
-      nombre: `${etapa.ordinal} Desafío de vida`,
+      nombre: `${etapa.ordinal} ${desafioTitulo} de vida`,
       concepto: 'reto-meta',
       value: valores.letras[etapa.desafio],
       color: ROJO
@@ -340,11 +362,11 @@ export function LifeStagesCalculator({ isMember = false }: { isMember?: boolean 
   function handleSave() {
     if (!valores || !birthDate) return
     const detail = `Nacimiento: ${formatShortDate(birthDate)}`
-    const href = `/calculadoras/camino-de-vida?nacimiento=${birthDate}`
-    ETAPAS.slice(0, 4).forEach(({ ordinal, etapa }) => {
+    const href = `${calculadoraPath}?nacimiento=${birthDate}`
+    ETAPAS.slice(0, 4).forEach(({ ordinal, etapa, desafio }) => {
       addSavedResult({
-        label: `${ordinal} Etapa de vida`,
-        value: String(valores.letras[etapa]),
+        label: isDesafios ? `${ordinal} Meta de vida` : `${ordinal} Etapa de vida`,
+        value: String(valores.letras[isDesafios ? desafio : etapa]),
         detail,
         href
       })
@@ -389,7 +411,12 @@ export function LifeStagesCalculator({ isMember = false }: { isMember?: boolean 
           {/* Curva de etapas */}
           <figure className="overflow-x-auto rounded-[1.5rem] border border-border/60 bg-background/60 p-4 sm:p-5">
             <div className="min-w-[560px]">
-              <LifeStagesChart valores={valores} activa={activa} onSelect={openEtapa} />
+              <LifeStagesChart
+                valores={valores}
+                activa={activa}
+                onSelect={isDesafios ? openDesafio : openEtapa}
+                variant={variant}
+              />
             </div>
             <figcaption className="mt-2 border-t border-border/60 pt-3 text-sm font-semibold text-foreground/60">
               Etapas de vida · toca una vibración para su interpretación
@@ -405,7 +432,7 @@ export function LifeStagesCalculator({ isMember = false }: { isMember?: boolean 
                     Etapas
                   </span>
                   <span className="font-display text-lg font-semibold" style={{ color: ROJO }}>
-                    Desafíos
+                    {isDesafios ? 'Metas' : 'Desafíos'}
                   </span>
                 </li>
                 {columna.map((etapa) => {
@@ -454,7 +481,7 @@ export function LifeStagesCalculator({ isMember = false }: { isMember?: boolean 
                           <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white font-display text-sm font-semibold" style={{ color: ROJO }}>
                             {valores.letras[etapa.desafio]}
                           </span>
-                          {etapa.desafio}. {etapa.ordinal} Desafío
+                          {etapa.desafio}. {etapa.ordinal} {desafioTitulo}
                         </button>
                       </div>
                     </li>
@@ -466,10 +493,14 @@ export function LifeStagesCalculator({ isMember = false }: { isMember?: boolean 
 
           <div className="flex flex-wrap items-center gap-3">
             <Link
-              href={`/calculadoras/desafios-de-vida?nacimiento=${birthDate}` as Route}
+              href={
+                (isDesafios
+                  ? `/calculadoras/camino-de-vida?nacimiento=${birthDate}`
+                  : `/calculadoras/desafios-de-vida?nacimiento=${birthDate}`) as Route
+              }
               className="inline-flex items-center rounded-full bg-gradient-brand px-5 py-2.5 text-sm font-semibold text-white shadow-glow transition hover:opacity-95"
             >
-              Leer más sobre tus desafíos de vida
+              {isDesafios ? 'Conoce tus etapas de vida' : 'Leer más sobre tus desafíos de vida'}
             </Link>
             <button
               type="button"
