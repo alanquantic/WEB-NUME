@@ -49,6 +49,20 @@ export async function refreshWithToken(payload: RefreshInput) {
   })
 }
 
+export async function requestPasswordReset(email: string) {
+  return fetchBackend<{ message: string }>('/auth/forgot-password', {
+    method: 'POST',
+    body: JSON.stringify({ email })
+  })
+}
+
+export async function resetPasswordWithToken(token: string, password: string) {
+  return fetchBackend<{ message: string }>('/auth/reset-password', {
+    method: 'POST',
+    body: JSON.stringify({ token, password })
+  })
+}
+
 export const getServerSessionUser = cache(async (): Promise<SafeUser | null> => {
   const cookieStore = cookies()
   const accessToken = cookieStore.get(ACCESS_COOKIE)?.value
