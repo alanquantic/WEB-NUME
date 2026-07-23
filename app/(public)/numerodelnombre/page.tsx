@@ -1,15 +1,18 @@
 import type { Metadata } from 'next'
 
 import { NameNumberCalculator } from '@/components/calculators/name-number-calculator'
-import { ConceptExplainer } from '@/components/content/concept-explainer'
+import { GuiaBloquesList } from '@/components/content/guia-personal-view'
 import { ToolPage } from '@/components/content/tool-page'
-import { NUMERO_NOMBRE } from '@/lib/content/draft-name-day'
+import { getNumeroDelNombreGuia, getPersonalCategoria } from '@/lib/personales/data'
 
 export const metadata: Metadata = {
   title: 'Número del Nombre'
 }
 
 export default function Page() {
+  const guia = getNumeroDelNombreGuia()
+  const categoria = getPersonalCategoria('numero-del-nombre')
+
   return (
     <ToolPage
       toolKey="numerodelnombre"
@@ -19,7 +22,7 @@ export default function Page() {
     >
       <div className="space-y-10">
         <NameNumberCalculator kind="expression" />
-        <ConceptExplainer concept={NUMERO_NOMBRE} />
+        {categoria ? <GuiaBloquesList bloques={guia.bloques} categoria={categoria} /> : null}
       </div>
     </ToolPage>
   )

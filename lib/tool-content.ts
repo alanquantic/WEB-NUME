@@ -275,5 +275,21 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       { href: '/horoscopos', title: 'Horóscopo de tu Año Personal' },
       { href: '/mespersonal', title: 'Tu Mes Personal' }
     ]
+  },
+  'personales-nombre-activo': {
+    seo: [],
+    related: [
+      { href: '/nombreactivo', title: 'Calcula tu Nombre Activo' },
+      { href: '/nombrehereditario', title: 'Tu Nombre Hereditario' },
+      { href: '/numerodelnombre', title: 'Número del Nombre' }
+    ]
+  },
+  'personales-numero-del-nombre': {
+    seo: [],
+    related: [
+      { href: '/numerodelnombre', title: 'Calcula tu Número del Nombre' },
+      { href: '/nombreactivo', title: 'Tu Nombre Activo' },
+      { href: '/significadodeletras', title: 'Significado de Letras' }
+    ]
   }
 }

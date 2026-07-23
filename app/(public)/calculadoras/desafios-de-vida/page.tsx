@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 
-import { DesafiosCalculator } from "@/components/calculators/desafios-calculator";
+import { LifeStagesCalculator } from "@/components/calculators/life-stages-calculator";
 import { ToolPage } from "@/components/content/tool-page";
+import { getServerSessionUser } from "@/lib/auth/session";
 
 export const metadata: Metadata = {
   title: "Mis desafíos de vida",
 };
 
-export default function DesafiosDeVidaPage() {
+export default async function DesafiosDeVidaPage() {
+  const user = await getServerSessionUser();
+  const isMember = Boolean(user?.has_active_membership);
+
   return (
     <ToolPage
       toolKey="desafios-de-vida"
@@ -70,7 +74,7 @@ export default function DesafiosDeVidaPage() {
           </h3>
         </section>
 
-        <DesafiosCalculator />
+        <LifeStagesCalculator variant="desafios" isMember={isMember} />
 
         <section className="space-y-4 p-6 sm:p-8">
           <h2 className="font-display text-2xl font-semibold">
