@@ -1,7 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import { startTransition, useState } from 'react'
+import { startTransition, useEffect, useState } from 'react'
 
 import { NumberResult } from '@/components/calculators/number-result'
 import { Button } from '@/components/ui/button'
@@ -27,6 +26,15 @@ const KIND_LABEL: Record<NameKind, string> = {
   hereditary: 'Nombre hereditario'
 }
 
+// Página de la calculadora de cada tipo (para el link guardado en Mi carta).
+const KIND_PATH: Record<NameKind, string> = {
+  expression: '/numerodelnombre',
+  soul: '/numerodelalma',
+  personality: '/numerodeexpresiondelalma',
+  active: '/nombreactivo',
+  hereditary: '/nombrehereditario'
+}
+
 function compute(kind: NameKind, fullName: string): number | null {
   const normalized = fullName.replace(/\s+/g, ' ').trim()
   if (!normalized) return null
@@ -48,26 +56,26 @@ function compute(kind: NameKind, fullName: string): number | null {
 }
 
 export function NameNumberCalculator({ kind }: { kind: NameKind }) {
-  const router = useRouter()
   const [fullName, setFullName] = useState('')
   const [result, setResult] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
 
+  // Precarga desde Mi carta: /ruta?nombre=<nombre completo>
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const nombre = params.get('nombre')
+    if (!nombre) return
+    setFullName(nombre)
+    startTransition(() => {
+      setResult(compute(kind, nombre))
+      setSubmitted(true)
+    })
+  }, [kind])
+
   function handleSubmit(formData: FormData) {
     const next = String(formData.get('fullName') ?? '')
-    const value = compute(kind, next)
-
-    // Nombre activo: el resultado lleva directo a la página de su número.
-    if (kind === 'active' && value !== null) {
-      const href = personalPagePath('nombre-activo', value)
-      if (href) {
-        router.push(href as Parameters<typeof router.push>[0])
-        return
-      }
-    }
-
     startTransition(() => {
-      setResult(value)
+      setResult(compute(kind, next))
       setSubmitted(true)
     })
   }
@@ -93,7 +101,18 @@ export function NameNumberCalculator({ kind }: { kind: NameKind }) {
       </form>
 
       {submitted && result !== null ? (
-        <NumberResult value={result} intro={KIND_HINT[kind]} saveLabel={KIND_LABEL[kind]} />
+        <NumberResult
+          value={result}
+          intro={KIND_HINT[kind]}
+          saveLabel={KIND_LABEL[kind]}
+          saveDetail={fullName.trim() ? `Nombre: ${fullName.trim()}` : undefined}
+          saveHref={
+            fullName.trim()
+              ? `${KIND_PATH[kind]}?nombre=${encodeURIComponent(fullName.trim())}`
+              : undefined
+          }
+          verMasHref={kind === 'active' ? personalPagePath('nombre-activo', result) : null}
+        />
       ) : (
         <p className="mt-4 text-sm text-foreground/60">
           Escribe tu nombre completo para calcular este número.
