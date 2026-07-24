@@ -20,7 +20,7 @@ export type HoroscopoMesContenido = {
 
 export type HoroscopoContenido = Record<string, Record<string, HoroscopoMesContenido>>
 
-const TIENDA_URL = 'https://tienda.numerologia-cotidiana.com/'
+const TIENDA_URL = 'https://tienda-nume-chi.vercel.app/'
 
 export function HoroscopoMensualExplorer({
   anio,
