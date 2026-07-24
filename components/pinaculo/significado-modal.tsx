@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { cn } from '@/lib/utils'
 
-const TIENDA_URL = 'https://tienda.numerologia-cotidiana.com/'
+const TIENDA_URL = 'https://tienda-nume-chi.vercel.app/'
 
 type Bloque = { titulo?: string; tipo: 'parrafos' | 'lista'; contenido: string[] }
 
