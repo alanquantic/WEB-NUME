@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 
-import { NumberMeaningsGrid } from '@/components/content/number-meanings-grid'
 import { SignificadosConceptosAccordion } from '@/components/content/significados-conceptos-accordion'
 import { ToolPage } from '@/components/content/tool-page'
 
@@ -14,11 +13,8 @@ export default function Page() {
       toolKey="significadodelosnumeros"
       wide
       title="Significado de los Números"
-      description="Cada número del 1 al 9, más los maestros 11, 22 y 33, tiene una vibración propia. Esta es su esencia."
     >
-      <NumberMeaningsGrid />
-
-      <section className="mt-14 space-y-5">
+      <section className="space-y-5">
         <div className="space-y-2">
           <h2 className="font-display text-2xl font-semibold text-primary">
             Los números en cada posición del Pináculo

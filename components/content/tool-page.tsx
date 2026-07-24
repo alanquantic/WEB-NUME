@@ -5,7 +5,7 @@ import { ToolFooter } from '@/components/content/tool-footer'
 
 type ToolPageProps = {
   title: string
-  description: string
+  description?: string
   children: ReactNode
   wide?: boolean
   toolKey?: string
@@ -22,7 +22,9 @@ export function ToolPage({ title, description, children, wide = false, toolKey }
         ]}
       />
       <h1 className="mt-3 font-display text-4xl font-semibold">{title}</h1>
-      <p className="mt-3 text-base leading-8 text-foreground/72">{description}</p>
+      {description ? (
+        <p className="mt-3 text-base leading-8 text-foreground/72">{description}</p>
+      ) : null}
       <div className="mt-8">{children}</div>
       {toolKey ? <ToolFooter toolKey={toolKey} /> : null}
     </div>
