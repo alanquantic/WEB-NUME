@@ -20,7 +20,7 @@ function exploreLinksFor(value: number): ExploreLink[] {
       description: '¿Aparece este número en tu carta?'
     },
     {
-      href: '/calculadoras/expresion',
+      href: '/numerodeexpresiondelalma',
       title: 'Tus números del nombre',
       description: 'Expresión, alma y personalidad.'
     },
