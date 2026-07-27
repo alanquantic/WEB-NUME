@@ -92,26 +92,31 @@ function formatShortDate(value: string): string {
 export type LifeStagesVariant = 'etapas' | 'desafios'
 
 /** Curva de las 7 etapas con años, rangos de edad y etapa activa resaltada.
- *  variant 'etapas' → nodos E-H (verde); 'desafios' → nodos K-N (rojo). */
+ *  variant 'etapas' → nodos E-H (verde) con su desafío K-N (rojo) debajo.
+ *  variant 'desafios' → nodos K-N (rojo). */
 function LifeStagesChart({
   valores,
   activa,
-  onSelect,
+  onSelectEtapa,
+  onSelectDesafio,
   variant
 }: {
   valores: Valores
   activa: number
-  onSelect: (etapaIndex: number) => void
+  onSelectEtapa: (etapaIndex: number) => void
+  onSelectDesafio: (etapaIndex: number) => void
   variant: LifeStagesVariant
 }) {
   const W = 760
-  const H = 330
+  const muestraDesafiosPareados = variant === 'etapas'
+  const H = muestraDesafiosPareados ? 390 : 330
   const X0 = 30
   const STEP = (W - 2 * X0) / 7
   const xs = Array.from({ length: 8 }, (_, i) => X0 + i * STEP)
   // Altura de la curva por etapa (E bajo → H cima → espejo).
   const ys = [252, 204, 156, 108, 156, 204, 252]
-  const YEAR_Y = 316
+  const YEAR_Y = muestraDesafiosPareados ? 376 : 316
+  const GUIDE_BOTTOM = muestraDesafiosPareados ? 356 : 296
   const anos: (number | string)[] = [
     valores.birthYear,
     ...valores.cortes.map((edad) => valores.birthYear + edad),
@@ -146,7 +151,7 @@ function LifeStagesChart({
         x={xs[activa - 1]}
         y={16}
         width={STEP}
-        height={280}
+        height={muestraDesafiosPareados ? 340 : 280}
         rx={10}
         className="fill-[hsl(var(--accent)/0.2)]"
       />
@@ -169,7 +174,7 @@ function LifeStagesChart({
           x1={x}
           y1={20}
           x2={x}
-          y2={296}
+          y2={GUIDE_BOTTOM}
           strokeDasharray="4 5"
           className="stroke-foreground/25"
         />
@@ -217,7 +222,7 @@ function LifeStagesChart({
       {/* Curva */}
       <path d={path} fill="none" strokeWidth={3} className="stroke-[hsl(var(--royal-blue))]" />
 
-      {/* Nodos: letra, valor y caption; clickeables */}
+      {/* Nodos: etapa verde y, en la curva de etapas, su desafío rojo debajo. */}
       {ETAPAS.map((etapa, i) => {
         const x = xs[i]
         const y = ys[i]
@@ -226,42 +231,72 @@ function LifeStagesChart({
         // Tono más oscuro hacia la cima (como el original).
         const shade = [0.55, 0.7, 0.85, 1, 0.85, 0.7, 0.55][i]
         return (
-          <g
-            key={etapa.n}
-            onClick={() => onSelect(i)}
-            className="cursor-pointer"
-            role="button"
-            aria-label={`${etapa.ordinal} ${variant === 'etapas' ? 'Etapa' : 'Meta'}: vibración ${valores.letras[letra]}`}
-          >
-            <text
-              x={x}
-              y={y - 26}
-              textAnchor="middle"
-              style={{ fill: color }}
-              className="font-display text-[20px] font-bold"
+          <g key={etapa.n}>
+            <g
+              onClick={() => (variant === 'etapas' ? onSelectEtapa(i) : onSelectDesafio(i))}
+              className="cursor-pointer"
+              role="button"
+              aria-label={`${etapa.ordinal} ${variant === 'etapas' ? 'Etapa' : 'Meta'}: vibración ${valores.letras[letra]}`}
             >
-              {letra}
-            </text>
-            <rect
-              x={x - 17}
-              y={y - 17}
-              width={34}
-              height={34}
-              rx={9}
-              style={{ fill: color, opacity: shade }}
-              stroke="white"
-              strokeWidth={2}
-            />
-            <text
-              x={x}
-              y={y + 6}
-              textAnchor="middle"
-              className="fill-white font-display text-[16px] font-semibold"
-            >
-              {valores.letras[letra]}
-            </text>
+              <text
+                x={x}
+                y={y - 26}
+                textAnchor="middle"
+                style={{ fill: color }}
+                className="font-display text-[20px] font-bold"
+              >
+                {letra}
+              </text>
+              <rect
+                x={x - 17}
+                y={y - 17}
+                width={34}
+                height={34}
+                rx={9}
+                style={{ fill: color, opacity: shade }}
+                stroke="white"
+                strokeWidth={2}
+              />
+              <text
+                x={x}
+                y={y + 6}
+                textAnchor="middle"
+                className="fill-white font-display text-[16px] font-semibold"
+              >
+                {valores.letras[letra]}
+              </text>
+            </g>
+
+            {muestraDesafiosPareados ? (
+              <g
+                onClick={() => onSelectDesafio(i)}
+                className="cursor-pointer"
+                role="button"
+                aria-label={`${etapa.ordinal} Desafío: vibración ${valores.letras[etapa.desafio]}`}
+              >
+                <rect
+                  x={x - 17}
+                  y={y + 23}
+                  width={34}
+                  height={34}
+                  rx={9}
+                  style={{ fill: ROJO }}
+                  stroke="white"
+                  strokeWidth={2}
+                />
+                <text
+                  x={x}
+                  y={y + 46}
+                  textAnchor="middle"
+                  className="fill-white font-display text-[16px] font-semibold"
+                >
+                  {valores.letras[etapa.desafio]}
+                </text>
+              </g>
+            ) : null}
+
             {variant === 'etapas' ? (
-              <text x={x} y={y + 34} textAnchor="middle" className="fill-foreground/60 text-[11px]">
+              <text x={x} y={y + 78} textAnchor="middle" className="fill-foreground/60 text-[11px]">
                 {ETAPA_CAPTION[i]} Etapa
               </text>
             ) : null}
@@ -414,12 +449,15 @@ export function LifeStagesCalculator({
               <LifeStagesChart
                 valores={valores}
                 activa={activa}
-                onSelect={isDesafios ? openDesafio : openEtapa}
+                onSelectEtapa={openEtapa}
+                onSelectDesafio={openDesafio}
                 variant={variant}
               />
             </div>
             <figcaption className="mt-2 border-t border-border/60 pt-3 text-sm font-semibold text-foreground/60">
-              Etapas de vida · toca una vibración para su interpretación
+              {isDesafios
+                ? 'Metas de vida · toca una vibración para su interpretación'
+                : 'Etapas y desafíos de vida · toca un número para ver su interpretación'}
             </figcaption>
           </figure>
 

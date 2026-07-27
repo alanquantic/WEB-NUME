@@ -145,7 +145,7 @@ export default function Page() {
           </div>
         </section>
 
-        <section className="space-y-5 rounded-[2rem] border border-[hsl(var(--primary)/0.14)] bg-[linear-gradient(135deg,hsl(var(--secondary)/0.86),hsl(var(--primary)/0.92))] p-6 shadow-panel sm:p-8">
+        <section className="insight-panel space-y-5 rounded-[2rem] p-6 sm:p-8">
           <div className="space-y-4 text-base leading-8 text-foreground/72">
             <p>
               <strong>
