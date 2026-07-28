@@ -1,17 +1,25 @@
 'use client'
 
-import { startTransition, useState } from 'react'
+import { startTransition, useEffect, useState } from 'react'
 
 import { NumberResult } from '@/components/calculators/number-result'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { calculateMaturity } from '@/lib/numerology/maturity'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 export function MaturityCalculator() {
   const [fullName, setFullName] = useState('')
   const [birthDate, setBirthDate] = useState('')
   const [result, setResult] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
+  const defaults = useUserDefaults()
+
+  useEffect(() => {
+    if (!fullName && defaults.fullName) setFullName(defaults.fullName)
+    if (!birthDate && defaults.birthDate) setBirthDate(defaults.birthDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.fullName, defaults.birthDate])
 
   function handleSubmit(formData: FormData) {
     const name = String(formData.get('fullName') ?? '')

@@ -19,6 +19,7 @@ import { getMeaning } from '@/lib/numerology/meanings'
 import { personalPagePath, type PersonalCategoriaKey } from '@/lib/personales/routes'
 import { addSavedResult } from '@/lib/saved-results'
 import Person from '@/resources/person'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 type MapItem = {
   label: string
@@ -144,10 +145,17 @@ export function MapaNumerologico() {
   const [submitted, setSubmitted] = useState(false)
   const [saved, setSaved] = useState(false)
   const [origin, setOrigin] = useState('')
+  const defaults = useUserDefaults()
 
   useEffect(() => {
     setOrigin(window.location.origin)
   }, [])
+
+  useEffect(() => {
+    if (!fullName && defaults.fullName) setFullName(defaults.fullName)
+    if (!birthDate && defaults.birthDate) setBirthDate(defaults.birthDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.fullName, defaults.birthDate])
 
   function handleSubmit(formData: FormData) {
     const name = String(formData.get('fullName') ?? '')

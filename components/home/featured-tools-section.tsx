@@ -12,9 +12,9 @@ type Tool = {
 
 const FEATURED = {
   href: '/mi-mapa',
-  title: 'Mi Mapa Numerológico',
+  title: 'Centro numerológico',
   description:
-    'Todos tus números en una sola vista: camino de vida, los números de tu nombre, tu madurez y tus vibraciones del año. Gratis, al instante.'
+    'Todas las calculadoras y herramientas de numerología en un solo lugar: camino de vida, números del nombre, ciclos personales, pináculo y más.'
 }
 
 const TOOLS: readonly Tool[] = [

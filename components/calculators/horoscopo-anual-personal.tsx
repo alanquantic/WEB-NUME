@@ -1,10 +1,11 @@
 'use client'
 
-import { startTransition, useState } from 'react'
+import { startTransition, useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import Person from '@/resources/person'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 function buildYearOptions() {
   const currentYear = new Date().getFullYear()
@@ -34,6 +35,12 @@ export function HoroscopoAnualPersonal() {
   const [yearToCalculate, setYearToCalculate] = useState(currentYear)
   const [result, setResult] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
+  const defaults = useUserDefaults()
+
+  useEffect(() => {
+    if (!birthDate && defaults.birthDate) setBirthDate(defaults.birthDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.birthDate])
 
   function handleSubmit(formData: FormData) {
     const nextBirthDate = String(formData.get('birthDate') ?? '')

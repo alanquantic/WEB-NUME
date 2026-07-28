@@ -231,7 +231,7 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
   'personales-numero-personal': {
     seo: [],
     related: [
-      { href: '/mi-mapa', title: 'Mi mapa numerológico' },
+      { href: '/mi-mapa', title: 'Centro numerológico' },
       { href: '/calculatupinaculo', title: 'Calcula tu pináculo' },
       { href: '/significadodelosnumeros', title: 'Significado de los números' }
     ]
@@ -240,7 +240,7 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
     seo: [],
     related: [
       { href: '/numerodelalma', title: 'Número del Alma' },
-      { href: '/mi-mapa', title: 'Mi mapa numerológico' },
+      { href: '/mi-mapa', title: 'Centro numerológico' },
       { href: '/significadodelosnumeros', title: 'Significado de los números' }
     ]
   },

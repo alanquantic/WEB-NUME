@@ -1,6 +1,6 @@
 'use client'
 
-import { startTransition, useState } from 'react'
+import { startTransition, useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -8,11 +8,18 @@ import {
   calculateCompatibility,
   type CompatibilityResult
 } from '@/lib/numerology/compatibility'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 export function CompatibilityCalculator() {
   const [dateA, setDateA] = useState('')
   const [dateB, setDateB] = useState('')
   const [result, setResult] = useState<CompatibilityResult | null>(null)
+  const defaults = useUserDefaults()
+
+  useEffect(() => {
+    if (!dateA && defaults.birthDate) setDateA(defaults.birthDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.birthDate])
 
   function handleSubmit(formData: FormData) {
     const a = String(formData.get('dateA') ?? '')

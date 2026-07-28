@@ -12,6 +12,7 @@ import { personalPagePath, type PersonalCategoriaKey } from '@/lib/personales/ro
 import Person from '@/resources/person'
 import Pinnacle from '@/resources/pinnacle'
 import { useNumerologyMapStore } from '@/stores/numerology-map-store'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 type ResultCard = {
   id: 'personal-number' | 'soul-number' | 'personal-year'
@@ -240,10 +241,17 @@ export function NumerologyMapSection() {
   const [results, setResults] = useState(INITIAL_RESULTS)
   const [isCalculated, setIsCalculated] = useState(false)
   const [isPending, startTransition] = useTransition()
+  const defaults = useUserDefaults()
 
   const formState: FormState = { fullName, birthDate }
 
   const isFormComplete = fullName.trim().length > 0 && birthDate.trim().length > 0
+
+  useEffect(() => {
+    if (!fullName && defaults.fullName) setField('fullName', defaults.fullName)
+    if (!birthDate && defaults.birthDate) setField('birthDate', defaults.birthDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.fullName, defaults.birthDate])
 
   // Deriva los resultados del snapshot persistido: cubre el click en
   // "Calcular" y la rehidratación al volver a la página con datos de sesión.

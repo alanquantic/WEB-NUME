@@ -11,6 +11,7 @@ import { CountUp } from '@/components/ui/count-up'
 import { Input } from '@/components/ui/input'
 import { personalPagePath } from '@/lib/personales/routes'
 import Person from '@/resources/person'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 const MONTHS = [
   'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
@@ -104,6 +105,12 @@ export function PersonalMonthCalculator() {
   const [submitted, setSubmitted] = useState(false)
   const [showMeaning, setShowMeaning] = useState(false)
   const meaningRef = useRef<HTMLDivElement | null>(null)
+  const defaults = useUserDefaults()
+
+  useEffect(() => {
+    if (!birthDate && defaults.birthDate) setBirthDate(defaults.birthDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.birthDate])
 
   // Precarga desde Mi carta: /mespersonal?nacimiento=YYYY-MM-DD&mes=<0-11>
   useEffect(() => {

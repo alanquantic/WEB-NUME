@@ -34,7 +34,7 @@ export async function GET(request: Request) {
           display: 'flex',
           flexDirection: 'column',
           padding: '52px 64px',
-          background: 'linear-gradient(135deg, #4A1D95, #AD16B6)',
+          background: 'linear-gradient(135deg, #693061, #966e90)',
           color: 'white',
           fontFamily: 'Inter'
         }}

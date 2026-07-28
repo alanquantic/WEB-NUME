@@ -1,11 +1,12 @@
 'use client'
 
-import { startTransition, useState } from 'react'
+import { startTransition, useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { getMeaning } from '@/lib/numerology/meanings'
 import Person from '@/resources/person'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 type CompassItem = {
   label: string
@@ -50,6 +51,12 @@ export function PersonalCompass() {
   const [birthDate, setBirthDate] = useState('')
   const [items, setItems] = useState<CompassItem[] | null>(null)
   const [submitted, setSubmitted] = useState(false)
+  const defaults = useUserDefaults()
+
+  useEffect(() => {
+    if (!birthDate && defaults.birthDate) setBirthDate(defaults.birthDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.birthDate])
 
   function handleSubmit(formData: FormData) {
     const next = String(formData.get('birthDate') ?? '')
