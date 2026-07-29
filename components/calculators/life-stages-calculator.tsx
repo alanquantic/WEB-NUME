@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import { addSavedResult } from '@/lib/saved-results'
 import Pinnacle from '@/resources/pinnacle'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 type EtapaLetra = 'E' | 'F' | 'G' | 'H'
 type DesafioLetra = 'K' | 'L' | 'M' | 'N'
@@ -339,6 +340,7 @@ export function LifeStagesCalculator({
   const [submitted, setSubmitted] = useState(false)
   const [saved, setSaved] = useState(false)
   const [modalTarget, setModalTarget] = useState<ModalTarget | null>(null)
+  const defaults = useUserDefaults()
 
   // Precarga: /calculadoras/camino-de-vida?nacimiento=YYYY-MM-DD
   useEffect(() => {
@@ -351,6 +353,15 @@ export function LifeStagesCalculator({
       setSubmitted(true)
     })
   }, [])
+
+  // Prefill desde el perfil del usuario logueado. Solo si aún no hay fecha
+  // (para no pisar la precarga del query string ni ediciones del usuario).
+  useEffect(() => {
+    if (birthDate || submitted) return
+    if (!defaults.birthDate) return
+    setBirthDate(defaults.birthDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.birthDate])
 
   function handleSubmit(formData: FormData) {
     const next = String(formData.get('birthDate') ?? '')
