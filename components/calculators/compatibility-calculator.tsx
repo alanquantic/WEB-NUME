@@ -60,7 +60,7 @@ export function CompatibilityCalculator() {
       </form>
 
       {result ? (
-        <div className="mt-6 rounded-[1.5rem] bg-[linear-gradient(135deg,hsl(var(--secondary)/0.85),hsl(var(--primary)/0.12))] p-6 text-center">
+        <div className="mt-6 rounded-[1.5rem] bg-[hsl(var(--secondary)/0.2)] p-6 text-center">
           <div className="flex items-center justify-center gap-4">
             <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-brand font-display text-3xl font-semibold text-white shadow-glow">
               {result.numberA}

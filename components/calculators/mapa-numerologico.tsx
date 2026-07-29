@@ -235,7 +235,7 @@ export function MapaNumerologico() {
       </form>
 
       {submitted && data ? (
-        <div className="animate-result-pop relative mt-8 overflow-hidden rounded-[1.75rem] bg-[linear-gradient(135deg,hsl(var(--secondary)/0.7),hsl(var(--primary)/0.1))] p-6">
+        <div className="animate-result-pop relative mt-8 overflow-hidden rounded-[1.75rem] bg-[hsl(var(--secondary)/0.18)] p-6">
           <SparkleField className="text-primary" />
           <div className="relative">
             <p className="font-display text-xl font-semibold text-primary">El mapa de {data.name}</p>

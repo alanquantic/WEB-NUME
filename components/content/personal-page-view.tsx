@@ -39,7 +39,7 @@ function Bloque({ bloque }: { bloque: PersonalBloque }) {
       return <Prosa html={bloque.html} />
     case 'laura':
       return (
-        <aside className="rounded-[2rem] border border-primary/20 bg-[linear-gradient(135deg,hsl(var(--secondary)/0.8),hsl(var(--primary-soft)))] p-6 shadow-panel sm:p-8">
+        <aside className="rounded-[2rem] border border-primary/20 bg-[hsl(var(--primary-soft))] p-6 shadow-panel sm:p-8">
           <div className="flex items-start gap-4">
             <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-brand text-white shadow-glow">
               <Sparkles size={20} aria-hidden />
@@ -136,7 +136,7 @@ function Bloque({ bloque }: { bloque: PersonalBloque }) {
 
 function MembershipWall({ next }: { next: string }) {
   return (
-    <section className="rounded-[2rem] border border-primary/20 bg-[linear-gradient(135deg,hsl(var(--secondary)/0.85),hsl(var(--primary-soft)))] p-8 text-center shadow-panel sm:p-10">
+    <section className="rounded-[2rem] border border-primary/20 bg-[hsl(var(--primary-soft))] p-8 text-center shadow-panel sm:p-10">
       <p className="font-display text-2xl font-semibold text-primary">
         Sigue leyendo con tu membresía
       </p>
@@ -183,12 +183,12 @@ export function PersonalPageView({
         {/* Hero */}
         <section className="overflow-hidden rounded-[2rem] border border-border/70 bg-card shadow-panel">
           <div className="grid gap-0 md:grid-cols-2">
-            <div className="flex min-h-[200px] items-center justify-center bg-[linear-gradient(135deg,hsl(var(--secondary)/0.86),hsl(var(--primary-soft)))] p-8 sm:min-h-[260px]">
+            <div className="flex min-h-[200px] items-center justify-center bg-[hsl(var(--primary-soft))] p-8 sm:min-h-[260px]">
               <span className="font-display text-7xl font-semibold leading-none text-primary sm:text-8xl md:text-9xl">
                 {entry.numero}
               </span>
             </div>
-            <div className="flex min-h-[200px] flex-col justify-center space-y-4 bg-[linear-gradient(135deg,hsl(var(--card)),hsl(var(--background)))] p-8 sm:min-h-[260px]">
+            <div className="flex min-h-[200px] flex-col justify-center space-y-4 bg-card p-8 sm:min-h-[260px]">
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
                 {categoria.etiqueta}
               </p>

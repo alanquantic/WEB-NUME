@@ -163,7 +163,7 @@ export function PageSidebarWidget({ title = 'Concepto Numerológico' }: PageSide
   }
 
   return (
-    <aside className="overflow-hidden rounded-[2rem] border border-border bg-[linear-gradient(180deg,hsl(var(--secondary)/0.96),hsl(var(--background)/0.98))] p-5 shadow-panel">
+    <aside className="overflow-hidden rounded-[2rem] border border-border bg-[hsl(var(--secondary)/0.14)] p-5 shadow-panel">
       <div className="mb-4">
         <CalculatorIcon />
       </div>

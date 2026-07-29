@@ -30,7 +30,7 @@ export function NumberResult({
   return (
     <div
       key={String(value)}
-      className="animate-result-pop mt-6 rounded-[1.5rem] bg-[linear-gradient(135deg,hsl(var(--secondary)/0.82),hsl(var(--primary)/0.12))] p-6"
+      className="animate-result-pop mt-6 rounded-[1.5rem] bg-[hsl(var(--secondary)/0.2)] p-6"
     >
       <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:text-left">
         <div className="relative shrink-0">

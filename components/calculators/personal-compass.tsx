@@ -90,7 +90,7 @@ export function PersonalCompass() {
           {items.map((item) => (
             <div
               key={item.label}
-              className="flex flex-col items-center rounded-[1.5rem] bg-[linear-gradient(135deg,hsl(var(--secondary)/0.85),hsl(var(--primary)/0.1))] p-5 text-center"
+              className="flex flex-col items-center rounded-[1.5rem] bg-[hsl(var(--secondary)/0.2)] p-5 text-center"
             >
               <span className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-brand font-display text-2xl font-semibold text-white shadow-glow">
                 {item.value}

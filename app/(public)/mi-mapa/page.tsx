@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 }
 
 type Calculator = {
-  href: Route
+  href: string
   title: string
   description: string
 }
@@ -131,7 +131,7 @@ export default function Page() {
         {CALCULATORS.map((calculator) => (
           <Link
             key={calculator.href}
-            href={calculator.href}
+            href={calculator.href as Route}
             className="group flex flex-col rounded-[1.8rem] border border-border/80 bg-card p-6 shadow-panel transition hover:-translate-y-1 hover:shadow-glow"
           >
             <ToolIconTile href={calculator.href} />
