@@ -12,9 +12,9 @@ type Tool = {
 
 const FEATURED = {
   href: '/mi-mapa',
-  title: 'Mi Mapa Numerológico',
+  title: 'Centro numerológico',
   description:
-    'Todos tus números en una sola vista: camino de vida, los números de tu nombre, tu madurez y tus vibraciones del año. Gratis, al instante.'
+    'Todas las calculadoras y herramientas de numerología en un solo lugar: camino de vida, números del nombre, ciclos personales, pináculo y más.'
 }
 
 const TOOLS: readonly Tool[] = [
@@ -57,7 +57,7 @@ export function FeaturedToolsSection() {
         <ScrollReveal className="sm:col-span-2 lg:col-span-2 lg:row-span-2">
           <Link
             href={FEATURED.href as Route}
-            className="group flex h-full flex-col justify-between rounded-[1.8rem] border border-border/80 bg-[linear-gradient(135deg,hsl(var(--secondary)/0.75),hsl(var(--card)))] p-7 shadow-panel transition hover:-translate-y-1 hover:shadow-glow"
+            className="group flex h-full flex-col justify-between rounded-[1.8rem] border border-border/80 bg-[hsl(var(--secondary)/0.16)] p-7 shadow-panel transition hover:-translate-y-1 hover:shadow-glow"
           >
             <div>
               <ToolIconTile href={FEATURED.href} className="h-14 w-14" size={28} />

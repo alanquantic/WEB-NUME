@@ -53,12 +53,12 @@ export function SignificadoConceptoView({
         {/* Hero */}
         <section className="overflow-hidden rounded-[2rem] border border-border/70 bg-card shadow-panel">
           <div className="grid gap-0 md:grid-cols-2">
-            <div className="flex min-h-[220px] items-center justify-center bg-[linear-gradient(135deg,hsl(var(--secondary)/0.86),hsl(var(--primary-soft)))] p-8 sm:min-h-[280px]">
+            <div className="flex min-h-[220px] items-center justify-center bg-[hsl(var(--primary-soft))] p-8 sm:min-h-[280px]">
               <span className="font-display text-7xl font-semibold leading-none text-primary sm:text-8xl md:text-9xl">
                 {numero.numero}
               </span>
             </div>
-            <div className="flex min-h-[220px] flex-col justify-center space-y-4 bg-[linear-gradient(135deg,hsl(var(--card)),hsl(var(--background)))] p-8 sm:min-h-[280px]">
+            <div className="flex min-h-[220px] flex-col justify-center space-y-4 bg-card p-8 sm:min-h-[280px]">
               {concepto.etiqueta ? (
                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
                   {concepto.etiqueta}

@@ -1,11 +1,12 @@
 'use client'
 
-import { startTransition, useState } from 'react'
+import { startTransition, useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { calculateExpression, type ExpressionResult } from '@/lib/numerology/expression'
 import { getMeaning } from '@/lib/numerology/meanings'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 const TILES = [
   { key: 'expression', label: 'Expresión', hint: 'Tu destino y talentos' },
@@ -16,6 +17,12 @@ const TILES = [
 export function ExpressionCalculator() {
   const [fullName, setFullName] = useState('')
   const [result, setResult] = useState<ExpressionResult | null>(null)
+  const defaults = useUserDefaults()
+
+  useEffect(() => {
+    if (!fullName && defaults.fullName) setFullName(defaults.fullName)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.fullName])
 
   function handleSubmit(formData: FormData) {
     const nextName = String(formData.get('fullName') ?? '')
@@ -52,7 +59,7 @@ export function ExpressionCalculator() {
             return (
               <div
                 key={tile.key}
-                className="flex flex-col items-center rounded-[1.5rem] bg-[linear-gradient(135deg,hsl(var(--secondary)/0.85),hsl(var(--primary)/0.1))] p-5 text-center"
+                className="flex flex-col items-center rounded-[1.5rem] bg-[hsl(var(--secondary)/0.2)] p-5 text-center"
               >
                 <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-brand font-display text-3xl font-semibold text-white shadow-glow">
                   {value}

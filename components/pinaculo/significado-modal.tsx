@@ -187,7 +187,7 @@ export function SignificadoModal({
         )}
       >
         {/* Encabezado con banda de color */}
-        <div className="relative bg-[linear-gradient(135deg,hsl(var(--secondary)/0.86),hsl(var(--primary-soft)))] px-6 py-6 sm:px-8">
+        <div className="relative bg-[hsl(var(--primary-soft))] px-6 py-6 sm:px-8">
           <button
             ref={closeRef}
             onClick={onClose}

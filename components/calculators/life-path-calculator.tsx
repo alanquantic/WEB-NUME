@@ -1,16 +1,23 @@
 'use client'
 
-import { startTransition, useState } from 'react'
+import { startTransition, useEffect, useState } from 'react'
 
 import { NumberResult } from '@/components/calculators/number-result'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { calculateLifePath } from '@/lib/numerology/life-path'
 import type { LifePathResult } from '@/lib/numerology/types'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 export function LifePathCalculator() {
   const [birthDate, setBirthDate] = useState('')
   const [result, setResult] = useState<LifePathResult | null>(null)
+  const defaults = useUserDefaults()
+
+  useEffect(() => {
+    if (!birthDate && defaults.birthDate) setBirthDate(defaults.birthDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.birthDate])
 
   function handleSubmit(formData: FormData) {
     const nextBirthDate = String(formData.get('birthDate') ?? '')

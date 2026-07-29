@@ -153,7 +153,7 @@ export function ConsultantCard({
         </div>
 
         {nextCourse ? (
-          <div className="rounded-2xl bg-[linear-gradient(135deg,hsl(var(--secondary)/0.72),hsl(var(--primary-soft)))] px-5 py-3 text-center">
+          <div className="rounded-2xl bg-[hsl(var(--primary-soft))] px-5 py-3 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">
               Próximo curso
             </p>

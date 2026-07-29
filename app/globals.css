@@ -13,12 +13,12 @@
     /* #E7DFF0 */
     --muted: 270 60% 97%;
     /* #F6F0FA */
-    --primary: 263 67% 35%;
-    /* #4A1D95 */
-    --primary-soft: 270 95% 95%;
-    /* #F2E7FE */
-    --secondary: 270 100% 96%;
-    /* #F5EBFF */
+    --primary: 308 37% 30%;
+    /* #693061 */
+    --primary-soft: 308 45% 94%;
+    /* #f7ebf5 */
+    --secondary: 309 16% 51%;
+    /* #966e90 */
     --accent: 46 64% 52%;
     /* #D3AE35 */
     --fuchsia: 295 78% 40%;
@@ -47,9 +47,9 @@
     --card: 263 34% 13%;
     --border: 263 24% 24%;
     --muted: 263 30% 16%;
-    --primary: 271 82% 78%;
-    --primary-soft: 264 42% 22%;
-    --secondary: 263 34% 18%;
+    --primary: 308 45% 72%;
+    --primary-soft: 308 28% 22%;
+    --secondary: 309 18% 42%;
     --accent: 46 78% 62%;
     --fuchsia: 295 78% 72%;
     --gray: 255 12% 68%;
@@ -71,13 +71,13 @@ html {
 
 body {
     min-height: 100vh;
-    background: radial-gradient(circle at top, hsl(var(--primary) / 0.14), transparent 38%), radial-gradient(circle at 80% 0%, hsl(var(--fuchsia) / 0.1), transparent 30%), linear-gradient(180deg, hsl(0 0% 100% / 0.75), hsl(var(--background) / 0.96)), hsl(var(--background));
+    background: hsl(var(--background));
     color: hsl(var(--foreground));
     font-family: 'Inter', system-ui, sans-serif;
 }
 
 .dark body {
-    background: radial-gradient(circle at top, hsl(var(--primary) / 0.16), transparent 42%), radial-gradient(circle at 80% 0%, hsl(var(--fuchsia) / 0.12), transparent 32%), hsl(var(--background));
+    background: hsl(var(--background));
 }
 
 /*
@@ -91,9 +91,9 @@ body {
     --card: 0 0% 100%;
     --border: 270 32% 82%;
     --muted: 270 60% 97%;
-    --primary: 263 67% 35%;
-    --primary-soft: 270 95% 95%;
-    --secondary: 270 100% 96%;
+    --primary: 308 37% 30%;
+    --primary-soft: 308 45% 94%;
+    --secondary: 309 16% 51%;
     --gray: 255 10% 42%;
     color: hsl(var(--foreground));
 }
@@ -130,13 +130,10 @@ a {
         text-wrap: balance;
     }
     .text-gradient-brand {
-        background: linear-gradient(120deg, hsl(var(--primary)), hsl(var(--fuchsia)));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
+        color: hsl(var(--primary));
     }
     .bg-gradient-brand {
-        background: linear-gradient(120deg, hsl(var(--primary)), hsl(var(--fuchsia)));
+        background: hsl(var(--primary));
     }
     .header-chip {
         position: relative;
@@ -147,7 +144,7 @@ a {
         content: '';
         position: absolute;
         inset: 0;
-        background: linear-gradient(120deg, hsl(var(--primary) / 0.14), transparent 55%, hsl(var(--fuchsia) / 0.12));
+        background: hsl(var(--primary) / 0.12);
         opacity: 0;
         transition: opacity 220ms ease;
         pointer-events: none;
@@ -266,14 +263,14 @@ a {
 .nume-puck {
     --puck-font-family: 'Inter', system-ui, sans-serif;
     /* Acento (Puck usa la escala azure como color primario) → púrpura marca */
-    --puck-color-azure-03: hsl(263 67% 28%);
-    --puck-color-azure-04: hsl(263 67% 35%);
-    --puck-color-azure-05: hsl(263 60% 45%);
-    --puck-color-azure-06: hsl(263 55% 56%);
-    --puck-color-azure-07: hsl(270 60% 70%);
-    --puck-button-primary-color-bg: hsl(263 67% 35%);
-    --puck-button-primary-color-bg-hover: hsl(263 67% 30%);
-    --puck-button-primary-color-bg-active: hsl(263 67% 25%);
+    --puck-color-azure-03: hsl(308 37% 24%);
+    --puck-color-azure-04: hsl(308 37% 30%);
+    --puck-color-azure-05: hsl(308 30% 42%);
+    --puck-color-azure-06: hsl(309 20% 55%);
+    --puck-color-azure-07: hsl(309 18% 68%);
+    --puck-button-primary-color-bg: hsl(308 37% 30%);
+    --puck-button-primary-color-bg-hover: hsl(308 37% 25%);
+    --puck-button-primary-color-bg-active: hsl(308 37% 20%);
     /* Formas más suaves para combinar con el resto de la UI */
     --puck-field-radius: 0.85rem;
     --puck-button-radius: 999px;
@@ -342,10 +339,7 @@ a {
     isolation: isolate;
     overflow: hidden;
     border: 1px solid hsl(var(--primary) / 0.16);
-    background:
-        radial-gradient(circle at 8% 50%, hsl(var(--primary) / 0.12), transparent 24%),
-        radial-gradient(circle at 92% 20%, hsl(var(--fuchsia) / 0.09), transparent 28%),
-        linear-gradient(135deg, hsl(var(--card) / 0.98), hsl(var(--secondary) / 0.78));
+    background: hsl(var(--primary-soft));
     box-shadow: 0 18px 48px hsl(var(--primary) / 0.09);
 }
 
@@ -392,9 +386,7 @@ a {
     isolation: isolate;
     overflow: hidden;
     border: 1px solid hsl(var(--primary) / 0.14);
-    background:
-        radial-gradient(circle at 100% 0%, hsl(var(--primary) / 0.1), transparent 30%),
-        linear-gradient(145deg, hsl(var(--card) / 0.98), hsl(var(--secondary) / 0.58));
+    background: hsl(var(--secondary) / 0.14);
     box-shadow: 0 20px 54px hsl(var(--primary) / 0.08);
 }
 
@@ -403,12 +395,7 @@ a {
     inset: 0 0 auto;
     z-index: 1;
     height: 4px;
-    background: linear-gradient(
-        90deg,
-        hsl(var(--primary)),
-        hsl(var(--fuchsia)),
-        hsl(var(--accent))
-    );
+    background: hsl(var(--primary));
     content: "";
 }
 

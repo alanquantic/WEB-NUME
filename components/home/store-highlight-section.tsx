@@ -69,7 +69,7 @@ export function StoreHighlightSection() {
                 href={STORE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex h-full flex-col rounded-[1.6rem] border border-border/80 bg-[linear-gradient(180deg,hsl(var(--secondary)/0.5),hsl(var(--card)))] p-5 transition hover:-translate-y-1 hover:shadow-glow"
+                className="group flex h-full flex-col rounded-[1.6rem] border border-border/80 bg-[hsl(var(--secondary)/0.14)] p-5 transition hover:-translate-y-1 hover:shadow-glow"
               >
                 <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-soft text-primary transition duration-200 group-hover:bg-gradient-brand group-hover:text-white">
                   <category.Icon size={22} strokeWidth={1.75} aria-hidden />

@@ -34,7 +34,7 @@ const statusOptions: Array<{ value: PostStatus; label: string }> = [
 ]
 
 const statusPill: Record<PostStatus, string> = {
-  draft: 'bg-[hsl(var(--secondary))] text-[hsl(var(--foreground))/0.7]',
+  draft: 'bg-[hsl(var(--secondary)/0.18)] text-[hsl(var(--foreground))/0.7]',
   published: 'bg-[hsl(160_84%_39%/0.15)] text-[hsl(160_84%_28%)]',
   scheduled: 'bg-[hsl(46_64%_52%/0.18)] text-[hsl(38_70%_32%)]',
   archived: 'bg-[hsl(var(--foreground)/0.08)] text-[hsl(var(--foreground)/0.55)]'
@@ -291,7 +291,7 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
         <div className="flex items-center gap-3">
           <Link
             href={listHref}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-[hsl(var(--border))] text-[hsl(var(--foreground))/0.7] transition hover:bg-[hsl(var(--secondary))]"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-[hsl(var(--border))] text-[hsl(var(--foreground))/0.7] transition hover:bg-[hsl(var(--secondary)/0.18)]"
             aria-label="Volver"
           >
             ←

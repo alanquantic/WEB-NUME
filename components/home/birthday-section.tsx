@@ -94,7 +94,7 @@ function BirthdayProfile({ numero, monthName }: { numero: number; monthName: str
   return (
     <div className="mt-8 overflow-hidden rounded-[2rem] border border-border/70 bg-card shadow-panel">
       {/* Encabezado del perfil */}
-      <div className="flex flex-col gap-5 border-b border-border/70 bg-[linear-gradient(135deg,hsl(var(--secondary)/0.5),hsl(var(--card)))] p-6 sm:flex-row sm:items-center sm:p-8">
+      <div className="flex flex-col gap-5 border-b border-border/70 bg-[hsl(var(--secondary)/0.16)] p-6 sm:flex-row sm:items-center sm:p-8">
         <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-gradient-brand font-display text-4xl font-semibold text-white shadow-glow">
           {numero}
         </span>
@@ -173,7 +173,7 @@ function BirthdayProfile({ numero, monthName }: { numero: number; monthName: str
         ) : null}
 
         {perfil.afirmacion ? (
-          <blockquote className="rounded-2xl border border-primary/16 bg-[linear-gradient(135deg,hsl(var(--secondary)/0.4),hsl(var(--card)))] p-5 text-center font-display text-lg italic leading-8 text-primary">
+          <blockquote className="rounded-2xl border border-primary/16 bg-[hsl(var(--secondary)/0.14)] p-5 text-center font-display text-lg italic leading-8 text-primary">
             “{perfil.afirmacion}”
           </blockquote>
         ) : null}
@@ -222,7 +222,7 @@ export function BirthdaySection() {
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
-      <div className="rounded-[2.5rem] bg-[linear-gradient(135deg,hsl(var(--secondary)/0.86),hsl(var(--primary)/0.92))] px-5 py-8 shadow-panel sm:px-6 md:px-12 md:py-10">
+      <div className="rounded-[2.5rem] bg-[hsl(var(--primary))] px-5 py-8 shadow-panel sm:px-6 md:px-12 md:py-10">
         <div className="grid items-center gap-8 lg:grid-cols-[1fr_0.85fr]">
           <ScrollReveal>
             <div>

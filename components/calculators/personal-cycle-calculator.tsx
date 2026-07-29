@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { personalPagePath, type PersonalCategoriaKey } from '@/lib/personales/routes'
 import Person from '@/resources/person'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 export type CycleKind = 'year' | 'month' | 'week' | 'day' | 'stage'
 
@@ -110,6 +111,12 @@ export function PersonalCycleCalculator({ kind }: { kind: CycleKind }) {
   const [targetDate, setTargetDate] = useState(todayIso())
   const [result, setResult] = useState<number | string | null>(null)
   const [submitted, setSubmitted] = useState(false)
+  const defaults = useUserDefaults()
+
+  useEffect(() => {
+    if (!birthDate && defaults.birthDate) setBirthDate(defaults.birthDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.birthDate])
 
   const hasTargetField = Boolean(TARGET_FIELD_LABEL[kind])
 

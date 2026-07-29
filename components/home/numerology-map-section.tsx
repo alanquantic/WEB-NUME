@@ -12,6 +12,7 @@ import { personalPagePath, type PersonalCategoriaKey } from '@/lib/personales/ro
 import Person from '@/resources/person'
 import Pinnacle from '@/resources/pinnacle'
 import { useNumerologyMapStore } from '@/stores/numerology-map-store'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 type ResultCard = {
   id: 'personal-number' | 'soul-number' | 'personal-year'
@@ -90,9 +91,9 @@ const RESULT_CARDS: readonly ResultCard[] = [
 
 const CARD_STYLES: Record<ResultCard['tone'], string> = {
   essence:
-    "border border-border/70 bg-[linear-gradient(180deg,hsl(var(--secondary)/0.94),hsl(var(--background)/0.98)),url('/images/who-im.png')] text-primary shadow-[0_22px_55px_hsl(var(--primary)/0.08)]",
+    "border border-border/70 bg-[url('/images/who-im.png')] bg-[hsl(var(--primary-soft))] text-primary shadow-[0_22px_55px_hsl(var(--primary)/0.08)]",
   mission:
-    "bg-[linear-gradient(180deg,hsl(var(--primary)/0.66),hsl(var(--fuchsia)/0.7)),url('/images/my-mission.png')] text-white shadow-[0_24px_60px_hsl(var(--primary)/0.18)]",
+    "bg-[url('/images/my-mission.png')] bg-[hsl(var(--primary))] text-white shadow-[0_24px_60px_hsl(var(--primary)/0.18)]",
   year:
     "border border-[hsl(var(--accent)/0.14)] bg-[radial-gradient(circle_at_top,hsl(var(--accent)/0.34),transparent_55%),linear-gradient(180deg,hsl(var(--background)/0.94),hsl(var(--accent)/0.2)),url('/images/personal-year-2.png')] text-[hsl(var(--accent))] shadow-[0_22px_55px_hsl(var(--accent)/0.14)]"
 }
@@ -240,10 +241,17 @@ export function NumerologyMapSection() {
   const [results, setResults] = useState(INITIAL_RESULTS)
   const [isCalculated, setIsCalculated] = useState(false)
   const [isPending, startTransition] = useTransition()
+  const defaults = useUserDefaults()
 
   const formState: FormState = { fullName, birthDate }
 
   const isFormComplete = fullName.trim().length > 0 && birthDate.trim().length > 0
+
+  useEffect(() => {
+    if (!fullName && defaults.fullName) setField('fullName', defaults.fullName)
+    if (!birthDate && defaults.birthDate) setField('birthDate', defaults.birthDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.fullName, defaults.birthDate])
 
   // Deriva los resultados del snapshot persistido: cubre el click en
   // "Calcular" y la rehidratación al volver a la página con datos de sesión.
@@ -296,7 +304,7 @@ export function NumerologyMapSection() {
         <ScrollReveal delay={70} className="h-full">
           <div
             data-calculator-slot="mapa-form"
-            className="flex h-full min-h-[27rem] flex-col overflow-hidden rounded-[2rem] border border-border/70 bg-[linear-gradient(180deg,hsl(var(--foreground)/0.34),hsl(var(--primary)/0.24)),url('/images/form-bk.png')] bg-contain bg-center p-5 text-white shadow-[0_24px_60px_hsl(var(--foreground)/0.12)] backdrop-blur sm:min-h-[31rem] sm:p-6"
+            className="flex h-full min-h-[27rem] flex-col overflow-hidden rounded-[2rem] border border-border/70 bg-[url('/images/form-bk.png')] bg-[hsl(var(--foreground)/0.58)] bg-contain bg-center p-5 text-white shadow-[0_24px_60px_hsl(var(--foreground)/0.12)] backdrop-blur sm:min-h-[31rem] sm:p-6"
           >
             <h2 className="font-display text-[1.45rem] font-semibold uppercase tracking-[0.03em] text-white sm:text-[1.7rem]">
               Mi Mapa <span className="block">Numerológico</span>
@@ -393,7 +401,7 @@ export function NumerologyMapSection() {
           <ScrollReveal delay={360}>
             <article
               data-result="energia-hoy"
-              className="group flex h-full min-h-[13rem] flex-col rounded-[2rem] bg-[radial-gradient(circle_at_top,hsl(var(--card)/0.24),transparent_42%),linear-gradient(180deg,hsl(var(--royal-blue)/0.72),hsl(var(--primary)/0.88))] px-5 py-6 text-white shadow-[0_24px_60px_hsl(var(--royal-blue)/0.16)] transition hover:-translate-y-1 sm:min-h-[15rem] sm:px-6 sm:py-7"
+              className="group flex h-full min-h-[13rem] flex-col rounded-[2rem] bg-[hsl(var(--royal-blue))] px-5 py-6 text-white shadow-[0_24px_60px_hsl(var(--royal-blue)/0.16)] transition hover:-translate-y-1 sm:min-h-[15rem] sm:px-6 sm:py-7"
             >
               <h3 className="font-display text-[1.2rem] font-semibold uppercase tracking-[0.03em] sm:text-[1.55rem]">
                 Mi energía de hoy
@@ -458,14 +466,14 @@ export function NumerologyMapSection() {
         <ScrollReveal delay={180}>
           <div
             data-calculator-slot="mapa-pinaculo"
-            className="flex flex-col rounded-[2rem] border border-border/70 bg-[linear-gradient(180deg,hsl(var(--secondary)/0.74),hsl(var(--card)/0.94))] p-5 text-center shadow-[0_22px_55px_hsl(var(--primary)/0.08)] sm:p-6"
+            className="flex flex-col rounded-[2rem] border border-border/70 bg-[hsl(var(--secondary)/0.16)] p-5 text-center shadow-[0_22px_55px_hsl(var(--primary)/0.08)] sm:p-6"
           >
             <h3 className="font-display text-[1.4rem] font-semibold uppercase tracking-[0.03em] text-primary sm:text-[1.7rem]">
               Mi Pináculo
             </h3>
             <p className="mt-1 text-sm text-[hsl(var(--gray))]">Descubre tu Pináculo Personal</p>
             <div className="mt-5 overflow-hidden rounded-[1.65rem] bg-white/66 p-3 shadow-[inset_0_1px_0_hsl(var(--card)/0.6)]">
-              <div className="relative overflow-hidden rounded-[1.35rem] bg-[linear-gradient(180deg,hsl(var(--card)/0.84),hsl(var(--secondary)/0.7))]">
+              <div className="relative overflow-hidden rounded-[1.35rem] bg-[hsl(var(--secondary)/0.18)]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={isCalculated ? '/images/pinnacle.png' : '/images/pinnacle-pre.webp'}

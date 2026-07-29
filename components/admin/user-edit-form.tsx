@@ -231,7 +231,7 @@ export function UserEditForm({ user }: UserEditFormProps) {
       </Section>
 
       {feedback ? (
-        <p className="rounded-2xl bg-[hsl(var(--secondary))] px-4 py-3 text-sm font-medium">{feedback}</p>
+        <p className="rounded-2xl bg-[hsl(var(--secondary))] px-4 py-3 text-sm font-medium text-white">{feedback}</p>
       ) : null}
       {error ? (
         <p className="rounded-2xl bg-[hsl(var(--danger))/0.12] px-4 py-3 text-sm font-medium text-[hsl(var(--danger))]">{error}</p>

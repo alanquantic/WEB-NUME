@@ -1,10 +1,11 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { Route } from 'next'
 import Link from 'next/link'
 
 import Person from '@/resources/person'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 type CalculatorOption = {
   id: string
@@ -117,6 +118,16 @@ function CalculatorIcon() {
 export function PageSidebarWidget({ title = 'Concepto Numerológico' }: PageSidebarWidgetProps) {
   const [formState, setFormState] = useState(INITIAL_FORM_STATE)
   const [result, setResult] = useState('Resultado:')
+  const defaults = useUserDefaults()
+
+  useEffect(() => {
+    setFormState((current) => ({
+      ...current,
+      fullName: current.fullName || defaults.fullName,
+      birthDate: current.birthDate || defaults.birthDate
+    }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.fullName, defaults.birthDate])
 
   const selectedOption = useMemo(
     () => CALCULATOR_OPTIONS.find((option) => option.id === formState.concept) ?? null,
@@ -152,7 +163,7 @@ export function PageSidebarWidget({ title = 'Concepto Numerológico' }: PageSide
   }
 
   return (
-    <aside className="overflow-hidden rounded-[2rem] border border-border bg-[linear-gradient(180deg,hsl(var(--secondary)/0.96),hsl(var(--background)/0.98))] p-5 shadow-panel">
+    <aside className="overflow-hidden rounded-[2rem] border border-border bg-[hsl(var(--secondary)/0.14)] p-5 shadow-panel">
       <div className="mb-4">
         <CalculatorIcon />
       </div>

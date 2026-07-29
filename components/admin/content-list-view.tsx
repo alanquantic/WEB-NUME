@@ -173,7 +173,7 @@ export function ContentListView({ kind, result, searchParams }: ContentListViewP
             {page > 1 ? (
               <Link
                 href={buildPageHref(basePath, searchParams, page - 1)}
-                className="rounded-full bg-[hsl(var(--secondary))] px-4 py-2 font-semibold"
+                className="rounded-full bg-[hsl(var(--secondary))] px-4 py-2 font-semibold text-white"
               >
                 Anterior
               </Link>
@@ -181,7 +181,7 @@ export function ContentListView({ kind, result, searchParams }: ContentListViewP
             {page < totalPages ? (
               <Link
                 href={buildPageHref(basePath, searchParams, page + 1)}
-                className="rounded-full bg-[hsl(var(--secondary))] px-4 py-2 font-semibold"
+                className="rounded-full bg-[hsl(var(--secondary))] px-4 py-2 font-semibold text-white"
               >
                 Siguiente
               </Link>

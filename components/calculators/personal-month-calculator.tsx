@@ -11,6 +11,7 @@ import { CountUp } from '@/components/ui/count-up'
 import { Input } from '@/components/ui/input'
 import { personalPagePath } from '@/lib/personales/routes'
 import Person from '@/resources/person'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 const MONTHS = [
   'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
@@ -51,7 +52,7 @@ function MeaningBlocks({ entry }: { entry: MesPersonalEntry }) {
           return (
             <blockquote
               key={index}
-              className="rounded-2xl border border-primary/16 bg-[linear-gradient(135deg,hsl(var(--secondary)/0.4),hsl(var(--card)))] p-5 text-center font-display text-lg italic leading-8 text-primary"
+              className="rounded-2xl border border-primary/16 bg-[hsl(var(--secondary)/0.14)] p-5 text-center font-display text-lg italic leading-8 text-primary"
             >
               {bloque.texto}
             </blockquote>
@@ -104,6 +105,12 @@ export function PersonalMonthCalculator() {
   const [submitted, setSubmitted] = useState(false)
   const [showMeaning, setShowMeaning] = useState(false)
   const meaningRef = useRef<HTMLDivElement | null>(null)
+  const defaults = useUserDefaults()
+
+  useEffect(() => {
+    if (!birthDate && defaults.birthDate) setBirthDate(defaults.birthDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.birthDate])
 
   // Precarga desde Mi carta: /mespersonal?nacimiento=YYYY-MM-DD&mes=<0-11>
   useEffect(() => {
@@ -178,7 +185,7 @@ export function PersonalMonthCalculator() {
         {submitted && result ? (
           <div
             key={`${result.value}-${result.monthIndex}`}
-            className="animate-result-pop mt-6 rounded-[1.5rem] bg-[linear-gradient(135deg,hsl(var(--secondary)/0.82),hsl(var(--primary)/0.12))] p-6"
+            className="animate-result-pop mt-6 rounded-[1.5rem] bg-[hsl(var(--secondary)/0.2)] p-6"
           >
             <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-center sm:text-left">
               <div className="relative shrink-0">
