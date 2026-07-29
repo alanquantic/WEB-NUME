@@ -10,7 +10,7 @@ type ButtonProps = PropsWithChildren<
 
 const variants = {
   default: 'bg-[hsl(var(--primary))] text-white hover:opacity-90',
-  secondary: 'bg-[hsl(var(--secondary))] text-[hsl(var(--foreground))] hover:opacity-90',
+  secondary: 'bg-[hsl(var(--secondary))] text-white hover:opacity-90',
   ghost: 'bg-transparent text-[hsl(var(--foreground))] hover:bg-black/5',
   danger: 'bg-[hsl(var(--danger))] text-white hover:opacity-90'
 }

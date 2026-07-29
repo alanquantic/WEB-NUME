@@ -71,7 +71,7 @@ export function PinnacleDiagram({ birthDate }: { birthDate: string }) {
 
   return (
     <div className="overflow-hidden rounded-[1.65rem] bg-white/70 p-3 shadow-[inset_0_1px_0_hsl(var(--card)/0.6)]">
-      <div className="relative overflow-hidden rounded-[1.35rem] bg-[linear-gradient(180deg,hsl(var(--card)/0.84),hsl(var(--secondary)/0.7))]">
+      <div className="relative overflow-hidden rounded-[1.35rem] bg-[hsl(var(--secondary)/0.18)]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/pinnacle.png" alt="Diagrama del pináculo" className="h-full w-full object-cover" />
         <div className="pointer-events-none absolute inset-0">

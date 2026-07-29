@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { personalPagePath } from '@/lib/personales/routes'
 import Person from '@/resources/person'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 export type NameKind = 'expression' | 'soul' | 'personality' | 'active' | 'hereditary'
 
@@ -59,6 +60,12 @@ export function NameNumberCalculator({ kind }: { kind: NameKind }) {
   const [fullName, setFullName] = useState('')
   const [result, setResult] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
+  const defaults = useUserDefaults()
+
+  useEffect(() => {
+    if (!fullName && defaults.fullName) setFullName(defaults.fullName)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.fullName])
 
   // Precarga desde Mi carta: /ruta?nombre=<nombre completo>
   useEffect(() => {

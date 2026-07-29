@@ -1,11 +1,12 @@
 'use client'
 
-import { startTransition, useState } from 'react'
+import { startTransition, useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { getMeaning } from '@/lib/numerology/meanings'
 import Person from '@/resources/person'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 type CompassItem = {
   label: string
@@ -50,6 +51,12 @@ export function PersonalCompass() {
   const [birthDate, setBirthDate] = useState('')
   const [items, setItems] = useState<CompassItem[] | null>(null)
   const [submitted, setSubmitted] = useState(false)
+  const defaults = useUserDefaults()
+
+  useEffect(() => {
+    if (!birthDate && defaults.birthDate) setBirthDate(defaults.birthDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.birthDate])
 
   function handleSubmit(formData: FormData) {
     const next = String(formData.get('birthDate') ?? '')
@@ -83,7 +90,7 @@ export function PersonalCompass() {
           {items.map((item) => (
             <div
               key={item.label}
-              className="flex flex-col items-center rounded-[1.5rem] bg-[linear-gradient(135deg,hsl(var(--secondary)/0.85),hsl(var(--primary)/0.1))] p-5 text-center"
+              className="flex flex-col items-center rounded-[1.5rem] bg-[hsl(var(--secondary)/0.2)] p-5 text-center"
             >
               <span className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-brand font-display text-2xl font-semibold text-white shadow-glow">
                 {item.value}

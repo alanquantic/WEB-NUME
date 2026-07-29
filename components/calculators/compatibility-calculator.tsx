@@ -1,6 +1,6 @@
 'use client'
 
-import { startTransition, useState } from 'react'
+import { startTransition, useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -8,11 +8,18 @@ import {
   calculateCompatibility,
   type CompatibilityResult
 } from '@/lib/numerology/compatibility'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 export function CompatibilityCalculator() {
   const [dateA, setDateA] = useState('')
   const [dateB, setDateB] = useState('')
   const [result, setResult] = useState<CompatibilityResult | null>(null)
+  const defaults = useUserDefaults()
+
+  useEffect(() => {
+    if (!dateA && defaults.birthDate) setDateA(defaults.birthDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.birthDate])
 
   function handleSubmit(formData: FormData) {
     const a = String(formData.get('dateA') ?? '')
@@ -53,7 +60,7 @@ export function CompatibilityCalculator() {
       </form>
 
       {result ? (
-        <div className="mt-6 rounded-[1.5rem] bg-[linear-gradient(135deg,hsl(var(--secondary)/0.85),hsl(var(--primary)/0.12))] p-6 text-center">
+        <div className="mt-6 rounded-[1.5rem] bg-[hsl(var(--secondary)/0.2)] p-6 text-center">
           <div className="flex items-center justify-center gap-4">
             <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-brand font-display text-3xl font-semibold text-white shadow-glow">
               {result.numberA}

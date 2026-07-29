@@ -8,6 +8,7 @@ import { SignificadoModal, type ModalTarget } from '@/components/pinaculo/signif
 import { cn } from '@/lib/utils'
 import Pinnacle from '@/resources/pinnacle'
 import { useNumerologyMapStore } from '@/stores/numerology-map-store'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 type Valor = number | string
 type Valores = Record<string, Valor>
@@ -118,6 +119,7 @@ export function PinnacleCalculator({ isMember = false }: { isMember?: boolean })
   // se precarga y se muestra el pináculo calculado. Solo una vez por visita
   // para no pisar interacciones posteriores (p. ej. tras "Borrar").
   const calculated = useNumerologyMapStore((state) => state.calculated)
+  const defaults = useUserDefaults()
   const prefilledRef = useRef(false)
 
   useEffect(() => {
@@ -131,6 +133,16 @@ export function PinnacleCalculator({ isMember = false }: { isMember?: boolean })
       setSubmitted(true)
     })
   }, [calculated, submitted, birthDate])
+
+  // Fallback: si no vino nada del mapa del home pero el usuario está
+  // logueado y tiene fecha de nacimiento en su perfil, la precargamos sin
+  // calcular automáticamente (deja que confirme con "Calcular").
+  useEffect(() => {
+    if (birthDate || submitted) return
+    if (!defaults.birthDate) return
+    setBirthDate(defaults.birthDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.birthDate])
 
   function handleSubmit(formData: FormData) {
     const next = String(formData.get('birthDate') ?? '')

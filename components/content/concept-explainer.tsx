@@ -35,7 +35,7 @@ export function ConceptExplainer({
           {concept.numeros.map((item) => (
             <details
               key={item.numero}
-              className="group overflow-hidden rounded-[1.5rem] border border-border/70 bg-[linear-gradient(135deg,hsl(var(--secondary)/0.72),hsl(var(--card)))]"
+              className="group overflow-hidden rounded-[1.5rem] border border-border/70 bg-[hsl(var(--secondary)/0.16)]"
             >
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left">
                 <span className="font-display text-lg font-semibold text-primary">
@@ -53,7 +53,7 @@ export function ConceptExplainer({
         </div>
       </section>
 
-      <section className="space-y-4 rounded-[2rem] border border-[hsl(var(--primary)/0.14)] bg-[linear-gradient(135deg,hsl(var(--secondary)/0.82),hsl(var(--background)))] p-6 shadow-panel sm:p-8">
+      <section className="space-y-4 rounded-[2rem] border border-[hsl(var(--primary)/0.14)] bg-[hsl(var(--secondary)/0.14)] p-6 shadow-panel sm:p-8">
         <h2 className="font-display text-2xl font-semibold text-primary">{concept.calculoTitulo}</h2>
         <div className="space-y-4 text-base leading-8 text-foreground/72">
           {concept.calculo.map((paragraph, index) => (

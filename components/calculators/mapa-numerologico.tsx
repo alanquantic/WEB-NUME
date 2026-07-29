@@ -19,6 +19,7 @@ import { getMeaning } from '@/lib/numerology/meanings'
 import { personalPagePath, type PersonalCategoriaKey } from '@/lib/personales/routes'
 import { addSavedResult } from '@/lib/saved-results'
 import Person from '@/resources/person'
+import { useUserDefaults } from '@/stores/user-defaults'
 
 type MapItem = {
   label: string
@@ -144,10 +145,17 @@ export function MapaNumerologico() {
   const [submitted, setSubmitted] = useState(false)
   const [saved, setSaved] = useState(false)
   const [origin, setOrigin] = useState('')
+  const defaults = useUserDefaults()
 
   useEffect(() => {
     setOrigin(window.location.origin)
   }, [])
+
+  useEffect(() => {
+    if (!fullName && defaults.fullName) setFullName(defaults.fullName)
+    if (!birthDate && defaults.birthDate) setBirthDate(defaults.birthDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults.fullName, defaults.birthDate])
 
   function handleSubmit(formData: FormData) {
     const name = String(formData.get('fullName') ?? '')
@@ -227,7 +235,7 @@ export function MapaNumerologico() {
       </form>
 
       {submitted && data ? (
-        <div className="animate-result-pop relative mt-8 overflow-hidden rounded-[1.75rem] bg-[linear-gradient(135deg,hsl(var(--secondary)/0.7),hsl(var(--primary)/0.1))] p-6">
+        <div className="animate-result-pop relative mt-8 overflow-hidden rounded-[1.75rem] bg-[hsl(var(--secondary)/0.18)] p-6">
           <SparkleField className="text-primary" />
           <div className="relative">
             <p className="font-display text-xl font-semibold text-primary">El mapa de {data.name}</p>

@@ -214,7 +214,7 @@ export default function Page() {
               <details
                 key={item.id}
                 id={item.id}
-                className="accordion-active group overflow-hidden rounded-[1.5rem] border border-border/70 bg-[linear-gradient(135deg,hsl(var(--secondary)/0.72),hsl(var(--card)))]"
+                className="accordion-active group overflow-hidden rounded-[1.5rem] border border-border/70 bg-[hsl(var(--secondary)/0.16)]"
               >
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left">
                   <span className="font-display text-lg font-semibold text-primary">

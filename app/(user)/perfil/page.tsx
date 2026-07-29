@@ -1,3 +1,4 @@
+import { ChangePasswordDialog } from '@/components/auth/change-password-dialog'
 import { LogoutButton } from '@/components/auth/logout-button'
 import { MembershipTierBadge } from '@/components/memberships/membership-tier-badge'
 import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card'
@@ -39,7 +40,8 @@ export default async function ProfilePage() {
           <MembershipTierBadge tier={user?.current_membership} />
         </p>
       </CardContent>
-      <div className="mt-6 border-t border-[hsl(var(--border))] pt-5">
+      <div className="mt-6 flex flex-wrap gap-3 border-t border-[hsl(var(--border))] pt-5">
+        <ChangePasswordDialog />
         <LogoutButton />
       </div>
     </Card>

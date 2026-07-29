@@ -98,7 +98,7 @@ export function DesafiosCalculator() {
       </form>
 
       {submitted && values ? (
-        <div className="animate-result-pop mt-6 rounded-[1.5rem] bg-[linear-gradient(135deg,hsl(var(--secondary)/0.82),hsl(var(--primary)/0.12))] p-6">
+        <div className="animate-result-pop mt-6 rounded-[1.5rem] bg-[hsl(var(--secondary)/0.2)] p-6">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {DESAFIOS.map(({ key, label, sub }) => (
               <div

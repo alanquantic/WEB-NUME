@@ -41,12 +41,12 @@ export function AnoPersonalNumberView({ entry }: { entry: AnoPersonalEntry }) {
       <div className="space-y-8">
         <section className="overflow-hidden rounded-[2rem] border border-border/70 bg-card shadow-panel">
           <div className="grid gap-0 md:grid-cols-2">
-            <div className="flex min-h-[220px] items-center justify-center bg-[linear-gradient(135deg,hsl(var(--secondary)/0.86),hsl(var(--primary-soft)))] p-8 sm:min-h-[280px]">
+            <div className="flex min-h-[220px] items-center justify-center bg-[hsl(var(--primary-soft))] p-8 sm:min-h-[280px]">
               <span className="font-display text-7xl font-semibold leading-none text-primary sm:text-8xl md:text-9xl">
                 {entry.anio}
               </span>
             </div>
-            <div className="min-h-[220px] bg-[linear-gradient(135deg,hsl(var(--card)),hsl(var(--background)))] p-8 sm:min-h-[280px] flex flex-col justify-center space-y-8">
+            <div className="min-h-[220px] bg-card p-8 sm:min-h-[280px] flex flex-col justify-center space-y-8">
               <h1>AÑO PERSONAL</h1>
               <p className="text-base leading-8 text-foreground/72">
                 {entry.titulo}
@@ -76,8 +76,8 @@ export function AnoPersonalNumberView({ entry }: { entry: AnoPersonalEntry }) {
               id="dividido-80-20"
               className="grid gap-0 overflow-hidden rounded-[2rem] border border-[hsl(var(--accent)/0.16)] bg-[linear-gradient(180deg,hsl(var(--accent)/0.18),hsl(var(--background)/0.95))] shadow-[0_24px_60px_hsl(var(--primary)/0.08)] lg:grid-cols-[0.85fr_1.15fr]"
             >
-              <section className="relative flex min-w-0 items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_40%_30%,hsl(var(--primary)/0.2),transparent_32%),linear-gradient(180deg,hsl(var(--secondary)/0.55),hsl(var(--accent)/0.08))] px-6 py-10 lg:px-10">
-                <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,hsl(var(--fuchsia)/0.16),hsl(var(--primary)/0.2))] blur-[2px]" />
+              <section className="relative flex min-w-0 items-center justify-center overflow-hidden bg-[hsl(var(--secondary)/0.18)] px-6 py-10 lg:px-10">
+                <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[hsl(var(--primary)/0.18)] blur-[2px]" />
                 <img
                   src="/images/mini-laura.png"
                   alt="Ilustración de apoyo sobre vibraciones de tiempo"
@@ -117,7 +117,7 @@ export function AnoPersonalNumberView({ entry }: { entry: AnoPersonalEntry }) {
           </div>
         </section>
 
-        <section className="space-y-5 rounded-[2rem] border border-[hsl(var(--primary)/0.14)] bg-[linear-gradient(135deg,hsl(var(--secondary)/0.82),hsl(var(--background)))] p-6 shadow-panel sm:p-8">
+        <section className="space-y-5 rounded-[2rem] border border-[hsl(var(--primary)/0.14)] bg-[hsl(var(--secondary)/0.14)] p-6 shadow-panel sm:p-8">
           <h2 className="font-display text-2xl font-semibold text-primary">
             Claves del Año {entry.anio}
           </h2>

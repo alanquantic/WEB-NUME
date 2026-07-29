@@ -16,7 +16,8 @@ export function PageBannerWidget({
       <div
         className="relative min-h-[17rem] bg-cover bg-center px-6 py-10 sm:min-h-[20rem] sm:px-8 md:px-10"
         style={{
-          backgroundImage: `linear-gradient(105deg, hsl(var(--foreground) / 0.78), hsl(var(--primary) / 0.45), hsl(var(--fuchsia) / 0.34)), url('${imageSrc}')`
+          backgroundImage: `url('${imageSrc}')`,
+          backgroundColor: `hsl(var(--primary))`
         }}
       >
         <div className="relative z-10 flex h-full max-w-3xl flex-col justify-end text-white">
