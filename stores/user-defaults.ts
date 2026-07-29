@@ -14,8 +14,11 @@ function readString(obj: Record<string, unknown> | undefined, key: string): stri
   return typeof value === 'string' ? value.trim() : ''
 }
 
-function isYyyyMmDd(value: string): boolean {
-  return /^\d{4}-\d{2}-\d{2}$/.test(value)
+// Acepta 'YYYY-MM-DD' o cualquier ISO que empiece así (ej. '1990-05-15T00:00:00Z'
+// que llega del webhook de la tienda) y devuelve solo la parte de fecha.
+function toDateInputValue(value: string): string {
+  const match = value.match(/^(\d{4}-\d{2}-\d{2})/)
+  return match ? match[1] : ''
 }
 
 // Prefiere datos del perfil editado por el usuario; usa metadata.customer
@@ -24,6 +27,10 @@ export function useUserDefaults(): UserDefaults {
   const user = useSessionStore((state) => state.user)
 
   return useMemo(() => {
+    // TEMP DEBUG — quitar cuando termine el diagnóstico
+    console.log('[useUserDefaults] user:', user)
+    console.log('[useUserDefaults] user.metadata:', user?.metadata)
+
     if (!user) return { fullName: '', birthDate: '' }
 
     const meta = user.metadata ?? {}
@@ -34,6 +41,8 @@ export function useUserDefaults(): UserDefaults {
       | Record<string, unknown>
       | undefined
 
+    console.log('[useUserDefaults] profile:', profile, 'customer:', customer)
+
     const first = readString(profile, 'first_name') || readString(customer, 'first_name')
     const last = readString(profile, 'last_name') || readString(customer, 'last_name')
     const composed = [first, last].filter(Boolean).join(' ')
@@ -43,7 +52,9 @@ export function useUserDefaults(): UserDefaults {
       readString(profile, 'nickname')
 
     const rawBirth = readString(profile, 'birth_date') || readString(customer, 'birth_date')
-    const birthDate = isYyyyMmDd(rawBirth) ? rawBirth : ''
+    const birthDate = toDateInputValue(rawBirth)
+
+    console.log('[useUserDefaults] result:', { fullName, birthDate, rawBirth })
 
     return { fullName, birthDate }
   }, [user])
