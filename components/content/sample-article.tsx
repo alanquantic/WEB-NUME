@@ -38,6 +38,7 @@ export function SampleArticle({ post }: { post: SamplePost }) {
     <ToolPage
       title={post.title}
       wide
+      containerClassName="max-w-[92rem] px-4 sm:px-5 lg:px-6"
       breadcrumbs={[
         { name: 'Inicio', path: '/' },
         { name: 'Blog', path: '/blog' },
@@ -140,6 +141,7 @@ export function SampleArticle({ post }: { post: SamplePost }) {
 
         <aside aria-label="Barra lateral" className="flex flex-col gap-6">
           <RelatedProducts
+            title={post.title}
             categoryName={post.category}
             tagNames={post.tags}
             excludeSlug={post.slug}

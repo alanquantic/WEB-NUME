@@ -1,5 +1,5 @@
 import { getRelatedProducts, type RelatedProduct } from '@/lib/api/products'
-import { resolveStoreCategories } from '@/lib/blog/related-store'
+import { extractProductKeywords, resolveStoreCategories } from '@/lib/blog/related-store'
 
 function formatPrice(price: string | null, currency: string): string | null {
   if (!price) return null
@@ -86,18 +86,21 @@ function ProductCardGrid({ product }: { product: RelatedProduct }) {
 }
 
 export async function RelatedProducts({
+  title,
   categoryName,
   tagNames = [],
   excludeSlug,
-  limit = 4,
+  limit = 3,
   layout = 'sidebar'
 }: {
+  title?: string | null
   categoryName?: string | null
   tagNames?: string[]
   excludeSlug?: string | null
   limit?: number
   layout?: 'sidebar' | 'grid'
 }) {
+  const titleKeywords = extractProductKeywords(title)
   const storeCategories = resolveStoreCategories(categoryName, tagNames)
 
   const collected: RelatedProduct[] = []
@@ -112,6 +115,15 @@ export async function RelatedProducts({
     }
   }
 
+  if (titleKeywords.length > 0) {
+    const matchedByTitle = await getRelatedProducts({
+      keywords: titleKeywords,
+      limit,
+      exclude: excludeSlug ?? undefined
+    })
+    merge(matchedByTitle)
+  }
+
   if (storeCategories.length > 0) {
     const matched = await getRelatedProducts({
       categories: storeCategories,
@@ -121,7 +133,7 @@ export async function RelatedProducts({
     merge(matched)
   }
 
-  // Fallback: si el mapping no llenó el bloque, completar con destacados/recientes.
+  // Fallback: si titulo + mapping no llenaron el bloque, completar con recientes.
   if (collected.length < limit) {
     const fallback = await getRelatedProducts({
       limit,

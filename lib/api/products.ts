@@ -20,12 +20,16 @@ const STORE_API_URL = (
 
 export async function getRelatedProducts(params: {
   categories?: string[]
+  keywords?: string[]
   limit?: number
   exclude?: string
 }): Promise<RelatedProduct[]> {
   const query = new URLSearchParams()
   for (const category of params.categories ?? []) {
     if (category.trim()) query.append('category', category.trim())
+  }
+  for (const keyword of params.keywords ?? []) {
+    if (keyword.trim()) query.append('keyword', keyword.trim())
   }
   if (params.limit) query.set('limit', String(params.limit))
   if (params.exclude) query.set('exclude', params.exclude)

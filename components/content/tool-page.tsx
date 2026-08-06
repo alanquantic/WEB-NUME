@@ -9,6 +9,7 @@ type ToolPageProps = {
   description?: string
   children: ReactNode
   wide?: boolean
+  containerClassName?: string
   toolKey?: string
   breadcrumbs?: Crumb[]
   header?: ReactNode
@@ -23,6 +24,7 @@ export function ToolPage({
   description,
   children,
   wide = false,
+  containerClassName,
   toolKey,
   breadcrumbs,
   header,
@@ -36,7 +38,16 @@ export function ToolPage({
   ]
 
   return (
-    <div className={`mx-auto ${wide ? 'max-w-5xl' : 'max-w-3xl'} px-6 py-12`}>
+    <div
+      className={[
+        'mx-auto py-12',
+        wide ? 'max-w-5xl' : 'max-w-3xl',
+        'px-6',
+        containerClassName
+      ]
+        .filter(Boolean)
+        .join(' ')}
+    >
       <Breadcrumbs items={items} />
       {header !== undefined ? (
         header
