@@ -29,6 +29,7 @@ export type NavIconName =
   | 'pages'
   | 'taxonomy'
   | 'users'
+  | 'banner'
 
 export type NavItem = { href: Route; label: string; icon?: NavIconName }
 export type NavSection = { title?: string; items: NavItem[] }
@@ -41,7 +42,8 @@ const iconMap: Record<NavIconName, ComponentType<SVGProps<SVGSVGElement>>> = {
   posts: FileTextIcon,
   pages: LayersIcon,
   taxonomy: TagIcon,
-  users: UsersIcon
+  users: UsersIcon,
+  banner: SidebarIcon
 }
 
 function isActive(pathname: string, href: string): boolean {

@@ -1,4 +1,4 @@
-import { FacebookIcon, LinkedinIcon, XIcon } from '@/components/ui/icons'
+import { FacebookIcon, LinkedinIcon, WhatsappIcon, XIcon } from '@/components/ui/icons'
 
 const SITE_URL = 'https://www.numerologia-cotidiana.com'
 
@@ -30,6 +30,12 @@ export function ShareButtons({ slug, title }: Props) {
       href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
       icon: LinkedinIcon,
       hoverClass: 'hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]'
+    },
+    {
+      name: 'WhatsApp',
+      href: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`,
+      icon: WhatsappIcon,
+      hoverClass: 'hover:bg-[#25D366] hover:text-white hover:border-[#25D366]'
     }
   ] as const
 
