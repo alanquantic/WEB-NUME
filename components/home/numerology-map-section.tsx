@@ -4,7 +4,7 @@ import { useEffect, useState, useTransition } from 'react'
 import type { Route } from 'next'
 import Link from 'next/link'
 
-import { Sparkles } from 'lucide-react'
+import { ArrowRight, Sparkles } from 'lucide-react'
 
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
 import { SparkleField } from '@/components/ui/sparkle-field'
@@ -129,6 +129,33 @@ const PINNACLE_POSITIONS: Record<PinnacleLetter, string> = {
   W: 'left-[6%] top-[67.9%]'
 }
 
+const PINNACLE_TOOLTIPS: Record<PinnacleLetter, { title: string; description: string }> = {
+  A: { title: 'Número de Karma', description: 'La tarea pendiente que vienes a transformar.' },
+  B: { title: 'Número Personal', description: 'Tu identidad esencial y forma natural de actuar.' },
+  C: { title: 'Vida Pasada', description: 'La experiencia que traes como aprendizaje previo.' },
+  D: { title: 'Personalidad', description: 'La imagen que proyectas y cómo te perciben.' },
+  E: { title: 'Primera Etapa', description: 'La energía que guía tu aprendizaje inicial.' },
+  F: { title: 'Segunda Etapa', description: 'La vibración de tu etapa de desarrollo.' },
+  G: { title: 'Tercera Etapa', description: 'La energía de madurez y consolidación.' },
+  H: { title: 'Destino', description: 'La realización hacia la que dirige tu camino.' },
+  I: { title: 'Subconsciente', description: 'Tu recurso interno para avanzar hacia el destino.' },
+  J: { title: 'Inconsciente', description: 'El espejo que se activa en tus relaciones.' },
+  K: { title: 'Primer Reto', description: 'El desafío principal de tu primera etapa.' },
+  L: { title: 'Segundo Reto', description: 'El aprendizaje a conquistar en tu desarrollo.' },
+  M: { title: 'Tercer Reto', description: 'El reto que acompaña tu etapa de madurez.' },
+  N: { title: 'Cuarto Reto', description: 'El desafío final para alcanzar tu realización.' },
+  O: { title: 'Inconsciente Negativo', description: 'El patrón automático que necesitas reconocer.' },
+  P: { title: 'Número de Sombra', description: 'La energía que ocultas o expresas sin equilibrio.' },
+  Q: { title: 'Ser Inferior Heredado', description: 'El patrón recibido de tu sistema familiar.' },
+  R: { title: 'Ser Inferior Consciente', description: 'La conducta que ya puedes observar y transformar.' },
+  S: { title: 'Ser Inferior Latente', description: 'El aspecto interno que emerge bajo presión.' },
+  W: { title: 'Triplicidad', description: 'Una energía repetida con influencia especial.' }
+}
+
+const TOOLTIP_BELOW = new Set<PinnacleLetter>(['H', 'G', 'E', 'F', 'I', 'J'])
+const TOOLTIP_LEFT_EDGE = new Set<PinnacleLetter>(['A', 'W'])
+const TOOLTIP_RIGHT_EDGE = new Set<PinnacleLetter>(['D'])
+
 const INITIAL_RESULTS: CalculationResult = {
   personalNumber: '?',
   soulNumber: '?',
@@ -240,6 +267,7 @@ export function NumerologyMapSection() {
 
   const [results, setResults] = useState(INITIAL_RESULTS)
   const [isCalculated, setIsCalculated] = useState(false)
+  const [activePinnacleTooltip, setActivePinnacleTooltip] = useState<PinnacleLetter | null>(null)
   const [isPending, startTransition] = useTransition()
   const defaults = useUserDefaults()
 
@@ -466,42 +494,100 @@ export function NumerologyMapSection() {
         <ScrollReveal delay={180}>
           <div
             data-calculator-slot="mapa-pinaculo"
-            className="flex flex-col rounded-[2rem] border border-border/70 bg-[hsl(var(--secondary)/0.16)] p-5 text-center shadow-[0_22px_55px_hsl(var(--primary)/0.08)] sm:p-6"
+            className="group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-border/70 bg-white p-5 text-center shadow-[0_22px_55px_hsl(var(--primary)/0.1)] sm:p-6"
           >
-            <h3 className="font-display text-[1.4rem] font-semibold uppercase tracking-[0.03em] text-primary sm:text-[1.7rem]">
-              Mi Pináculo
-            </h3>
-            <p className="mt-1 text-sm text-[hsl(var(--gray))]">Descubre tu Pináculo Personal</p>
-            <div className="mt-5 overflow-hidden rounded-[1.65rem] bg-white/66 p-3 shadow-[inset_0_1px_0_hsl(var(--card)/0.6)]">
-              <div className="relative overflow-hidden rounded-[1.35rem] bg-[hsl(var(--secondary)/0.18)]">
+            <div className="relative">
+              <span className="inline-flex rounded-full border border-[#693061]/15 bg-[#693061]/5 px-3 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.15em] text-[#693061]">
+                Tu mapa de vida
+              </span>
+              <h3 className="mt-3 font-display text-[1.4rem] font-semibold uppercase tracking-[0.03em] text-[#693061] sm:text-[1.7rem]">
+                Mi Pináculo
+              </h3>
+              <p className="mt-1 text-sm leading-5 text-[hsl(var(--gray))]">
+                Identidad, ciclos y retos en un solo mapa
+              </p>
+            </div>
+            <div className="mt-5 rounded-[1.65rem] border border-border/60 bg-[hsl(var(--primary-soft)/0.45)] p-3 shadow-[0_16px_38px_hsl(var(--primary)/0.09)] transition duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_22px_46px_hsl(var(--primary)/0.14)]">
+              <div className="relative rounded-[1.35rem] bg-white">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={isCalculated ? '/images/pinnacle.png' : '/images/pinnacle-pre.webp'}
                   alt="Vista del pináculo"
-                  className="h-full w-full object-cover"
+                  className="h-full w-full rounded-[1.35rem] object-cover"
                 />
-                {isCalculated && (
-                  <div className="pointer-events-none absolute inset-0">
+                <div className="absolute inset-0">
                     {(
                       Object.entries(PINNACLE_POSITIONS) as Array<[PinnacleLetter, string]>
-                    ).map(([letter, positionClassName]) => (
-                      <span
-                        key={letter}
-                        data-letter={letter}
-                        className={`absolute inline-flex h-[1.85rem] w-[1.85rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full font-display text-[0.55rem] font-semibold leading-none text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)] sm:h-[2.1rem] sm:w-[2.1rem] sm:text-[1.08rem] ${positionClassName}`}
-                      >
-                        {results.pinnacleValues[letter] ?? ''}
-                      </span>
-                    ))}
+                    ).map(([letter, positionClassName]) => {
+                      const tooltip = PINNACLE_TOOLTIPS[letter]
+                      const tooltipBelow = TOOLTIP_BELOW.has(letter)
+                      const tooltipIsActive = activePinnacleTooltip === letter
+                      const tooltipHorizontalPosition = TOOLTIP_LEFT_EDGE.has(letter)
+                        ? 'left-0'
+                        : TOOLTIP_RIGHT_EDGE.has(letter)
+                          ? 'right-0'
+                          : 'left-1/2 -translate-x-1/2'
+
+                      return (
+                        <button
+                          key={letter}
+                          type="button"
+                          data-letter={letter}
+                          aria-label={`${letter}. ${tooltip.title}: ${tooltip.description}`}
+                          aria-describedby={tooltipIsActive ? `pinnacle-tooltip-${letter}` : undefined}
+                          onMouseEnter={() => setActivePinnacleTooltip(letter)}
+                          onMouseLeave={() => setActivePinnacleTooltip(null)}
+                          onFocus={() => setActivePinnacleTooltip(letter)}
+                          onBlur={() => setActivePinnacleTooltip(null)}
+                          onClick={() => setActivePinnacleTooltip(letter)}
+                          className={`absolute inline-flex h-[1.85rem] w-[1.85rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full font-display text-[0.55rem] font-semibold leading-none text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)] outline-none focus-visible:ring-2 focus-visible:ring-white sm:h-[2.1rem] sm:w-[2.1rem] sm:text-[1.08rem] ${positionClassName}`}
+                        >
+                          {isCalculated ? results.pinnacleValues[letter] ?? '' : (
+                            <span className="sr-only">{letter}</span>
+                          )}
+                          {tooltipIsActive ? (
+                            <span
+                              id={`pinnacle-tooltip-${letter}`}
+                              role="tooltip"
+                              className={`pointer-events-none absolute z-30 w-44 rounded-xl bg-[#693061] px-3 py-2 text-left font-sans text-white shadow-[0_12px_30px_rgba(42,30,62,0.24)] ${tooltipHorizontalPosition} ${
+                                tooltipBelow ? 'top-[calc(100%+0.5rem)]' : 'bottom-[calc(100%+0.5rem)]'
+                              }`}
+                            >
+                              <strong className="block text-[0.7rem] font-semibold leading-4">
+                                {letter}. {tooltip.title}
+                              </strong>
+                              <span className="mt-0.5 block text-[0.64rem] font-normal leading-4 text-white/78">
+                                {tooltip.description}
+                              </span>
+                            </span>
+                          ) : null}
+                        </button>
+                      )
+                    })}
                   </div>
-                )}
               </div>
+            </div>
+            <p className="mt-3 text-xs text-[hsl(var(--gray))]">
+              Pasa el cursor sobre cada número para conocer su significado.
+            </p>
+            <div className="mt-4 flex flex-wrap justify-center gap-2 text-[0.65rem] font-semibold text-[#693061]">
+              {[
+                ['Identidad', 'bg-[rgb(181,148,176)]'],
+                ['Evolución', 'bg-[rgb(172,192,66)]'],
+                ['Retos', 'bg-[rgb(209,77,77)]'],
+              ].map(([label, color]) => (
+                <span key={label} className="inline-flex items-center gap-1.5 rounded-full bg-white/70 px-2.5 py-1">
+                  <span className={`h-2 w-2 rounded-full ${color}`} />
+                  {label}
+                </span>
+              ))}
             </div>
             <Link
               href="/calculatupinaculo"
-              className="mt-6 inline-flex justify-center text-sm font-semibold text-primary underline-offset-4 transition hover:underline"
+              className="mt-auto inline-flex items-center justify-center gap-2 pt-5 text-sm font-semibold text-[#693061] underline-offset-4 transition hover:gap-3 hover:underline"
             >
-              Ver más
+              {isCalculated ? 'Interpretar mi pináculo' : 'Explorar mi pináculo'}
+              <ArrowRight size={16} aria-hidden />
             </Link>
           </div>
         </ScrollReveal>
