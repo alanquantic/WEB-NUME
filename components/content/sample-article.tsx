@@ -92,6 +92,14 @@ export function SampleArticle({ post }: { post: SamplePost }) {
             />
           )}
 
+          <RelatedProducts
+            title={post.title}
+            categoryName={post.category}
+            tagNames={post.tags}
+            excludeSlug={post.slug}
+            layout="grid"
+          />
+
           <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-border/70 pt-6">
             <div className="flex flex-wrap gap-2">
               {post.tags.map((tag) => (
