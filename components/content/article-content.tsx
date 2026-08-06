@@ -85,7 +85,7 @@ export function ArticleContent({
           ) : null}
 
           <div className="mt-8 text-base leading-8 text-foreground/80 [&_a]:text-primary [&_a]:underline [&_h2]:mt-6 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-semibold [&_h3]:mt-5 [&_h3]:font-display [&_h3]:text-xl [&_img]:my-4 [&_img]:mx-auto [&_img]:max-w-2xl [&_img]:rounded-2xl [&_img]:w-full [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6">
-            {safeHtml ? (
+          {safeHtml ? (
               <div dangerouslySetInnerHTML={{ __html: safeHtml }} />
             ) : (
               <p className="text-foreground/60">
@@ -93,6 +93,14 @@ export function ArticleContent({
               </p>
             )}
           </div>
+
+          <RelatedProducts
+            title={content.title}
+            categoryName={content.category?.name.trim() ?? null}
+            tagNames={content.tags?.map((tag) => tag.name.trim()) ?? []}
+            excludeSlug={content.slug}
+            layout="grid"
+          />
 
           {author ? (
             <section
@@ -124,13 +132,14 @@ export function ArticleContent({
               <h2 className="font-display text-2xl font-semibold text-foreground sm:text-3xl">
                 También podría interesarte
               </h2>
-              <div className="mt-6 grid gap-6 sm:grid-cols-2">
+              <div className="mt-6 grid gap-6 md:grid-cols-3">
                 {relatedPosts.map((post) => (
                   <PostCard key={post.id} post={post} />
                 ))}
               </div>
             </section>
           ) : null}
+
         </article>
 
         <aside aria-label="Barra lateral" className="flex flex-col gap-6">
