@@ -7,6 +7,7 @@ import { PremiumGate } from '@/components/memberships/premium-gate'
 import type { ContentItem } from '@/lib/api/contracts'
 import { ApiError } from '@/lib/api/errors'
 import { getPostById, getPosts } from '@/lib/api/posts'
+import { getTags } from '@/lib/api/taxonomy'
 import { getSamplePost, SAMPLE_POSTS } from '@/lib/blog/sample-posts'
 
 export function generateStaticParams() {
@@ -44,6 +45,19 @@ async function loadRelatedPosts(
   }
 }
 
+async function resolveTagNames(tagIds: number[]): Promise<{ name: string }[]> {
+  if (tagIds.length === 0) return []
+  try {
+    const res = await getTags(1, 200)
+    const wanted = new Set(tagIds)
+    return res.data
+      .filter((tag) => wanted.has(tag.id))
+      .map((tag) => ({ name: tag.name }))
+  } catch {
+    return []
+  }
+}
+
 export default async function BlogDetailPage({ params }: { params: { id: string } }) {
   const sample = getSamplePost(params.id)
   if (sample) {
@@ -52,8 +66,13 @@ export default async function BlogDetailPage({ params }: { params: { id: string 
 
   try {
     const post = await getPostById(params.id)
-    const relatedPosts = await loadRelatedPosts(post.id, post.category_id)
-    return <ArticleContent content={post} relatedPosts={relatedPosts} />
+    const [relatedPosts, tags] = await Promise.all([
+      loadRelatedPosts(post.id, post.category_id),
+      resolveTagNames(post.tag_ids ?? [])
+    ])
+    return (
+      <ArticleContent content={{ ...post, tags }} relatedPosts={relatedPosts} />
+    )
   } catch (error) {
     if (error instanceof ApiError && error.status === 403) {
       return <PremiumGate detail={error.problem.detail} returnTo={`/blog/${params.id}`} />

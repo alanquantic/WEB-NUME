@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { CompatibilityCalculator } from '@/components/calculators/compatibility-calculator'
 import { Breadcrumbs } from '@/components/content/breadcrumbs'
 import { KeepExploring } from '@/components/content/keep-exploring'
+import { RelatedProducts } from '@/components/content/related-products'
 import { JsonLd } from '@/components/seo/json-ld'
 
 export const metadata: Metadata = {
@@ -85,6 +86,8 @@ export default function Page() {
       <div className="mt-8">
         <CompatibilityCalculator />
       </div>
+
+      <RelatedProducts layout="grid" />
 
       <section className="mt-12">
         <h2 className="font-display text-2xl font-semibold text-primary">
