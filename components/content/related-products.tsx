@@ -24,9 +24,9 @@ function ProductCardCompact({ product }: { product: RelatedProduct }) {
       href={product.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex gap-3 rounded-2xl border border-border/70 bg-card p-3 shadow-panel transition hover:-translate-y-0.5 hover:shadow-glow"
+      className="group flex flex-col overflow-hidden rounded-[1.4rem] border border-border/70 bg-card shadow-panel transition hover:-translate-y-0.5 hover:shadow-glow"
     >
-      <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-secondary/70">
+      <div className="aspect-[4/3] w-full overflow-hidden bg-secondary/70">
         {product.image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -36,12 +36,12 @@ function ProductCardCompact({ product }: { product: RelatedProduct }) {
           />
         ) : null}
       </div>
-      <div className="flex min-w-0 flex-1 flex-col justify-between">
-        <p className="line-clamp-2 text-sm font-semibold leading-snug text-foreground group-hover:text-primary">
+      <div className="flex min-w-0 flex-1 flex-col p-4">
+        <p className="line-clamp-2 text-base font-semibold leading-snug text-foreground group-hover:text-primary">
           {product.name}
         </p>
         {price ? (
-          <span className="mt-1 text-xs font-semibold text-primary">{price}</span>
+          <span className="mt-2 text-sm font-semibold text-primary">{price}</span>
         ) : null}
       </div>
     </a>
@@ -153,7 +153,7 @@ export async function RelatedProducts({
         <p className="mt-2 text-sm leading-7 text-foreground/70">
           Complementa esta herramienta con recursos de nuestra tienda.
         </p>
-        <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-5 grid gap-4 md:grid-cols-3">
           {collected.map((product) => (
             <ProductCardGrid key={product.id} product={product} />
           ))}
@@ -167,10 +167,10 @@ export async function RelatedProducts({
       aria-label="Productos relacionados"
       className="rounded-[1.5rem] border border-border/70 bg-card p-5 shadow-panel"
     >
-      <h2 className="font-display text-base font-semibold text-foreground">
+      <h2 className="font-display text-xl font-semibold text-foreground">
         Productos relacionados
       </h2>
-      <p className="mt-1 text-xs text-foreground/60">
+      <p className="mt-2 text-sm leading-6 text-foreground/65">
         Recursos de nuestra tienda para acompañar esta lectura.
       </p>
       <div className="mt-4 flex flex-col gap-3">

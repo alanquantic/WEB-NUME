@@ -47,7 +47,12 @@ const STOP_WORDS = new Set([
   'tus',
   'un',
   'una',
-  'y'
+  'y',
+  'numerologia',
+  'numerologico',
+  'numerologica',
+  'numerologicos',
+  'numerologicas'
 ])
 
 function normalize(value: string | null | undefined): string | null {
