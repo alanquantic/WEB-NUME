@@ -48,6 +48,7 @@ export function ArticleContent({
     <ToolPage
       title={content.title}
       wide
+      containerClassName="max-w-[92rem] px-4 sm:px-5 lg:px-6"
       breadcrumbs={[
         { name: 'Inicio', path: '/' },
         { name: 'Blog', path: '/blog' },
@@ -83,7 +84,7 @@ export function ArticleContent({
             </div>
           ) : null}
 
-          <div className="mt-8 text-base leading-8 text-foreground/80 [&_a]:text-primary [&_a]:underline [&_h2]:mt-6 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-semibold [&_h3]:mt-5 [&_h3]:font-display [&_h3]:text-xl [&_img]:my-4 [&_img]:rounded-2xl [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6">
+          <div className="mt-8 text-base leading-8 text-foreground/80 [&_a]:text-primary [&_a]:underline [&_h2]:mt-6 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-semibold [&_h3]:mt-5 [&_h3]:font-display [&_h3]:text-xl [&_img]:my-4 [&_img]:mx-auto [&_img]:max-w-2xl [&_img]:rounded-2xl [&_img]:w-full [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6">
             {safeHtml ? (
               <div dangerouslySetInnerHTML={{ __html: safeHtml }} />
             ) : (
@@ -134,6 +135,7 @@ export function ArticleContent({
 
         <aside aria-label="Barra lateral" className="flex flex-col gap-6">
           <RelatedProducts
+            title={content.title}
             categoryName={content.category?.name.trim() ?? null}
             tagNames={content.tags?.map((tag) => tag.name.trim()) ?? []}
             excludeSlug={content.slug}

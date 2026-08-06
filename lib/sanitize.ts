@@ -2,6 +2,18 @@ import 'server-only'
 
 import sanitizeHtmlLib from 'sanitize-html'
 
+const STORE_API_URL = (
+  process.env.STORE_API_URL ?? 'https://tienda.numerologia-cotidiana.com'
+).replace(/\/$/, '')
+const LEGACY_STORE_ORIGIN = 'https://tienda.numerologia-cotidiana.com'
+
+function rewriteStoreLinks(dirty: string): string {
+  return dirty.replaceAll(LEGACY_STORE_ORIGIN, STORE_API_URL).replaceAll(
+    `${STORE_API_URL}/product/`,
+    `${STORE_API_URL}/productos/`
+  )
+}
+
 // Allowlist pensada para contenido editorial (posts/pages del API). Solo se
 // permiten etiquetas y atributos de artículo; scripts, estilos y eventos
 // inline se descartan. sanitize-html ya bloquea esquemas peligrosos
@@ -37,5 +49,5 @@ const ARTICLE_OPTIONS: sanitizeHtmlLib.IOptions = {
  */
 export function sanitizeArticleHtml(dirty: string | null | undefined): string {
   if (!dirty) return ''
-  return sanitizeHtmlLib(dirty, ARTICLE_OPTIONS)
+  return sanitizeHtmlLib(rewriteStoreLinks(dirty), ARTICLE_OPTIONS)
 }
