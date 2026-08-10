@@ -2,16 +2,37 @@ import 'server-only'
 
 import sanitizeHtmlLib from 'sanitize-html'
 
+const APP_URL = (
+  process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.numerologia-cotidiana.com'
+).replace(/\/$/, '')
 const STORE_API_URL = (
   process.env.STORE_API_URL ?? 'https://tienda.numerologia-cotidiana.com'
 ).replace(/\/$/, '')
-const LEGACY_STORE_ORIGIN = 'https://tienda.numerologia-cotidiana.com'
+const LEGACY_STORE_ORIGINS = [
+  'https://tienda.numerologia-cotidiana.com',
+  'http://tienda.numerologia-cotidiana.com',
+  'https://www.tienda.numerologia-cotidiana.com',
+  'http://www.tienda.numerologia-cotidiana.com'
+]
+const LEGACY_APP_ORIGINS = [
+  'https://numerologia-cotidiana.com',
+  'http://numerologia-cotidiana.com',
+  'https://www.numerologia-cotidiana.com',
+  'http://www.numerologia-cotidiana.com'
+]
 
-function rewriteStoreLinks(dirty: string): string {
-  return dirty.replaceAll(LEGACY_STORE_ORIGIN, STORE_API_URL).replaceAll(
-    `${STORE_API_URL}/product/`,
-    `${STORE_API_URL}/productos/`
-  )
+function rewriteContentUrls(dirty: string): string {
+  let rewritten = dirty
+
+  for (const origin of LEGACY_STORE_ORIGINS) {
+    rewritten = rewritten.replaceAll(origin, STORE_API_URL)
+  }
+
+  for (const origin of LEGACY_APP_ORIGINS) {
+    rewritten = rewritten.replaceAll(origin, APP_URL)
+  }
+
+  return rewritten.replaceAll(`${STORE_API_URL}/product/`, `${STORE_API_URL}/productos/`)
 }
 
 // Allowlist pensada para contenido editorial (posts/pages del API). Solo se
@@ -49,5 +70,5 @@ const ARTICLE_OPTIONS: sanitizeHtmlLib.IOptions = {
  */
 export function sanitizeArticleHtml(dirty: string | null | undefined): string {
   if (!dirty) return ''
-  return sanitizeHtmlLib(rewriteStoreLinks(dirty), ARTICLE_OPTIONS)
+  return sanitizeHtmlLib(rewriteContentUrls(dirty), ARTICLE_OPTIONS)
 }
