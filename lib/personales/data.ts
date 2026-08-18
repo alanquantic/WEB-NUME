@@ -193,3 +193,53 @@ export function getNombreActivoGuia(): GuiaPersonal {
 export function getNumeroDelNombreGuia(): GuiaPersonal {
   return numeroDelNombreGuiaData as unknown as GuiaPersonal
 }
+
+// ── Resúmenes cortos (landing "Mi mapa numerológico") ───────────────────────
+
+function stripHtmlToText(html: string): string {
+  return html
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;|&#822[01];/gi, '"')
+    .replace(/&#821[67];/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+/**
+ * Devuelve un resumen corto del contenido de una categoría/número: el
+ * subtítulo del origen si existe o, si no, el arranque del primer bloque de
+ * texto cortado en el fin de oración más cercano a `maxLen`.
+ */
+export function getPersonalResumen(
+  key: PersonalCategoriaKey,
+  numero: number | string,
+  maxLen = 250
+): string | null {
+  const parsed = typeof numero === 'string' ? Number(numero) : numero
+  if (!Number.isFinite(parsed)) return null
+
+  const categoria = getPersonalCategoria(key)
+  const entry = categoria?.numeros.find((item) => item.numero === parsed)
+  if (!entry) return null
+
+  const subtitulo = (entry.subtitulo ?? '').trim()
+  if (subtitulo) return subtitulo
+
+  const bloque = entry.bloques.find(
+    (item): item is Extract<PersonalBloque, { tipo: 'html' }> => item.tipo === 'html'
+  )
+  if (!bloque) return null
+
+  const texto = stripHtmlToText(bloque.html)
+  if (!texto) return null
+  if (texto.length <= maxLen) return texto
+
+  const corte = texto.slice(0, maxLen)
+  const finOracion = corte.lastIndexOf('.')
+  if (finOracion > maxLen * 0.5) return corte.slice(0, finOracion + 1)
+
+  const finPalabra = corte.lastIndexOf(' ')
+  return `${corte.slice(0, finPalabra > 0 ? finPalabra : maxLen)}…`
+}
