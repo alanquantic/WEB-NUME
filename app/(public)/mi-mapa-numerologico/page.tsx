@@ -94,15 +94,20 @@ function SaberMasLink({
 }: {
   href: string
   label: string
+  /** Colores del botón (fondo/texto/sombra) según el tono de la sección. */
   className?: string
 }) {
   return (
     <Link
       href={href as Route}
-      className={`inline-flex items-center gap-2 text-sm font-semibold underline-offset-4 transition hover:gap-3 hover:underline ${className ?? ''}`}
+      className={`group inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-center text-sm font-semibold transition hover:scale-[1.03] ${className ?? ''}`}
     >
       {label}
-      <ArrowRight size={15} aria-hidden />
+      <ArrowRight
+        size={15}
+        className="shrink-0 transition-transform group-hover:translate-x-0.5"
+        aria-hidden
+      />
     </Link>
   )
 }
@@ -159,11 +164,16 @@ export default async function Page({
     timeZone: 'UTC'
   }).format(resultados.nacimiento)
 
+  const nombreVisible =
+    resultados.nombrePila.charAt(0).toUpperCase() + resultados.nombrePila.slice(1)
+
   const energia = [
     {
       label: 'Día',
       value: resultados.personalDay,
-      tone: 'text-[hsl(var(--accent))]',
+      circulo: 'bg-[hsl(var(--accent))] shadow-[0_12px_28px_hsl(var(--accent)/0.4)]',
+      boton:
+        'bg-[hsl(var(--accent))] text-white shadow-[0_12px_26px_hsl(var(--accent)/0.35)] hover:bg-[hsl(var(--accent)/0.9)]',
       descripcion: descripcionCorta('dia-personal', resultados.personalDay, 170),
       linkLabel: 'Quiero saber más sobre mi día personal',
       linkHref: '/diapersonal'
@@ -171,7 +181,9 @@ export default async function Page({
     {
       label: 'Semana',
       value: resultados.personalWeek,
-      tone: 'text-white',
+      circulo: 'bg-[hsl(var(--royal-blue))] shadow-[0_12px_28px_hsl(var(--royal-blue)/0.4)]',
+      boton:
+        'bg-[hsl(var(--royal-blue))] text-white shadow-[0_12px_26px_hsl(var(--royal-blue)/0.35)] hover:bg-[hsl(var(--royal-blue)/0.9)]',
       descripcion: descripcionCorta('semana', resultados.personalWeek, 170),
       linkLabel: 'Quiero saber más sobre mi semana personal',
       linkHref: '/semanapersonal'
@@ -179,7 +191,9 @@ export default async function Page({
     {
       label: 'Mes',
       value: resultados.personalMonth,
-      tone: 'text-[hsl(var(--fuchsia))]',
+      circulo: 'bg-[hsl(var(--fuchsia))] shadow-[0_12px_28px_hsl(var(--fuchsia)/0.4)]',
+      boton:
+        'bg-[hsl(var(--fuchsia))] text-white shadow-[0_12px_26px_hsl(var(--fuchsia)/0.35)] hover:bg-[hsl(var(--fuchsia)/0.9)]',
       descripcion: descripcionCorta('mes-personal', resultados.personalMonth, 170),
       linkLabel: 'Quiero saber más sobre mi mes personal',
       linkHref: '/mespersonal'
@@ -200,44 +214,53 @@ export default async function Page({
         <h1 className="relative mt-4 font-display text-3xl font-semibold leading-tight sm:text-5xl">
           <span className="text-gradient-brand">Mi Mapa Numerológico</span>
         </h1>
-        <p className="relative mx-auto mt-4 max-w-2xl text-base leading-8 text-foreground/75">
-          Te damos la bienvenida, <strong className="text-primary">{resultados.nombrePila}</strong>:
-          estos son tus resultados numerológicos.
+        <p className="relative mx-auto mt-5 max-w-2xl font-display text-2xl font-semibold leading-snug text-balance sm:text-3xl">
+          Te damos la bienvenida,{' '}
+          <span className="text-gradient-brand">{nombreVisible}</span>
         </p>
-        <p className="relative mt-1 text-sm text-foreground/55">Fecha de nacimiento: {fechaLegible}</p>
+        <p className="relative mx-auto mt-2 max-w-2xl text-base leading-7 text-foreground/72 sm:text-lg">
+          Estos son tus resultados numerológicos.
+        </p>
+        <p className="relative mt-2 text-sm text-foreground/55">Fecha de nacimiento: {fechaLegible}</p>
       </header>
 
       <div className="mt-12 space-y-10">
         {/* ── Mi energía de hoy ─────────────────────────────────────────── */}
         <section
           aria-label="Mi energía de hoy"
-          className="rounded-[2rem] bg-[hsl(var(--royal-blue))] p-6 text-white shadow-[0_24px_60px_hsl(var(--royal-blue)/0.16)] sm:p-10"
+          className="rounded-[2rem] border border-[hsl(var(--fuchsia)/0.16)] bg-[linear-gradient(135deg,hsl(var(--fuchsia)/0.14),hsl(var(--primary)/0.06)_45%,hsl(var(--royal-blue)/0.16))] p-6 shadow-[0_22px_55px_hsl(var(--primary)/0.1)] sm:p-10"
         >
-          <h2 className="font-display text-2xl font-semibold uppercase tracking-[0.03em] sm:text-3xl">
+          <h2 className="font-display text-2xl font-semibold uppercase tracking-[0.03em] text-[hsl(var(--fuchsia))] sm:text-3xl">
             Mi energía de hoy
           </h2>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-white/78">
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-foreground/65">
             La vibración que acompaña tu día, tu semana y tu mes en este momento.
           </p>
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
             {energia.map((item) => (
               <article
                 key={item.label}
-                className="flex flex-col rounded-[1.5rem] bg-white/8 p-5 backdrop-blur-sm"
+                className="flex flex-col rounded-[1.5rem] border border-border/60 bg-card p-5 shadow-panel sm:p-6"
               >
-                <span className="text-xs font-semibold uppercase tracking-[0.14em] text-white/72">
-                  {item.label}
-                </span>
-                <span className={`mt-3 font-display text-5xl font-semibold leading-none ${item.tone}`}>
-                  {item.value}
-                </span>
+                <div className="flex items-center gap-4">
+                  <span
+                    className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-full font-display text-3xl font-semibold text-white ${item.circulo}`}
+                  >
+                    {item.value}
+                  </span>
+                  <span className="text-xs font-semibold uppercase tracking-[0.16em] text-foreground/60">
+                    {item.label}
+                  </span>
+                </div>
                 {item.descripcion ? (
-                  <p className="mt-4 text-sm leading-6 text-white/82">{item.descripcion}</p>
+                  <p className="mt-4 flex-1 text-sm leading-6 text-foreground/72">
+                    {item.descripcion}
+                  </p>
                 ) : null}
                 <SaberMasLink
                   href={item.linkHref}
                   label={item.linkLabel}
-                  className="mt-auto pt-4 text-white"
+                  className={`mt-4 w-full ${item.boton}`}
                 />
               </article>
             ))}
@@ -268,7 +291,7 @@ export default async function Page({
               <SaberMasLink
                 href="/calculadoras/camino-de-vida"
                 label="Quiero saber más sobre mi número personal"
-                className="mt-4 text-primary"
+                className="mt-5 bg-gradient-brand text-white shadow-[0_14px_30px_hsl(var(--primary)/0.3)]"
               />
             </div>
           </div>
@@ -296,7 +319,7 @@ export default async function Page({
               <SaberMasLink
                 href="/numerodelalma"
                 label="Quiero saber más sobre mi número del alma"
-                className="mt-4 text-white"
+                className="mt-5 bg-white text-primary shadow-[0_14px_30px_hsl(263_35%_10%/0.35)] hover:bg-white/92"
               />
             </div>
           </div>
@@ -330,7 +353,7 @@ export default async function Page({
               <SaberMasLink
                 href="/anopersonal"
                 label="Quiero saber más sobre mi año personal"
-                className="mt-4 text-[hsl(var(--accent))]"
+                className="mt-5 bg-[hsl(var(--accent))] text-white shadow-[0_14px_30px_hsl(var(--accent)/0.4)] hover:bg-[hsl(var(--accent)/0.9)]"
               />
             </div>
           </div>
