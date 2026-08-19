@@ -1,14 +1,12 @@
 'use client'
 
 import { useEffect, useState, useTransition } from 'react'
-import type { Route } from 'next'
 import Link from 'next/link'
 
 import { ArrowRight, Sparkles } from 'lucide-react'
 
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
 import { SparkleField } from '@/components/ui/sparkle-field'
-import { personalPagePath, type PersonalCategoriaKey } from '@/lib/personales/routes'
 import Person from '@/resources/person'
 import Pinnacle from '@/resources/pinnacle'
 import { useNumerologyMapStore } from '@/stores/numerology-map-store'
@@ -18,10 +16,6 @@ type ResultCard = {
   id: 'personal-number' | 'soul-number' | 'personal-year'
   heading: string
   subtitle: string
-  // Página de contenido según el número calculado; si no hay cálculo (o el
-  // número no tiene página) se usa fallbackHref.
-  categoria: PersonalCategoriaKey
-  fallbackHref: Route
   tone: 'essence' | 'mission' | 'year'
 }
 
@@ -67,24 +61,18 @@ const RESULT_CARDS: readonly ResultCard[] = [
     id: 'personal-number',
     heading: 'Mi esencia',
     subtitle: 'Número Personal',
-    categoria: 'numero-personal',
-    fallbackHref: '/calculadoras/camino-de-vida',
     tone: 'essence'
   },
   {
     id: 'soul-number',
     heading: 'Mi misión',
     subtitle: 'Número del Alma',
-    categoria: 'alma',
-    fallbackHref: '/calculadoras/expresion',
     tone: 'mission'
   },
   {
     id: 'personal-year',
     heading: 'Mi año 2026',
     subtitle: 'Año Personal',
-    categoria: 'ano-personal',
-    fallbackHref: '/calculadoras/camino-de-vida',
     tone: 'year'
   }
 ] as const
@@ -164,17 +152,6 @@ const INITIAL_RESULTS: CalculationResult = {
   personalWeek: '?',
   personalMonth: '?',
   pinnacleValues: {}
-}
-
-function CardLink({ href }: { href: Route }) {
-  return (
-    <Link
-      href={href}
-      className="mt-6 inline-flex items-center gap-2 text-sm font-semibold underline-offset-4 transition hover:underline"
-    >
-      Ver más
-    </Link>
-  )
 }
 
 function sanitizeName(value: string): string {
@@ -381,6 +358,16 @@ export function NumerologyMapSection() {
                     Borrar
                   </button>
                 </div>
+                {isCalculated && calculated ? (
+                  <a
+                    href={`/mi-mapa-numerologico?nombre=${encodeURIComponent(calculated.fullName)}&nacimiento=${encodeURIComponent(calculated.birthDate)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="animate-result-pop inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[hsl(var(--accent))] px-5 text-[0.95rem] font-bold uppercase tracking-[0.04em] text-[hsl(263_35%_16%)] shadow-[0_0_0_3px_hsl(var(--accent)/0.28),0_16px_38px_hsl(var(--accent)/0.45)] transition hover:scale-[1.03] hover:bg-[hsl(var(--accent)/0.9)]"
+                  >
+                    <Sparkles size={18} aria-hidden /> Quiero saber más
+                  </a>
+                ) : null}
               </div>
             </div>
           </div>
@@ -394,8 +381,6 @@ export function NumerologyMapSection() {
                 : card.id === 'soul-number'
                   ? results.soulNumber
                   : results.personalYear
-
-            const personalHref = isCalculated ? personalPagePath(card.categoria, value) : null
 
             return (
               <ScrollReveal key={card.id} delay={120 + index * 80}>
@@ -420,7 +405,6 @@ export function NumerologyMapSection() {
                   <span className="mt-5 font-display text-5xl font-semibold leading-none sm:mt-6 sm:text-6xl">
                     {value}
                   </span>
-                  <CardLink href={(personalHref ?? card.fallbackHref) as Route} />
                 </article>
               </ScrollReveal>
             )
@@ -436,56 +420,27 @@ export function NumerologyMapSection() {
               </h3>
               <div className="mt-5 grid grid-cols-3 gap-2 text-center sm:mt-6 sm:gap-3">
                 {([
-                  {
-                    label: 'Día',
-                    value: results.personalDay,
-                    categoria: 'dia-personal',
-                    fallbackHref: '/diapersonal'
-                  },
-                  {
-                    label: 'Semana',
-                    value: results.personalWeek,
-                    categoria: 'semana',
-                    fallbackHref: '/semanapersonal'
-                  },
-                  {
-                    label: 'Mes',
-                    value: results.personalMonth,
-                    categoria: 'mes-personal',
-                    fallbackHref: '/mespersonal'
-                  }
+                  { label: 'Día', value: results.personalDay },
+                  { label: 'Semana', value: results.personalWeek },
+                  { label: 'Mes', value: results.personalMonth }
                 ] as Array<{
                   label: EnergyLabel
                   value: number | string
-                  categoria: PersonalCategoriaKey
-                  fallbackHref: Route
-                }>).map((item) => {
-                  const personalHref = isCalculated
-                    ? personalPagePath(item.categoria, item.value)
-                    : null
-
-                  return (
-                    <div
-                      key={item.label}
-                      className="flex flex-col rounded-2xl bg-white/8 px-2 py-3 backdrop-blur-sm"
+                }>).map((item) => (
+                  <div
+                    key={item.label}
+                    className="flex flex-col justify-center rounded-2xl bg-white/8 px-2 py-3 backdrop-blur-sm"
+                  >
+                    <span
+                      className={`block font-display text-3xl font-semibold leading-none sm:text-4xl ${ENERGY_CARD_TONES[item.label]}`}
                     >
-                      <span
-                        className={`block font-display text-3xl font-semibold leading-none sm:text-4xl ${ENERGY_CARD_TONES[item.label]}`}
-                      >
-                        {item.value}
-                      </span>
-                      <span className="mt-2 block text-[0.56rem] font-semibold uppercase tracking-[0.04em] text-white/72 sm:text-[0.6rem] sm:tracking-[0.06em]">
-                        {item.label}
-                      </span>
-                      <Link
-                        href={(personalHref ?? item.fallbackHref) as Route}
-                        className="mt-2 inline-flex justify-center text-[0.7rem] font-semibold underline-offset-4 transition hover:underline"
-                      >
-                        Ver más
-                      </Link>
-                    </div>
-                  )
-                })}
+                      {item.value}
+                    </span>
+                    <span className="mt-2 block text-[0.56rem] font-semibold uppercase tracking-[0.04em] text-white/72 sm:text-[0.6rem] sm:tracking-[0.06em]">
+                      {item.label}
+                    </span>
+                  </div>
+                ))}
               </div>
             </article>
           </ScrollReveal>
