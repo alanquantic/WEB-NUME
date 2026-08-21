@@ -1,6 +1,7 @@
 import { BirthdaySection } from '@/components/home/birthday-section'
 import { CoupleNumerologySection } from '@/components/home/couple-numerology-section'
 import { FeaturedToolsSection } from '@/components/home/featured-tools-section'
+import { HeroBannerSlider } from '@/components/home/hero-banner-slider'
 import { HomeSeoSection } from '@/components/home/home-seo-section'
 import { NewsSection } from '@/components/home/news-section'
 import { NumerologyMapSection } from '@/components/home/numerology-map-section'
@@ -11,6 +12,7 @@ import { ScrollReveal } from '@/components/ui/scroll-reveal'
 export default function HomePage() {
   return (
     <div className="pb-4">
+      <HeroBannerSlider />
       <ScrollReveal>
         <NumerologyMapSection />
       </ScrollReveal>
