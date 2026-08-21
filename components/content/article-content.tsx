@@ -3,6 +3,7 @@ import { PostCard } from '@/components/content/post-card'
 import { RelatedProducts } from '@/components/content/related-products'
 import { ShareButtons } from '@/components/content/share-buttons'
 import { SidebarBanner } from '@/components/content/sidebar-banner'
+import { TopBanner } from '@/components/content/top-banner'
 import { ToolPage } from '@/components/content/tool-page'
 import type { ContentItem } from '@/lib/api/contracts'
 import { excerptFromHtml, formatDate } from '@/lib/format'
@@ -57,7 +58,10 @@ export function ArticleContent({
       header={null}
       showRelatedProducts={false}
     >
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
+      <div className="grid gap-8">
+        <TopBanner />
+
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <article>
           <ShareButtons slug={content.slug} title={content.title} />
 
@@ -151,6 +155,7 @@ export function ArticleContent({
           />
           <SidebarBanner />
         </aside>
+        </div>
       </div>
     </ToolPage>
   )

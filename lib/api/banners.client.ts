@@ -1,7 +1,7 @@
 'use client'
 
 import { clientApiFetch } from '@/lib/api/client'
-import type { Banner } from '@/lib/api/banners'
+import type { Banner, BannerPlacement } from '@/lib/api/banners'
 
 type ListResponse = { data: Banner[] }
 
@@ -10,6 +10,7 @@ export async function listBannersClient() {
 }
 
 export async function createBanner(input: {
+  placement?: BannerPlacement
   image_url: string
   link_url?: string | null
   is_active?: boolean
@@ -22,7 +23,12 @@ export async function createBanner(input: {
 
 export async function updateBanner(
   id: string,
-  input: Partial<{ image_url: string; link_url: string | null; is_active: boolean }>
+  input: Partial<{
+    placement: BannerPlacement
+    image_url: string
+    link_url: string | null
+    is_active: boolean
+  }>
 ) {
   return clientApiFetch<Banner>(`/banners/${id}`, {
     method: 'PATCH',
