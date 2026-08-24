@@ -6,20 +6,49 @@ import { useState, useTransition } from 'react'
 import { MediaLibraryModal } from '@/components/admin/media-library-modal'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import type { Banner } from '@/lib/api/banners'
+import type { Banner, BannerPlacement } from '@/lib/api/banners'
 import {
   createBanner,
   deleteBanner,
   updateBanner
 } from '@/lib/api/banners.client'
 
-function NewBannerForm({ onCreated }: { onCreated: () => void }) {
+const PLACEMENT_COPY: Record<
+  BannerPlacement,
+  {
+    title: string
+    description: string
+    empty: string
+  }
+> = {
+  top: {
+    title: 'Banners superiores',
+    description:
+      'Aquí puedes cargar los banners que aparecerán en la parte superior.',
+    empty: 'Aún no hay banners superiores.'
+  },
+  sidebar: {
+    title: 'Banner lateral',
+    description:
+      'Aquí puedes cargar los banners que aparecerán en el lateral del blog.',
+    empty: 'Aún no hay banners laterales.'
+  }
+}
+
+function NewBannerForm({
+  placement,
+  onCreated
+}: {
+  placement: BannerPlacement
+  onCreated: () => void
+}) {
   const [imageUrl, setImageUrl] = useState('')
   const [linkUrl, setLinkUrl] = useState('')
   const [isActive, setIsActive] = useState(true)
   const [isMediaOpen, setIsMediaOpen] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
+  const copy = PLACEMENT_COPY[placement]
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -40,6 +69,7 @@ function NewBannerForm({ onCreated }: { onCreated: () => void }) {
     startTransition(async () => {
       try {
         await createBanner({
+          placement,
           image_url: imageUrl,
           link_url: link || null,
           is_active: isActive
@@ -57,10 +87,10 @@ function NewBannerForm({ onCreated }: { onCreated: () => void }) {
   return (
     <>
       <form onSubmit={handleSubmit} className="rounded-[2rem] bg-white p-6 shadow-panel">
-        <h2 className="font-display text-xl font-semibold">Añadir banner</h2>
+        <h2 className="font-display text-xl font-semibold">{copy.title}</h2>
         <p className="mt-1 text-sm text-[hsl(var(--foreground))/0.7]">
-          Selecciona una imagen desde la biblioteca de medios y (opcional) el
-          link al que apuntará al hacer click.
+          {copy.description} Selecciona una imagen desde la biblioteca de medios
+          y, de forma opcional, agrega el link al que apuntará al hacer click.
         </p>
 
         <div className="mt-4 grid gap-4 md:grid-cols-[240px_1fr]">
@@ -258,6 +288,8 @@ function BannerRow({
 
 export function BannersManager({ initialBanners }: { initialBanners: Banner[] }) {
   const router = useRouter()
+  const topBanners = initialBanners.filter((banner) => banner.placement === 'top')
+  const sidebarBanners = initialBanners.filter((banner) => banner.placement === 'sidebar')
 
   function refresh() {
     router.refresh()
@@ -265,25 +297,47 @@ export function BannersManager({ initialBanners }: { initialBanners: Banner[] })
 
   return (
     <div className="grid gap-6">
-      <NewBannerForm onCreated={refresh} />
+      <section className="grid gap-6">
+        <NewBannerForm placement="top" onCreated={refresh} />
+        <div className="rounded-[2rem] bg-white p-6 shadow-panel">
+          <h2 className="font-display text-xl font-semibold">{PLACEMENT_COPY.top.title}</h2>
+          <p className="mt-1 text-sm text-[hsl(var(--foreground))/0.7]">
+            Si hay más de uno activo, se muestra uno al azar en cada visita.
+          </p>
+          <ul className="mt-4 grid gap-3">
+            {topBanners.length === 0 ? (
+              <li className="text-sm text-[hsl(var(--foreground))/0.6]">
+                {PLACEMENT_COPY.top.empty}
+              </li>
+            ) : (
+              topBanners.map((banner) => (
+                <BannerRow key={banner.id} banner={banner} onChanged={refresh} />
+              ))
+            )}
+          </ul>
+        </div>
+      </section>
 
-      <div className="rounded-[2rem] bg-white p-6 shadow-panel">
-        <h2 className="font-display text-xl font-semibold">Banners</h2>
-        <p className="mt-1 text-sm text-[hsl(var(--foreground))/0.7]">
-          Si hay más de uno activo, se muestra uno al azar en cada visita.
-        </p>
-        <ul className="mt-4 grid gap-3">
-          {initialBanners.length === 0 ? (
-            <li className="text-sm text-[hsl(var(--foreground))/0.6]">
-              Aún no hay banners.
-            </li>
-          ) : (
-            initialBanners.map((banner) => (
-              <BannerRow key={banner.id} banner={banner} onChanged={refresh} />
-            ))
-          )}
-        </ul>
-      </div>
+      <section className="grid gap-6">
+        <NewBannerForm placement="sidebar" onCreated={refresh} />
+        <div className="rounded-[2rem] bg-white p-6 shadow-panel">
+          <h2 className="font-display text-xl font-semibold">{PLACEMENT_COPY.sidebar.title}</h2>
+          <p className="mt-1 text-sm text-[hsl(var(--foreground))/0.7]">
+            Si hay más de uno activo, se muestra uno al azar en cada visita.
+          </p>
+          <ul className="mt-4 grid gap-3">
+            {sidebarBanners.length === 0 ? (
+              <li className="text-sm text-[hsl(var(--foreground))/0.6]">
+                {PLACEMENT_COPY.sidebar.empty}
+              </li>
+            ) : (
+              sidebarBanners.map((banner) => (
+                <BannerRow key={banner.id} banner={banner} onChanged={refresh} />
+              ))
+            )}
+          </ul>
+        </div>
+      </section>
     </div>
   )
 }

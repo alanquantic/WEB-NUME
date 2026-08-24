@@ -1,9 +1,9 @@
 import { listBanners } from '@/lib/api/banners'
 
-export async function SidebarBanner() {
+export async function TopBanner() {
   let banners: Awaited<ReturnType<typeof listBanners>>['data'] = []
   try {
-    const res = await listBanners({ activeOnly: true, placement: 'sidebar' })
+    const res = await listBanners({ activeOnly: true, placement: 'top' })
     banners = res.data
   } catch {
     return null
@@ -18,17 +18,13 @@ export async function SidebarBanner() {
 
   const inner = (
     // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={banner.image_url}
-      alt=""
-      className="w-full object-cover"
-    />
+    <img src={banner.image_url} alt="" className="w-full object-cover" />
   )
 
   return (
     <section
-      aria-label="Banner"
-      className="overflow-hidden rounded-[1.5rem] border border-border/70 bg-card shadow-panel"
+      aria-label="Banner superior"
+      className="overflow-hidden rounded-[2rem] border border-border/70 bg-card shadow-panel"
     >
       {banner.link_url ? (
         <a

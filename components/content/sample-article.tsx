@@ -5,6 +5,7 @@ import { KeepExploring } from '@/components/content/keep-exploring'
 import { RelatedProducts } from '@/components/content/related-products'
 import { RICH_ARTICLES } from '@/components/content/rich-articles'
 import { SidebarBanner } from '@/components/content/sidebar-banner'
+import { TopBanner } from '@/components/content/top-banner'
 import { ToolPage } from '@/components/content/tool-page'
 import { JsonLd } from '@/components/seo/json-ld'
 import { FacebookIcon, TelegramIcon, WhatsappIcon } from '@/components/ui/icons'
@@ -65,7 +66,10 @@ export function SampleArticle({ post }: { post: SamplePost }) {
         ])}
       />
 
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
+      <div className="grid gap-8">
+        <TopBanner />
+
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <article>
           <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-wide text-fuchsia">
             <span>{post.category}</span>
@@ -156,6 +160,7 @@ export function SampleArticle({ post }: { post: SamplePost }) {
           />
           <SidebarBanner />
         </aside>
+        </div>
       </div>
     </ToolPage>
   )
