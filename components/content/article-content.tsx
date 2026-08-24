@@ -58,7 +58,10 @@ export function ArticleContent({
       header={null}
       showRelatedProducts={false}
     >
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
+      <div className="grid gap-8">
+        <TopBanner />
+
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <article>
           <TopBanner />
           <ShareButtons slug={content.slug} title={content.title} />
@@ -153,6 +156,7 @@ export function ArticleContent({
           />
           <SidebarBanner />
         </aside>
+        </div>
       </div>
     </ToolPage>
   )

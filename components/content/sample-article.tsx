@@ -66,7 +66,10 @@ export function SampleArticle({ post }: { post: SamplePost }) {
         ])}
       />
 
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
+      <div className="grid gap-8">
+        <TopBanner />
+
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <article>
           <TopBanner />
           <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-wide text-fuchsia">
@@ -162,6 +165,7 @@ export function SampleArticle({ post }: { post: SamplePost }) {
           />
           <SidebarBanner />
         </aside>
+        </div>
       </div>
     </ToolPage>
   )
