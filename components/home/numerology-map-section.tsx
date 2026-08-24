@@ -79,11 +79,11 @@ const RESULT_CARDS: readonly ResultCard[] = [
 
 const CARD_STYLES: Record<ResultCard['tone'], string> = {
   essence:
-    "border border-border/70 bg-[url('/images/who-im.png')] bg-[hsl(var(--primary-soft))] text-primary shadow-[0_22px_55px_hsl(var(--primary)/0.08)]",
+    "border border-border/70 bg-[url('/images/numerology-card-essence.png')] bg-[hsl(var(--primary-soft))] text-primary shadow-[0_22px_55px_hsl(var(--primary)/0.08)] dark:bg-[url('/images/numerology-card-essence-dark.png')] dark:bg-[hsl(var(--primary-soft)/0.7)] dark:bg-cover sm:dark:bg-contain",
   mission:
-    "bg-[url('/images/my-mission.png')] bg-[hsl(var(--primary))] text-white shadow-[0_24px_60px_hsl(var(--primary)/0.18)]",
+    "bg-[url('/images/numerology-card-mission.png')] bg-[hsl(var(--primary))] text-white shadow-[0_24px_60px_hsl(var(--primary)/0.18)] dark:bg-[url('/images/numerology-card-mission-dark.png')] dark:bg-[hsl(var(--primary)/0.55)]",
   year:
-    "border border-[hsl(var(--accent)/0.14)] bg-[radial-gradient(circle_at_top,hsl(var(--accent)/0.34),transparent_55%),linear-gradient(180deg,hsl(var(--background)/0.94),hsl(var(--accent)/0.2)),url('/images/personal-year-2.png')] text-[hsl(var(--accent))] shadow-[0_22px_55px_hsl(var(--accent)/0.14)]"
+    "border border-[hsl(var(--accent)/0.14)] bg-[url('/images/numerology-card-year.png')] text-[hsl(var(--accent))] shadow-[0_22px_55px_hsl(var(--accent)/0.14)] dark:bg-[url('/images/numerology-card-year-dark.png')] dark:bg-[hsl(226_45%_10%/0.82)] dark:bg-cover sm:dark:bg-contain"
 }
 
 const ENERGY_CARD_TONES = {
@@ -309,14 +309,14 @@ export function NumerologyMapSection() {
         <ScrollReveal delay={70} className="h-full">
           <div
             data-calculator-slot="mapa-form"
-            className="flex h-full min-h-[27rem] flex-col overflow-hidden rounded-[2rem] border border-border/70 bg-[url('/images/form-bk.png')] bg-[hsl(var(--foreground)/0.58)] bg-contain bg-center p-5 text-white shadow-[0_24px_60px_hsl(var(--foreground)/0.12)] backdrop-blur sm:min-h-[31rem] sm:p-6"
+            className="flex h-full min-h-[27rem] flex-col overflow-hidden rounded-[2rem] border border-border/70 bg-[url('/images/numerology-card-map.png')] bg-cover bg-center p-5 text-primary shadow-[0_24px_60px_hsl(var(--foreground)/0.12)] backdrop-blur dark:bg-[url('/images/numerology-card-map-dark.png')] dark:bg-[hsl(var(--foreground)/0.32)] dark:text-white sm:min-h-[31rem] sm:p-6"
           >
-            <h2 className="font-display text-[1.45rem] font-semibold uppercase tracking-[0.03em] text-white sm:text-[1.7rem]">
+            <h2 className="font-display text-[1.45rem] font-semibold uppercase tracking-[0.03em] text-primary dark:text-white sm:text-[1.7rem]">
               Mi Mapa <span className="block">Numerológico</span>
             </h2>
             <div className="mt-6 flex flex-1 flex-col justify-center gap-5">
               <div>
-                <label htmlFor="map-full-name" className="text-sm font-medium text-white/86">
+                <label htmlFor="map-full-name" className="text-sm font-medium text-primary/90 dark:text-white/86">
                   Nombre Completo
                 </label>
                 <input
@@ -330,7 +330,7 @@ export function NumerologyMapSection() {
               </div>
               <div className="space-y-5">
                 <div>
-                  <label htmlFor="map-birth-date" className="text-sm font-medium text-white/86">
+                  <label htmlFor="map-birth-date" className="text-sm font-medium text-primary/90 dark:text-white/86">
                     Fecha de Nacimiento
                   </label>
                   <input
@@ -353,7 +353,7 @@ export function NumerologyMapSection() {
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="inline-flex h-11 items-center justify-center rounded-full border border-white/34 bg-white/10 px-6 text-sm font-semibold text-white/84 transition hover:bg-white/16"
+                    className="inline-flex h-11 items-center justify-center rounded-full border border-primary/25 bg-white/55 px-6 text-sm font-semibold text-primary transition hover:bg-white/75 dark:border-white/34 dark:bg-white/10 dark:text-white/84 dark:hover:bg-white/16"
                   >
                     Borrar
                   </button>
@@ -413,7 +413,7 @@ export function NumerologyMapSection() {
           <ScrollReveal delay={360}>
             <article
               data-result="energia-hoy"
-              className="group flex h-full min-h-[13rem] flex-col rounded-[2rem] bg-[hsl(var(--royal-blue))] px-5 py-6 text-white shadow-[0_24px_60px_hsl(var(--royal-blue)/0.16)] transition hover:-translate-y-1 sm:min-h-[15rem] sm:px-6 sm:py-7"
+              className="group flex h-full min-h-[13rem] flex-col rounded-[2rem] bg-[url('/images/numerology-card-energy-today.png')] bg-cover bg-center px-5 py-6 text-[hsl(263_35%_18%)] shadow-[0_24px_60px_hsl(var(--accent)/0.18)] transition hover:-translate-y-1 dark:bg-[url('/images/numerology-card-energy-today-dark.png')] dark:bg-[hsl(var(--royal-blue)/0.58)] dark:text-white dark:shadow-[0_24px_60px_hsl(var(--royal-blue)/0.16)] sm:min-h-[15rem] sm:px-6 sm:py-7"
             >
               <h3 className="font-display text-[1.2rem] font-semibold uppercase tracking-[0.03em] sm:text-[1.55rem]">
                 Mi energía de hoy
@@ -429,14 +429,14 @@ export function NumerologyMapSection() {
                 }>).map((item) => (
                   <div
                     key={item.label}
-                    className="flex flex-col justify-center rounded-2xl bg-white/8 px-2 py-3 backdrop-blur-sm"
+                    className="flex flex-col justify-center rounded-2xl bg-white/38 px-2 py-3 backdrop-blur-sm dark:bg-white/8"
                   >
                     <span
                       className={`block font-display text-3xl font-semibold leading-none sm:text-4xl ${ENERGY_CARD_TONES[item.label]}`}
                     >
                       {item.value}
                     </span>
-                    <span className="mt-2 block text-[0.56rem] font-semibold uppercase tracking-[0.04em] text-white/72 sm:text-[0.6rem] sm:tracking-[0.06em]">
+                    <span className="mt-2 block text-[0.56rem] font-semibold uppercase tracking-[0.04em] text-[hsl(263_35%_18%)]/72 dark:text-white/72 sm:text-[0.6rem] sm:tracking-[0.06em]">
                       {item.label}
                     </span>
                   </div>

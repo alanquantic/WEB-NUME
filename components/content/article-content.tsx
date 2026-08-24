@@ -58,11 +58,9 @@ export function ArticleContent({
       header={null}
       showRelatedProducts={false}
     >
-      <div className="grid gap-8">
-        <TopBanner />
-
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <article>
+          <TopBanner />
           <ShareButtons slug={content.slug} title={content.title} />
 
           <div className="mt-6 flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-wide text-fuchsia">
@@ -78,12 +76,12 @@ export function ArticleContent({
           </h1>
 
           {content.featured_image_url ? (
-            <div className="mt-6 overflow-hidden rounded-[1.75rem] shadow-panel">
+            <div className="mt-6 max-h-[500px] overflow-hidden rounded-[1.75rem] shadow-panel">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={content.featured_image_url}
                 alt={content.title}
-                className="w-full object-cover"
+                className="h-full max-h-[500px] w-full object-cover"
               />
             </div>
           ) : null}
@@ -146,7 +144,7 @@ export function ArticleContent({
 
         </article>
 
-        <aside aria-label="Barra lateral" className="flex flex-col gap-6">
+        <aside aria-label="Barra lateral" className="flex flex-col gap-6 lg:mt-[270px]">
           <RelatedProducts
             title={content.title}
             categoryName={content.category?.name.trim() ?? null}
@@ -155,7 +153,6 @@ export function ArticleContent({
           />
           <SidebarBanner />
         </aside>
-        </div>
       </div>
     </ToolPage>
   )
