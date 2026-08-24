@@ -21,7 +21,7 @@ export async function SidebarBanner() {
     <img
       src={banner.image_url}
       alt=""
-      className="w-full object-cover"
+      className="h-auto w-full object-contain"
     />
   )
 

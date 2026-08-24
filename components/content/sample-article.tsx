@@ -66,11 +66,9 @@ export function SampleArticle({ post }: { post: SamplePost }) {
         ])}
       />
 
-      <div className="grid gap-8">
-        <TopBanner />
-
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <article>
+          <TopBanner />
           <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-wide text-fuchsia">
             <span>{post.category}</span>
             {date ? <span className="text-foreground/55">{date}</span> : null}
@@ -80,9 +78,13 @@ export function SampleArticle({ post }: { post: SamplePost }) {
           <h1 className="mt-3 font-display text-4xl font-semibold leading-tight">{post.title}</h1>
           <p className="mt-2 text-sm text-foreground/60">Por {post.author}</p>
 
-          <div className="mt-6 overflow-hidden rounded-[1.75rem] shadow-panel">
+          <div className="mt-6 max-h-[500px] overflow-hidden rounded-[1.75rem] shadow-panel">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={post.image} alt={post.title} className="w-full object-cover" />
+            <img
+              src={post.image}
+              alt={post.title}
+              className="h-full max-h-[500px] w-full object-cover"
+            />
           </div>
 
           {rich ? (
@@ -151,7 +153,7 @@ export function SampleArticle({ post }: { post: SamplePost }) {
           <KeepExploring links={exploreLinks} />
         </article>
 
-        <aside aria-label="Barra lateral" className="flex flex-col gap-6">
+        <aside aria-label="Barra lateral" className="flex flex-col gap-6 lg:mt-[270px]">
           <RelatedProducts
             title={post.title}
             categoryName={post.category}
@@ -160,7 +162,6 @@ export function SampleArticle({ post }: { post: SamplePost }) {
           />
           <SidebarBanner />
         </aside>
-        </div>
       </div>
     </ToolPage>
   )
