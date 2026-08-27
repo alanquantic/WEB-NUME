@@ -31,9 +31,7 @@ export default function HomePage() {
       <ScrollReveal delay={180}>
         <NewsSection />
       </ScrollReveal>
-      <ScrollReveal delay={200}>
-        <BirthdaySection />
-      </ScrollReveal>
+      <BirthdaySection />
       <ScrollReveal delay={220}>
         <HomeSeoSection />
       </ScrollReveal>

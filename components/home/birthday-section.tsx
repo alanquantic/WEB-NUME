@@ -227,9 +227,9 @@ export function BirthdaySection() {
   }
 
   return (
-    <section className={`mx-auto max-w-7xl px-4 py-12 sm:px-6 ${dmSans.className}`}>
-      <div className="overflow-hidden rounded-[2.5rem] bg-[#160b26] bg-[url('/images/birthday/fondo.png')] bg-cover bg-center px-5 py-10 shadow-panel sm:px-8 md:px-12 md:py-14">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+    <section className={`py-12 ${dmSans.className}`}>
+      <div className="overflow-hidden bg-[#160b26] bg-[url('/images/birthday/fondo.png')] bg-cover bg-center py-10 shadow-panel md:py-14">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr]">
           <ScrollReveal>
             <div>
               <p className="text-base font-medium uppercase tracking-[0.22em] text-[#D3AE35]">
@@ -331,7 +331,9 @@ export function BirthdaySection() {
       </div>
 
       {result ? (
-        <BirthdayProfile numero={result.dayNumber} monthName={result.monthName} />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <BirthdayProfile numero={result.dayNumber} monthName={result.monthName} />
+        </div>
       ) : null}
     </section>
   )
