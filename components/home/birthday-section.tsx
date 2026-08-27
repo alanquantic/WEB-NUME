@@ -1,6 +1,7 @@
 'use client'
 
 import type { Route } from 'next'
+import { DM_Sans, Playfair_Display } from 'next/font/google'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -30,6 +31,11 @@ type PerfilCumpleanos = {
 }
 
 const PERFILES = perfilesData as Record<string, PerfilCumpleanos>
+
+// Tipografías de la sección de cumpleaños: DM Sans para textos y una serif
+// de alto contraste para el titular (sustituta de "The Seasons").
+const dmSans = DM_Sans({ subsets: ['latin'] })
+const displaySerif = Playfair_Display({ subsets: ['latin'], style: ['normal', 'italic'] })
 
 const SHARE_LINKS = [
   { id: 'facebook', label: 'Facebook', Icon: FacebookIcon },
@@ -221,41 +227,45 @@ export function BirthdaySection() {
   }
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
-      <div className="rounded-[2.5rem] bg-[hsl(var(--primary))] px-5 py-8 shadow-panel sm:px-6 md:px-12 md:py-10">
-        <div className="grid items-center gap-8 lg:grid-cols-[1fr_0.85fr]">
+    <section className={`py-12 ${dmSans.className}`}>
+      <div className="overflow-hidden bg-[#160b26] bg-[url('/images/birthday/fondo.png')] bg-cover bg-center py-10 shadow-panel md:py-14">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr]">
           <ScrollReveal>
             <div>
-              <h2 className="font-display text-[2.2rem] font-semibold text-gradient-brand sm:text-[2.65rem]">
-                Feliz cumpleaños
+              <p className="text-base font-medium uppercase tracking-[0.22em] text-[#D3AE35]">
+                Tu número, tu camino
+              </p>
+              <h2
+                className={`mt-4 max-w-xl text-[2.35rem] font-medium leading-[1.15] text-white sm:text-[3.025rem] ${displaySerif.className}`}
+              >
+                Descubre tu Proyección Numerológica para <em className="italic text-[#D3AE35]">tu año.</em>
               </h2>
-              <p className="mt-3 max-w-md text-[1rem] leading-7 text-foreground/78 sm:text-[1.125rem] sm:leading-8">
-                Descubre la Proyección Numerológica para tu año o el de alguien más y
-                compártesela.
+              <p className="mt-5 max-w-md text-xl font-normal leading-8 text-white/85 sm:text-[1.35rem] sm:leading-9">
+                Conoce las energías que te acompañarán y toma decisiones más alineadas contigo.
               </p>
 
               <div
                 data-calculator-slot="cumpleanos"
-                className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-end"
+                className="mt-7 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-end"
               >
-                <label className="flex flex-col gap-1 text-base font-medium text-foreground/82">
+                <label className="flex flex-col gap-1.5 text-base font-semibold text-[#D3AE35]">
                   Día de nacimiento
                   <select
                     value={day}
                     onChange={(event) => setDay(Number(event.target.value))}
-                    className="h-11 rounded-2xl border border-border bg-card px-4 text-base text-foreground outline-none transition focus:border-primary"
+                    className="h-11 rounded-xl border border-white/20 bg-white px-4 text-[1.0625rem] font-medium text-[#2A1E3E] outline-none transition focus:border-[#D3AE35]"
                   >
                     {DAYS.map((value) => (
                       <option key={value} value={value}>{value}</option>
                     ))}
                   </select>
                 </label>
-                <label className="flex flex-col gap-1 text-base font-medium text-foreground/82">
+                <label className="flex flex-col gap-1.5 text-base font-semibold text-[#D3AE35]">
                   Mes de nacimiento
                   <select
                     value={monthIndex}
                     onChange={(event) => setMonthIndex(Number(event.target.value))}
-                    className="h-11 rounded-2xl border border-border bg-card px-4 text-base text-foreground outline-none transition focus:border-primary"
+                    className="h-11 rounded-xl border border-white/20 bg-white px-4 text-[1.0625rem] font-medium text-[#2A1E3E] outline-none transition focus:border-[#D3AE35]"
                   >
                     {MONTHS.map((monthName, index) => (
                       <option key={monthName} value={index}>{monthName}</option>
@@ -265,19 +275,19 @@ export function BirthdaySection() {
                 <button
                   type="button"
                   onClick={handleCalculate}
-                  className="inline-flex h-11 items-center justify-center rounded-full bg-accent px-8 text-sm font-semibold text-foreground transition hover:opacity-90"
+                  className="inline-flex h-11 items-center justify-center rounded-full bg-[#D3AE35] px-8 text-sm font-semibold text-[#2A1E3E] transition hover:opacity-90"
                 >
                   Ver
                 </button>
               </div>
 
               {result ? (
-                <div className="mt-6 inline-flex items-center gap-4 rounded-[1.5rem] border border-white/40 bg-white/70 px-5 py-4 backdrop-blur">
+                <div className="mt-6 inline-flex items-center gap-4 rounded-[1.5rem] border border-white/40 bg-white/85 px-5 py-4 backdrop-blur">
                   <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-brand font-display text-3xl font-semibold text-white shadow-glow">
                     {result.energy}
                   </span>
-                  <div className="text-sm leading-6 text-foreground/82">
-                    <p className="font-semibold text-foreground">
+                  <div className="text-sm leading-6 text-[#2A1E3E]/85">
+                    <p className="font-semibold text-[#2A1E3E]">
                       Tu energía de cumpleaños {result.year}
                     </p>
                     <p>
@@ -287,7 +297,7 @@ export function BirthdaySection() {
                 </div>
               ) : null}
 
-              <p className="mt-6 text-base font-semibold text-foreground/82">
+              <p className="mt-7 text-[1.0625rem] font-semibold text-[#D3AE35]/90">
                 Compártelo con alguien especial
               </p>
               <ul className="mt-3 flex gap-3">
@@ -298,7 +308,7 @@ export function BirthdaySection() {
                         type="button"
                         onClick={() => handleShare(id)}
                         aria-label={`Compartir en ${label}`}
-                        className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-brand text-white transition hover:scale-105 hover:opacity-90"
+                        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/12 text-white transition hover:scale-105 hover:bg-white/25"
                       >
                         <Icon width={18} height={18} />
                       </button>
@@ -310,20 +320,20 @@ export function BirthdaySection() {
           </ScrollReveal>
 
           <ScrollReveal delay={160}>
-            <div className="overflow-hidden rounded-[1.75rem] shadow-panel">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/feliz-cumpleanos.png"
-                alt="Ilustración de feliz cumpleaños"
-                className="h-full w-full object-cover"
-              />
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/birthday/polaroid.png"
+              alt="Fotografía polaroid de una joven soplando las velas de su pastel de cumpleaños"
+              className="mx-auto w-full max-w-[400px] lg:max-w-[470px]"
+            />
           </ScrollReveal>
         </div>
       </div>
 
       {result ? (
-        <BirthdayProfile numero={result.dayNumber} monthName={result.monthName} />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <BirthdayProfile numero={result.dayNumber} monthName={result.monthName} />
+        </div>
       ) : null}
     </section>
   )
