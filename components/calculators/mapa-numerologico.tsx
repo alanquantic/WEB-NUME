@@ -12,6 +12,7 @@ import { SparkleField } from '@/components/ui/sparkle-field'
 import { getToolIcon } from '@/components/ui/tool-icon'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { trackCalculatorSubmit, useCalculatorView } from '@/lib/analytics/calculator'
 import { calculateExpression } from '@/lib/numerology/expression'
 import { calculateLifePath } from '@/lib/numerology/life-path'
 import { calculateMaturity } from '@/lib/numerology/maturity'
@@ -139,6 +140,7 @@ function MapTile({ item }: { item: MapItem }) {
 }
 
 export function MapaNumerologico() {
+  useCalculatorView('numerological-map')
   const [fullName, setFullName] = useState('')
   const [birthDate, setBirthDate] = useState('')
   const [data, setData] = useState<MapData | null>(null)
@@ -160,6 +162,7 @@ export function MapaNumerologico() {
   function handleSubmit(formData: FormData) {
     const name = String(formData.get('fullName') ?? '')
     const date = String(formData.get('birthDate') ?? '')
+    void trackCalculatorSubmit('numerological-map', { birthDate: date, fullName: name })
     startTransition(() => {
       setData(buildMap(name, date))
       setSubmitted(true)

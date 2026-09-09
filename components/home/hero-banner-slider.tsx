@@ -5,6 +5,7 @@ import Image, { type StaticImageData } from 'next/image'
 
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
+import { track } from '@/lib/analytics'
 import banner1 from '@/public/images/slider/1.png'
 import banner2 from '@/public/images/slider/2.png'
 import banner3 from '@/public/images/slider/3.png'
@@ -106,6 +107,7 @@ export function HeroBannerSlider() {
       >
         {BANNERS.map((banner, position) => {
           const isActive = position === index
+          const promoId = `hero_banner_${position + 1}`
           return (
             <a
               key={banner.href}
@@ -116,6 +118,21 @@ export function HeroBannerSlider() {
               tabIndex={isActive ? 0 : -1}
               aria-label={`${banner.alt} (abre la tienda en una pestaña nueva)`}
               className="block w-full shrink-0 outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-primary/60"
+              onClick={() => {
+                try {
+                  const url = new URL(banner.href)
+                  track('outbound_click', {
+                    link_url: banner.href,
+                    link_domain: url.hostname,
+                    link_text: banner.alt
+                  })
+                  track('select_promotion', {
+                    promotion_id: promoId,
+                    promotion_name: banner.alt,
+                    creative_slot: 'home_hero_slider'
+                  })
+                } catch {}
+              }}
             >
               <Image
                 src={banner.src}

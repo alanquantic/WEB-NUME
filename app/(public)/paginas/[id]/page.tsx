@@ -5,6 +5,9 @@ import { PremiumGate } from '@/components/memberships/premium-gate'
 import { ApiError } from '@/lib/api/errors'
 import { getPageById } from '@/lib/api/pages'
 
+// ISR: regenera páginas del CMS cada hora.
+export const revalidate = 3600
+
 export default async function PageDetailPage({ params }: { params: { id: string } }) {
   try {
     const page = await getPageById(params.id)

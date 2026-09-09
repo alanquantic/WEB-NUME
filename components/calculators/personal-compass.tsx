@@ -4,6 +4,7 @@ import { startTransition, useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { trackCalculatorSubmit, useCalculatorView } from '@/lib/analytics/calculator'
 import { getMeaning } from '@/lib/numerology/meanings'
 import Person from '@/resources/person'
 import { useUserDefaults } from '@/stores/user-defaults'
@@ -48,6 +49,7 @@ function compute(birthDate: string): CompassItem[] | null {
 }
 
 export function PersonalCompass() {
+  useCalculatorView('personal-compass')
   const [birthDate, setBirthDate] = useState('')
   const [items, setItems] = useState<CompassItem[] | null>(null)
   const [submitted, setSubmitted] = useState(false)
@@ -60,6 +62,7 @@ export function PersonalCompass() {
 
   function handleSubmit(formData: FormData) {
     const next = String(formData.get('birthDate') ?? '')
+    void trackCalculatorSubmit('personal-compass', { birthDate: next })
     startTransition(() => {
       setItems(compute(next))
       setSubmitted(true)
