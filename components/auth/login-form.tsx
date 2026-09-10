@@ -8,6 +8,7 @@ import { useState, useTransition } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import { track } from '@/lib/analytics'
 import { useSessionStore } from '@/stores/session-store'
 
 export function LoginForm() {
@@ -47,6 +48,7 @@ export function LoginForm() {
       }
 
       await loadSession()
+      track('login', { method: 'password' })
       const nextPath = resolveNextPath(searchParams.get('next'))
       router.push(nextPath)
       router.refresh()

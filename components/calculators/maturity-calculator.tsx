@@ -5,10 +5,12 @@ import { startTransition, useEffect, useState } from 'react'
 import { NumberResult } from '@/components/calculators/number-result'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { trackCalculatorSubmit, useCalculatorView } from '@/lib/analytics/calculator'
 import { calculateMaturity } from '@/lib/numerology/maturity'
 import { useUserDefaults } from '@/stores/user-defaults'
 
 export function MaturityCalculator() {
+  useCalculatorView('maturity')
   const [fullName, setFullName] = useState('')
   const [birthDate, setBirthDate] = useState('')
   const [result, setResult] = useState<number | null>(null)
@@ -24,6 +26,7 @@ export function MaturityCalculator() {
   function handleSubmit(formData: FormData) {
     const name = String(formData.get('fullName') ?? '')
     const date = String(formData.get('birthDate') ?? '')
+    void trackCalculatorSubmit('maturity', { birthDate: date, fullName: name })
     startTransition(() => {
       setResult(calculateMaturity(name, date))
       setSubmitted(true)
@@ -66,6 +69,7 @@ export function MaturityCalculator() {
           value={result}
           intro="Tu número de madurez revela hacia dónde madura tu propósito en la segunda mitad de la vida."
           saveLabel="Número de la madurez"
+          calculatorId="maturity"
         />
       ) : (
         <p className="mt-4 text-sm text-foreground/60">

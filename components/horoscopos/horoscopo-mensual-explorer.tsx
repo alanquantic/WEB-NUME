@@ -3,6 +3,8 @@
 import Link from 'next/link'
 import { useRef, useState } from 'react'
 
+import { OutboundLink } from '@/components/analytics/outbound-link'
+
 export type HoroscopoMesContenido = {
   /** Frase corta de energía del mes (heading superior). */
   energia?: string
@@ -223,14 +225,15 @@ export function HoroscopoMensualExplorer({
                       <strong>mes excelente</strong>.
                     </p>
                     <div className="mt-6 flex flex-wrap justify-center gap-3">
-                      <a
+                      <OutboundLink
                         href={TIENDA_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        promotionId="horoscopo_mensual_tienda"
+                        promotionName="Ir a la tienda desde horóscopo mensual"
+                        creativeSlot="horoscopo_mensual_gate"
                         className="inline-flex h-11 items-center justify-center rounded-full bg-gradient-brand px-7 text-sm font-semibold text-white shadow-glow transition hover:opacity-90"
                       >
                         Ir a la tienda
-                      </a>
+                      </OutboundLink>
                       <Link
                         href="/login?next=/horoscopos"
                         className="inline-flex h-11 items-center justify-center rounded-full border border-border/80 bg-background px-7 text-sm font-semibold text-primary transition hover:border-primary/40 hover:bg-primary-soft"
