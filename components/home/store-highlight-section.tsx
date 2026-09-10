@@ -1,5 +1,6 @@
 import { Award, FileText, GraduationCap, NotebookText, type LucideIcon } from 'lucide-react'
 
+import { OutboundLink } from '@/components/analytics/outbound-link'
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
 import { STORE_URL } from '@/lib/site-config'
 
@@ -51,24 +52,26 @@ export function StoreHighlightSection() {
                 Agendas, reportes, cursos y certificaciones.
               </p>
             </div>
-            <a
+            <OutboundLink
               href={STORE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              promotionId="home_store_cta"
+              promotionName="Ver toda la tienda"
+              creativeSlot="home_store_highlight_cta"
               className="header-chip rounded-full bg-gradient-brand px-5 py-2.5 text-sm font-semibold text-white shadow-glow hover:opacity-95"
             >
               <span className="relative z-10">Ver toda la tienda</span>
-            </a>
+            </OutboundLink>
           </div>
         </ScrollReveal>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {STORE_CATEGORIES.map((category, index) => (
             <ScrollReveal key={category.id} delay={80 + index * 70}>
-              <a
+              <OutboundLink
                 href={STORE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                promotionId={`home_store_category_${category.id}`}
+                promotionName={category.title}
+                creativeSlot="home_store_categories"
                 className="group flex h-full flex-col rounded-[1.6rem] border border-border/80 bg-[hsl(var(--secondary)/0.14)] p-5 transition hover:-translate-y-1 hover:shadow-glow"
               >
                 <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-soft text-primary transition duration-200 group-hover:bg-gradient-brand group-hover:text-white">
@@ -83,7 +86,7 @@ export function StoreHighlightSection() {
                 <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary">
                   Explorar →
                 </span>
-              </a>
+              </OutboundLink>
             </ScrollReveal>
           ))}
         </div>

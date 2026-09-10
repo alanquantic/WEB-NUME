@@ -4,6 +4,7 @@ import { startTransition, useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { trackCalculatorSubmit, useCalculatorView } from '@/lib/analytics/calculator'
 import { calculateExpression, type ExpressionResult } from '@/lib/numerology/expression'
 import { getMeaning } from '@/lib/numerology/meanings'
 import { useUserDefaults } from '@/stores/user-defaults'
@@ -15,6 +16,7 @@ const TILES = [
 ] as const
 
 export function ExpressionCalculator() {
+  useCalculatorView('expression')
   const [fullName, setFullName] = useState('')
   const [result, setResult] = useState<ExpressionResult | null>(null)
   const defaults = useUserDefaults()
@@ -26,6 +28,7 @@ export function ExpressionCalculator() {
 
   function handleSubmit(formData: FormData) {
     const nextName = String(formData.get('fullName') ?? '')
+    void trackCalculatorSubmit('expression', { fullName: nextName })
     startTransition(() => {
       setResult(calculateExpression(nextName))
     })

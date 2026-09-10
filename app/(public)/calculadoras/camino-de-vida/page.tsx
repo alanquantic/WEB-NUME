@@ -2,17 +2,84 @@ import type { Metadata } from "next";
 
 import { LifeStagesCalculator } from "@/components/calculators/life-stages-calculator";
 import { ToolPage } from "@/components/content/tool-page";
+import { JsonLd } from "@/components/seo/json-ld";
 import { getServerSessionUser } from "@/lib/auth/session";
+import {
+  breadcrumbJsonLd,
+  faqPageJsonLd,
+  howToJsonLd,
+  webPageJsonLd
+} from "@/lib/seo";
+
+const TITLE = "Calculadora de Camino de Vida — Numerología Cotidiana";
+const DESCRIPTION =
+  "Descubre tu número de camino de vida a partir de tu fecha de nacimiento. Calculadora gratis con la interpretación completa del propósito esencial de tu alma.";
+const PATH = "/calculadoras/camino-de-vida";
 
 export const metadata: Metadata = {
-  title: "Camino de vida",
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: PATH },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: PATH,
+    type: "article"
+  },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION }
 };
+
+const HOWTO = howToJsonLd({
+  name: "Cómo calcular tu Camino de Vida",
+  description: DESCRIPTION,
+  totalTimeIso: "PT1M",
+  steps: [
+    { name: "Ingresa tu fecha de nacimiento", text: "Escribe día, mes y año en el campo de fecha." },
+    { name: "Pulsa Calcular", text: "La herramienta reduce tu fecha a un dígito (1-9) o maestro (11, 22, 33)." },
+    { name: "Lee tu interpretación", text: "Obtén el significado, tu luz y tu reto para este camino." }
+  ]
+});
+
+const FAQ = faqPageJsonLd([
+  {
+    question: "¿Qué es el número de Camino de Vida?",
+    answer:
+      "Es el número numerológico principal, obtenido reduciendo tu fecha de nacimiento a un solo dígito (o número maestro). Revela el propósito esencial con el que llegaste a esta vida."
+  },
+  {
+    question: "¿Cómo se calcula el Camino de Vida?",
+    answer:
+      "Se suman todos los dígitos de la fecha de nacimiento (día + mes + año) y se reduce el resultado hasta obtener un dígito de 1 a 9, o los maestros 11, 22 y 33."
+  },
+  {
+    question: "¿El Camino de Vida cambia con el tiempo?",
+    answer: "No. Al depender de tu fecha de nacimiento, es un número fijo a lo largo de toda tu vida."
+  }
+]);
+
+const WEBPAGE = webPageJsonLd({
+  title: TITLE,
+  description: DESCRIPTION,
+  path: PATH,
+  speakableSelectors: ["h1", "[data-speakable]"]
+});
+
+const BREADCRUMBS = breadcrumbJsonLd([
+  { name: "Inicio", path: "/" },
+  { name: "Calculadoras", path: "/calculadoras" },
+  { name: "Camino de vida", path: PATH }
+]);
 
 export default async function LifePathPage() {
   const user = await getServerSessionUser();
   const isMember = Boolean(user?.has_active_membership);
 
   return (
+    <>
+      <JsonLd data={WEBPAGE} />
+      <JsonLd data={HOWTO} />
+      <JsonLd data={FAQ} />
+      <JsonLd data={BREADCRUMBS} />
     <ToolPage
       toolKey="camino-de-vida"
       title="Camino de vida"
@@ -191,5 +258,6 @@ export default async function LifePathPage() {
         </section>
       </div>
     </ToolPage>
+    </>
   );
 }

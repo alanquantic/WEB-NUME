@@ -3,10 +3,12 @@ import type { MetadataRoute } from 'next'
 import { getGuiaSlugs, getPersonalSlugs } from '@/lib/personales/data'
 import { getSignificadoParams } from '@/lib/significados/data'
 
-const STATIC_ROUTES = [
+// Rutas de alta prioridad (contenido principal + calculadoras). Reciben priority 0.8.
+const PRIMARY_ROUTES = [
   '',
   '/numerologia',
   '/mi-mapa',
+  '/mi-carta',
   '/explora',
   '/numerologia-de-pareja',
   '/vibraciondeltiempo',
@@ -28,20 +30,26 @@ const STATIC_ROUTES = [
   '/nombreactivo',
   '/nombrehereditario',
   '/horoscopos',
+  '/horoscopoanopersonal',
   '/revisatuhoroscopomensual2026',
-  '/consultores',
-  '/instructores',
-  '/cursos',
   '/calculadoras',
   '/calculadoras/camino-de-vida',
   '/calculadoras/desafios-de-vida',
   '/calculadoras/expresion',
   '/calculadoras/compatibilidad',
+  '/calculadoras/ano-personal-horoscopo',
+  '/membresias'
+]
+
+// Rutas secundarias (índices, listados). Reciben priority 0.5.
+const SECONDARY_ROUTES = [
+  '/consultores',
+  '/instructores',
+  '/cursos',
+  '/directorio',
   '/blog',
   '/categorias',
   '/tags',
-  '/directorio',
-  '/membresias',
   '/busqueda'
 ]
 
@@ -58,10 +66,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const personalesRoutes = [...getPersonalSlugs(), ...getGuiaSlugs()].map((slug) => `/${slug}`)
 
-  return [...STATIC_ROUTES, ...significadosRoutes, ...personalesRoutes].map((path) => ({
+  const primary = PRIMARY_ROUTES.map((path) => ({
     url: `${base}${path}`,
     lastModified,
-    changeFrequency: 'weekly',
-    priority: path === '' ? 1 : 0.6
+    changeFrequency: 'weekly' as const,
+    priority: path === '' ? 1 : 0.8
   }))
+
+  const secondary = SECONDARY_ROUTES.map((path) => ({
+    url: `${base}${path}`,
+    lastModified,
+    changeFrequency: 'weekly' as const,
+    priority: 0.5
+  }))
+
+  const dynamic = [...significadosRoutes, ...personalesRoutes].map((path) => ({
+    url: `${base}${path}`,
+    lastModified,
+    changeFrequency: 'monthly' as const,
+    priority: 0.6
+  }))
+
+  return [...primary, ...secondary, ...dynamic]
 }

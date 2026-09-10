@@ -1,8 +1,13 @@
+'use client'
+
 import type { Route } from 'next'
 import Link from 'next/link'
+import { useEffect } from 'react'
 
 import { SaveResultButton } from '@/components/calculators/save-result-button'
 import { CountUp } from '@/components/ui/count-up'
+import { trackCalculatorResultView } from '@/lib/analytics/calculator'
+import type { CalculatorId } from '@/lib/analytics/events'
 import { getMeaning } from '@/lib/numerology/meanings'
 
 type NumberResultProps = {
@@ -15,6 +20,8 @@ type NumberResultProps = {
   saveHref?: string
   /** Página de contenido del número obtenido ("Ver más"). */
   verMasHref?: string | null
+  /** ID de la calculadora — dispara calculator_result_view y llega a Save. */
+  calculatorId?: CalculatorId
 }
 
 export function NumberResult({
@@ -23,8 +30,13 @@ export function NumberResult({
   saveLabel,
   saveDetail,
   saveHref,
-  verMasHref
+  verMasHref,
+  calculatorId
 }: NumberResultProps) {
+  useEffect(() => {
+    if (!calculatorId) return
+    trackCalculatorResultView(calculatorId, value)
+  }, [calculatorId, value])
   const meaning = typeof value === 'number' ? getMeaning(value) : null
 
   return (
@@ -98,6 +110,7 @@ export function NumberResult({
               value={value}
               detail={saveDetail}
               href={saveHref}
+              calculatorId={calculatorId}
             />
           ) : null}
         </div>
