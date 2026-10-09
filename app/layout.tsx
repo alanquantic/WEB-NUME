@@ -1,5 +1,8 @@
 import type { Metadata } from 'next'
 
+import { ConsentBanner } from '@/components/analytics/consent-banner'
+import { GoogleAnalytics } from '@/components/analytics/google-analytics'
+import { RouteTracker } from '@/components/analytics/route-tracker'
 import { SessionBootstrap } from '@/components/auth/session-bootstrap'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { SiteHeader } from '@/components/layout/site-header'
@@ -50,6 +53,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" suppressHydrationWarning>
+      <head>
+        <GoogleAnalytics />
+      </head>
       <body>
         <script
           dangerouslySetInnerHTML={{
@@ -59,10 +65,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <JsonLd data={organizationJsonLd()} />
         <JsonLd data={websiteJsonLd()} />
         <SessionBootstrap />
+        <RouteTracker />
         <TopBar />
         <SiteHeader />
         <main>{children}</main>
         <SiteFooter />
+        <ConsentBanner />
       </body>
     </html>
   )

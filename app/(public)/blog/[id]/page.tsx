@@ -10,6 +10,9 @@ import { getPostById, getPosts } from '@/lib/api/posts'
 import { getTags } from '@/lib/api/taxonomy'
 import { getSamplePost, SAMPLE_POSTS } from '@/lib/blog/sample-posts'
 
+// ISR: regenera artículos cada hora para reflejar cambios del CMS sin rebuild.
+export const revalidate = 3600
+
 export function generateStaticParams() {
   return SAMPLE_POSTS.map((post) => ({ id: post.slug }))
 }

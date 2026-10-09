@@ -8,6 +8,7 @@ import { startTransition, useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { CountUp } from '@/components/ui/count-up'
 import { Input } from '@/components/ui/input'
+import { trackCalculatorSubmit, useCalculatorView } from '@/lib/analytics/calculator'
 import { addSavedResult } from '@/lib/saved-results'
 import Pinnacle from '@/resources/pinnacle'
 
@@ -42,6 +43,7 @@ function formatShortDate(value: string): string {
 }
 
 export function DesafiosCalculator() {
+  useCalculatorView('challenges')
   const [birthDate, setBirthDate] = useState('')
   const [values, setValues] = useState<Valores | null>(null)
   const [submitted, setSubmitted] = useState(false)
@@ -61,6 +63,7 @@ export function DesafiosCalculator() {
 
   function handleSubmit(formData: FormData) {
     const next = String(formData.get('birthDate') ?? '')
+    void trackCalculatorSubmit('challenges', { birthDate: next })
     startTransition(() => {
       setValues(computeDesafios(next))
       setSubmitted(true)

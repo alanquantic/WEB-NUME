@@ -1,10 +1,11 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useState, useTransition } from 'react'
+import { useEffect, useRef, useState, useTransition } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card'
+import { track } from '@/lib/analytics'
 import type { MembershipPlan, PaymentProvider } from '@/lib/api/contracts'
 import { absoluteUrl } from '@/lib/utils'
 
@@ -18,6 +19,19 @@ export function MembershipPlans({ plans }: MembershipPlansProps) {
   const [error, setError] = useState<string | null>(null)
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
+  const viewedRef = useRef(false)
+
+  useEffect(() => {
+    if (viewedRef.current || plans.length === 0) return
+    viewedRef.current = true
+    plans.forEach((plan) => {
+      track('view_membership', {
+        membership_id: plan.id,
+        membership_name: plan.name,
+        price: Number(plan.price) || undefined
+      })
+    })
+  }, [plans])
 
   function resolveCheckoutUrl(payload: Record<string, unknown>) {
     const candidate =
@@ -32,6 +46,23 @@ export function MembershipPlans({ plans }: MembershipPlansProps) {
   function handleCheckout(planId: string, provider: PaymentProvider = 'stripe') {
     setError(null)
     setSelectedPlan(planId)
+
+    const plan = plans.find((candidate) => candidate.id === planId)
+    if (plan) {
+      const value = Number(plan.price) || 0
+      const currency = plan.currency || 'MXN'
+      track('select_plan', {
+        membership_id: plan.id,
+        membership_name: plan.name,
+        price: value
+      })
+      track('begin_subscription', {
+        membership_id: plan.id,
+        membership_name: plan.name,
+        value,
+        currency
+      })
+    }
 
     startTransition(async () => {
       const nextPath = searchParams.get('next') || '/perfil/suscripcion'

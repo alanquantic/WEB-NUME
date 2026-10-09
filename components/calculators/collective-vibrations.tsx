@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 
 import { Input } from '@/components/ui/input'
+import { useCalculatorView } from '@/lib/analytics/calculator'
 import Universal from '@/resources/universal'
 
 type Vibration = {
@@ -28,6 +29,7 @@ function computeVibrations(dateValue: string): Vibration[] {
 }
 
 export function CollectiveVibrations() {
+  useCalculatorView('collective-vibrations')
   const [dateValue, setDateValue] = useState('')
   const vibrations = useMemo(() => computeVibrations(dateValue), [dateValue])
 

@@ -9,6 +9,7 @@ import { SaveResultButton } from '@/components/calculators/save-result-button'
 import { Button } from '@/components/ui/button'
 import { CountUp } from '@/components/ui/count-up'
 import { Input } from '@/components/ui/input'
+import { trackCalculatorSubmit, useCalculatorView } from '@/lib/analytics/calculator'
 import { personalPagePath } from '@/lib/personales/routes'
 import Person from '@/resources/person'
 import { useUserDefaults } from '@/stores/user-defaults'
@@ -98,6 +99,7 @@ function formatShortDate(value: string): string {
 }
 
 export function PersonalMonthCalculator() {
+  useCalculatorView('personal-month')
   const now = new Date()
   const [birthDate, setBirthDate] = useState('')
   const [monthIndex, setMonthIndex] = useState(now.getMonth())
@@ -132,6 +134,8 @@ export function PersonalMonthCalculator() {
   const handleSubmit = (formData: FormData) => {
     const nextBirthDate = String(formData.get('birthDate') ?? '')
     const nextMonthIndex = Number(formData.get('targetMonth') ?? monthIndex)
+
+    void trackCalculatorSubmit('personal-month', { birthDate: nextBirthDate })
 
     setResult(computeMonth(nextBirthDate, nextMonthIndex))
     setSubmitted(true)
@@ -235,6 +239,7 @@ export function PersonalMonthCalculator() {
                     ? `/mespersonal?nacimiento=${birthDate}&mes=${result.monthIndex}`
                     : undefined
                 }
+                calculatorId="personal-month"
               />
             </div>
           </div>

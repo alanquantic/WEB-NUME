@@ -5,11 +5,13 @@ import { startTransition, useEffect, useState } from 'react'
 import { NumberResult } from '@/components/calculators/number-result'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { trackCalculatorSubmit, useCalculatorView } from '@/lib/analytics/calculator'
 import { calculateLifePath } from '@/lib/numerology/life-path'
 import type { LifePathResult } from '@/lib/numerology/types'
 import { useUserDefaults } from '@/stores/user-defaults'
 
 export function LifePathCalculator() {
+  useCalculatorView('life-path')
   const [birthDate, setBirthDate] = useState('')
   const [result, setResult] = useState<LifePathResult | null>(null)
   const defaults = useUserDefaults()
@@ -21,6 +23,7 @@ export function LifePathCalculator() {
 
   function handleSubmit(formData: FormData) {
     const nextBirthDate = String(formData.get('birthDate') ?? '')
+    void trackCalculatorSubmit('life-path', { birthDate: nextBirthDate })
     startTransition(() => {
       setResult(calculateLifePath({ birthDate: nextBirthDate }))
     })
@@ -50,6 +53,7 @@ export function LifePathCalculator() {
           value={result.lifePathNumber}
           intro="Tu número de camino de vida revela el propósito esencial con el que llegaste a esta vida."
           saveLabel="Camino de vida"
+          calculatorId="life-path"
         />
       ) : (
         <p className="mt-4 text-sm text-foreground/60">

@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { trackCalculatorSubmit, useCalculatorView } from '@/lib/analytics/calculator'
 import {
   calculateCompatibility,
   type CompatibilityResult
@@ -33,6 +34,7 @@ const CALCULATION_STEPS = [
 ]
 
 export function CompatibilityCalculator() {
+  useCalculatorView('compatibility')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [dateA, setDateA] = useState('')
@@ -81,6 +83,12 @@ export function CompatibilityCalculator() {
       setError('Debes aceptar los términos y condiciones para continuar.')
       return
     }
+
+    void trackCalculatorSubmit('compatibility', {
+      birthDate: dateA,
+      birthDateSecondary: dateB,
+      fullName: name
+    })
 
     setResult(null)
     setIsCalculating(true)

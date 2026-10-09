@@ -8,6 +8,7 @@ import { startTransition, useEffect, useState } from 'react'
 import { SignificadoModal, type ModalTarget } from '@/components/pinaculo/significado-modal'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { trackCalculatorSubmit, useCalculatorView } from '@/lib/analytics/calculator'
 import { cn } from '@/lib/utils'
 import { addSavedResult } from '@/lib/saved-results'
 import Pinnacle from '@/resources/pinnacle'
@@ -334,6 +335,8 @@ export function LifeStagesCalculator({
   const calculadoraPath = isDesafios
     ? '/calculadoras/desafios-de-vida'
     : '/calculadoras/camino-de-vida'
+  const calculatorId = isDesafios ? 'challenges' : 'personal-stage'
+  useCalculatorView(calculatorId)
 
   const [birthDate, setBirthDate] = useState('')
   const [valores, setValores] = useState<Valores | null>(null)
@@ -365,6 +368,7 @@ export function LifeStagesCalculator({
 
   function handleSubmit(formData: FormData) {
     const next = String(formData.get('birthDate') ?? '')
+    void trackCalculatorSubmit(calculatorId, { birthDate: next })
     startTransition(() => {
       setValores(computeValores(next))
       setSubmitted(true)

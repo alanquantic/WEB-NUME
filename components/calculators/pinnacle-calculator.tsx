@@ -5,6 +5,7 @@ import { startTransition, useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { SignificadoModal, type ModalTarget } from '@/components/pinaculo/significado-modal'
+import { trackCalculatorSubmit, useCalculatorView } from '@/lib/analytics/calculator'
 import { cn } from '@/lib/utils'
 import Pinnacle from '@/resources/pinnacle'
 import { useNumerologyMapStore } from '@/stores/numerology-map-store'
@@ -164,6 +165,7 @@ function computeAll(birthDate: string): Valores | null {
 }
 
 export function PinnacleCalculator({ isMember = false }: { isMember?: boolean }) {
+  useCalculatorView('pinnacle')
   const [birthDate, setBirthDate] = useState('')
   const [values, setValues] = useState<Valores | null>(null)
   const [submitted, setSubmitted] = useState(false)
@@ -202,6 +204,7 @@ export function PinnacleCalculator({ isMember = false }: { isMember?: boolean })
 
   function handleSubmit(formData: FormData) {
     const next = String(formData.get('birthDate') ?? '')
+    void trackCalculatorSubmit('pinnacle', { birthDate: next })
     startTransition(() => {
       setValues(computeAll(next))
       setSubmitted(true)

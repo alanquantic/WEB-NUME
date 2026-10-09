@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 
+import { OutboundLink } from '@/components/analytics/outbound-link'
 import { cn } from '@/lib/utils'
 
 const TIENDA_URL = 'https://tienda-nume-chi.vercel.app/'
@@ -61,14 +62,15 @@ function MemberWall({ nombre }: { nombre: string }) {
         para leer el análisis completo de cada número de tu pináculo.
       </p>
       <div className="mt-6 flex flex-wrap justify-center gap-3">
-        <a
+        <OutboundLink
           href={TIENDA_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+          promotionId="pinaculo_modal_tienda"
+          promotionName="Ir a la tienda desde significado del pináculo"
+          creativeSlot="pinaculo_modal"
           className="inline-flex h-11 items-center justify-center rounded-full bg-gradient-brand px-7 text-sm font-semibold text-white shadow-glow transition hover:opacity-90"
         >
           Ir a la tienda
-        </a>
+        </OutboundLink>
         <Link
           href="/login?next=/calculatupinaculo"
           className="inline-flex h-11 items-center justify-center rounded-full border border-border/80 bg-background px-7 text-sm font-semibold text-primary transition hover:border-primary/40 hover:bg-primary-soft"

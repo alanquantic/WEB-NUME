@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import { OutboundLink } from '@/components/analytics/outbound-link'
 import { STORE_URL } from '@/lib/site-config'
 
 const courseLinks = [
@@ -96,15 +97,16 @@ export function CoursesDirectoryPage() {
               )
 
               return link.external ? (
-                <a
+                <OutboundLink
                   key={link.href}
                   href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  promotionId="directory_cursos_tienda"
+                  promotionName={link.title}
+                  creativeSlot="directory_cursos"
                   className={className}
                 >
                   {content}
-                </a>
+                </OutboundLink>
               ) : (
                 <Link key={link.href} href={link.href} className={className}>
                   {content}

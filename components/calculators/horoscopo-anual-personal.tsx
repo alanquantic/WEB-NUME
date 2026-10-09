@@ -4,6 +4,7 @@ import { startTransition, useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { trackCalculatorSubmit, useCalculatorView } from '@/lib/analytics/calculator'
 import Person from '@/resources/person'
 import { useUserDefaults } from '@/stores/user-defaults'
 
@@ -28,6 +29,7 @@ function computePersonalYear(birthDate: string, yearToCalculate: string): number
 }
 
 export function HoroscopoAnualPersonal() {
+  useCalculatorView('annual-horoscope')
   const yearOptions = buildYearOptions()
   const currentYear = String(new Date().getFullYear())
 
@@ -45,6 +47,8 @@ export function HoroscopoAnualPersonal() {
   function handleSubmit(formData: FormData) {
     const nextBirthDate = String(formData.get('birthDate') ?? '')
     const nextYearToCalculate = String(formData.get('yearToCalculate') ?? '')
+
+    void trackCalculatorSubmit('annual-horoscope', { birthDate: nextBirthDate })
 
     startTransition(() => {
       setResult(computePersonalYear(nextBirthDate, nextYearToCalculate))

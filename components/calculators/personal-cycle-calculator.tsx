@@ -5,11 +5,21 @@ import { startTransition, useEffect, useState } from 'react'
 import { NumberResult } from '@/components/calculators/number-result'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { trackCalculatorSubmit, useCalculatorView } from '@/lib/analytics/calculator'
+import type { CalculatorId } from '@/lib/analytics/events'
 import { personalPagePath, type PersonalCategoriaKey } from '@/lib/personales/routes'
 import Person from '@/resources/person'
 import { useUserDefaults } from '@/stores/user-defaults'
 
 export type CycleKind = 'year' | 'month' | 'week' | 'day' | 'stage'
+
+const KIND_CALCULATOR_ID: Record<CycleKind, CalculatorId> = {
+  year: 'personal-year',
+  month: 'personal-month',
+  week: 'personal-week',
+  day: 'personal-day',
+  stage: 'personal-stage'
+}
 
 const KIND_HINT: Record<CycleKind, string> = {
   year: 'Tu tema central durante este año.',
@@ -107,6 +117,8 @@ function compute(kind: CycleKind, birthDate: string, targetDate: string): number
 }
 
 export function PersonalCycleCalculator({ kind }: { kind: CycleKind }) {
+  const calculatorId = KIND_CALCULATOR_ID[kind]
+  useCalculatorView(calculatorId)
   const [birthDate, setBirthDate] = useState('')
   const [targetDate, setTargetDate] = useState(todayIso())
   const [result, setResult] = useState<number | string | null>(null)
@@ -142,6 +154,7 @@ export function PersonalCycleCalculator({ kind }: { kind: CycleKind }) {
     const nextTargetDate = hasTargetField
       ? String(formData.get('targetDate') ?? todayIso())
       : todayIso()
+    void trackCalculatorSubmit(calculatorId, { birthDate: nextBirthDate })
     startTransition(() => {
       setResult(compute(kind, nextBirthDate, nextTargetDate))
       setSubmitted(true)
@@ -204,6 +217,7 @@ export function PersonalCycleCalculator({ kind }: { kind: CycleKind }) {
           saveDetail={saveDetail}
           saveHref={saveHref}
           verMasHref={verMasHref}
+          calculatorId={calculatorId}
         />
       ) : submitted ? (
         <p className="mt-4 text-sm text-foreground/60">

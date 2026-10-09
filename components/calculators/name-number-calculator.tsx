@@ -5,11 +5,21 @@ import { startTransition, useEffect, useState } from 'react'
 import { NumberResult } from '@/components/calculators/number-result'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { trackCalculatorSubmit, useCalculatorView } from '@/lib/analytics/calculator'
+import type { CalculatorId } from '@/lib/analytics/events'
 import { personalPagePath } from '@/lib/personales/routes'
 import Person from '@/resources/person'
 import { useUserDefaults } from '@/stores/user-defaults'
 
 export type NameKind = 'expression' | 'soul' | 'personality' | 'active' | 'hereditary'
+
+const KIND_CALCULATOR_ID: Record<NameKind, CalculatorId> = {
+  expression: 'expression',
+  soul: 'soul-urge',
+  personality: 'personality',
+  active: 'active-name',
+  hereditary: 'hereditary-name'
+}
 
 const KIND_HINT: Record<NameKind, string> = {
   expression: 'La suma de todas las letras de tu nombre: tu destino y talentos.',
@@ -57,6 +67,8 @@ function compute(kind: NameKind, fullName: string): number | null {
 }
 
 export function NameNumberCalculator({ kind }: { kind: NameKind }) {
+  const calculatorId = KIND_CALCULATOR_ID[kind]
+  useCalculatorView(calculatorId)
   const [fullName, setFullName] = useState('')
   const [result, setResult] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
@@ -81,6 +93,7 @@ export function NameNumberCalculator({ kind }: { kind: NameKind }) {
 
   function handleSubmit(formData: FormData) {
     const next = String(formData.get('fullName') ?? '')
+    void trackCalculatorSubmit(calculatorId, { fullName: next })
     startTransition(() => {
       setResult(compute(kind, next))
       setSubmitted(true)
@@ -125,6 +138,7 @@ export function NameNumberCalculator({ kind }: { kind: NameKind }) {
                 ? personalPagePath('numero-del-nombre', result)
                 : null
           }
+          calculatorId={calculatorId}
         />
       ) : (
         <p className="mt-4 text-sm text-foreground/60">
