@@ -18,7 +18,7 @@ export default function Page() {
           description: 'La base de tu horóscopo numerológico mensual.'
         },
         {
-          href: '/anopersonal',
+          href: '/ano-personal',
           title: 'Tu año personal 2026',
           description: 'El marco que da sentido a cada mes.'
         }

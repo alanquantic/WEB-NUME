@@ -12,7 +12,7 @@ import { organizationJsonLd, websiteJsonLd } from '@/lib/seo'
 import '@/app/globals.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.numerologia-cotidiana.com'),
+  metadataBase: new URL('https://numerologia-cotidiana.com'),
   title: {
     default: 'Numerología Cotidiana — Una brújula para guiar tu vida',
     template: '%s | Numerología Cotidiana'
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: 'Numerología Cotidiana — Una brújula para guiar tu vida',
     description:
       'Tu mapa numerológico, tu pináculo personal y las energías diarias en un solo lugar.',
-    url: 'https://www.numerologia-cotidiana.com'
+    url: 'https://numerologia-cotidiana.com'
   },
   twitter: {
     card: 'summary_large_image',

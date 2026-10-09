@@ -1,18 +1,23 @@
 #!/usr/bin/env node
-// Genera lib/seo/redirects.generated.json a partir de url-audit.csv.
-// Fuente: ../../../url-audit.csv (root del monorepo numeVercel).
-// Incluye:
-//   - manual_redirect_candidate (cambios de slug/estructura, orden fijo)
-//   - api_post_slug_match no-tag (posts migrados: /slug -> /blog/slug)
-//   - /tag/* -> /busqueda?q=<texto con espacios> (puente hasta revisar con GSC)
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
+// Genera lib/seo/redirects.generated.json a partir de docs/seo/mapa-urls.csv
+// (mapa de las URLs del WordPress original → acción en el sitio nuevo).
+//
+//   301            URL vieja duplicada/etiqueta con clics → otra URL vieja canónica
+//   410            etiqueta sin tráfico → Gone
+//   RENOMBRAR_RUTA ruta del sitio nuevo (p.ej. /diapersonal) → su URL vieja
+//
+// El resto de acciones (YA_COINCIDE, PAGINA_CREADA, POST_EN_RAIZ…) se sirven
+// directamente en su URL vieja y no necesitan redirect.
+//
+// Las claves van sin barra final (el middleware normaliza antes de buscar) y
+// los destinos internos con barra final, igual que el WordPress original.
+import { readFileSync, writeFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const CSV_PATH = resolve(__dirname, '../../../url-audit.csv')
-const MANUAL_OUT = resolve(__dirname, '../../lib/seo/redirects.manual.generated.json')
-const BULK_OUT = resolve(__dirname, '../../lib/seo/redirects.bulk.generated.json')
+const CSV_PATH = resolve(__dirname, '../../docs/seo/mapa-urls.csv')
+const OUT = resolve(__dirname, '../../lib/seo/redirects.generated.json')
 
 function parseCsvLine(line) {
   const fields = []
@@ -42,76 +47,45 @@ function parseCsvLine(line) {
   return fields
 }
 
-const raw = readFileSync(CSV_PATH, 'utf8')
-const lines = raw.split(/\r?\n/).filter(Boolean)
+const key = (path) => (path.length > 1 ? path.replace(/\/+$/, '') : path)
+const destination = (path) =>
+  /^https?:\/\//.test(path) || path.endsWith('/') ? path : `${path}/`
+
+const lines = readFileSync(CSV_PATH, 'utf8').split(/\r?\n/).filter(Boolean)
 const header = parseCsvLine(lines.shift())
 const COL = Object.fromEntries(header.map((name, i) => [name, i]))
 
-const manual = []
-const blog = []
-const tags = []
-const seen = new Set()
-const tagSeen = new Set()
+const redirects = {}
+const gone = []
+const counts = { redirect: 0, renombrar: 0, gone: 0 }
 
 for (const line of lines) {
   const row = parseCsvLine(line)
-  const matchType = row[COL.match_type]
-  const source = row[COL.old_path]
-  const destination = row[COL.recommended_new_path]
-  if (!source) continue
+  const oldUrl = row[COL.url_vieja]
+  const accion = row[COL.accion]
+  const nueva = row[COL.pagina_nueva_que_la_sirve]
 
-  if (source.startsWith('/tag/')) {
-    const tagSlug = source.slice('/tag/'.length).replace(/\/$/, '')
-    if (!tagSlug || tagSeen.has(tagSlug)) continue
-    tagSeen.add(tagSlug)
-    // Next.js decodes %20 a espacio literal al emitir Location, lo que rompe
-    // la validez del header. Usamos '+' (form-urlencoded) que preserva el
-    // espacio y lo entiende el formulario de /busqueda al parsear la query.
-    const query = tagSlug.replace(/-/g, '+')
-    tags.push({
-      source: `/tag/${tagSlug}`,
-      destination: `/busqueda?q=${query}`,
-      statusCode: 301
-    })
-    continue
-  }
-
-  if (!destination || source === destination) continue
-  if (seen.has(source)) continue
-
-  if (matchType === 'manual_redirect_candidate') {
-    seen.add(source)
-    manual.push({ source, destination, statusCode: 301 })
-  } else if (matchType === 'api_post_slug_match') {
-    seen.add(source)
-    blog.push({ source, destination, statusCode: 301 })
+  if (accion === '301' && nueva) {
+    redirects[key(oldUrl)] = destination(nueva)
+    counts.redirect++
+  } else if (accion === '410') {
+    gone.push(key(oldUrl))
+    counts.gone++
+  } else if (accion === 'RENOMBRAR_RUTA' && nueva && key(nueva) !== key(oldUrl)) {
+    redirects[key(nueva)] = destination(oldUrl)
+    counts.renombrar++
   }
 }
 
-const generatedAt = new Date().toISOString()
-
-// Manual: pocos, no triggerean el warning de Next (<=1000 custom routes).
-const manualPayload = {
-  generatedAt,
-  counts: { manual: manual.length },
-  redirects: manual
+// Evitar cadenas: si un destino también redirige, apuntar directo al final.
+for (const [from, to] of Object.entries(redirects)) {
+  let target = to
+  for (let hops = 0; hops < 5 && redirects[key(target)]; hops++) target = redirects[key(target)]
+  redirects[from] = target
 }
 
-// Bulk: lookup O(1) desde el middleware. Mapa plano source->destination.
-const bulkRedirects = {}
-for (const { source, destination } of [...blog, ...tags]) {
-  bulkRedirects[source] = destination
-}
-const bulkPayload = {
-  generatedAt,
-  counts: { blog: blog.length, tags: tags.length, total: blog.length + tags.length },
-  redirects: bulkRedirects
-}
-
-mkdirSync(dirname(MANUAL_OUT), { recursive: true })
-writeFileSync(MANUAL_OUT, JSON.stringify(manualPayload, null, 2) + '\n')
-writeFileSync(BULK_OUT, JSON.stringify(bulkPayload, null, 2) + '\n')
-
-console.log(
-  `wrote ${manual.length} manual -> ${MANUAL_OUT}\nwrote ${blog.length + tags.length} bulk (${blog.length} blog + ${tags.length} tags) -> ${BULK_OUT}`
+writeFileSync(
+  OUT,
+  JSON.stringify({ generatedAt: new Date().toISOString(), counts, redirects, gone: gone.sort() }, null, 2) + '\n'
 )
+console.log(`wrote ${Object.keys(redirects).length} redirects + ${gone.length} gone -> ${OUT}`, counts)

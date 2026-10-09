@@ -5,5 +5,5 @@ export default function AdminUserDetailRedirectPage({
 }: {
   params: { id: string }
 }) {
-  redirect(`/perfil/usuarios/${params.id}`)
+  redirect(`/perfil/usuarios/${params.id}/`)
 }

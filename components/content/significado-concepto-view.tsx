@@ -3,6 +3,7 @@ import Link from 'next/link'
 
 import { ToolPage } from '@/components/content/tool-page'
 import type { SignificadoBloque, SignificadoConcepto, SignificadoNumero } from '@/lib/significados/data'
+import { significadoPath } from '@/lib/significados/routes'
 
 function Bloque({ bloque }: { bloque: SignificadoBloque }) {
   return (
@@ -136,7 +137,7 @@ export function SignificadoConceptoView({
                 return (
                   <Link
                     key={item.numero}
-                    href={`/significadodelosnumeros/${concepto.slug}/${item.numero}` as Route}
+                    href={significadoPath(concepto.slug, item.numero) as Route}
                     aria-current={activo ? 'page' : undefined}
                     className={
                       activo

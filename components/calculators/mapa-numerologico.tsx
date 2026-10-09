@@ -78,18 +78,18 @@ function buildMap(fullName: string, birthDate: string): MapData | null {
           mapItem(
             'Camino de vida',
             calculateLifePath({ birthDate }).lifePathNumber,
-            '/calculadoras/camino-de-vida'
+            '/mi-camino-de-vida'
           ),
           mapItem('Número personal', person.calcPersonalNumber(), '/explora', 'numero-personal'),
-          mapItem('Madurez', calculateMaturity(name, birthDate), '/numerodelamadurez')
+          mapItem('Madurez', calculateMaturity(name, birthDate), '/significado-numero-la-madurez')
         ]
       },
       {
         title: 'Tu nombre',
         items: [
-          mapItem('Expresión', expression?.expression, '/numerodelnombre'),
-          mapItem('Alma', expression?.soul, '/numerodelalma', 'alma'),
-          mapItem('Personalidad', expression?.personality, '/numerodeexpresiondelalma')
+          mapItem('Expresión', expression?.expression, '/significado-de-tu-nombre'),
+          mapItem('Alma', expression?.soul, '/significado-numero-del-alma', 'alma'),
+          mapItem('Personalidad', expression?.personality, '/significado-numero-de-expresion')
         ]
       },
       {
@@ -98,11 +98,11 @@ function buildMap(fullName: string, birthDate: string): MapData | null {
           mapItem(
             'Año personal',
             person.calcPersonalYear(new Date(now.getFullYear(), 0, 1)),
-            '/anopersonal',
+            '/ano-personal',
             'ano-personal'
           ),
           mapItem('Mes personal', person.calcPersonalMonth(now, now), '/mespersonal', 'mes-personal'),
-          mapItem('Día personal', person.calcPersonalDay(now), '/diapersonal', 'dia-personal')
+          mapItem('Día personal', person.calcPersonalDay(now), '/dia-personal', 'dia-personal')
         ]
       }
     ]

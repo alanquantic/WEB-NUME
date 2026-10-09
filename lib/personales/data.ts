@@ -189,7 +189,7 @@ export function getNombreActivoGuia(): GuiaPersonal {
   return nombreActivoGuiaData as unknown as GuiaPersonal
 }
 
-/** Guía del Significado del Nombre (página del sitio original), embebida en /numerodelnombre. */
+/** Guía del Significado del Nombre (página del sitio original), embebida en /significado-de-tu-nombre. */
 export function getNumeroDelNombreGuia(): GuiaPersonal {
   return numeroDelNombreGuiaData as unknown as GuiaPersonal
 }

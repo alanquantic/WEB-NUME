@@ -70,7 +70,7 @@ export function BirthdateView({ dia, mes, numero }: Props) {
           </Link>
 
           <Link
-            href="/calculadoras/camino-de-vida"
+            href="/mi-camino-de-vida"
             className="group rounded-[1.5rem] border border-border/60 bg-background p-5 transition hover:border-primary/40 hover:bg-primary-soft"
           >
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
@@ -90,7 +90,7 @@ export function BirthdateView({ dia, mes, numero }: Props) {
           <p className="mt-2 text-base leading-7 text-foreground/78">
             Consulta tu <Link href="/horoscopos" className="font-semibold text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary">horóscopo mensual del Año Personal</Link>{' '}
             o revisa el{' '}
-            <Link href="/significadodelosnumeros" className="font-semibold text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary">significado completo de los números</Link>.
+            <Link href="/significado-los-numeros" className="font-semibold text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary">significado completo de los números</Link>.
           </p>
         </div>
       </section>

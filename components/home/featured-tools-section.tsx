@@ -19,12 +19,12 @@ const FEATURED = {
 
 const TOOLS: readonly Tool[] = [
   {
-    href: '/calculatupinaculo',
+    href: '/pinaculo',
     title: 'Tu Pináculo',
     description: 'El estudio más profundo de tu carta.'
   },
   {
-    href: '/calculadoras/camino-de-vida',
+    href: '/mi-camino-de-vida',
     title: 'Camino de Vida',
     description: 'Tu propósito esencial.'
   },
@@ -34,7 +34,7 @@ const TOOLS: readonly Tool[] = [
     description: 'Tu compatibilidad en el amor.'
   },
   {
-    href: '/anopersonal',
+    href: '/ano-personal',
     title: 'Año Personal',
     description: 'La energía de tu año.'
   }

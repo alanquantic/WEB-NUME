@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
 import { SearchIcon } from '@/components/ui/icons'
 import type { Category } from '@/lib/api/contracts'
+import { postPath } from '@/lib/blog/paths'
 import { getSamplePosts } from '@/lib/blog/sample-posts'
 import { getPosts } from '@/lib/api/posts'
 import { getCategories } from '@/lib/api/taxonomy'
@@ -28,7 +29,7 @@ function sampleCards(): NewsCard[] {
       title: post.title,
       author: post.author,
       date: formatDate(post.date),
-      href: `/blog/${post.slug}`,
+      href: postPath(post.slug),
       imageSrc: post.image,
       imageAlt: post.title
     }))
@@ -44,7 +45,7 @@ async function loadNews(): Promise<NewsCard[]> {
       title: post.title,
       author: 'Numerología Cotidiana',
       date: formatDate(post.published_at ?? post.created_at),
-      href: `/blog/${post.id}`,
+      href: postPath(post.slug),
       imageSrc: post.featured_image_url ?? '/images/preview-bk.png',
       imageAlt: post.title
     }))

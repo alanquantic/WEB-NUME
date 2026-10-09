@@ -18,32 +18,32 @@ export default function Page() {
           description: 'Elige un número y descúbrelo a fondo.'
         },
         {
-          href: '/calculadoras/camino-de-vida',
+          href: '/mi-camino-de-vida',
           title: 'Camino de vida',
           description: 'Tu número raíz desde tu fecha de nacimiento.'
         },
         {
-          href: '/numerodelnombre',
+          href: '/significado-de-tu-nombre',
           title: 'Números del nombre',
           description: 'Expresión, alma y personalidad.'
         },
         {
-          href: '/calculatupinaculo',
+          href: '/pinaculo',
           title: 'Pináculo',
           description: 'Los números clave de tu mapa completo.'
         },
         {
-          href: '/labrujulanumerologica',
+          href: '/la-brujula-numerologica',
           title: 'Brújula numerológica',
           description: 'Tus vibraciones de tiempo de un vistazo.'
         },
         {
-          href: '/significadodelosnumeros',
+          href: '/significado-los-numeros',
           title: 'Significado de los números',
           description: 'La esencia del 1 al 9 y los maestros.'
         },
         {
-          href: '/calculadoras/compatibilidad',
+          href: '/compatibilidad-numerologica',
           title: 'Compatibilidad',
           description: 'La afinidad entre dos personas.'
         }

@@ -6,5 +6,5 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  redirect('/directorio?has_next_course=true')
+  redirect('/directorio/?has_next_course=true')
 }

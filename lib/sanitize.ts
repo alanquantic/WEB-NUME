@@ -3,7 +3,7 @@ import 'server-only'
 import sanitizeHtmlLib from 'sanitize-html'
 
 const APP_URL = (
-  process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.numerologia-cotidiana.com'
+  process.env.NEXT_PUBLIC_APP_URL ?? 'https://numerologia-cotidiana.com'
 ).replace(/\/$/, '')
 const STORE_API_URL = (
   process.env.STORE_API_URL ?? 'https://tienda.numerologia-cotidiana.com'

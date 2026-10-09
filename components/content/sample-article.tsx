@@ -9,6 +9,7 @@ import { TopBanner } from '@/components/content/top-banner'
 import { ToolPage } from '@/components/content/tool-page'
 import { JsonLd } from '@/components/seo/json-ld'
 import { FacebookIcon, TelegramIcon, WhatsappIcon } from '@/components/ui/icons'
+import { postPath } from '@/lib/blog/paths'
 import { getRelatedSamplePosts, type SamplePost } from '@/lib/blog/sample-posts'
 import { estimateReadingTime, formatDate } from '@/lib/format'
 import { absoluteUrl, articleJsonLd, breadcrumbJsonLd } from '@/lib/seo'
@@ -18,7 +19,7 @@ export function SampleArticle({ post }: { post: SamplePost }) {
   const rich = RICH_ARTICLES[post.slug]
   const reading = rich?.minutes ?? estimateReadingTime(post.html)
   const related = getRelatedSamplePosts(post.slug)
-  const url = absoluteUrl(`/blog/${post.slug}`)
+  const url = absoluteUrl(postPath(post.slug))
   const shareText = encodeURIComponent(post.title)
   const shareUrl = encodeURIComponent(url)
 
@@ -29,7 +30,7 @@ export function SampleArticle({ post }: { post: SamplePost }) {
       description: tool.description
     })),
     ...related.map((item) => ({
-      href: `/blog/${item.slug}`,
+      href: postPath(item.slug),
       title: item.title,
       description: item.excerpt
     }))
@@ -52,7 +53,7 @@ export function SampleArticle({ post }: { post: SamplePost }) {
         data={articleJsonLd({
           title: post.title,
           description: post.excerpt,
-          path: `/blog/${post.slug}`,
+          path: postPath(post.slug),
           image: post.image,
           datePublished: post.date,
           author: post.author
@@ -62,7 +63,7 @@ export function SampleArticle({ post }: { post: SamplePost }) {
         data={breadcrumbJsonLd([
           { name: 'Inicio', path: '/' },
           { name: 'Blog', path: '/blog' },
-          { name: post.title, path: `/blog/${post.slug}` }
+          { name: post.title, path: postPath(post.slug) }
         ])}
       />
 

@@ -13,7 +13,7 @@ import {
 const TITLE = 'Calculadora de Compatibilidad Numerológica — Numerología Cotidiana'
 const DESCRIPTION =
   'Compara los caminos de vida de dos personas y descubre su afinidad numerológica. Calculadora gratis con fortalezas, retos y consejos.'
-const PATH = '/calculadoras/compatibilidad'
+const PATH = '/compatibilidad-numerologica'
 
 export const metadata: Metadata = {
   title: TITLE,

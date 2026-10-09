@@ -2,12 +2,13 @@ import type { Route } from 'next'
 import Link from 'next/link'
 
 import type { ContentItem } from '@/lib/api/contracts'
+import { postPath } from '@/lib/blog/paths'
 import { excerptFromHtml, formatDate } from '@/lib/format'
 
 export function PostCard({ post }: { post: ContentItem }) {
   const date = formatDate(post.published_at ?? post.created_at)
   const excerpt = excerptFromHtml(post.content_html)
-  const href = `/blog/${post.id}` as Route
+  const href = postPath(post.slug) as Route
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-[1.9rem] border border-border/80 bg-card shadow-panel transition hover:-translate-y-1 hover:shadow-glow">

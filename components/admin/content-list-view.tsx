@@ -1,3 +1,4 @@
+import type { Route } from 'next'
 import Link from 'next/link'
 import type { UrlObject } from 'url'
 
@@ -53,7 +54,7 @@ export function ContentListView({ kind, result, searchParams }: ContentListViewP
   const newHref = isPost ? '/perfil/posts/nuevo' : '/perfil/pages/nuevo'
   const heading = isPost ? 'Posts' : 'Páginas'
   const newLabel = isPost ? 'Nuevo post' : 'Nueva página'
-  const publicBasePath = isPost ? '/blog' : '/paginas'
+  const publicBasePath = isPost ? '' : '/paginas'
 
   const page = Number(searchParams.page) > 0 ? Number(searchParams.page) : 1
   const totalPages = Math.max(1, Math.ceil(result.pagination.total / result.pagination.limit))
@@ -138,7 +139,7 @@ export function ContentListView({ kind, result, searchParams }: ContentListViewP
                           ) : null}
                           {item.status === 'published' ? (
                             <Link
-                              href={`${publicBasePath}/${item.slug}`}
+                              href={`${publicBasePath}/${item.slug}` as Route}
                               target="_blank"
                               className="mt-2 inline-flex text-xs font-semibold text-[hsl(var(--primary))] hover:underline"
                             >

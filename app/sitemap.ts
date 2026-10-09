@@ -1,10 +1,15 @@
 import type { MetadataRoute } from 'next'
 
+import { getPosts } from '@/lib/api/posts'
+import { getCategories } from '@/lib/api/taxonomy'
+import { postPath } from '@/lib/blog/paths'
+import { categoryPath } from '@/lib/categorias/paths'
 import { getBirthdateSlugs } from '@/lib/horoscopos/birthdate'
 import { getHoroscopoMesSlugs } from '@/lib/horoscopos/data'
 import { getLegadoSlugs } from '@/lib/legado/data'
 import { getGuiaSlugs, getPersonalSlugs } from '@/lib/personales/data'
 import { getSignificadoParams } from '@/lib/significados/data'
+import { significadoPath } from '@/lib/significados/routes'
 
 const STATIC_ROUTES = [
   '',
@@ -14,51 +19,67 @@ const STATIC_ROUTES = [
   '/explora',
   '/numerologia-de-pareja',
   '/vibraciondeltiempo',
-  '/labrujulanumerologica',
-  '/etapapersonal',
-  '/anopersonal',
+  '/la-brujula-numerologica',
+  '/etapa-personal',
+  '/ano-personal',
   '/mespersonal',
-  '/semanapersonal',
-  '/diapersonal',
-  '/vibracionescolectivas',
-  '/calculatupinaculo',
-  '/significadodelosnumeros',
-  '/significadodeletras',
+  '/semana-personal-ok',
+  '/dia-personal',
+  '/vibraciones-colectivas',
+  '/pinaculo',
+  '/significado-los-numeros',
+  '/significado-significado-de-letras',
   '/numerologianombre',
-  '/numerodelnombre',
-  '/numerodelalma',
-  '/numerodeexpresiondelalma',
-  '/numerodelamadurez',
+  '/significado-de-tu-nombre',
+  '/significado-numero-del-alma',
+  '/significado-numero-de-expresion',
+  '/significado-numero-la-madurez',
   '/nombreactivo',
   '/nombrehereditario',
   '/horoscopos',
   '/revisatuhoroscopomensual2026',
   '/consultores',
   '/instructores',
-  '/cursos',
+  '/curso-de-numerologia',
   '/calculadoras',
-  '/calculadoras/camino-de-vida',
-  '/calculadoras/desafios-de-vida',
+  '/mi-camino-de-vida',
+  '/mis-desafio-de-vida',
   '/calculadoras/expresion',
-  '/calculadoras/compatibilidad',
+  '/compatibilidad-numerologica',
   '/calculadoras/ano-personal-horoscopo',
   '/blog',
   '/categorias',
-  '/tags',
   '/directorio',
-  '/membresias',
-  '/busqueda'
+  '/membresias'
 ]
 
-export default function sitemap(): MetadataRoute.Sitemap {
+// Se regenera cada hora para incluir los posts nuevos del blog.
+export const revalidate = 3600
+
+// Posts y categorías del blog desde la API (si falla, el sitemap sale sin ellos).
+async function loadBlogRoutes(): Promise<string[]> {
+  const routes: string[] = []
+  try {
+    for (let page = 1; page <= 50; page++) {
+      const res = await getPosts({ page, limit: 100 })
+      routes.push(...res.data.map((post) => postPath(post.slug)))
+      if (res.data.length < 100) break
+    }
+    routes.push(...(await getCategories(1, 100)).data.map((category) => categoryPath(category.slug)))
+  } catch {
+    // sin API: solo rutas estáticas
+  }
+  return routes
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base =
-    process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, '') ??
-    'https://www.numerologia-cotidiana.com'
+    process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, '') ?? 'https://numerologia-cotidiana.com'
 
   const lastModified = new Date()
 
   const significadosRoutes = getSignificadoParams().map(
-    ({ concepto, numero }) => `/significadodelosnumeros/${concepto}/${numero}`
+    ({ concepto, numero }) => significadoPath(concepto, numero)
   )
 
   const personalesRoutes = [...getPersonalSlugs(), ...getGuiaSlugs()].map((slug) => `/${slug}`)
@@ -75,9 +96,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...personalesRoutes,
     ...horoscoposMensualesRoutes,
     ...birthdateRoutes,
-    ...legadoRoutes
+    ...legadoRoutes,
+    ...(await loadBlogRoutes())
   ].map((path) => ({
-    url: `${base}${path}`,
+    // Barra final en todas las URLs, igual que el WordPress original.
+    url: `${base}${path}/`,
     lastModified,
     changeFrequency: 'weekly',
     priority: path === '' ? 1 : 0.6

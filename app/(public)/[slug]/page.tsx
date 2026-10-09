@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 
 import { GuiaPersonalView } from '@/components/content/guia-personal-view'
 import { LegadoPageView } from '@/components/content/legado-page-view'
+import { getPostMetadata, PostDetail } from '@/components/content/post-detail'
+import { SignificadoPage } from '@/components/content/significado-page'
 import { PersonalPageView } from '@/components/content/personal-page-view'
 import { BirthdateView } from '@/components/horoscopos/birthdate-view'
 import { HoroscopoMesView } from '@/components/horoscopos/horoscopo-mes-view'
@@ -34,6 +35,8 @@ import {
   getPersonalSlugs
 } from '@/lib/personales/data'
 import type { PersonalCategoriaKey } from '@/lib/personales/routes'
+import { getSignificadoEntry, getSignificadoParams } from '@/lib/significados/data'
+import { parseSignificadoSlug, significadoPath } from '@/lib/significados/routes'
 
 // Categorías exclusivas para miembros: se envía solo un preview al cliente y
 // el resto queda tras el muro de membresía (validación por servidor, patrón
@@ -47,10 +50,11 @@ type PageProps = {
   }
 }
 
-// Solo se generan las páginas "personales" y guías conocidas; cualquier otro
-// slug de primer nivel responde 404 (las rutas estáticas existentes tienen
-// prioridad sobre este segmento dinámico).
-export const dynamicParams = false
+// Segmento de primer nivel con las URLs del WordPress original: páginas
+// "personales", guías, horóscopos, páginas heredadas, significados y, si no
+// es ninguna de esas, un post del blog (pedido a la API bajo demanda, ISR).
+// Las rutas estáticas existentes tienen prioridad sobre este segmento.
+export const revalidate = 3600
 
 export function generateStaticParams() {
   return [
@@ -58,11 +62,12 @@ export function generateStaticParams() {
     ...getGuiaSlugs(),
     ...getHoroscopoMesSlugs(),
     ...getBirthdateSlugs(),
-    ...getLegadoSlugs()
+    ...getLegadoSlugs(),
+    ...getSignificadoParams().map(({ concepto, numero }) => significadoPath(concepto, numero).slice(1))
   ].map((slug) => ({ slug }))
 }
 
-export function generateMetadata({ params }: PageProps): Metadata {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const result = getPersonalEntryBySlug(params.slug)
   if (result) {
     return {
@@ -111,9 +116,20 @@ export function generateMetadata({ params }: PageProps): Metadata {
     }
   }
 
-  return {
-    title: 'Numerología Cotidiana'
+  const significado = getSignificadoBySlug(params.slug)
+  if (significado) {
+    const path = significadoPath(significado.concepto.slug, significado.numero.numero)
+    const title = `${significado.concepto.nombre} · Número ${significado.numero.numero}`
+    const description = significado.concepto.subtitulo
+    return {
+      title,
+      description,
+      alternates: { canonical: path },
+      openGraph: { title, description, url: path, type: 'article' }
+    }
   }
+
+  return (await getPostMetadata(params.slug)) ?? { title: 'Numerología Cotidiana' }
 }
 
 export default async function Page({ params }: PageProps) {
@@ -178,5 +194,15 @@ export default async function Page({ params }: PageProps) {
     return <LegadoPageView pagina={legado} hermanas={getLegadoHermanas(legado)} />
   }
 
-  notFound()
+  const significado = getSignificadoBySlug(params.slug)
+  if (significado) {
+    return <SignificadoPage entry={significado} />
+  }
+
+  return <PostDetail slug={params.slug} />
+}
+
+function getSignificadoBySlug(slug: string) {
+  const parsed = parseSignificadoSlug(slug)
+  return parsed ? getSignificadoEntry(parsed.concepto, parsed.numero) : null
 }

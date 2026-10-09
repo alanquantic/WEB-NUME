@@ -1,5 +1,7 @@
 'use client'
 
+import { apiRoute } from '@/lib/api/route-url'
+
 type ClientApiInit = RequestInit & {
   skipRefresh?: boolean
 }
@@ -7,7 +9,7 @@ type ClientApiInit = RequestInit & {
 let refreshPromise: Promise<void> | null = null
 
 async function runRefresh() {
-  const response = await fetch('/api/auth/refresh', {
+  const response = await fetch(apiRoute('/api/auth/refresh'), {
     method: 'POST',
     credentials: 'include'
   })
@@ -21,7 +23,7 @@ export async function clientApiFetch<T>(
   path: string,
   init: ClientApiInit = {}
 ): Promise<T> {
-  const response = await fetch(`/api/bff${path}`, {
+  const response = await fetch(apiRoute(`/api/bff${path}`), {
     ...init,
     headers: {
       'Content-Type': 'application/json',

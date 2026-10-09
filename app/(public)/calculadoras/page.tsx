@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 const CALCULATORS = [
   {
-    href: '/calculadoras/camino-de-vida',
+    href: '/mi-camino-de-vida',
     title: 'Camino de vida',
     description: 'Tu número raíz a partir de tu fecha de nacimiento.'
   },
@@ -20,7 +20,7 @@ const CALCULATORS = [
     description: 'Tus números del nombre: expresión, alma y personalidad.'
   },
   {
-    href: '/calculadoras/compatibilidad',
+    href: '/compatibilidad-numerologica',
     title: 'Compatibilidad',
     description: 'La afinidad numerológica entre dos personas.'
   }

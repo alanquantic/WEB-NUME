@@ -19,7 +19,7 @@ type Calculator = {
 
 const CALCULATORS: Calculator[] = [
   {
-    href: '/calculadoras/camino-de-vida',
+    href: '/mi-camino-de-vida',
     title: 'Camino de vida',
     description: 'Tu número raíz a partir de tu fecha de nacimiento.'
   },
@@ -29,7 +29,7 @@ const CALCULATORS: Calculator[] = [
     description: 'Tus números del nombre: expresión, alma y personalidad.'
   },
   {
-    href: '/calculadoras/compatibilidad',
+    href: '/compatibilidad-numerologica',
     title: 'Compatibilidad',
     description: 'La afinidad numerológica entre dos personas.'
   },
@@ -39,17 +39,17 @@ const CALCULATORS: Calculator[] = [
     description: 'Tu vibración del año y su horóscopo personal.'
   },
   {
-    href: '/numerodelnombre',
+    href: '/significado-de-tu-nombre',
     title: 'Número del nombre',
     description: 'La vibración de tu nombre completo.'
   },
   {
-    href: '/numerodelalma',
+    href: '/significado-numero-del-alma',
     title: 'Número del alma',
     description: 'Lo que tu alma desea; el motor detrás de tus decisiones.'
   },
   {
-    href: '/numerodeexpresiondelalma',
+    href: '/significado-numero-de-expresion',
     title: 'Número de la personalidad',
     description: 'Cómo te perciben los demás según tu nombre.'
   },
@@ -64,17 +64,17 @@ const CALCULATORS: Calculator[] = [
     description: 'La herencia vibratoria de tus apellidos.'
   },
   {
-    href: '/numerodelamadurez',
+    href: '/significado-numero-la-madurez',
     title: 'Madurez',
     description: 'La suma de tu camino de vida y expresión: tu segunda mitad.'
   },
   {
-    href: '/calculatupinaculo',
+    href: '/pinaculo',
     title: 'Pináculo',
     description: 'Los ciclos y retos que marcan las etapas de tu vida.'
   },
   {
-    href: '/anopersonal',
+    href: '/ano-personal',
     title: 'Año personal',
     description: 'La energía que rige tu año en curso.'
   },
@@ -84,17 +84,17 @@ const CALCULATORS: Calculator[] = [
     description: 'La vibración del mes según tu año personal.'
   },
   {
-    href: '/semanapersonal',
+    href: '/semana-personal-ok',
     title: 'Semana personal',
     description: 'El tono energético de tu semana.'
   },
   {
-    href: '/diapersonal',
+    href: '/dia-personal',
     title: 'Día personal',
     description: 'La energía numerológica de tu día.'
   },
   {
-    href: '/etapapersonal',
+    href: '/etapa-personal',
     title: 'Etapa personal',
     description: 'El ciclo mayor que estás transitando.'
   },
@@ -104,12 +104,12 @@ const CALCULATORS: Calculator[] = [
     description: 'El número que rige el año universal.'
   },
   {
-    href: '/vibracionescolectivas',
+    href: '/vibraciones-colectivas',
     title: 'Vibraciones colectivas',
     description: 'Las energías que compartimos como colectivo.'
   },
   {
-    href: '/labrujulanumerologica',
+    href: '/la-brujula-numerologica',
     title: 'La brújula numerológica',
     description: 'Una guía para orientarte con tus números principales.'
   },
