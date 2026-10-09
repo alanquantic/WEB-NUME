@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { GuiaPersonalView } from '@/components/content/guia-personal-view'
+import { LegadoPageView } from '@/components/content/legado-page-view'
 import { PersonalPageView } from '@/components/content/personal-page-view'
 import { BirthdateView } from '@/components/horoscopos/birthdate-view'
 import { HoroscopoMesView } from '@/components/horoscopos/horoscopo-mes-view'
@@ -18,6 +19,12 @@ import {
   getHoroscopoMesSlugs,
   parseHoroscopoMesSlug
 } from '@/lib/horoscopos/data'
+import {
+  getLegadoBySlug,
+  getLegadoDescripcion,
+  getLegadoHermanas,
+  getLegadoSlugs
+} from '@/lib/legado/data'
 import {
   GUIA_META,
   getGuiaBySlug,
@@ -50,7 +57,8 @@ export function generateStaticParams() {
     ...getPersonalSlugs(),
     ...getGuiaSlugs(),
     ...getHoroscopoMesSlugs(),
-    ...getBirthdateSlugs()
+    ...getBirthdateSlugs(),
+    ...getLegadoSlugs()
   ].map((slug) => ({ slug }))
 }
 
@@ -92,6 +100,14 @@ export function generateMetadata({ params }: PageProps): Metadata {
       alternates: {
         canonical: `/horoscopo-numerologico-para-los-nacidos-el-${birthdate.dia}-de-${birthdate.mes}`
       }
+    }
+  }
+
+  const legado = getLegadoBySlug(params.slug)
+  if (legado) {
+    return {
+      title: legado.titulo,
+      description: getLegadoDescripcion(legado)
     }
   }
 
@@ -155,6 +171,11 @@ export default async function Page({ params }: PageProps) {
         numero={reduceBirthDay(birthdate.dia)}
       />
     )
+  }
+
+  const legado = getLegadoBySlug(params.slug)
+  if (legado) {
+    return <LegadoPageView pagina={legado} hermanas={getLegadoHermanas(legado)} />
   }
 
   notFound()

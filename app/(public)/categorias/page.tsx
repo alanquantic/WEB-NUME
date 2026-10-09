@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { EmptyState } from '@/components/ui/empty-state'
 import type { Category } from '@/lib/api/contracts'
 import { getCategories } from '@/lib/api/taxonomy'
+import { categoryPath } from '@/lib/categorias/paths'
 
 export const metadata: Metadata = {
   title: 'Categorías'
@@ -33,7 +34,7 @@ export default async function CategoriesPage() {
           {categories.map((category) => (
             <Link
               key={category.id}
-              href={`/categorias/${category.id}` as Route}
+              href={categoryPath(category.slug) as Route}
               className="group rounded-[1.6rem] border border-border/80 bg-card p-5 shadow-panel transition hover:-translate-y-1 hover:shadow-glow"
             >
               <span className="block font-display text-lg font-semibold text-foreground group-hover:text-primary">

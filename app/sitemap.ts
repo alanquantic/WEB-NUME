@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next'
 
 import { getBirthdateSlugs } from '@/lib/horoscopos/birthdate'
 import { getHoroscopoMesSlugs } from '@/lib/horoscopos/data'
+import { getLegadoSlugs } from '@/lib/legado/data'
 import { getGuiaSlugs, getPersonalSlugs } from '@/lib/personales/data'
 import { getSignificadoParams } from '@/lib/significados/data'
 
@@ -66,12 +67,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const birthdateRoutes = getBirthdateSlugs().map((slug) => `/${slug}`)
 
+  const legadoRoutes = getLegadoSlugs().map((slug) => `/${slug}`)
+
   return [
     ...STATIC_ROUTES,
     ...significadosRoutes,
     ...personalesRoutes,
     ...horoscoposMensualesRoutes,
-    ...birthdateRoutes
+    ...birthdateRoutes,
+    ...legadoRoutes
   ].map((path) => ({
     url: `${base}${path}`,
     lastModified,

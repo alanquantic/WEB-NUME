@@ -8,6 +8,7 @@ import { SearchIcon } from '@/components/ui/icons'
 import type { Category, ContentItem } from '@/lib/api/contracts'
 import { getPosts } from '@/lib/api/posts'
 import { getCategories } from '@/lib/api/taxonomy'
+import { categoryPath } from '@/lib/categorias/paths'
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -79,7 +80,7 @@ export default async function BlogPage({
           {categories.map((category) => (
             <Link
               key={category.id}
-              href={`/categorias/${category.id}` as Route}
+              href={categoryPath(category.slug) as Route}
               className="header-chip rounded-full border border-border bg-card px-4 py-1.5 text-sm font-medium text-foreground/75 hover:bg-primary-soft hover:text-primary"
             >
               <span className="relative z-10">{category.name.trim()}</span>
@@ -103,7 +104,7 @@ export default async function BlogPage({
             >
               {hasPrev ? (
                 <Link
-                  href={(page - 1 === 1 ? '/blog' : `/blog?page=${page - 1}`) as Route}
+                  href={(page - 1 === 1 ? '/blog' : `/blog/page/${page - 1}`) as Route}
                   className="rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold text-foreground/80 transition hover:bg-primary-soft hover:text-primary"
                 >
                   ← Anteriores
@@ -118,7 +119,7 @@ export default async function BlogPage({
 
               {hasNext ? (
                 <Link
-                  href={`/blog?page=${page + 1}` as Route}
+                  href={`/blog/page/${page + 1}` as Route}
                   className="rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold text-foreground/80 transition hover:bg-primary-soft hover:text-primary"
                 >
                   Siguientes →

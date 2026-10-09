@@ -7,6 +7,7 @@ import type { Category } from '@/lib/api/contracts'
 import { getSamplePosts } from '@/lib/blog/sample-posts'
 import { getPosts } from '@/lib/api/posts'
 import { getCategories } from '@/lib/api/taxonomy'
+import { categoryPath } from '@/lib/categorias/paths'
 import { formatDate } from '@/lib/format'
 
 type NewsCard = {
@@ -125,7 +126,7 @@ export async function NewsSection() {
                   {categories.map((category) => (
                     <li key={category.id}>
                       <Link
-                        href={`/categorias/${category.id}` as Route}
+                        href={categoryPath(category.slug) as Route}
                         className="flex items-center justify-between px-5 py-3 text-sm text-foreground/75 transition hover:bg-primary-soft hover:text-primary"
                       >
                         <span>{category.name.trim()}</span>

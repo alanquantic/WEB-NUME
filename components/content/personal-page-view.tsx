@@ -29,7 +29,7 @@ function Prosa({ html }: { html: string }) {
   return <div className={PROSE_CLASSES} dangerouslySetInnerHTML={{ __html: safeHtml }} />
 }
 
-function Bloque({ bloque }: { bloque: PersonalBloque }) {
+export function Bloque({ bloque }: { bloque: PersonalBloque }) {
   switch (bloque.tipo) {
     case 'titulo':
       return (

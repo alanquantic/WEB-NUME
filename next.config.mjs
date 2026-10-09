@@ -13,6 +13,10 @@ const nextConfig = {
     // (posts migrados y /tag/*) se resuelven desde el middleware con
     // lookup O(1) para evitar el warning de Next al pasar 1000 custom routes.
     return manualRedirects.redirects
+  },
+  async rewrites() {
+    // Paginación del blog con la misma forma que el WordPress original.
+    return [{ source: '/blog/page/:page(\\d+)', destination: '/blog?page=:page' }]
   }
 }
 
