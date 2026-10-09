@@ -3,7 +3,21 @@ import { notFound } from 'next/navigation'
 
 import { GuiaPersonalView } from '@/components/content/guia-personal-view'
 import { PersonalPageView } from '@/components/content/personal-page-view'
+import { BirthdateView } from '@/components/horoscopos/birthdate-view'
+import { HoroscopoMesView } from '@/components/horoscopos/horoscopo-mes-view'
 import { getServerSessionUser } from '@/lib/auth/session'
+import {
+  capitalizeMes,
+  getBirthdateSlugs,
+  parseBirthdateSlug,
+  reduceBirthDay
+} from '@/lib/horoscopos/birthdate'
+import {
+  getHoroscopoAnio,
+  getHoroscopoMesEntry,
+  getHoroscopoMesSlugs,
+  parseHoroscopoMesSlug
+} from '@/lib/horoscopos/data'
 import {
   GUIA_META,
   getGuiaBySlug,
@@ -32,7 +46,12 @@ type PageProps = {
 export const dynamicParams = false
 
 export function generateStaticParams() {
-  return [...getPersonalSlugs(), ...getGuiaSlugs()].map((slug) => ({ slug }))
+  return [
+    ...getPersonalSlugs(),
+    ...getGuiaSlugs(),
+    ...getHoroscopoMesSlugs(),
+    ...getBirthdateSlugs()
+  ].map((slug) => ({ slug }))
 }
 
 export function generateMetadata({ params }: PageProps): Metadata {
@@ -49,6 +68,30 @@ export function generateMetadata({ params }: PageProps): Metadata {
     return {
       title: guia.titulo,
       description: GUIA_META[params.slug]?.descripcion
+    }
+  }
+
+  const horoscopo = parseHoroscopoMesSlug(params.slug)
+  if (horoscopo) {
+    const anio = getHoroscopoAnio()
+    return {
+      title: `Año Personal ${horoscopo.numero} · ${horoscopo.mes} ${anio}`,
+      description: `Horóscopo numerológico del mes de ${horoscopo.mes} ${anio} para quienes están en Año Personal ${horoscopo.numero}.`,
+      alternates: {
+        canonical: `/ano-${horoscopo.numero}-${horoscopo.mes.toLowerCase()}`
+      }
+    }
+  }
+
+  const birthdate = parseBirthdateSlug(params.slug)
+  if (birthdate) {
+    const numero = reduceBirthDay(birthdate.dia)
+    return {
+      title: `Horóscopo numerológico para los nacidos el ${birthdate.dia} de ${birthdate.mes}`,
+      description: `Qué dice la numerología sobre quienes nacen un ${birthdate.dia} de ${birthdate.mes}: su día de nacimiento vibra con el número ${numero}.`,
+      alternates: {
+        canonical: `/horoscopo-numerologico-para-los-nacidos-el-${birthdate.dia}-de-${birthdate.mes}`
+      }
     }
   }
 
@@ -85,6 +128,33 @@ export default async function Page({ params }: PageProps) {
         />
       )
     }
+  }
+
+  const horoscopo = parseHoroscopoMesSlug(params.slug)
+  if (horoscopo) {
+    const user = await getServerSessionUser()
+    const isMember = Boolean(user?.has_active_membership)
+    const entrada = getHoroscopoMesEntry(horoscopo.numero, horoscopo.mes)
+    return (
+      <HoroscopoMesView
+        numero={horoscopo.numero}
+        mes={horoscopo.mes}
+        anio={getHoroscopoAnio()}
+        entrada={entrada}
+        isMember={isMember}
+      />
+    )
+  }
+
+  const birthdate = parseBirthdateSlug(params.slug)
+  if (birthdate) {
+    return (
+      <BirthdateView
+        dia={birthdate.dia}
+        mes={capitalizeMes(birthdate.mes)}
+        numero={reduceBirthDay(birthdate.dia)}
+      />
+    )
   }
 
   notFound()

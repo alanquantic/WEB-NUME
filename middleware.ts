@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+import bulkRedirects from '@/lib/seo/redirects.bulk.generated.json'
+
 const API_BASE_URL = (
   process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://api-nume-production.up.railway.app/api/v1'
 )
   .trim()
   .replace(/\/+$/, '')
+
+// Mapa plano source -> destination para los redirects masivos (posts migrados
+// y /tag/*). Montarlo en module scope garantiza O(1) por request.
+const REDIRECT_MAP: Record<string, string> = bulkRedirects.redirects as Record<string, string>
 const ACCESS_COOKIE = process.env.AUTH_ACCESS_COOKIE ?? 'nume_at'
 const REFRESH_COOKIE = process.env.AUTH_REFRESH_COOKIE ?? 'nume_rt'
 
@@ -96,6 +102,15 @@ const ADMIN_ONLY_PREFIXES = [
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
+  // Redirects SEO masivos (posts migrados + /tag/*): 308 con lookup O(1).
+  // Se evalúan antes que la lógica de admin/auth porque son rutas públicas
+  // heredadas del sitio anterior.
+  const bulkDestination = REDIRECT_MAP[pathname]
+  if (bulkDestination) {
+    const target = new URL(bulkDestination, request.url)
+    return NextResponse.redirect(target, 301)
+  }
+
   // El panel se unificó bajo /perfil: cualquier /admin heredado redirige allí.
   if (pathname === '/admin' || pathname.startsWith('/admin/')) {
     const url = request.nextUrl.clone()
@@ -181,5 +196,10 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/perfil/:path*']
+  // Corre en todas las rutas excepto assets y endpoints internos: necesitamos
+  // interceptar paths públicos heredados (posts viejos, /tag/*) además de
+  // /admin y /perfil.
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|.*\\.(?:png|jpg|jpeg|gif|svg|webp|ico|css|js|map|txt|xml|json|woff2?|ttf|eot)).*)'
+  ]
 }
