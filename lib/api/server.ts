@@ -3,6 +3,7 @@ import { cookies } from 'next/headers'
 import type { ProblemDetails } from '@/lib/api/contracts'
 import { ApiError, parseProblemDetails } from '@/lib/api/errors'
 import { ACCESS_COOKIE } from '@/lib/auth/cookies'
+import { incomingProxyHeaders } from '@/lib/auth/incoming-proxy-headers'
 import { API_BASE_URL } from '@/lib/auth/session'
 
 export async function serverApiFetch<T>(
@@ -17,6 +18,8 @@ export async function serverApiFetch<T>(
     headers: {
       'Content-Type': 'application/json',
       ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+      // IP real del visitante (p. ej. la búsqueda tiene límite por IP).
+      ...incomingProxyHeaders(),
       ...(init?.headers ?? {})
     },
     cache: init?.cache ?? 'no-store'

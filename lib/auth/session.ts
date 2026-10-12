@@ -4,6 +4,7 @@ import { cookies } from 'next/headers'
 import type { AuthSession, RefreshInput, SafeUser } from '@/lib/api/contracts'
 import { ApiError, parseProblemDetails } from '@/lib/api/errors'
 import { ACCESS_COOKIE } from '@/lib/auth/cookies'
+import { incomingProxyHeaders } from '@/lib/auth/incoming-proxy-headers'
 
 // Quita slashes finales para evitar rutas con doble slash (p. ej. `//auth/login`)
 // si la variable de entorno se configura con `/` al final.
@@ -23,6 +24,8 @@ export async function fetchBackend<T>(
     ...init,
     headers: {
       'Content-Type': 'application/json',
+      // IP real del visitante para el rate limit de la API (login, forgot…).
+      ...incomingProxyHeaders(),
       ...(init?.headers ?? {})
     },
     cache: 'no-store'
