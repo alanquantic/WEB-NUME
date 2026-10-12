@@ -152,7 +152,6 @@ function NewBannerForm({
         initialUrl={imageUrl}
         onClose={() => setIsMediaOpen(false)}
         onSelect={(url) => {
-          console.log('[Banner form] imagen seleccionada:', url)
           setImageUrl(url)
         }}
       />

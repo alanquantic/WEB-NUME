@@ -125,7 +125,6 @@ export type ConsultantDirectoryItem = {
 
 export type ContentAuthor = {
   id: string
-  email: string
   profile_picture_url: string | null
 }
 
@@ -192,7 +191,6 @@ export type AdminContentDetail = {
 
 export type PostAuthor = {
   id: string
-  email: string
   profile_picture_url: string | null
   name: string
   bio: string | null

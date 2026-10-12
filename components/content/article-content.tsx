@@ -24,7 +24,6 @@ type ArticleData = {
   author?: {
     id: string
     name: string
-    email: string
     profile_picture_url: string | null
     bio: string | null
   } | null

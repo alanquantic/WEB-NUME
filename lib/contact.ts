@@ -72,10 +72,18 @@ export function getWhatsAppHref(phone: string | null, nationality: string | null
   return `https://wa.me/${digits}`
 }
 
+// Normaliza un enlace capturado a mano ("www.sitio.com", "https://…") y solo
+// devuelve URLs http(s): un `javascript:` u otro esquema se descarta (XSS).
 export function normalizeExternalUrl(value: string | null) {
   if (!value) return null
   const trimmed = value.trim()
   if (!trimmed) return null
-  if (/^https?:\/\//i.test(trimmed)) return trimmed
-  return `https://${trimmed}`
+  const candidate = /^[a-z][a-z0-9+.-]*:/i.test(trimmed) ? trimmed : `https://${trimmed}`
+
+  try {
+    const url = new URL(candidate)
+    return url.protocol === 'http:' || url.protocol === 'https:' ? url.href : null
+  } catch {
+    return null
+  }
 }

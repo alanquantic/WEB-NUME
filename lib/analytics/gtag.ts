@@ -34,12 +34,33 @@ export function updateConsent(settings: ConsentSettings) {
   gtag('consent', 'update', settings)
 }
 
+// Parámetros de URL que nunca deben llegar a Analytics: tokens de un solo uso
+// (restablecer contraseña, confirmar correo) y datos personales de las
+// calculadoras (nombre, fecha de nacimiento).
+const SENSITIVE_QUERY_PARAMS = ['token', 'nombre', 'nacimiento', 'name', 'email', 'fecha']
+
+export function stripSensitiveParams(url: string): string {
+  const [base, hash] = url.split('#', 2)
+  const queryStart = base.indexOf('?')
+  if (queryStart === -1) return url
+
+  const params = new URLSearchParams(base.slice(queryStart + 1))
+  for (const key of SENSITIVE_QUERY_PARAMS) params.delete(key)
+  const query = params.toString()
+  const cleaned = `${base.slice(0, queryStart)}${query ? `?${query}` : ''}`
+  return hash !== undefined ? `${cleaned}#${hash}` : cleaned
+}
+
 // Page view manual (para SPA / App Router — Next no dispara automáticamente).
 export function pageView(url: string, title?: string) {
   if (!GA_MEASUREMENT_ID) return
+  const pagePath = stripSensitiveParams(url)
   gtag('event', 'page_view', {
-    page_path: url,
-    page_location: typeof window !== 'undefined' ? window.location.href : url,
+    page_path: pagePath,
+    page_location:
+      typeof window !== 'undefined'
+        ? stripSensitiveParams(window.location.href)
+        : pagePath,
     page_title: title ?? (typeof document !== 'undefined' ? document.title : undefined),
     send_to: GA_MEASUREMENT_ID
   })

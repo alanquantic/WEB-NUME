@@ -30,6 +30,9 @@ export function VerifyEmailCard({ token }: VerifyEmailCardProps) {
   useEffect(() => {
     if (sentRef.current) return
     sentRef.current = true
+    // El token ya está en memoria: lo quitamos de la URL para que no quede en
+    // el historial ni viaje en el Referer.
+    window.history.replaceState(window.history.state, '', window.location.pathname)
 
     void (async () => {
       try {
