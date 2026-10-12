@@ -14,6 +14,7 @@ const { POST } = await import('@/app/api/auth/verify-email/route')
 function request(body: unknown) {
   return new NextRequest('http://localhost/api/auth/verify-email/', {
     method: 'POST',
+    headers: { origin: 'http://localhost', 'content-type': 'application/json' },
     body: typeof body === 'string' ? body : JSON.stringify(body)
   })
 }
