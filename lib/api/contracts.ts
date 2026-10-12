@@ -70,6 +70,9 @@ export type SafeUser = {
   current_membership: MembershipTier
   membership_expires_at: string | null
   has_active_membership: boolean
+  // Opcionales: la API los agregó después; si faltan, no se trata como "sin verificar".
+  email_verified?: boolean
+  email_verified_at?: string | null
   metadata?: Record<string, unknown>
   consultant_profile?: ConsultantProfile | null
   created_at: string

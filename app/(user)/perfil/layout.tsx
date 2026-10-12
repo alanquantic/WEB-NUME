@@ -1,4 +1,6 @@
+import { EmailVerificationNotice } from '@/components/auth/email-verification-notice'
 import { DashboardShell, type NavSection } from '@/components/layout/dashboard-shell'
+import { isEmailUnverified } from '@/lib/auth/email-verification'
 import { getServerSessionUser } from '@/lib/auth/session'
 
 const accountSection: NavSection = {
@@ -35,6 +37,9 @@ export default async function ProfileLayout({ children }: { children: React.Reac
     <DashboardShell
       sections={sections}
     >
+      {isEmailUnverified(user) && user ? (
+        <EmailVerificationNotice email={user.email} className="mb-6" />
+      ) : null}
       {children}
     </DashboardShell>
   )
