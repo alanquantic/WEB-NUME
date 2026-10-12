@@ -13,6 +13,7 @@ import {
   type ConsultantFieldsValue,
   type ProfileFieldsValue
 } from '@/components/profile/user-fields'
+import { ChangeEmailDialog } from '@/components/profile/change-email-dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import type { SafeUser, UpdateUserInput } from '@/lib/api/contracts'
@@ -89,8 +90,17 @@ export function SelfProfileForm({ user }: { user: SafeUser }) {
       <Section title="Datos personales">
         <div className="grid gap-2">
           <label className="text-sm font-semibold" htmlFor="email">Email</label>
-          <Input id="email" type="email" value={form.email} required
-            onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))} />
+          {/* El correo se cambia con contraseña y confirmación desde el buzón nuevo. */}
+          <div className="flex flex-wrap items-center gap-2">
+            <Input id="email" type="email" value={form.email} readOnly className="min-w-0 flex-1" />
+            <ChangeEmailDialog currentEmail={user.email} />
+          </div>
+          {user.pending_email ? (
+            <p className="text-xs text-[hsl(var(--foreground))/0.7]">
+              Cambio pendiente a <strong className="break-all">{user.pending_email}</strong>: abre el
+              enlace que te enviamos a ese correo para confirmarlo.
+            </p>
+          ) : null}
         </div>
         <ProfileFields value={form.profile} onChange={(profile) => setForm((p) => ({ ...p, profile }))} />
         <div className="grid gap-4 md:grid-cols-2">

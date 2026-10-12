@@ -73,6 +73,13 @@ export async function verifyEmailWithToken(token: string) {
   })
 }
 
+export async function confirmEmailChangeWithToken(token: string) {
+  return fetchBackend<{ message: string; email: string }>('/auth/confirm-email-change', {
+    method: 'POST',
+    body: JSON.stringify({ token })
+  })
+}
+
 export const getServerSessionUser = cache(async (): Promise<SafeUser | null> => {
   const cookieStore = cookies()
   const accessToken = cookieStore.get(ACCESS_COOKIE)?.value

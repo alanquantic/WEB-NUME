@@ -73,6 +73,8 @@ export type SafeUser = {
   // Opcionales: la API los agregó después; si faltan, no se trata como "sin verificar".
   email_verified?: boolean
   email_verified_at?: string | null
+  // Correo nuevo esperando confirmación desde ese buzón (null si no hay cambio).
+  pending_email?: string | null
   metadata?: Record<string, unknown>
   consultant_profile?: ConsultantProfile | null
   created_at: string
