@@ -14,7 +14,7 @@ import {
 const TITLE = "Calculadora de Camino de Vida — Numerología Cotidiana";
 const DESCRIPTION =
   "Descubre tu número de camino de vida a partir de tu fecha de nacimiento. Calculadora gratis con la interpretación completa del propósito esencial de tu alma.";
-const PATH = "/calculadoras/camino-de-vida";
+const PATH = "/mi-camino-de-vida";
 
 export const metadata: Metadata = {
   title: TITLE,

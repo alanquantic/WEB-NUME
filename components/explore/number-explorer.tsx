@@ -10,22 +10,22 @@ const NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22, 33]
 function exploreLinksFor(value: number): ExploreLink[] {
   const isMaster = value === 11 || value === 22 || value === 33
   const article = isMaster
-    ? { href: '/blog/nacer-un-dia-11-o-29', title: 'La diferencia de nacer un día 11 o 29' }
-    : { href: '/blog/numero-personal-tu-esencia', title: 'El Número Personal: tu esencia' }
+    ? { href: '/nacer-un-dia-11-o-29', title: 'La diferencia de nacer un día 11 o 29' }
+    : { href: '/numero-personal-tu-esencia', title: 'El Número Personal: tu esencia' }
 
   return [
     {
-      href: '/calculadoras/camino-de-vida',
+      href: '/mi-camino-de-vida',
       title: 'Calcula tu camino de vida',
       description: '¿Aparece este número en tu carta?'
     },
     {
-      href: '/numerodeexpresiondelalma',
+      href: '/significado-numero-de-expresion',
       title: 'Tus números del nombre',
       description: 'Expresión, alma y personalidad.'
     },
     {
-      href: '/calculatupinaculo',
+      href: '/pinaculo',
       title: 'Tu pináculo',
       description: 'El mapa completo de tu vida.'
     },

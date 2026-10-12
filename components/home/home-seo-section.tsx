@@ -66,23 +66,23 @@ export function HomeSeoSection() {
           </p>
           <p>
             Empieza por tu{' '}
-            <Link href={'/calculadoras/camino-de-vida' as Route} className="font-medium text-primary underline">
+            <Link href={'/mi-camino-de-vida' as Route} className="font-medium text-primary underline">
               camino de vida
             </Link>
             , descubre tu{' '}
-            <Link href={'/calculatupinaculo' as Route} className="font-medium text-primary underline">
+            <Link href={'/pinaculo' as Route} className="font-medium text-primary underline">
               pináculo personal
             </Link>
             , revisa tu{' '}
-            <Link href={'/anopersonal' as Route} className="font-medium text-primary underline">
+            <Link href={'/ano-personal' as Route} className="font-medium text-primary underline">
               año personal
             </Link>{' '}
             o explora el{' '}
-            <Link href={'/significadodelosnumeros' as Route} className="font-medium text-primary underline">
+            <Link href={'/significado-los-numeros' as Route} className="font-medium text-primary underline">
               significado de cada número
             </Link>
             . Y si te interesa el amor, prueba la{' '}
-            <Link href={'/calculadoras/compatibilidad' as Route} className="font-medium text-primary underline">
+            <Link href={'/compatibilidad-numerologica' as Route} className="font-medium text-primary underline">
               numerología de pareja
             </Link>
             .

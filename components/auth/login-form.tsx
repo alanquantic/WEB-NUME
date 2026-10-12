@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { track } from '@/lib/analytics'
+import { apiRoute } from '@/lib/api/route-url'
 import { useSessionStore } from '@/stores/session-store'
 
 export function LoginForm() {
@@ -32,7 +33,7 @@ export function LoginForm() {
     setError(null)
 
     startTransition(async () => {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch(apiRoute('/api/auth/login'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

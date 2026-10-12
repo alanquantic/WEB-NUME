@@ -34,34 +34,34 @@ const NAV_ITEMS: readonly NavItem[] = [
         label: 'Vibraciones de Tiempo',
         href: '/vibraciondeltiempo',
         children: [
-          { label: 'La Brújula Numerológica', href: '/labrujulanumerologica' },
-          { label: 'Etapa Personal', href: '/etapapersonal' },
-          { label: 'Año Personal', href: '/anopersonal' },
+          { label: 'La Brújula Numerológica', href: '/la-brujula-numerologica' },
+          { label: 'Etapa Personal', href: '/etapa-personal' },
+          { label: 'Año Personal', href: '/ano-personal' },
           { label: 'Mes Personal', href: '/mespersonal' },
-          { label: 'Semana Personal', href: '/semanapersonal' },
-          { label: 'Día Personal', href: '/diapersonal' },
-          { label: 'Vibraciones Colectivas', href: '/vibracionescolectivas' }
+          { label: 'Semana Personal', href: '/semana-personal-ok' },
+          { label: 'Día Personal', href: '/dia-personal' },
+          { label: 'Vibraciones Colectivas', href: '/vibraciones-colectivas' }
         ]
       },
       {
         label: 'Calcula tu Pináculo',
-        href: '/calculatupinaculo',
+        href: '/pinaculo',
         children: [
-          { label: 'Significado de los Números', href: '/significadodelosnumeros' }
+          { label: 'Significado de los Números', href: '/significado-los-numeros' }
         ]
       },
       {
         label: 'Numerología Nombre',
         href: '/numerologianombre',
         children: [
-          { label: 'Número del Nombre', href: '/numerodelnombre' },
-          { label: 'Número del Alma', href: '/numerodelalma' },
+          { label: 'Número del Nombre', href: '/significado-de-tu-nombre' },
+          { label: 'Número del Alma', href: '/significado-numero-del-alma' },
           {
             label: 'Número de Expresión del Alma',
-            href: '/numerodeexpresiondelalma'
+            href: '/significado-numero-de-expresion'
           },
-          { label: 'Número de la Madurez', href: '/numerodelamadurez' },
-          { label: 'Significado de Letras', href: '/significadodeletras' },
+          { label: 'Número de la Madurez', href: '/significado-numero-la-madurez' },
+          { label: 'Significado de Letras', href: '/significado-significado-de-letras' },
           { label: 'Nombre Activo', href: '/nombreactivo' },
           { label: 'Nombre Hereditario', href: '/nombrehereditario' }
         ]
@@ -94,7 +94,7 @@ const NAV_ITEMS: readonly NavItem[] = [
     children: [
       { label: 'Consultores', href: '/consultores' },
       { label: 'Instructores', href: '/instructores' },
-      { label: 'Cursos', href: '/cursos' }
+      { label: 'Cursos', href: '/curso-de-numerologia' }
     ]
   }
 ]

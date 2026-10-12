@@ -12,9 +12,9 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       'No habla de lo que harás, sino de cómo lo harás: tu estilo, tus dones y los retos que se repetirán hasta que los integres. Es la base para entender el resto de tus números.'
     ],
     related: [
-      { href: '/significadodelosnumeros', title: 'Significado de los números' },
-      { href: '/calculatupinaculo', title: 'Calcula tu pináculo' },
-      { href: '/blog/numero-personal-tu-esencia', title: 'El Número Personal: tu esencia' }
+      { href: '/significado-los-numeros', title: 'Significado de los números' },
+      { href: '/pinaculo', title: 'Calcula tu pináculo' },
+      { href: '/numero-personal-tu-esencia', title: 'El Número Personal: tu esencia' }
     ]
   },
   expresion: {
@@ -23,9 +23,9 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       'Cambiar de nombre o firmar distinto modifica esta vibración; por eso muchas personas ajustan su nombre para alinearlo con sus metas.'
     ],
     related: [
-      { href: '/numerodelalma', title: 'Número del Alma' },
-      { href: '/numerodelnombre', title: 'Número del Nombre' },
-      { href: '/blog/como-calcular-el-numero-del-alma', title: 'Cómo calcular tu alma' }
+      { href: '/significado-numero-del-alma', title: 'Número del Alma' },
+      { href: '/significado-de-tu-nombre', title: 'Número del Nombre' },
+      { href: '/como-calcular-el-numero-del-alma', title: 'Cómo calcular tu alma' }
     ]
   },
   compatibilidad: {
@@ -35,8 +35,8 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
     ],
     related: [
       { href: '/numerologia-de-pareja', title: 'Numerología de pareja' },
-      { href: '/blog/como-se-relacionan-los-numeros-en-pareja', title: 'Los números en pareja' },
-      { href: '/calculadoras/camino-de-vida', title: 'Tu camino de vida' }
+      { href: '/como-se-relacionan-los-numeros-en-pareja', title: 'Los números en pareja' },
+      { href: '/mi-camino-de-vida', title: 'Tu camino de vida' }
     ]
   },
   anopersonal: {
@@ -46,8 +46,8 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
     ],
     related: [
       { href: '/mespersonal', title: 'Tu mes personal' },
-      { href: '/labrujulanumerologica', title: 'La Brújula Numerológica' },
-      { href: '/blog/ano-personal-que-es-y-como-se-calcula', title: 'Año personal: guía' }
+      { href: '/la-brujula-numerologica', title: 'La Brújula Numerológica' },
+      { href: '/ano-personal-que-es-y-como-se-calcula', title: 'Año personal: guía' }
     ]
   },
   mespersonal: {
@@ -56,9 +56,9 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       'Se obtiene combinando tu año personal con el mes en curso. Es la base de tu horóscopo numerológico mensual.'
     ],
     related: [
-      { href: '/anopersonal', title: 'Tu año personal' },
-      { href: '/diapersonal', title: 'Tu día personal' },
-      { href: '/blog/ano-personal-que-es-y-como-se-calcula', title: 'Cómo funcionan los ciclos' }
+      { href: '/ano-personal', title: 'Tu año personal' },
+      { href: '/dia-personal', title: 'Tu día personal' },
+      { href: '/ano-personal-que-es-y-como-se-calcula', title: 'Cómo funcionan los ciclos' }
     ]
   },
   semanapersonal: {
@@ -67,9 +67,9 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       'Parte de tu año personal y del momento del mes en que te encuentras.'
     ],
     related: [
-      { href: '/diapersonal', title: 'Tu día personal' },
+      { href: '/dia-personal', title: 'Tu día personal' },
       { href: '/mespersonal', title: 'Tu mes personal' },
-      { href: '/labrujulanumerologica', title: 'Todas tus vibraciones' }
+      { href: '/la-brujula-numerologica', title: 'Todas tus vibraciones' }
     ]
   },
   diapersonal: {
@@ -78,9 +78,9 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       'Se calcula con tu año personal, el día y el mes actuales. Consúltalo a diario para fluir con la energía del momento.'
     ],
     related: [
-      { href: '/semanapersonal', title: 'Tu semana personal' },
-      { href: '/vibracionescolectivas', title: 'Energía colectiva de hoy' },
-      { href: '/labrujulanumerologica', title: 'La Brújula Numerológica' }
+      { href: '/semana-personal-ok', title: 'Tu semana personal' },
+      { href: '/vibraciones-colectivas', title: 'Energía colectiva de hoy' },
+      { href: '/la-brujula-numerologica', title: 'La Brújula Numerológica' }
     ]
   },
   etapapersonal: {
@@ -89,9 +89,9 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       'Se derivan de tu fecha de nacimiento y se relacionan con los ciclos de vida de tu pináculo.'
     ],
     related: [
-      { href: '/calculatupinaculo', title: 'Tu pináculo' },
-      { href: '/anopersonal', title: 'Tu año personal' },
-      { href: '/labrujulanumerologica', title: 'La Brújula Numerológica' }
+      { href: '/pinaculo', title: 'Tu pináculo' },
+      { href: '/ano-personal', title: 'Tu año personal' },
+      { href: '/la-brujula-numerologica', title: 'La Brújula Numerológica' }
     ]
   },
   labrujulanumerologica: {
@@ -100,9 +100,9 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       'Ideal para planear con sentido: combina la mirada amplia de la etapa con el detalle del día a día.'
     ],
     related: [
-      { href: '/anopersonal', title: 'Tu año personal' },
-      { href: '/calculatupinaculo', title: 'Tu pináculo' },
-      { href: '/vibracionescolectivas', title: 'Energía colectiva' }
+      { href: '/ano-personal', title: 'Tu año personal' },
+      { href: '/pinaculo', title: 'Tu pináculo' },
+      { href: '/vibraciones-colectivas', title: 'Energía colectiva' }
     ]
   },
   vibracionescolectivas: {
@@ -111,9 +111,9 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       'Te ayudan a entender el clima energético general de un periodo: ese trasfondo común sobre el que se mueven tus vibraciones personales.'
     ],
     related: [
-      { href: '/anopersonal', title: 'Tu año personal' },
-      { href: '/blog/2026-ano-universal-1', title: '2026: Año Universal 1' },
-      { href: '/diapersonal', title: 'Tu día personal' }
+      { href: '/ano-personal', title: 'Tu año personal' },
+      { href: '/2026-ano-universal-1', title: '2026: Año Universal 1' },
+      { href: '/dia-personal', title: 'Tu día personal' }
     ]
   },
   calculatupinaculo: {
@@ -122,9 +122,9 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       'Te muestra cómo evoluciona tu energía por etapas y qué desafíos y dones marcan cada periodo.'
     ],
     related: [
-      { href: '/calculadoras/camino-de-vida', title: 'Tu camino de vida' },
-      { href: '/significadodelosnumeros', title: 'Significado de los números' },
-      { href: '/blog/numero-personal-tu-esencia', title: 'El número personal' }
+      { href: '/mi-camino-de-vida', title: 'Tu camino de vida' },
+      { href: '/significado-los-numeros', title: 'Significado de los números' },
+      { href: '/numero-personal-tu-esencia', title: 'El número personal' }
     ]
   },
   numerodelnombre: {
@@ -133,9 +133,9 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       'Cada letra tiene un valor numérico; al sumarlos y reducirlos obtienes esta vibración.'
     ],
     related: [
-      { href: '/numerodelalma', title: 'Número del Alma' },
-      { href: '/numerodeexpresiondelalma', title: 'Expresión del Alma' },
-      { href: '/significadodeletras', title: 'Significado de Letras' }
+      { href: '/significado-numero-del-alma', title: 'Número del Alma' },
+      { href: '/significado-numero-de-expresion', title: 'Expresión del Alma' },
+      { href: '/significado-significado-de-letras', title: 'Significado de Letras' }
     ]
   },
   numerodelalma: {
@@ -144,9 +144,9 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       'Trabajar este número te acerca a lo que de verdad te llena, más allá de lo que muestras hacia afuera.'
     ],
     related: [
-      { href: '/numerodelnombre', title: 'Número del Nombre' },
-      { href: '/numerodeexpresiondelalma', title: 'Expresión del Alma' },
-      { href: '/blog/como-calcular-el-numero-del-alma', title: 'Cómo calcular tu alma' }
+      { href: '/significado-de-tu-nombre', title: 'Número del Nombre' },
+      { href: '/significado-numero-de-expresion', title: 'Expresión del Alma' },
+      { href: '/como-calcular-el-numero-del-alma', title: 'Cómo calcular tu alma' }
     ]
   },
   numerodeexpresiondelalma: {
@@ -155,9 +155,9 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       'Juntos, alma y expresión muestran el contraste entre tu mundo interior y tu fachada.'
     ],
     related: [
-      { href: '/numerodelalma', title: 'Número del Alma' },
-      { href: '/numerodelnombre', title: 'Número del Nombre' },
-      { href: '/significadodeletras', title: 'Significado de Letras' }
+      { href: '/significado-numero-del-alma', title: 'Número del Alma' },
+      { href: '/significado-de-tu-nombre', title: 'Número del Nombre' },
+      { href: '/significado-significado-de-letras', title: 'Significado de Letras' }
     ]
   },
   nombreactivo: {
@@ -167,8 +167,8 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
     ],
     related: [
       { href: '/nombrehereditario', title: 'Nombre Hereditario' },
-      { href: '/numerodelnombre', title: 'Número del Nombre' },
-      { href: '/significadodeletras', title: 'Significado de Letras' }
+      { href: '/significado-de-tu-nombre', title: 'Número del Nombre' },
+      { href: '/significado-significado-de-letras', title: 'Significado de Letras' }
     ]
   },
   nombrehereditario: {
@@ -178,8 +178,8 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
     ],
     related: [
       { href: '/nombreactivo', title: 'Nombre Activo' },
-      { href: '/numerodelnombre', title: 'Número del Nombre' },
-      { href: '/significadodeletras', title: 'Significado de Letras' }
+      { href: '/significado-de-tu-nombre', title: 'Número del Nombre' },
+      { href: '/significado-significado-de-letras', title: 'Significado de Letras' }
     ]
   },
   numerodelamadurez: {
@@ -188,9 +188,9 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       'Indica el regalo que la vida te prepara cuando integras tu esencia y tu destino.'
     ],
     related: [
-      { href: '/calculadoras/camino-de-vida', title: 'Tu camino de vida' },
-      { href: '/numerodelnombre', title: 'Tu número del nombre' },
-      { href: '/calculatupinaculo', title: 'Tu pináculo' }
+      { href: '/mi-camino-de-vida', title: 'Tu camino de vida' },
+      { href: '/significado-de-tu-nombre', title: 'Tu número del nombre' },
+      { href: '/pinaculo', title: 'Tu pináculo' }
     ]
   },
   significadodelosnumeros: {
@@ -200,8 +200,8 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
     ],
     related: [
       { href: '/explora', title: 'Explora por número' },
-      { href: '/calculadoras/camino-de-vida', title: 'Tu camino de vida' },
-      { href: '/significadodeletras', title: 'Significado de Letras' }
+      { href: '/mi-camino-de-vida', title: 'Tu camino de vida' },
+      { href: '/significado-significado-de-letras', title: 'Significado de Letras' }
     ]
   },
   significadodeletras: {
@@ -210,9 +210,9 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       'Con esta tabla puedes entender cómo se obtienen tu número del nombre, del alma y de la expresión.'
     ],
     related: [
-      { href: '/numerodelnombre', title: 'Número del Nombre' },
-      { href: '/numerodelalma', title: 'Número del Alma' },
-      { href: '/significadodelosnumeros', title: 'Significado de los números' }
+      { href: '/significado-de-tu-nombre', title: 'Número del Nombre' },
+      { href: '/significado-numero-del-alma', title: 'Número del Alma' },
+      { href: '/significado-los-numeros', title: 'Significado de los números' }
     ]
   },
   'desafios-de-vida': {
@@ -221,9 +221,9 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
       'Se calculan a partir de tu fecha de nacimiento y, a diferencia de otros números de tu carta, se leen del 0 al 8.'
     ],
     related: [
-      { href: '/calculadoras/camino-de-vida', title: 'Tu camino de vida' },
-      { href: '/calculatupinaculo', title: 'Calcula tu pináculo' },
-      { href: '/significadodelosnumeros', title: 'Significado de los números' }
+      { href: '/mi-camino-de-vida', title: 'Tu camino de vida' },
+      { href: '/pinaculo', title: 'Calcula tu pináculo' },
+      { href: '/significado-los-numeros', title: 'Significado de los números' }
     ]
   },
   // Páginas de contenido "personales" (réplicas del sitio original), una clave
@@ -232,31 +232,31 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
     seo: [],
     related: [
       { href: '/mi-mapa', title: 'Centro numerológico' },
-      { href: '/calculatupinaculo', title: 'Calcula tu pináculo' },
-      { href: '/significadodelosnumeros', title: 'Significado de los números' }
+      { href: '/pinaculo', title: 'Calcula tu pináculo' },
+      { href: '/significado-los-numeros', title: 'Significado de los números' }
     ]
   },
   'personales-alma': {
     seo: [],
     related: [
-      { href: '/numerodelalma', title: 'Número del Alma' },
+      { href: '/significado-numero-del-alma', title: 'Número del Alma' },
       { href: '/mi-mapa', title: 'Centro numerológico' },
-      { href: '/significadodelosnumeros', title: 'Significado de los números' }
+      { href: '/significado-los-numeros', title: 'Significado de los números' }
     ]
   },
   'personales-dia-personal': {
     seo: [],
     related: [
-      { href: '/diapersonal', title: 'Calcula tu Día Personal' },
-      { href: '/semanapersonal', title: 'Tu Semana Personal' },
+      { href: '/dia-personal', title: 'Calcula tu Día Personal' },
+      { href: '/semana-personal-ok', title: 'Tu Semana Personal' },
       { href: '/mespersonal', title: 'Tu Mes Personal' }
     ]
   },
   'personales-semana': {
     seo: [],
     related: [
-      { href: '/semanapersonal', title: 'Calcula tu Semana Personal' },
-      { href: '/diapersonal', title: 'Tu Día Personal' },
+      { href: '/semana-personal-ok', title: 'Calcula tu Semana Personal' },
+      { href: '/dia-personal', title: 'Tu Día Personal' },
       { href: '/mespersonal', title: 'Tu Mes Personal' }
     ]
   },
@@ -264,14 +264,14 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
     seo: [],
     related: [
       { href: '/mespersonal', title: 'Calcula tu Mes Personal' },
-      { href: '/anopersonal', title: 'Tu Año Personal' },
+      { href: '/ano-personal', title: 'Tu Año Personal' },
       { href: '/horoscopos', title: 'Horóscopo de tu Año Personal' }
     ]
   },
   'personales-ano-personal': {
     seo: [],
     related: [
-      { href: '/anopersonal', title: 'Calcula tu Año Personal' },
+      { href: '/ano-personal', title: 'Calcula tu Año Personal' },
       { href: '/horoscopos', title: 'Horóscopo de tu Año Personal' },
       { href: '/mespersonal', title: 'Tu Mes Personal' }
     ]
@@ -281,15 +281,15 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
     related: [
       { href: '/nombreactivo', title: 'Calcula tu Nombre Activo' },
       { href: '/nombrehereditario', title: 'Tu Nombre Hereditario' },
-      { href: '/numerodelnombre', title: 'Número del Nombre' }
+      { href: '/significado-de-tu-nombre', title: 'Número del Nombre' }
     ]
   },
   'personales-numero-del-nombre': {
     seo: [],
     related: [
-      { href: '/numerodelnombre', title: 'Calcula tu Número del Nombre' },
+      { href: '/significado-de-tu-nombre', title: 'Calcula tu Número del Nombre' },
       { href: '/nombreactivo', title: 'Tu Nombre Activo' },
-      { href: '/significadodeletras', title: 'Significado de Letras' }
+      { href: '/significado-significado-de-letras', title: 'Significado de Letras' }
     ]
   }
 }

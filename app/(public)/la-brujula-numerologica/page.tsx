@@ -106,7 +106,7 @@ export default function Page() {
                   desarrollo personal y crecimiento espiritual.
                 </p>
                 <Link
-                  href="/vibracionescolectivas"
+                  href="/vibraciones-colectivas"
                   className="mt-10 inline-flex items-center justify-center rounded-full bg-gradient-brand px-8 py-4 text-lg font-semibold text-white shadow-[0_18px_36px_hsl(var(--primary)/0.18)] transition hover:translate-y-[-1px] hover:shadow-[0_22px_44px_hsl(var(--primary)/0.24)]"
                 >
                   Vibraciones Colectivas
@@ -153,7 +153,7 @@ export default function Page() {
               </strong>
             </p>
             <p>
-              <Link href="/etapapersonal">
+              <Link href="/etapa-personal">
                 <strong>Las 4 Etapas: </strong>
               </Link>
               <em>
@@ -168,7 +168,7 @@ export default function Page() {
               de duración determinado en el cual estará activo ese aprendizaje.
             </p>
             <p>
-              <Link href="/anopersonal">
+              <Link href="/ano-personal">
                 <strong>Año Personal</strong>
                 <strong>:</strong>
               </Link>{" "}
@@ -207,7 +207,7 @@ export default function Page() {
               en cada mes.
             </p>
             <p>
-              <Link href="/semanapersonal">
+              <Link href="/semana-personal-ok">
                 <strong>Semana Personal:</strong>
               </Link>{" "}
               <em>
@@ -222,7 +222,7 @@ export default function Page() {
               desconocías y los vuelve conscientes para tu beneficio.
             </p>
             <p>
-              <Link href="/diapersonal">
+              <Link href="/dia-personal">
                 <strong>Día Personal</strong>
                 <strong>:</strong>{" "}
               </Link>

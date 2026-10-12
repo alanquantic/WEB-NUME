@@ -36,7 +36,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
     ],
     relatedTools: [
       {
-        href: '/calculadoras/compatibilidad',
+        href: '/compatibilidad-numerologica',
         title: 'Calculadora de compatibilidad',
         description: 'Compara dos fechas al instante.'
       },
@@ -46,7 +46,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
         description: 'La página dedicada con todo el detalle.'
       }
     ],
-    sourceUrl: 'https://www.numerologia-cotidiana.com/numerologia-de-pareja',
+    sourceUrl: 'https://numerologia-cotidiana.com/numerologia-de-pareja',
     html: `
 <p>La numerología de pareja —o sinastría numerológica— compara los números de dos personas para revelar su afinidad: qué energías comparten, dónde fluye la relación y dónde conviene poner conciencia.</p>
 <p>No se trata de saber si una relación va a "funcionar" o no, sino de entenderla mejor: conocer las fortalezas del vínculo y los retos que pide trabajar. Es una de las consultas más buscadas en numerología.</p>
@@ -65,7 +65,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
     tags: ['numerología', 'autoconocimiento'],
     relatedSlugs: ['como-calcular-el-numero-del-alma', 'ano-personal-que-es-y-como-se-calcula'],
     relatedTools: [
-      { href: '/calculadoras/camino-de-vida', title: 'Calcula tu camino de vida', description: 'El propósito con el que llegaste.' },
+      { href: '/mi-camino-de-vida', title: 'Calcula tu camino de vida', description: 'El propósito con el que llegaste.' },
       { href: '/numerologia', title: 'Explora la numerología', description: 'Todas las herramientas en un lugar.' }
     ],
     sourceUrl: 'https://numerologia-cotidiana.com/para-que-sirve-la-numerologia/',
@@ -80,7 +80,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
 <h2>Los números al servicio de tu conciencia</h2>
 <p>Los números son símbolos al servicio de tu conciencia, nunca al revés. Llevarlos contigo te permite activarlos a través del diálogo entre tu intelecto y tu intuición.</p>
 <p>La gran pregunta que propone la numerología es simple y poderosa: ¿por qué no ser, por fin, eso que solo tú puedes ser?</p>
-<p>¿Quieres empezar? Calcula tu <a href="/calculadoras/camino-de-vida">número de camino de vida</a> y descubre el propósito con el que llegaste a esta vida.</p>
+<p>¿Quieres empezar? Calcula tu <a href="/mi-camino-de-vida">número de camino de vida</a> y descubre el propósito con el que llegaste a esta vida.</p>
 `
   },
   {
@@ -95,7 +95,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
     tags: ['número del alma', 'nombre', 'vocales'],
     relatedSlugs: ['para-que-sirve-la-numerologia', 'nacer-un-dia-11-o-29'],
     relatedTools: [
-      { href: '/numerodelalma', title: 'Calcula tu Número del Alma', description: 'Lo que tu corazón anhela.' },
+      { href: '/significado-numero-del-alma', title: 'Calcula tu Número del Alma', description: 'Lo que tu corazón anhela.' },
       { href: '/calculadoras/expresion', title: 'Tus números del nombre', description: 'Expresión, alma y personalidad.' }
     ],
     sourceUrl: 'https://numerologia-cotidiana.com/como-calcular-el-numero-de-nuestra-alma/',
@@ -109,7 +109,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
 <p>En un nombre como "Luis Carlos", se toman las vocales (U, I, O…) y se suman sus valores. Si el total fuera 42, se reduce: 4 + 2 = 6. Estaríamos ante un Alma 6, protectora y entregada a la familia.</p>
 <h2>Los Números del Alma</h2>
 <p>Cada número describe un anhelo distinto: del Alma 1 (independencia) al Alma 9 (solidaridad), pasando por la sabiduría del 11 y la maestría del 22. Ninguno es mejor que otro: cada uno es una forma de buscar la plenitud.</p>
-<p>Hazlo automático: usa la <a href="/numerodelalma">calculadora del Número del Alma</a> o explora todos tus <a href="/calculadoras/expresion">números del nombre</a> de una sola vez.</p>
+<p>Hazlo automático: usa la <a href="/significado-numero-del-alma">calculadora del Número del Alma</a> o explora todos tus <a href="/calculadoras/expresion">números del nombre</a> de una sola vez.</p>
 `
   },
   {
@@ -124,8 +124,8 @@ export const SAMPLE_POSTS: SamplePost[] = [
     tags: ['año personal', 'ciclos'],
     relatedSlugs: ['para-que-sirve-la-numerologia', 'como-calcular-el-numero-del-alma'],
     relatedTools: [
-      { href: '/anopersonal', title: 'Calcula tu Año Personal', description: 'El tema central de tu año.' },
-      { href: '/labrujulanumerologica', title: 'La Brújula Numerológica', description: 'Tu año, mes, semana y día.' }
+      { href: '/ano-personal', title: 'Calcula tu Año Personal', description: 'El tema central de tu año.' },
+      { href: '/la-brujula-numerologica', title: 'La Brújula Numerológica', description: 'Tu año, mes, semana y día.' }
     ],
     sourceUrl: 'https://numerologia-cotidiana.com/numerologia-cotidiana-horoscopo-ano-personal/',
     html: `
@@ -138,7 +138,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
 <p>Suma el día y el mes de tu nacimiento con el año en curso y reduce el resultado a un dígito. Ese número es tu Año Personal para ese año.</p>
 <h2>De la iniciación al cierre</h2>
 <p>Cada número marca una etapa: el 1 inicia, el 5 libera, el 8 materializa y el 9 cierra el ciclo. Conocer tu año te da una hoja de ruta emocional y práctica para tomar mejores decisiones.</p>
-<p>Descubre el tuyo ahora con la <a href="/anopersonal">calculadora de Año Personal</a> o míralo junto a tu mes y tu día en <a href="/labrujulanumerologica">La Brújula Numerológica</a>.</p>
+<p>Descubre el tuyo ahora con la <a href="/ano-personal">calculadora de Año Personal</a> o míralo junto a tu mes y tu día en <a href="/la-brujula-numerologica">La Brújula Numerológica</a>.</p>
 `
   },
   {
@@ -153,8 +153,8 @@ export const SAMPLE_POSTS: SamplePost[] = [
     tags: ['números maestros', 'día de nacimiento'],
     relatedSlugs: ['ano-personal-que-es-y-como-se-calcula', 'como-calcular-el-numero-del-alma'],
     relatedTools: [
-      { href: '/significadodelosnumeros', title: 'Significado de los números', description: 'La esencia de cada vibración.' },
-      { href: '/calculatupinaculo', title: 'Calcula tu pináculo', description: 'Tu mapa numerológico completo.' }
+      { href: '/significado-los-numeros', title: 'Significado de los números', description: 'La esencia de cada vibración.' },
+      { href: '/pinaculo', title: 'Calcula tu pináculo', description: 'Tu mapa numerológico completo.' }
     ],
     sourceUrl: 'https://numerologia-cotidiana.com/la-diferencia-de-nacer-un-dia-11-o-29/',
     html: `
@@ -165,7 +165,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
 <p>Se compone de un 2 y un 9. El 2 aporta diplomacia, paz y cualidades conciliadoras; el 9 suma carisma y espíritu aventurero. Es una vibración profundamente espiritual e inspiradora, a menudo malinterpretada, con un equilibrio emocional mayor gracias a la influencia del 2.</p>
 <h2>Dos caminos hacia el 2</h2>
 <p>Mientras el 11 busca la maestría y la especialización, el 29 combina diplomacia con autonomía. El 11 inspira de forma directa; el 29 lo hace desde su mundo interior, con más serenidad.</p>
-<p>Explora qué significan tus números maestros en el <a href="/significadodelosnumeros">significado de los números</a> o revela tu mapa completo en <a href="/calculatupinaculo">tu pináculo personal</a>.</p>
+<p>Explora qué significan tus números maestros en el <a href="/significado-los-numeros">significado de los números</a> o revela tu mapa completo en <a href="/pinaculo">tu pináculo personal</a>.</p>
 `
   },
   {
@@ -180,8 +180,8 @@ export const SAMPLE_POSTS: SamplePost[] = [
     tags: ['pareja', 'compatibilidad', 'amor'],
     relatedSlugs: ['ano-personal-que-es-y-como-se-calcula', 'para-que-sirve-la-numerologia'],
     relatedTools: [
-      { href: '/calculadoras/compatibilidad', title: 'Calcula tu compatibilidad', description: 'La afinidad entre dos personas.' },
-      { href: '/calculadoras/camino-de-vida', title: 'Tu camino de vida', description: 'El punto de partida de tu carta.' }
+      { href: '/compatibilidad-numerologica', title: 'Calcula tu compatibilidad', description: 'La afinidad entre dos personas.' },
+      { href: '/mi-camino-de-vida', title: 'Tu camino de vida', description: 'El punto de partida de tu carta.' }
     ],
     sourceUrl: 'https://numerologia-cotidiana.com/como-se-relacionan-los-numeros-en-pareja/',
     html: `
@@ -194,7 +194,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
 <p>Se complementan y se apoyan. Aprenden a negociar y a estar de acuerdo incluso en los desacuerdos, aunque la conexión no sea inmediata.</p>
 <h2>Pareja de desafío y pareja neutral</h2>
 <p>La pareja de desafío es un gran reto: pide tolerancia y paciencia, y a cambio puede traer mucha pasión. La pareja neutral (como el 8 con el 1 o el 5) funciona bien al inicio, pero necesita pactos claros para no volverse volátil.</p>
-<p>Descubre tu afinidad en la <a href="/calculadoras/compatibilidad">calculadora de compatibilidad</a> y conoce primero tu <a href="/calculadoras/camino-de-vida">camino de vida</a>.</p>
+<p>Descubre tu afinidad en la <a href="/compatibilidad-numerologica">calculadora de compatibilidad</a> y conoce primero tu <a href="/mi-camino-de-vida">camino de vida</a>.</p>
 `
   },
   {
@@ -209,8 +209,8 @@ export const SAMPLE_POSTS: SamplePost[] = [
     tags: ['negocios', 'éxito', 'nombre'],
     relatedSlugs: ['para-que-sirve-la-numerologia', 'numero-personal-tu-esencia'],
     relatedTools: [
-      { href: '/numerodelnombre', title: 'Número del nombre', description: 'La vibración de un nombre.' },
-      { href: '/calculatupinaculo', title: 'Calcula tu pináculo', description: 'Tu mapa de fortalezas.' }
+      { href: '/significado-de-tu-nombre', title: 'Número del nombre', description: 'La vibración de un nombre.' },
+      { href: '/pinaculo', title: 'Calcula tu pináculo', description: 'Tu mapa de fortalezas.' }
     ],
     sourceUrl: 'https://numerologia-cotidiana.com/como-volver-tu-negocio-un-exito/',
     html: `
@@ -223,7 +223,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
 <p>Un nombre y una fecha con una vibración armoniosa abren mejores oportunidades. Al elegir o ajustar el nombre conviene pensar en la meta del negocio, qué aporta, qué vende y a quién.</p>
 <h2>La energía del nacimiento de tu empresa</h2>
 <p>Como las personas, toda empresa nace con energías propias el día de su creación. Elegir la mejor fecha de lanzamiento ayuda a que el proyecto avance con fluidez y menos obstáculos.</p>
-<p>Empieza por la vibración de tu marca con el <a href="/numerodelnombre">número del nombre</a> y revela tus fortalezas en <a href="/calculatupinaculo">tu pináculo</a>.</p>
+<p>Empieza por la vibración de tu marca con el <a href="/significado-de-tu-nombre">número del nombre</a> y revela tus fortalezas en <a href="/pinaculo">tu pináculo</a>.</p>
 `
   },
   {
@@ -238,8 +238,8 @@ export const SAMPLE_POSTS: SamplePost[] = [
     tags: ['año universal', '2026', 'ciclos'],
     relatedSlugs: ['ano-personal-que-es-y-como-se-calcula', 'para-que-sirve-la-numerologia'],
     relatedTools: [
-      { href: '/vibracionescolectivas', title: 'Vibraciones colectivas', description: 'La energía universal de hoy.' },
-      { href: '/anopersonal', title: 'Tu año personal', description: 'Tu energía dentro del año.' }
+      { href: '/vibraciones-colectivas', title: 'Vibraciones colectivas', description: 'La energía universal de hoy.' },
+      { href: '/ano-personal', title: 'Tu año personal', description: 'Tu energía dentro del año.' }
     ],
     sourceUrl: 'https://numerologia-cotidiana.com/2026-ano-universal-1/',
     html: `
@@ -252,7 +252,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
 <p>Piensa a largo plazo (lo que decidas marcará nueve años), fortalece tu independencia sin caer en el egoísmo, cierra la transición que venías arrastrando, responde con liderazgo y atrévete a experimentar.</p>
 <h2>El reto del 1</h2>
 <p>La energía del 1 también puede traer egoísmo, baja autoestima o victimización. Recuerda que incluso los tropiezos sirven para descubrir tu mejor camino.</p>
-<p>Mira la energía colectiva de hoy en <a href="/vibracionescolectivas">vibraciones colectivas</a> y compárala con tu <a href="/anopersonal">año personal</a>.</p>
+<p>Mira la energía colectiva de hoy en <a href="/vibraciones-colectivas">vibraciones colectivas</a> y compárala con tu <a href="/ano-personal">año personal</a>.</p>
 `
   },
   {
@@ -267,8 +267,8 @@ export const SAMPLE_POSTS: SamplePost[] = [
     tags: ['número personal', 'día de nacimiento', 'esencia'],
     relatedSlugs: ['como-calcular-el-numero-del-alma', 'nacer-un-dia-11-o-29'],
     relatedTools: [
-      { href: '/calculadoras/camino-de-vida', title: 'Tu camino de vida', description: 'Tu propósito esencial.' },
-      { href: '/labrujulanumerologica', title: 'La Brújula Numerológica', description: 'Tus vibraciones de tiempo.' }
+      { href: '/mi-camino-de-vida', title: 'Tu camino de vida', description: 'Tu propósito esencial.' },
+      { href: '/la-brujula-numerologica', title: 'La Brújula Numerológica', description: 'Tus vibraciones de tiempo.' }
     ],
     sourceUrl: 'https://numerologia-cotidiana.com/numerologia-personal/',
     html: `
@@ -281,7 +281,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
 <p>Trabajar este número en su polaridad positiva te acerca, poco a poco, a tu felicidad y a tu misión de vida. Es el factor central de tu conciencia.</p>
 <h2>Reinventarte</h2>
 <p>Llegar a tu realización implica revisar creencias que adquiriste en la infancia. Conocer tu número personal es el primer paso para construir tu identidad con intención.</p>
-<p>Calcula la base de tu carta con tu <a href="/calculadoras/camino-de-vida">camino de vida</a> y ve todas tus energías en <a href="/labrujulanumerologica">La Brújula Numerológica</a>.</p>
+<p>Calcula la base de tu carta con tu <a href="/mi-camino-de-vida">camino de vida</a> y ve todas tus energías en <a href="/la-brujula-numerologica">La Brújula Numerológica</a>.</p>
 `
   },
   {
@@ -297,7 +297,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
     relatedSlugs: ['nacer-un-dia-11-o-29', 'numero-personal-tu-esencia'],
     relatedTools: [
       { href: '/explora', title: 'Explora por número', description: 'Descubre cada número a fondo.' },
-      { href: '/significadodelosnumeros', title: 'Significado de los números', description: 'La esencia del 1 al 33.' }
+      { href: '/significado-los-numeros', title: 'Significado de los números', description: 'La esencia del 1 al 33.' }
     ],
     sourceUrl: '',
     html: `
@@ -310,7 +310,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
 <p>El 33 combina la creatividad del 3 con la entrega del 6. Es el maestro del amor incondicional, la enseñanza y la sanación a gran escala.</p>
 <h2>Vivir un número maestro</h2>
 <p>Tener un número maestro no garantiza nada: es un potencial que se conquista. Mientras no se desarrolla, suele expresarse en su versión reducida (el 11 como 2, el 22 como 4, el 33 como 6).</p>
-<p>¿Tienes números maestros en tu carta? Descúbrelo en <a href="/explora">Explora por número</a> o calcula tu <a href="/calculadoras/camino-de-vida">camino de vida</a>.</p>
+<p>¿Tienes números maestros en tu carta? Descúbrelo en <a href="/explora">Explora por número</a> o calcula tu <a href="/mi-camino-de-vida">camino de vida</a>.</p>
 `
   },
   {
@@ -325,7 +325,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
     tags: ['número del nombre', 'expresión', 'nombre'],
     relatedSlugs: ['como-calcular-el-numero-del-alma', 'que-es-el-pinaculo-numerologico'],
     relatedTools: [
-      { href: '/numerodelnombre', title: 'Calcula tu número del nombre', description: 'Hazlo al instante.' },
+      { href: '/significado-de-tu-nombre', title: 'Calcula tu número del nombre', description: 'Hazlo al instante.' },
       { href: '/calculadoras/expresion', title: 'Tus números del nombre', description: 'Expresión, alma y personalidad.' }
     ],
     sourceUrl: '',
@@ -346,8 +346,8 @@ export const SAMPLE_POSTS: SamplePost[] = [
     tags: ['pináculo', 'mapa numerológico', 'ciclos'],
     relatedSlugs: ['numero-personal-tu-esencia', 'numero-de-la-madurez'],
     relatedTools: [
-      { href: '/calculatupinaculo', title: 'Calcula tu pináculo', description: 'Tu mapa completo en números.' },
-      { href: '/calculadoras/camino-de-vida', title: 'Tu camino de vida', description: 'La base de tu carta.' }
+      { href: '/pinaculo', title: 'Calcula tu pináculo', description: 'Tu mapa completo en números.' },
+      { href: '/mi-camino-de-vida', title: 'Tu camino de vida', description: 'La base de tu carta.' }
     ],
     sourceUrl: '',
     html: `
@@ -367,8 +367,8 @@ export const SAMPLE_POSTS: SamplePost[] = [
     tags: ['número de la madurez', 'propósito'],
     relatedSlugs: ['que-es-el-pinaculo-numerologico', 'para-que-sirve-la-numerologia'],
     relatedTools: [
-      { href: '/numerodelamadurez', title: 'Calcula tu madurez', description: 'Nombre + fecha de nacimiento.' },
-      { href: '/calculadoras/camino-de-vida', title: 'Tu camino de vida', description: 'Uno de sus ingredientes.' }
+      { href: '/significado-numero-la-madurez', title: 'Calcula tu madurez', description: 'Nombre + fecha de nacimiento.' },
+      { href: '/mi-camino-de-vida', title: 'Tu camino de vida', description: 'Uno de sus ingredientes.' }
     ],
     sourceUrl: '',
     html: `
@@ -388,8 +388,8 @@ export const SAMPLE_POSTS: SamplePost[] = [
     tags: ['abundancia', 'dinero', 'número 8', 'negocios'],
     relatedSlugs: ['numerologia-para-el-exito-de-tu-negocio', 'para-que-sirve-la-numerologia'],
     relatedTools: [
-      { href: '/calculadoras/camino-de-vida', title: 'Tu camino de vida', description: 'Tu forma natural de prosperar.' },
-      { href: '/significadodelosnumeros', title: 'Significado de los números', description: 'La energía de cada cifra.' }
+      { href: '/mi-camino-de-vida', title: 'Tu camino de vida', description: 'Tu forma natural de prosperar.' },
+      { href: '/significado-los-numeros', title: 'Significado de los números', description: 'La energía de cada cifra.' }
     ],
     sourceUrl: '',
     html: `
@@ -402,7 +402,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
 <p>En numerología, el nombre y la fecha de inicio de un proyecto cargan una vibración que puede favorecer o frenar su éxito. Por eso muchas empresas eligen ambos con cuidado.</p>
 <h2>Tu año personal y el dinero</h2>
 <p>Hay años para sembrar y años para cosechar. Conocer tu año personal te ayuda a saber cuándo invertir, cuándo consolidar y cuándo esperar.</p>
-<p>Empieza por tu <a href="/calculadoras/camino-de-vida">camino de vida</a> y revisa el <a href="/significadodelosnumeros">significado de los números</a> para entender tu relación con la abundancia.</p>
+<p>Empieza por tu <a href="/mi-camino-de-vida">camino de vida</a> y revisa el <a href="/significado-los-numeros">significado de los números</a> para entender tu relación con la abundancia.</p>
 `
   }
 ]

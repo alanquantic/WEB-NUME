@@ -103,7 +103,7 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
   const isPost = kind === 'posts'
   const singular = isPost ? 'post' : 'página'
   const listHref = isPost ? '/perfil/posts' : '/perfil/pages'
-  const publicPrefix = isPost ? '/blog/' : '/paginas/'
+  const publicPrefix = isPost ? '/' : '/paginas/'
 
   const [title, setTitle] = useState(initial?.title ?? '')
   const [slug, setSlug] = useState(initial?.slug ?? '')

@@ -75,7 +75,7 @@ export default function Page() {
                   total 7 estaciones de tiempo en nuestro proyecto evolutivo.
                 </p>
                 <Link
-                  href="/calculadoras/camino-de-vida"
+                  href="/mi-camino-de-vida"
                   className="mt-10 inline-flex items-center justify-center rounded-full bg-gradient-brand px-8 py-4 text-lg font-semibold text-white shadow-[0_18px_36px_hsl(var(--primary)/0.18)] transition hover:translate-y-[-1px] hover:shadow-[0_22px_44px_hsl(var(--primary)/0.24)]"
                 >
                   Calcula tus Etapas de Vida

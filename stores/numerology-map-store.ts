@@ -12,7 +12,7 @@ type NumerologyMapState = {
   fullName: string
   birthDate: string
   // Copia de los datos al momento de pulsar "Calcular". Mientras exista, las
-  // cards del home y /calculatupinaculo se muestran como calculadas.
+  // cards del home y /pinaculo se muestran como calculadas.
   calculated: CalculatedSnapshot | null
   setField: (field: 'fullName' | 'birthDate', value: string) => void
   calculate: () => void

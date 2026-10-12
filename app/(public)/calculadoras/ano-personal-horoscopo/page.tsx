@@ -17,7 +17,7 @@ const PERSONAL_YEAR_ACCORDION: PersonalYearAccordionItem[] = [
   {
     id: "personal-year-1",
     title: "Año Personal Número 1",
-    url: "/anopersonal/1",
+    url: "/ano-personal/1",
     lead: "Año de siembra, inicios, grandes cambios y nueva vida",
     paragraphs: [
       "El año 1 es el año en el que desde sus primeros días podemos sentir latente la energía del cambio, se acaban las restricciones que inmovilizaron y frustraron el año recién pasado, volverás a sentirte motivado, animado, como si te pusieran pilas nuevas. Comienza un nuevo ciclo de vida donde tomaremos decisiones importantes que marcarán nuevas direcciones y metas para los próximos años.",
@@ -37,7 +37,7 @@ const PERSONAL_YEAR_ACCORDION: PersonalYearAccordionItem[] = [
   {
     id: "personal-year-3",
     title: "Año Personal Número 3",
-    url: "/anopersonal/3",
+    url: "/ano-personal/3",
     lead: "Exprésate con libertad, haz lo que te gusta, viaja, disfruta y socializa",
     paragraphs: [
       "El año 3 personal grita libertad por todos lados. Es para tratar de tomarse vacaciones de relajamiento, descansar, viajar, divertirte con los amigos y hacer las cosas que más disfrutas y que has estado posponiendo últimamente. Es el año para ponerte en el primer lugar de tu lista de prioridades.",
@@ -47,7 +47,7 @@ const PERSONAL_YEAR_ACCORDION: PersonalYearAccordionItem[] = [
   {
     id: "personal-year-4",
     title: "Año Personal Número 4",
-    url: "/anopersonal/4",
+    url: "/ano-personal/4",
     lead: "Reestructura los cimientos, ponte en acción y construye para el futuro",
     paragraphs: [
       "El año 4 se caracteriza por ser un tiempo de trabajo duro, de grandes esfuerzos, de mucho movimiento y acción. Es especial para organizar pensamientos, ideas y acciones y ser capaces de llevarlas a cabo sin perder de vista los objetivos que quieres lograr.",
@@ -57,7 +57,7 @@ const PERSONAL_YEAR_ACCORDION: PersonalYearAccordionItem[] = [
   {
     id: "personal-year-5",
     title: "Año Personal Número 5",
-    url: "/anopersonal/5",
+    url: "/ano-personal/5",
     lead: "Prender el motor, liberación, cambios inesperados y renovación",
     paragraphs: [
       "El año 5 se caracteriza por una gran necesidad de sentirse libre, romper reglas, hacer cambios drásticos, trascendentales, y conectarse de nuevo con el cosmos de alguna manera. La vida te invita a soltar lo conocido, buscar la emoción, reencontrar la pasión por la vida y sacar de tu vida todo lo que represente rutina.",
@@ -67,7 +67,7 @@ const PERSONAL_YEAR_ACCORDION: PersonalYearAccordionItem[] = [
   {
     id: "personal-year-6",
     title: "Año Personal Número 6",
-    url: "/anopersonal/6",
+    url: "/ano-personal/6",
     lead: "Año para formalizar relaciones, hacer compromisos y vivir grandes lecciones emocionales",
     paragraphs: [
       "El año 6 viene a probar nuestras emociones, nuestros apegos y nuestro compromiso con el amor. Esta lección tiene que ver con trabajo emocional, así que lo que tendrás que hacer durante el año estará relacionado a tus afectos más íntimos y cercanos.",
@@ -77,7 +77,7 @@ const PERSONAL_YEAR_ACCORDION: PersonalYearAccordionItem[] = [
   {
     id: "personal-year-7",
     title: "Año Personal Número 7",
-    url: "/anopersonal/7",
+    url: "/ano-personal/7",
     lead: "Momento de reflexionar, tomar decisiones, aterrizar proyectos y aplicar lo aprendido",
     paragraphs: [
       "El año 7 te empuja a definir y estructurar las cosas que aún no se han concretado. Es un año en el que las ideas, los proyectos y la necesidad de hacer cambios de vida no dejarán de dar vueltas en tu cabeza. La reflexión y observación serán actividades muy presentes a lo largo del año.",
@@ -87,7 +87,7 @@ const PERSONAL_YEAR_ACCORDION: PersonalYearAccordionItem[] = [
   {
     id: "personal-year-8",
     title: "Año Personal Número 8",
-    url: "/anopersonal/8",
+    url: "/ano-personal/8",
     lead: "Realizaciones materiales, cosecha y logros",
     paragraphs: [
       "El año 8 es de resultados, beneficios y logro de metas. Sentirás que muchos de tus sueños se empiezan a materializar. Los negocios encuentran su cauce y prosperan como nunca, así que prepárate para vivir uno de los años más prósperos en diferentes sentidos de tu ciclo.",
@@ -97,7 +97,7 @@ const PERSONAL_YEAR_ACCORDION: PersonalYearAccordionItem[] = [
   {
     id: "personal-year-9",
     title: "Año Personal Número 9",
-    url: "/anopersonal/9",
+    url: "/ano-personal/9",
     lead: "Cierres de ciclos, balances y reencuentros",
     paragraphs: [
       "El año 9 trae consigo energía de transformación. Lo viejo es desechado y se prepara el terreno para recibir nuevamente el año 1, es decir, un nuevo ciclo de nueve años. La vida te invita a renovarte, por lo que estarás preguntándote qué es lo que ya no funciona más para ti.",
@@ -107,7 +107,7 @@ const PERSONAL_YEAR_ACCORDION: PersonalYearAccordionItem[] = [
   {
     id: "personal-year-11",
     title: "Año Personal Número 11",
-    url: "/anopersonal/11",
+    url: "/ano-personal/11",
     lead: "Transmutación, apertura de consciencia y enseñanza",
     paragraphs: [
       "El año 11 te obliga a hacer una profunda introspección sobre cómo se ha desarrollado tu vida hasta este momento. Tendrás la necesidad de buscar un camino diferente, ya sea profesional o espiritualmente. Sentirás que las ideas y pensamientos fluyen constantemente por tu cabeza.",

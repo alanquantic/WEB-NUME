@@ -1,4 +1,5 @@
 import { FacebookIcon, LinkedinIcon, WhatsappIcon, XIcon } from '@/components/ui/icons'
+import { postPath } from '@/lib/blog/paths'
 
 const SITE_URL = 'https://www.numerologia-cotidiana.com'
 
@@ -8,7 +9,7 @@ type Props = {
 }
 
 export function ShareButtons({ slug, title }: Props) {
-  const url = `${SITE_URL}/blog/${slug}`
+  const url = `${SITE_URL}${postPath(slug)}`
   const encodedUrl = encodeURIComponent(url)
   const encodedTitle = encodeURIComponent(title)
 

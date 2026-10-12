@@ -6,7 +6,7 @@ import { getServerSessionUser } from '@/lib/auth/session'
 
 export default async function BannersAdminPage() {
   const user = await getServerSessionUser()
-  if (user?.role !== 'admin') redirect('/perfil')
+  if (user?.role !== 'admin') redirect('/perfil/')
 
   const { data } = await listBanners()
 

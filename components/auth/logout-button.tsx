@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { apiRoute } from '@/lib/api/route-url'
 import { useSessionStore } from '@/stores/session-store'
 
 export function LogoutButton() {
@@ -14,7 +15,7 @@ export function LogoutButton() {
   function handleLogout() {
     startTransition(async () => {
       try {
-        await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' })
+        await fetch(apiRoute('/api/auth/logout'), { method: 'POST', credentials: 'include' })
       } catch {
         // aunque falle la llamada al backend, limpiamos la sesión local igual
       }

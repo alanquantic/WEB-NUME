@@ -10,6 +10,7 @@ import { CountUp } from '@/components/ui/count-up'
 import { Input } from '@/components/ui/input'
 import { trackCalculatorSubmit, useCalculatorView } from '@/lib/analytics/calculator'
 import { addSavedResult } from '@/lib/saved-results'
+import { significadoPath } from '@/lib/significados/routes'
 import Pinnacle from '@/resources/pinnacle'
 
 type DesafioKey = 'K' | 'L' | 'M' | 'N'
@@ -49,7 +50,7 @@ export function DesafiosCalculator() {
   const [submitted, setSubmitted] = useState(false)
   const [saved, setSaved] = useState(false)
 
-  // Precarga desde Mi carta: /calculadoras/desafios-de-vida?nacimiento=YYYY-MM-DD
+  // Precarga desde Mi carta: /mis-desafio-de-vida?nacimiento=YYYY-MM-DD
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const nacimiento = params.get('nacimiento')
@@ -74,7 +75,7 @@ export function DesafiosCalculator() {
   function handleSave() {
     if (!values || !birthDate) return
     const detail = `Nacimiento: ${formatShortDate(birthDate)}`
-    const href = `/calculadoras/desafios-de-vida?nacimiento=${birthDate}`
+    const href = `/mis-desafio-de-vida?nacimiento=${birthDate}`
     DESAFIOS.forEach(({ key, label }) => {
       addSavedResult({ label: `${label} de vida`, value: String(values[key]), detail, href })
     })
@@ -123,7 +124,7 @@ export function DesafiosCalculator() {
                 <p className="mt-0.5 text-xs leading-5 text-foreground/55">{sub}</p>
                 {typeof values[key] === 'number' ? (
                   <Link
-                    href={`/significadodelosnumeros/reto-meta/${values[key]}` as Route}
+                    href={significadoPath('reto-meta', values[key]) as Route}
                     className="mt-2 text-xs font-semibold text-primary underline-offset-4 hover:underline"
                   >
                     Ver significado

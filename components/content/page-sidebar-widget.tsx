@@ -24,16 +24,16 @@ type PageSidebarWidgetProps = {
 }
 
 const CALCULATOR_OPTIONS: readonly CalculatorOption[] = [
-  { id: 'name', label: 'Número de tu Nombre', href: '/numerodelnombre' },
-  { id: 'soul', label: 'Número del Alma', href: '/numerodelalma' },
-  { id: 'expression', label: 'Expresión del Alma', href: '/numerodeexpresiondelalma' },
+  { id: 'name', label: 'Número de tu Nombre', href: '/significado-de-tu-nombre' },
+  { id: 'soul', label: 'Número del Alma', href: '/significado-numero-del-alma' },
+  { id: 'expression', label: 'Expresión del Alma', href: '/significado-numero-de-expresion' },
   { id: 'personal', label: 'Número Personal', href: '/numerologia' },
-  { id: 'stage', label: 'Etapa de Vida', href: '/etapapersonal' },
+  { id: 'stage', label: 'Etapa de Vida', href: '/etapa-personal' },
   { id: 'personality', label: 'Número de la Personalidad', href: '/numerologia' },
-  { id: 'year', label: 'Año Personal', href: '/anopersonal' },
+  { id: 'year', label: 'Año Personal', href: '/ano-personal' },
   { id: 'month', label: 'Mes Personal', href: '/mespersonal' },
-  { id: 'week', label: 'Semana Personal', href: '/semanapersonal' },
-  { id: 'day', label: 'Día Personal', href: '/diapersonal' }
+  { id: 'week', label: 'Semana Personal', href: '/semana-personal-ok' },
+  { id: 'day', label: 'Día Personal', href: '/dia-personal' }
 ] as const
 
 const INITIAL_FORM_STATE: FormState = {

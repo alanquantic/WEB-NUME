@@ -53,11 +53,11 @@ const VER_MAS_CATEGORIA: Partial<Record<CycleKind, PersonalCategoriaKey>> = {
 
 // Página de la calculadora de cada ciclo (para el link guardado en Mi carta).
 const CALCULATOR_PATH: Record<CycleKind, string> = {
-  year: '/anopersonal',
+  year: '/ano-personal',
   month: '/mespersonal',
-  week: '/semanapersonal',
-  day: '/diapersonal',
-  stage: '/etapapersonal'
+  week: '/semana-personal-ok',
+  day: '/dia-personal',
+  stage: '/etapa-personal'
 }
 
 function pad(value: number): string {

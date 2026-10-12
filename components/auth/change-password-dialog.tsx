@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { apiRoute } from '@/lib/api/route-url'
 
 type Step = 'request' | 'confirm'
 
@@ -19,13 +20,13 @@ function extractErrorMessage(data: ApiErrorPayload | null, fallback: string): st
 
 // Reintenta la petición una vez tras refrescar el access token si venció.
 async function bffFetch(path: string, init: RequestInit): Promise<Response> {
-  const response = await fetch(`/api/bff${path}`, { ...init, credentials: 'include' })
+  const response = await fetch(apiRoute(`/api/bff${path}`), { ...init, credentials: 'include' })
   if (response.status !== 401) return response
 
-  const refresh = await fetch('/api/auth/refresh', { method: 'POST', credentials: 'include' })
+  const refresh = await fetch(apiRoute('/api/auth/refresh'), { method: 'POST', credentials: 'include' })
   if (!refresh.ok) return response
 
-  return fetch(`/api/bff${path}`, { ...init, credentials: 'include' })
+  return fetch(apiRoute(`/api/bff${path}`), { ...init, credentials: 'include' })
 }
 
 export function ChangePasswordDialog() {

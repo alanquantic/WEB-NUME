@@ -34,7 +34,7 @@ export function CoupleNumerologySection() {
                   Calcula tu compatibilidad
                 </Link>
                 <Link
-                  href="/blog/como-se-relacionan-los-numeros-en-pareja"
+                  href="/como-se-relacionan-los-numeros-en-pareja"
                   className="inline-flex rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
                 >
                   Cómo se relacionan en pareja

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "seo:redirects": "node scripts/seo/generate-redirects.mjs"
   },
   "dependencies": {
     "@puckeditor/core": "^0.22.0",
