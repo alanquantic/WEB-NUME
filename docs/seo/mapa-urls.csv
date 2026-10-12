@@ -2005,10 +2005,10 @@ url_vieja,sitemap_viejo,accion,pagina_nueva_que_la_sirve,nota
 /categoria/secretos-revelados/,category-sitemap.xml,YA_COINCIDE,/categoria/secretos-revelados,ruta /categoria/[...segments] (requiere la categoría en la BD)
 /categoria/significados-de-los-numeros/,category-sitemap.xml,YA_COINCIDE,/categoria/significados-de-los-numeros,ruta /categoria/[...segments] (requiere la categoría en la BD)
 /categoria/horoscopos-numerologicos/,category-sitemap.xml,YA_COINCIDE,/categoria/horoscopos-numerologicos,ruta /categoria/[...segments] (requiere la categoría en la BD)
-/categoria/horoscopo-para-tu-ano-personal/,category-sitemap.xml,YA_COINCIDE,/categoria/horoscopo-para-tu-ano-personal,ruta /categoria/[...segments] (requiere la categoría en la BD)
+/categoria/horoscopo-para-tu-ano-personal/,category-sitemap.xml,301,/horoscopos/,categoría faltante en la BD: 301 al hub de horóscopos
 /categoria/horoscopos-numerologicos/proyecciones-semanales/,category-sitemap.xml,YA_COINCIDE,/categoria/horoscopos-numerologicos/proyecciones-semanales,ruta /categoria/[...segments] (requiere la categoría en la BD)
 /categoria/amor/,category-sitemap.xml,YA_COINCIDE,/categoria/amor,ruta /categoria/[...segments] (requiere la categoría en la BD)
-/categoria/vip/,category-sitemap.xml,YA_COINCIDE,/categoria/vip,ruta /categoria/[...segments] (requiere la categoría en la BD)
+/categoria/vip/,category-sitemap.xml,301,/membresias/,categoría faltante en la BD: 301 al hub de membresías
 /tag/jessie-j/,post_tag-sitemap.xml,410,,sin datos GSC
 /tag/nfl/,post_tag-sitemap.xml,410,,sin datos GSC
 /tag/priest/,post_tag-sitemap.xml,410,,sin datos GSC
