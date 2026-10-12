@@ -5,6 +5,9 @@
 //   301            URL vieja duplicada/etiqueta con clics → otra URL vieja canónica
 //   410            etiqueta sin tráfico → Gone
 //   RENOMBRAR_RUTA ruta del sitio nuevo (p.ej. /diapersonal) → su URL vieja
+//   SIN_CONTENIDO  página del WP vacía/técnica → Gone (410) por default
+//   MEMBRESIA      área de cuenta/membresía del WP → 301 a /membresias/
+//                  (excepto rutas que el sitio nuevo ya sirve nativamente)
 //
 // El resto de acciones (YA_COINCIDE, PAGINA_CREADA, POST_EN_RAIZ…) se sirven
 // directamente en su URL vieja y no necesitan redirect.
@@ -57,7 +60,12 @@ const COL = Object.fromEntries(header.map((name, i) => [name, i]))
 
 const redirects = {}
 const gone = []
-const counts = { redirect: 0, renombrar: 0, gone: 0 }
+const counts = { redirect: 0, renombrar: 0, gone: 0, membresia: 0, sinContenido: 0 }
+
+// MEMBRESIA: rutas del área de cuenta vieja. El sitio nuevo consolidó todo
+// en /membresias/, excepto /login/ que sigue siendo una ruta real.
+const MEMBRESIA_REAL_ROUTES = new Set(['/login'])
+const MEMBRESIA_DEFAULT = '/membresias/'
 
 for (const line of lines) {
   const row = parseCsvLine(line)
@@ -74,6 +82,20 @@ for (const line of lines) {
   } else if (accion === 'RENOMBRAR_RUTA' && nueva && key(nueva) !== key(oldUrl)) {
     redirects[key(nueva)] = destination(oldUrl)
     counts.renombrar++
+  } else if (accion === 'SIN_CONTENIDO') {
+    // Nota del CSV: "la página del WP está vacía o es técnica: 301 a algo
+    // cercano o 410". Sin destino manual → 410.
+    if (nueva) {
+      redirects[key(oldUrl)] = destination(nueva)
+      counts.redirect++
+    } else {
+      gone.push(key(oldUrl))
+      counts.sinContenido++
+    }
+  } else if (accion === 'MEMBRESIA') {
+    if (MEMBRESIA_REAL_ROUTES.has(key(oldUrl))) continue
+    redirects[key(oldUrl)] = nueva ? destination(nueva) : MEMBRESIA_DEFAULT
+    counts.membresia++
   }
 }
 
@@ -88,4 +110,7 @@ writeFileSync(
   OUT,
   JSON.stringify({ generatedAt: new Date().toISOString(), counts, redirects, gone: gone.sort() }, null, 2) + '\n'
 )
-console.log(`wrote ${Object.keys(redirects).length} redirects + ${gone.length} gone -> ${OUT}`, counts)
+console.log(
+  `wrote ${Object.keys(redirects).length} redirects + ${gone.length} gone -> ${OUT}`,
+  counts
+)
