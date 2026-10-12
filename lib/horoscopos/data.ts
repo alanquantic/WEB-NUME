@@ -1,5 +1,21 @@
 import horoscopoData from '@/components/jsons/horoscopo-mensual-2026.json'
-import type { HoroscopoContenido, HoroscopoMesContenido } from '@/components/horoscopos/horoscopo-mensual-explorer'
+
+export type HoroscopoMesContenido = {
+  /** Frase corta de energía del mes (heading superior). */
+  energia?: string
+  /** Número de Mes Personal (p. ej. "2"). */
+  mesPersonal?: string
+  /** Cuerpo completo del horóscopo (solo miembros). */
+  parrafos?: string[]
+  /** Viñetas de "Energía Activa" (solo miembros). */
+  energiaActiva?: string[]
+  /** Bloque "Mes excelente para" (solo miembros). */
+  mesExcelente?: string[]
+  /** Adelanto recortado del cuerpo (se envía a no-miembros en lugar del contenido completo). */
+  teaser?: string
+}
+
+export type HoroscopoContenido = Record<string, Record<string, HoroscopoMesContenido>>
 
 type HoroscopoData = {
   anio: number
