@@ -36,6 +36,8 @@ export async function ConsultantDetailPage({
   const place = [consultant.city, consultant.nationality].filter(Boolean).join(' · ')
   const whatsappHref = getWhatsAppHref(consultant.contact.phone, consultant.nationality)
   const websiteHref = normalizeExternalUrl(consultant.contact.website)
+  const facebookHref = normalizeExternalUrl(consultant.socials.facebook)
+  const instagramHref = normalizeExternalUrl(consultant.socials.instagram)
   const socials = [
     consultant.contact.email
       ? { label: 'Email', href: `mailto:${consultant.contact.email}`, icon: Mail }
@@ -43,11 +45,11 @@ export async function ConsultantDetailPage({
     whatsappHref
       ? { label: 'WhatsApp', href: whatsappHref, icon: WhatsappIcon }
       : null,
-    consultant.socials.facebook
-      ? { label: 'Facebook', href: consultant.socials.facebook, icon: FacebookIcon }
+    facebookHref
+      ? { label: 'Facebook', href: facebookHref, icon: FacebookIcon }
       : null,
-    consultant.socials.instagram
-      ? { label: 'Instagram', href: consultant.socials.instagram, icon: InstagramIcon }
+    instagramHref
+      ? { label: 'Instagram', href: instagramHref, icon: InstagramIcon }
       : null,
     websiteHref
       ? { label: 'Sitio web', href: websiteHref, icon: Globe2 }

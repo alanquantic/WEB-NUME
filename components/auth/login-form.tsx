@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/c
 import { Input } from '@/components/ui/input'
 import { track } from '@/lib/analytics'
 import { apiRoute } from '@/lib/api/route-url'
+import { safeRedirectPath } from '@/lib/safe-url'
 import { useSessionStore } from '@/stores/session-store'
 
 export function LoginForm() {
@@ -20,11 +21,9 @@ export function LoginForm() {
   const loadSession = useSessionStore((state) => state.loadSession)
 
   function resolveNextPath(value: string | null): Route {
-    if (!value || !value.startsWith('/')) {
-      return '/perfil'
-    }
-
-    return value as Route
+    // Solo rutas internas: `//otro-sitio.com` o `/\otro-sitio.com` también
+    // empiezan con "/" pero el navegador los manda a otro dominio.
+    return safeRedirectPath(value, '/perfil') as Route
   }
 
   async function handleSubmit(formData: FormData) {

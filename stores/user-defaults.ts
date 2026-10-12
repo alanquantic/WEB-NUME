@@ -27,9 +27,6 @@ export function useUserDefaults(): UserDefaults {
   const user = useSessionStore((state) => state.user)
 
   return useMemo(() => {
-    // TEMP DEBUG — quitar cuando termine el diagnóstico
-    console.log('[useUserDefaults] user:', user)
-    console.log('[useUserDefaults] user.metadata:', user?.metadata)
 
     if (!user) return { fullName: '', birthDate: '' }
 
@@ -41,7 +38,6 @@ export function useUserDefaults(): UserDefaults {
       | Record<string, unknown>
       | undefined
 
-    console.log('[useUserDefaults] profile:', profile, 'customer:', customer)
 
     const first = readString(profile, 'first_name') || readString(customer, 'first_name')
     const last = readString(profile, 'last_name') || readString(customer, 'last_name')
@@ -54,7 +50,6 @@ export function useUserDefaults(): UserDefaults {
     const rawBirth = readString(profile, 'birth_date') || readString(customer, 'birth_date')
     const birthDate = toDateInputValue(rawBirth)
 
-    console.log('[useUserDefaults] result:', { fullName, birthDate, rawBirth })
 
     return { fullName, birthDate }
   }, [user])
