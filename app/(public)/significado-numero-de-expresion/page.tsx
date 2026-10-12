@@ -132,7 +132,7 @@ export default function Page() {
               <a
                 title="La Numerología te dice lo que vino a hacer tu Alma a esta vida."
                 className="text-primary"
-                href="http://stage.numerologia-cotidiana.com/blog/la-numerologia-te-dice-lo-que-vino-a-hacer-tu-alma-a-esta-vida/"
+                href="/la-numerologia-te-dice-lo-que-vino-a-hacer-tu-alma-a-esta-vida"
               >
                 ALMA
               </a>

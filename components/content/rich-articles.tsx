@@ -146,7 +146,7 @@ export const RICH_ARTICLES: Record<string, RichArticle> = {
 
         <ArticleCallout title="Un consejo">
           Antes de leer la compatibilidad, calcula primero tu propio{' '}
-          <ArticleLink href="/calculadoras/camino-de-vida">camino de vida</ArticleLink>. Entenderte a
+          <ArticleLink href="/mi-camino-de-vida">camino de vida</ArticleLink>. Entenderte a
           ti mismo hace que la lectura de pareja tenga mucho más sentido.
         </ArticleCallout>
 
@@ -167,7 +167,7 @@ export const RICH_ARTICLES: Record<string, RichArticle> = {
         <ArticleP>
           La numerología de pareja es una brújula, no un mapa cerrado: te muestra el terreno, pero el
           camino lo eligen ustedes dos. ¿Lista o listo para tu lectura? Prueba la{' '}
-          <ArticleLink href="/calculadoras/compatibilidad">calculadora de compatibilidad</ArticleLink>{' '}
+          <ArticleLink href="/compatibilidad-numerologica">calculadora de compatibilidad</ArticleLink>{' '}
           o explora la página de{' '}
           <ArticleLink href="/numerologia-de-pareja">numerología de pareja</ArticleLink>.
         </ArticleP>
@@ -201,7 +201,7 @@ export const RICH_ARTICLES: Record<string, RichArticle> = {
         />
         <ArticleP>
           Si quieres ver la tabla de equivalencias, revisa el{' '}
-          <ArticleLink href="/significadodeletras">significado de las letras</ArticleLink>.
+          <ArticleLink href="/significado-significado-de-letras">significado de las letras</ArticleLink>.
         </ArticleP>
 
         <section className="mt-10 rounded-[1.75rem] border border-primary/15 bg-primary-soft/40 p-6">
@@ -227,7 +227,7 @@ export const RICH_ARTICLES: Record<string, RichArticle> = {
           Calcula los tres de una vez en la{' '}
           <ArticleLink href="/calculadoras/expresion">calculadora de expresión</ArticleLink> o
           empieza por tu{' '}
-          <ArticleLink href="/numerodelalma">número del alma</ArticleLink>.
+          <ArticleLink href="/significado-numero-del-alma">número del alma</ArticleLink>.
         </ArticleP>
       </div>
     )
@@ -272,14 +272,14 @@ export const RICH_ARTICLES: Record<string, RichArticle> = {
         <ArticleP>
           No se lee de corrido: cada número cuenta una parte de tu historia. Empieza por tu camino de
           vida para tener el marco y, desde ahí, observa cómo dialogan los ciclos y las metas. El{' '}
-          <ArticleLink href="/significadodelosnumeros">significado de los números</ArticleLink> te
+          <ArticleLink href="/significado-los-numeros">significado de los números</ArticleLink> te
           servirá de diccionario.
         </ArticleP>
 
         <ArticleP>
           ¿Listo para verlo completo? Calcula tu{' '}
-          <ArticleLink href="/calculatupinaculo">pináculo personal</ArticleLink> o tu{' '}
-          <ArticleLink href="/calculadoras/camino-de-vida">camino de vida</ArticleLink>.
+          <ArticleLink href="/pinaculo">pináculo personal</ArticleLink> o tu{' '}
+          <ArticleLink href="/mi-camino-de-vida">camino de vida</ArticleLink>.
         </ArticleP>
       </div>
     )
@@ -327,8 +327,8 @@ export const RICH_ARTICLES: Record<string, RichArticle> = {
 
         <ArticleP>
           Conoce primero tu{' '}
-          <ArticleLink href="/calculadoras/camino-de-vida">camino de vida</ArticleLink> y tu{' '}
-          <ArticleLink href="/numerodelnombre">número del nombre</ArticleLink>, los dos ingredientes
+          <ArticleLink href="/mi-camino-de-vida">camino de vida</ArticleLink> y tu{' '}
+          <ArticleLink href="/significado-de-tu-nombre">número del nombre</ArticleLink>, los dos ingredientes
           de tu madurez.
         </ArticleP>
       </div>

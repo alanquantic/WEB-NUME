@@ -6,6 +6,7 @@ import { useState, useTransition } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import { apiRoute } from '@/lib/api/route-url'
 
 type ResetPasswordFormProps = {
   token: string
@@ -32,7 +33,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
     }
 
     startTransition(async () => {
-      const response = await fetch('/api/auth/reset-password', {
+      const response = await fetch(apiRoute('/api/auth/reset-password'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

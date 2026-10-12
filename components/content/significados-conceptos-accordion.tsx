@@ -2,6 +2,7 @@ import type { Route } from 'next'
 import Link from 'next/link'
 
 import { getConceptos } from '@/lib/significados/data'
+import { significadoPath } from '@/lib/significados/routes'
 
 export function SignificadosConceptosAccordion() {
   const conceptos = getConceptos()
@@ -33,7 +34,7 @@ export function SignificadosConceptosAccordion() {
               {concepto.numeros.map((item) => (
                 <Link
                   key={item.numero}
-                  href={`/significadodelosnumeros/${concepto.slug}/${item.numero}` as Route}
+                  href={significadoPath(concepto.slug, item.numero) as Route}
                   className="flex h-11 w-11 items-center justify-center rounded-full border border-border/80 bg-background font-display text-lg font-semibold text-primary transition hover:border-primary/40 hover:bg-primary-soft"
                 >
                   {item.numero}

@@ -141,17 +141,17 @@ export default function Page() {
       <KeepExploring
         links={[
           {
-            href: '/calculadoras/compatibilidad',
+            href: '/compatibilidad-numerologica',
             title: 'Calculadora de compatibilidad',
             description: 'Compara dos fechas al instante.'
           },
           {
-            href: '/blog/como-se-relacionan-los-numeros-en-pareja',
+            href: '/como-se-relacionan-los-numeros-en-pareja',
             title: '¿Cómo se relacionan los números en pareja?',
             description: 'La guía completa en el blog.'
           },
           {
-            href: '/calculadoras/camino-de-vida',
+            href: '/mi-camino-de-vida',
             title: 'Tu camino de vida',
             description: 'El punto de partida de tu carta.'
           }

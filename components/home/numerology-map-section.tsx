@@ -538,7 +538,7 @@ export function NumerologyMapSection() {
               ))}
             </div>
             <Link
-              href="/calculatupinaculo"
+              href="/pinaculo"
               className="mt-auto inline-flex items-center justify-center gap-2 pt-5 text-sm font-semibold text-[#693061] underline-offset-4 transition hover:gap-3 hover:underline"
             >
               {isCalculated ? 'Interpretar mi pináculo' : 'Explorar mi pináculo'}

@@ -333,8 +333,8 @@ export function LifeStagesCalculator({
   const isDesafios = variant === 'desafios'
   const desafioTitulo = isDesafios ? 'Meta' : 'Desafío'
   const calculadoraPath = isDesafios
-    ? '/calculadoras/desafios-de-vida'
-    : '/calculadoras/camino-de-vida'
+    ? '/mis-desafio-de-vida'
+    : '/mi-camino-de-vida'
   const calculatorId = isDesafios ? 'challenges' : 'personal-stage'
   useCalculatorView(calculatorId)
 
@@ -345,7 +345,7 @@ export function LifeStagesCalculator({
   const [modalTarget, setModalTarget] = useState<ModalTarget | null>(null)
   const defaults = useUserDefaults()
 
-  // Precarga: /calculadoras/camino-de-vida?nacimiento=YYYY-MM-DD
+  // Precarga: /mi-camino-de-vida?nacimiento=YYYY-MM-DD
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const nacimiento = params.get('nacimiento')
@@ -548,8 +548,8 @@ export function LifeStagesCalculator({
             <Link
               href={
                 (isDesafios
-                  ? `/calculadoras/camino-de-vida?nacimiento=${birthDate}`
-                  : `/calculadoras/desafios-de-vida?nacimiento=${birthDate}`) as Route
+                  ? `/mi-camino-de-vida?nacimiento=${birthDate}`
+                  : `/mis-desafio-de-vida?nacimiento=${birthDate}`) as Route
               }
               className="inline-flex items-center rounded-full bg-gradient-brand px-5 py-2.5 text-sm font-semibold text-white shadow-glow transition hover:opacity-95"
             >

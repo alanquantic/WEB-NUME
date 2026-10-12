@@ -176,7 +176,7 @@ export default async function Page({
         'bg-[hsl(var(--accent))] text-white shadow-[0_12px_26px_hsl(var(--accent)/0.35)] hover:bg-[hsl(var(--accent)/0.9)]',
       descripcion: descripcionCorta('dia-personal', resultados.personalDay, 170),
       linkLabel: 'Quiero saber más sobre mi día personal',
-      linkHref: '/diapersonal'
+      linkHref: '/dia-personal'
     },
     {
       label: 'Semana',
@@ -186,7 +186,7 @@ export default async function Page({
         'bg-[hsl(var(--royal-blue))] text-white shadow-[0_12px_26px_hsl(var(--royal-blue)/0.35)] hover:bg-[hsl(var(--royal-blue)/0.9)]',
       descripcion: descripcionCorta('semana', resultados.personalWeek, 170),
       linkLabel: 'Quiero saber más sobre mi semana personal',
-      linkHref: '/semanapersonal'
+      linkHref: '/semana-personal-ok'
     },
     {
       label: 'Mes',
@@ -289,7 +289,7 @@ export default async function Page({
                 <p className="mt-3 text-sm leading-7 text-foreground/75">{descripcionEsencia}</p>
               ) : null}
               <SaberMasLink
-                href="/calculadoras/camino-de-vida"
+                href="/mi-camino-de-vida"
                 label="Quiero saber más sobre mi número personal"
                 className="mt-5 bg-gradient-brand text-white shadow-[0_14px_30px_hsl(var(--primary)/0.3)]"
               />
@@ -317,7 +317,7 @@ export default async function Page({
                 <p className="mt-3 text-sm leading-7 text-white/85">{descripcionMision}</p>
               ) : null}
               <SaberMasLink
-                href="/numerodelalma"
+                href="/significado-numero-del-alma"
                 label="Quiero saber más sobre mi número del alma"
                 className="mt-5 bg-white text-primary shadow-[0_14px_30px_hsl(263_35%_10%/0.35)] hover:bg-white/92"
               />
@@ -351,7 +351,7 @@ export default async function Page({
                 <p className="mt-3 text-sm leading-7 text-foreground/75">{descripcionAno}</p>
               ) : null}
               <SaberMasLink
-                href="/anopersonal"
+                href="/ano-personal"
                 label="Quiero saber más sobre mi año personal"
                 className="mt-5 bg-[hsl(var(--accent))] text-white shadow-[0_14px_30px_hsl(var(--accent)/0.4)] hover:bg-[hsl(var(--accent)/0.9)]"
               />

@@ -2,6 +2,7 @@ import type { Route } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { postPath } from '@/lib/blog/paths'
 import type { SamplePost } from '@/lib/blog/sample-posts'
 import { formatDate } from '@/lib/format'
 
@@ -34,7 +35,7 @@ export function SamplePostCard({ post, featured = false }: { post: SamplePost; f
             featured ? 'text-2xl' : 'text-[1.25rem]'
           }`}
         >
-          <Link href={`/blog/${post.slug}` as Route}>{post.title}</Link>
+          <Link href={postPath(post.slug) as Route}>{post.title}</Link>
         </h3>
         <p className="mt-2 flex-1 text-sm leading-6 text-foreground/70">{post.excerpt}</p>
         <div className="mt-3 flex items-center gap-2 text-xs font-medium text-foreground/55">
@@ -43,7 +44,7 @@ export function SamplePostCard({ post, featured = false }: { post: SamplePost; f
           <span>{post.author}</span>
         </div>
         <Link
-          href={`/blog/${post.slug}` as Route}
+          href={postPath(post.slug) as Route}
           className="mt-4 inline-flex w-fit rounded-full border border-primary/20 px-4 py-2 text-sm font-semibold text-primary transition hover:bg-primary-soft"
         >
           Leer más

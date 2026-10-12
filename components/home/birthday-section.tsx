@@ -13,6 +13,7 @@ import {
   WhatsappIcon
 } from '@/components/ui/icons'
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
+import { significadoPath } from '@/lib/significados/routes'
 import Universal from '@/resources/universal'
 import { reduceNumber } from '@/resources/utils'
 
@@ -186,13 +187,13 @@ function BirthdayProfile({ numero, monthName }: { numero: number; monthName: str
 
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <Link
-            href={`/significadodelosnumeros/numero-personal/${numero}` as Route}
+            href={significadoPath('numero-personal', numero) as Route}
             className="inline-flex h-11 items-center justify-center rounded-full bg-gradient-brand px-7 text-sm font-semibold text-white shadow-glow transition hover:opacity-90"
           >
             Ver el significado completo del {numero}
           </Link>
           <Link
-            href={`/significadodelosnumeros/karma/${reduceNumber(MONTHS.indexOf(monthName) + 1)}` as Route}
+            href={significadoPath('karma', reduceNumber(MONTHS.indexOf(monthName) + 1)) as Route}
             className="inline-flex h-11 items-center justify-center rounded-full border border-border/80 bg-background px-7 text-sm font-semibold text-primary transition hover:border-primary/40 hover:bg-primary-soft"
           >
             Tu Karma de {monthName}

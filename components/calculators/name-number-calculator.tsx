@@ -39,9 +39,9 @@ const KIND_LABEL: Record<NameKind, string> = {
 
 // Página de la calculadora de cada tipo (para el link guardado en Mi carta).
 const KIND_PATH: Record<NameKind, string> = {
-  expression: '/numerodelnombre',
-  soul: '/numerodelalma',
-  personality: '/numerodeexpresiondelalma',
+  expression: '/significado-de-tu-nombre',
+  soul: '/significado-numero-del-alma',
+  personality: '/significado-numero-de-expresion',
   active: '/nombreactivo',
   hereditary: '/nombrehereditario'
 }

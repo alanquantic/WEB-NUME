@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card'
 import { track } from '@/lib/analytics'
 import type { MembershipPlan, PaymentProvider } from '@/lib/api/contracts'
+import { apiRoute } from '@/lib/api/route-url'
 import { absoluteUrl } from '@/lib/utils'
 
 type MembershipPlansProps = {
@@ -66,7 +67,7 @@ export function MembershipPlans({ plans }: MembershipPlansProps) {
 
     startTransition(async () => {
       const nextPath = searchParams.get('next') || '/perfil/suscripcion'
-      const response = await fetch('/api/bff/checkout/sessions', {
+      const response = await fetch(apiRoute('/api/bff/checkout/sessions'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

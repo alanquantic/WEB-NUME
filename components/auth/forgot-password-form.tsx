@@ -6,6 +6,7 @@ import { useState, useTransition } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import { apiRoute } from '@/lib/api/route-url'
 
 export function ForgotPasswordForm() {
   const [error, setError] = useState<string | null>(null)
@@ -17,7 +18,7 @@ export function ForgotPasswordForm() {
     setError(null)
 
     startTransition(async () => {
-      const response = await fetch('/api/auth/forgot-password', {
+      const response = await fetch(apiRoute('/api/auth/forgot-password'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
