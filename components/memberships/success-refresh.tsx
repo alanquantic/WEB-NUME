@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import { track } from '@/lib/analytics'
+import { safeRedirectPath } from '@/lib/safe-url'
 import { useSessionStore } from '@/stores/session-store'
 
 const FIRED_KEY = 'nume_subscribe_fired'
@@ -15,11 +16,7 @@ export function SuccessRefresh() {
   const loadSession = useSessionStore((state) => state.loadSession)
 
   function resolveNextPath(value: string | null): Route {
-    if (!value || !value.startsWith('/')) {
-      return '/perfil/suscripcion'
-    }
-
-    return value as Route
+    return safeRedirectPath(value, '/perfil/suscripcion') as Route
   }
 
   useEffect(() => {
