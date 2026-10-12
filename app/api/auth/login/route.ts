@@ -3,8 +3,12 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createAccessCookie, createRefreshCookie } from '@/lib/auth/cookies'
 import { ApiError } from '@/lib/api/errors'
 import { loginWithCredentials } from '@/lib/auth/session'
+import { rejectCrossSiteRequest } from '@/lib/auth/request-guard'
 
 export async function POST(request: NextRequest) {
+  const rejected = rejectCrossSiteRequest(request)
+  if (rejected) return rejected
+
   let body: { email?: string; password?: string }
 
   try {

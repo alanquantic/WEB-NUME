@@ -1,10 +1,14 @@
 import { cookies } from 'next/headers'
-import { NextResponse } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
 
 import { ACCESS_COOKIE, clearAccessCookie, clearRefreshCookie } from '@/lib/auth/cookies'
+import { rejectCrossSiteRequest } from '@/lib/auth/request-guard'
 import { API_BASE_URL } from '@/lib/auth/session'
 
-export async function POST() {
+export async function POST(request: NextRequest) {
+  const rejected = rejectCrossSiteRequest(request)
+  if (rejected) return rejected
+
   const cookieStore = cookies()
   const accessToken = cookieStore.get(ACCESS_COOKIE)?.value
 

@@ -2,13 +2,23 @@ import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
 import { ACCESS_COOKIE } from '@/lib/auth/cookies'
+import { isSafePathSegment, rejectCrossSiteRequest } from '@/lib/auth/request-guard'
 import { API_BASE_URL } from '@/lib/auth/session'
 
 async function proxy(request: NextRequest, path: string[]) {
+  // El BFF adjunta la sesión (cookie httpOnly) como Bearer: solo para
+  // peticiones del propio sitio.
+  const rejected = rejectCrossSiteRequest(request)
+  if (rejected) return rejected
+
+  if (!path.every(isSafePathSegment)) {
+    return NextResponse.json({ message: 'Ruta inválida.' }, { status: 400 })
+  }
+
   const cookieStore = cookies()
   const accessToken = cookieStore.get(ACCESS_COOKIE)?.value
   const search = request.nextUrl.search || ''
-  const url = `${API_BASE_URL}/${path.join('/')}${search}`
+  const url = `${API_BASE_URL}/${path.map(encodeURIComponent).join('/')}${search}`
   const rawBody =
     request.method === 'GET' || request.method === 'HEAD' ? undefined : await request.text()
 

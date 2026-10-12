@@ -116,7 +116,11 @@ export function SelfProfileForm({ user }: { user: SafeUser }) {
 
       {isConsultant ? (
         <Section title="Mi ficha de consultor">
-          <ConsultantFields value={form.consultant} onChange={(consultant) => setForm((p) => ({ ...p, consultant }))} />
+          <ConsultantFields
+            value={form.consultant}
+            onChange={(consultant) => setForm((p) => ({ ...p, consultant }))}
+            canEditTiers={user.role === 'admin'}
+          />
         </Section>
       ) : null}
 

@@ -86,10 +86,14 @@ export type ConsultantFieldsValue = {
 
 export function ConsultantFields({
   value,
-  onChange
+  onChange,
+  canEditTiers = true
 }: {
   value: ConsultantFieldsValue
   onChange: (v: ConsultantFieldsValue) => void
+  // Los tiers son credenciales públicas: solo un admin los asigna (la API
+  // ignora los que mande el propio consultor).
+  canEditTiers?: boolean
 }) {
   const set = (patch: Partial<ConsultantFieldsValue>) => onChange({ ...value, ...patch })
   const toggleTier = (slug: string) =>
@@ -135,6 +139,27 @@ export function ConsultantFields({
         </Labeled>
       </div>
 
+      {!canEditTiers ? (
+        <div className="grid gap-2">
+          <span className="text-sm font-semibold">Tiers</span>
+          <div className="flex flex-wrap gap-2">
+            {CONSULTANT_TIERS.filter((tier) => value.tiers.includes(tier.slug)).map((tier) => (
+              <span
+                key={tier.slug}
+                className="rounded-full bg-[hsl(var(--primary))] px-3 py-1.5 text-sm text-white"
+              >
+                {tier.label}
+              </span>
+            ))}
+            {value.tiers.length === 0 ? (
+              <span className="text-sm text-[hsl(var(--foreground))/0.6]">Sin tiers asignados.</span>
+            ) : null}
+          </div>
+          <p className="text-xs text-[hsl(var(--foreground))/0.6]">
+            Los tiers los asigna un administrador.
+          </p>
+        </div>
+      ) : (
       <div className="grid gap-2">
         <span className="text-sm font-semibold">Tiers</span>
         <div className="flex flex-wrap gap-2">
@@ -159,6 +184,7 @@ export function ConsultantFields({
           ))}
         </div>
       </div>
+      )}
     </div>
   )
 }

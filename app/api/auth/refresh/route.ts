@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers'
-import { NextResponse } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
 
 import {
   clearAccessCookie,
@@ -8,9 +8,13 @@ import {
   createRefreshCookie,
   REFRESH_COOKIE
 } from '@/lib/auth/cookies'
+import { rejectCrossSiteRequest } from '@/lib/auth/request-guard'
 import { refreshWithToken } from '@/lib/auth/session'
 
-export async function POST() {
+export async function POST(request: NextRequest) {
+  const rejected = rejectCrossSiteRequest(request)
+  if (rejected) return rejected
+
   const cookieStore = cookies()
   const refreshToken = cookieStore.get(REFRESH_COOKIE)?.value
 
