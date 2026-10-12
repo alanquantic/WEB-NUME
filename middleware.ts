@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+import { clientIpFrom, proxyHeaders } from '@/lib/auth/proxy-headers'
 import seoRedirects from '@/lib/seo/redirects.generated.json'
 
 const API_BASE_URL = (
@@ -51,11 +52,13 @@ async function fetchMe(accessToken: string) {
   })
 }
 
-async function refreshTokens(refreshToken: string) {
+async function refreshTokens(refreshToken: string, request: NextRequest) {
   return fetch(`${API_BASE_URL}/auth/refresh`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      // IP real del visitante para el rate limit de la API.
+      ...proxyHeaders(clientIpFrom(request.headers, request.ip))
     },
     body: JSON.stringify({ refresh_token: refreshToken }),
     cache: 'no-store'
@@ -163,7 +166,7 @@ export async function middleware(request: NextRequest) {
       return redirectToLogin(request)
     }
 
-    const refreshResponse = await refreshTokens(refreshToken)
+    const refreshResponse = await refreshTokens(refreshToken, request)
     if (!refreshResponse.ok) {
       const redirect = redirectToLogin(request)
       clearSessionCookies(redirect)

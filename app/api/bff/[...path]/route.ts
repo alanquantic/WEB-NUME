@@ -2,6 +2,7 @@ import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
 import { ACCESS_COOKIE } from '@/lib/auth/cookies'
+import { clientIpFrom, proxyHeaders } from '@/lib/auth/proxy-headers'
 import { isSafePathSegment, rejectCrossSiteRequest } from '@/lib/auth/request-guard'
 import { API_BASE_URL } from '@/lib/auth/session'
 
@@ -26,7 +27,8 @@ async function proxy(request: NextRequest, path: string[]) {
     method: request.method,
     headers: {
       'Content-Type': 'application/json',
-      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {})
+      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+      ...proxyHeaders(clientIpFrom(request.headers, request.ip))
     },
     body: rawBody
   })
