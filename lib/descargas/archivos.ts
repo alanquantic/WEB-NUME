@@ -1,5 +1,5 @@
-// Descargas públicas con URL fija: /descargas/{slug}.pdf redirige al archivo
-// actual en Cloudinary. Para reemplazar un PDF, súbelo en Cloudinary con el
+// Descargas públicas con URL fija: /{slug}.pdf (rewrite en next.config.mjs) y
+// /descargas/{slug}.pdf redirigen al archivo actual en Cloudinary. Para reemplazar un PDF, súbelo en Cloudinary con el
 // MISMO public_id marcando "Overwrite" + "Invalidate": la URL del sitio no
 // cambia y este archivo no se toca. Para publicar uno nuevo, agrega una entrada.
 
@@ -13,10 +13,10 @@ export type Descarga = {
 }
 
 export const DESCARGAS: Record<string, Descarga> = {
-  // 'guia-numerologia': {
-  //   publicId: 'nume-media/descargas/guia-numerologia',
-  //   nombreArchivo: 'guia-numerologia'
-  // }
+  'binomios-generales': {
+    publicId: 'nume-media/descargas/binomios-generales',
+    nombreArchivo: 'Binomios-Generales'
+  }
 }
 
 export function getDescarga(archivo: string): Descarga | null {
