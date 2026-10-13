@@ -1,5 +1,6 @@
 import type { Route } from 'next'
 import Link from 'next/link'
+import type { ReactNode } from 'react'
 
 import { Bloque } from '@/components/content/personal-page-view'
 import { ToolPage } from '@/components/content/tool-page'
@@ -7,11 +8,13 @@ import type { LegadoPagina } from '@/lib/legado/data'
 
 export function LegadoPageView({
   pagina,
-  hermanas
+  hermanas,
+  children
 }: {
   pagina: LegadoPagina
   /** Páginas de la misma familia para navegar entre números/letras (vacío = sin navegación). */
   hermanas: LegadoPagina[]
+  children?: ReactNode
 }) {
   return (
     <ToolPage
@@ -21,6 +24,7 @@ export function LegadoPageView({
       breadcrumbs={[{ name: 'Inicio', path: '/' }, { name: pagina.titulo }]}
     >
       <div className="space-y-8">
+        {children}
         <section className="space-y-6">
           {pagina.bloques.map((bloque, index) => (
             <Bloque key={index} bloque={bloque} />

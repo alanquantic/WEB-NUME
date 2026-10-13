@@ -3,7 +3,7 @@
 import { Puck, type Data } from '@puckeditor/core'
 import '@puckeditor/core/puck.css'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState, useTransition } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -133,6 +133,14 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
   )
 
   const [error, setError] = useState<string | null>(null)
+  const searchParams = useSearchParams()
+  const [savedAt, setSavedAt] = useState<Date | null>(null)
+
+  // Recién creado como borrador: viene de `nuevo` con ?borrador=1. En cliente para
+  // que la hora del aviso no difiera entre SSR e hidratación.
+  useEffect(() => {
+    if (isEdit && searchParams.get('borrador') === '1') setSavedAt(new Date())
+  }, [isEdit, searchParams])
   const [isPending, startTransition] = useTransition()
 
   const effectiveSlug = slugTouched ? slug : slugify(title)
@@ -241,27 +249,42 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
     void loadMedia(true)
   }, [isLoadingMedia, isMediaModalOpen, mediaItems.length])
 
-  function handleSave() {
+  // `asDraft`: guarda como borrador y se queda en el editor para seguir editando.
+  // Si no, guarda con el estado elegido (un borrador se publica) y vuelve al listado.
+  function handleSave(asDraft: boolean) {
     setError(null)
+    setSavedAt(null)
+
+    const nextStatus: PostStatus = asDraft ? 'draft' : status === 'draft' ? 'published' : status
 
     if (!title.trim()) return setError('El título es obligatorio.')
     if (!effectiveSlug) return setError('El slug es obligatorio.')
-    if (status === 'scheduled' && !toIsoOrNull(publishedAt)) {
+    if (nextStatus === 'scheduled' && !toIsoOrNull(publishedAt)) {
       return setError('Para programar necesitas una fecha de publicación válida.')
     }
 
     const html = renderPuckDataToHtml(data)
     const hasBlocks = Array.isArray(data.content) && data.content.length > 0
 
+    // Al actualizar algo ya publicado se conserva su fecha original (null la reinicia a "ahora").
+    const keepPublishedAt = isEdit && initial?.status === 'published' && nextStatus === 'published'
+
     const payload: ContentMutationInput = {
       title: title.trim(),
       slug: effectiveSlug,
-      status,
+      status: nextStatus,
       requires_membership: requiresMembership,
       featured_image_url: featuredImageUrl.trim() ? featuredImageUrl.trim() : null,
-      content_json: hasBlocks ? (data as unknown) : null,
+      // Nunca null: el trigger `tr_revisions_limit` copia OLD.content_json a post_revisions
+      // (NOT NULL), así que un borrador creado sin bloques no podría volver a guardarse.
+      content_json: data as unknown,
       content_html: hasBlocks && html ? html : null,
-      published_at: status === 'scheduled' ? toIsoOrNull(publishedAt) : null
+      published_at:
+        nextStatus === 'scheduled'
+          ? toIsoOrNull(publishedAt)
+          : keepPublishedAt
+            ? undefined
+            : null
     }
 
     if (isPost) {
@@ -271,18 +294,41 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
 
     startTransition(async () => {
       try {
-        if (isEdit && initial) {
-          await updateContent(kind, initial.id, payload)
-        } else {
-          await createContent(kind, payload)
+        const saved =
+          isEdit && initial
+            ? await updateContent(kind, initial.id, payload)
+            : await createContent(kind, payload)
+
+        if (!asDraft) {
+          router.push(listHref)
+          router.refresh()
+          return
         }
-        router.push(listHref)
-        router.refresh()
+
+        setStatus('draft')
+        setSlug(effectiveSlug)
+        setSlugTouched(true)
+        if (isEdit) {
+          setSavedAt(new Date())
+          router.refresh()
+        } else {
+          // Ya existe en BD: pasar a la ruta de edición para que los siguientes guardados actualicen.
+          router.replace(`${listHref}/${saved.item.id}/editar?borrador=1`)
+        }
       } catch (caught) {
         setError(resolveError(caught))
       }
     })
   }
+
+  const primaryLabel =
+    status === 'scheduled'
+      ? 'Programar'
+      : status === 'archived'
+        ? 'Guardar'
+        : isEdit && initial?.status === 'published'
+          ? 'Actualizar'
+          : 'Publicar'
 
   return (
     <div className="grid gap-5">
@@ -309,6 +355,12 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
           <span className={cn('rounded-full px-3 py-1.5 text-xs font-semibold', statusPill[status])}>
             {statusLabel}
           </span>
+          {savedAt ? (
+            <span className="text-xs text-[hsl(var(--foreground))/0.55]" role="status">
+              Borrador guardado{' '}
+              {savedAt.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' })}
+            </span>
+          ) : null}
           <Button
             type="button"
             variant="secondary"
@@ -317,8 +369,16 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
           >
             Cancelar
           </Button>
-          <Button type="button" onClick={handleSave} disabled={isPending}>
-            {isPending ? 'Guardando…' : isEdit ? 'Guardar' : 'Publicar'}
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => handleSave(true)}
+            disabled={isPending}
+          >
+            {isPending ? 'Guardando…' : 'Guardar borrador'}
+          </Button>
+          <Button type="button" onClick={() => handleSave(false)} disabled={isPending}>
+            {isPending ? 'Guardando…' : primaryLabel}
           </Button>
         </div>
       </div>

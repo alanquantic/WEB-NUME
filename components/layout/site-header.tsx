@@ -80,11 +80,11 @@ const NAV_ITEMS: readonly NavItem[] = [
   { label: 'Blog', href: '/blog' },
   {
     label: 'Horóscopos',
-    href: '/horoscopos',
+    href: '/horoscopo-personal-2027',
     children: [
       {
-        label: 'Revisa tu horóscopo mensual 2026',
-        href: '/horoscopos'
+        label: 'Revisa tu horóscopo mensual 2027',
+        href: '/horoscopo-personal-2027'
       }
     ]
   },
