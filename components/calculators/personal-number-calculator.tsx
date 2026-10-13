@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type FormEvent } from 'react'
 import type { Route } from 'next'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -11,10 +11,11 @@ import { personalPagePath } from '@/lib/personales/routes'
 import { useUserDefaults } from '@/stores/user-defaults'
 
 export function PersonalNumberCalculator() {
-  const router = useRouter()
   const defaults = useUserDefaults()
   const [birthDate, setBirthDate] = useState('')
   const [error, setError] = useState('')
+  const [result, setResult] = useState<number | null>(null)
+  const resultPath = result === null ? null : personalPagePath('numero-personal', result)
   const today = new Date()
   const maxDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
 
@@ -32,11 +33,12 @@ export function PersonalNumberCalculator() {
       date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 ||
       date.getUTCDate() !== day || birthDate > maxDate
     ) {
+      setResult(null)
       setError('Ingresa una fecha de nacimiento válida que no sea futura.')
       return
     }
-    const path = personalPagePath('numero-personal', reduceBirthDay(day))
-    if (path) router.push(path as Route)
+    setError('')
+    setResult(reduceBirthDay(day))
   }
 
   return (
@@ -56,15 +58,38 @@ export function PersonalNumberCalculator() {
             min="0001-01-01"
             max={maxDate}
             value={birthDate}
-            onChange={(event) => { setBirthDate(event.target.value); setError('') }}
+            onChange={(event) => { setBirthDate(event.target.value); setError(''); setResult(null) }}
             aria-invalid={Boolean(error)}
             aria-describedby={error ? 'personal-date-error' : undefined}
             className="mt-2"
           />
         </label>
         <Button type="submit">Calcular mi número personal</Button>
+        <Button
+          type="button"
+          variant="ghost"
+          className="border border-border"
+          onClick={() => { setBirthDate(''); setError(''); setResult(null) }}
+        >
+          Borrar
+        </Button>
       </form>
       {error ? <p id="personal-date-error" role="alert" className="mt-3 text-sm text-red-600">{error}</p> : null}
+      <div aria-live="polite" aria-atomic="true">
+        {result !== null && resultPath ? (
+          <div className="mt-6 rounded-2xl bg-primary-soft px-6 py-7 text-center">
+            <p className="font-display text-xl font-semibold text-primary">
+              Tu número personal es <span className="mt-2 block text-5xl">{result}</span>
+            </p>
+            <Link
+              href={resultPath as Route}
+              className="mt-5 inline-flex font-display text-xl font-semibold italic text-primary underline-offset-4 hover:underline"
+            >
+              ¿Qué significa?
+            </Link>
+          </div>
+        ) : null}
+      </div>
       <p className="mt-4 text-sm text-foreground/60">
         Se obtiene reduciendo tu día de nacimiento, conservando los números maestros 11 y 22.
       </p>
