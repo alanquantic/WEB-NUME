@@ -265,14 +265,14 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
     related: [
       { href: '/mespersonal', title: 'Calcula tu Mes Personal' },
       { href: '/ano-personal', title: 'Tu Año Personal' },
-      { href: '/horoscopos', title: 'Horóscopo de tu Año Personal' }
+      { href: '/horoscopo-personal-2027', title: 'Horóscopo de tu Año Personal' }
     ]
   },
   'personales-ano-personal': {
     seo: [],
     related: [
       { href: '/ano-personal', title: 'Calcula tu Año Personal' },
-      { href: '/horoscopos', title: 'Horóscopo de tu Año Personal' },
+      { href: '/horoscopo-personal-2027', title: 'Horóscopo de tu Año Personal' },
       { href: '/mespersonal', title: 'Tu Mes Personal' }
     ]
   },

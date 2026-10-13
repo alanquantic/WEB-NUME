@@ -36,7 +36,7 @@ const STATIC_ROUTES = [
   '/significado-numero-la-madurez',
   '/nombreactivo',
   '/nombrehereditario',
-  '/horoscopos',
+  '/horoscopo-personal-2027',
   '/revisatuhoroscopomensual2026',
   '/consultores',
   '/instructores',
