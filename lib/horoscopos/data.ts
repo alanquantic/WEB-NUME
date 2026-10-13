@@ -1,4 +1,4 @@
-import horoscopoData from '@/components/jsons/horoscopo-mensual-2026.json'
+import horoscopoData from '@/components/jsons/horoscopo-mensual-2027.json'
 
 export type HoroscopoMesContenido = {
   /** Frase corta de energía del mes (heading superior). */

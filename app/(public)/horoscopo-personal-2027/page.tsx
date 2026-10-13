@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import horoscopoData from '@/components/jsons/horoscopo-mensual-2026.json'
+import horoscopoData from '@/components/jsons/horoscopo-mensual-2027.json'
 import { ToolPage } from '@/components/content/tool-page'
 import { HoroscopoMensualExplorer } from '@/components/horoscopos/horoscopo-mensual-explorer'
 
@@ -15,7 +15,7 @@ type HoroscopoData = {
   meses: string[]
 }
 
-const data = { ...(horoscopoData as HoroscopoData), anio: 2027 }
+const data = horoscopoData as HoroscopoData
 
 export default function Page() {
   return (
