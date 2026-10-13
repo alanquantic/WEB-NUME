@@ -25,7 +25,11 @@ const nextConfig = {
   trailingSlash: true,
   async rewrites() {
     // Paginación del blog con la misma forma que el WordPress original.
-    return [{ source: '/blog/page/:page(\\d+)', destination: '/blog?page=:page' }]
+    return [
+      { source: '/blog/page/:page(\\d+)', destination: '/blog?page=:page' },
+      // PDFs descargables en la raíz (/archivo.pdf) -> lib/descargas/archivos.ts
+      { source: '/:archivo([a-z0-9-]+\\.pdf)', destination: '/descargas/:archivo' }
+    ]
   }
 }
 
