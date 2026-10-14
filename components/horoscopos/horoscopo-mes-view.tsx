@@ -54,7 +54,7 @@ export function HoroscopoMesView({ numero, mes, anio, entrada, isMember }: Props
       description={description}
       breadcrumbs={[
         { name: 'Inicio', path: '/' },
-        { name: 'Horóscopos', path: '/horoscopos' },
+        { name: 'Horóscopos', path: '/horoscopo-personal-2027' },
         { name: `Año ${numero} · ${mes}` }
       ]}
     >
@@ -162,7 +162,7 @@ export function HoroscopoMesView({ numero, mes, anio, entrada, isMember }: Props
 
             <div className="border-t border-border/60 pt-5 text-sm text-foreground/72">
               <Link
-                href="/horoscopos"
+                href="/horoscopo-personal-2027"
                 className="font-semibold text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary"
               >
                 Ver todos los meses del Año Personal {numero}
@@ -173,7 +173,7 @@ export function HoroscopoMesView({ numero, mes, anio, entrada, isMember }: Props
           <p className="mt-4 text-base leading-8 text-foreground/72">
             El horóscopo de {mes} para el Año Personal {numero} estará disponible muy pronto.{' '}
             <Link
-              href="/horoscopos"
+              href="/horoscopo-personal-2027"
               className="font-semibold text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary"
             >
               Explora el resto del horóscopo mensual.

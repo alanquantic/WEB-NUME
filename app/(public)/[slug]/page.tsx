@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { PersonalNumberCalculator } from '@/components/calculators/personal-number-calculator'
 
 import { GuiaPersonalView } from '@/components/content/guia-personal-view'
 import { LegadoPageView } from '@/components/content/legado-page-view'
@@ -191,7 +192,11 @@ export default async function Page({ params }: PageProps) {
 
   const legado = getLegadoBySlug(params.slug)
   if (legado) {
-    return <LegadoPageView pagina={legado} hermanas={getLegadoHermanas(legado)} />
+    return (
+      <LegadoPageView pagina={legado} hermanas={getLegadoHermanas(legado)}>
+        {params.slug === 'numero-personal' ? <PersonalNumberCalculator /> : null}
+      </LegadoPageView>
+    )
   }
 
   const significado = getSignificadoBySlug(params.slug)

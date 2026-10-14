@@ -67,6 +67,8 @@ export function ConsultantCard({
   const nextCourse = c.next_course ? formatNextCourse(c.next_course) : null
   const whatsappHref = getWhatsAppHref(c.contact.phone, c.nationality)
   const websiteHref = normalizeExternalUrl(c.contact.website)
+  const instagramHref = normalizeExternalUrl(c.socials.instagram)
+  const facebookHref = normalizeExternalUrl(c.socials.facebook)
   const badges = c.tiers
     .map((tier) => ({
       ...tier,
@@ -76,8 +78,8 @@ export function ConsultantCard({
   const socialLinks = [
     c.contact.email ? { label: 'Email', href: `mailto:${c.contact.email}`, icon: Mail } : null,
     whatsappHref ? { label: 'WhatsApp', href: whatsappHref, icon: WhatsappIcon } : null,
-    c.socials.instagram ? { label: 'Instagram', href: c.socials.instagram, icon: InstagramIcon } : null,
-    c.socials.facebook ? { label: 'Facebook', href: c.socials.facebook, icon: FacebookIcon } : null,
+    instagramHref ? { label: 'Instagram', href: instagramHref, icon: InstagramIcon } : null,
+    facebookHref ? { label: 'Facebook', href: facebookHref, icon: FacebookIcon } : null,
     websiteHref ? { label: 'Sitio', href: websiteHref, icon: Globe2 } : null
   ].filter(Boolean) as Array<{
     label: string

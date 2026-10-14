@@ -1,4 +1,5 @@
 import { listBanners } from '@/lib/api/banners'
+import { safeHref } from '@/lib/safe-url'
 
 export async function TopBanner() {
   let banners: Awaited<ReturnType<typeof listBanners>>['data'] = []
@@ -15,6 +16,7 @@ export async function TopBanner() {
     banners.length === 1
       ? banners[0]
       : banners[Math.floor(Math.random() * banners.length)]
+  const linkHref = safeHref(banner.link_url)
 
   const inner = (
     // eslint-disable-next-line @next/next/no-img-element
@@ -26,9 +28,9 @@ export async function TopBanner() {
       aria-label="Banner superior"
       className="overflow-hidden rounded-[2rem] border border-border/70 bg-card shadow-panel"
     >
-      {banner.link_url ? (
+      {linkHref ? (
         <a
-          href={banner.link_url}
+          href={linkHref}
           target="_blank"
           rel="noopener noreferrer"
           className="block"

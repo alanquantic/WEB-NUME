@@ -7,8 +7,8 @@ import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { reduceBirthDay } from '@/lib/horoscopos/birthdate'
 import { personalPagePath } from '@/lib/personales/routes'
-import Person from '@/resources/person'
 import { useUserDefaults } from '@/stores/user-defaults'
 
 export function PersonalNumberCalculator() {
@@ -46,8 +46,7 @@ export function PersonalNumberCalculator() {
     }
 
     setError('')
-    const value = new Person({ birthDate: date }).calcPersonalNumber()
-    setResult(typeof value === 'number' ? value : null)
+    setResult(reduceBirthDay(day))
   }
 
   function clear() {

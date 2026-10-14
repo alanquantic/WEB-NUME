@@ -34,7 +34,7 @@ export function BirthdateView({ dia, mes, numero }: Props) {
       description={`Qué dice la numerología sobre quienes nacen un ${dia} de ${mes}: su día de nacimiento vibra con el número ${numero}.`}
       breadcrumbs={[
         { name: 'Inicio', path: '/' },
-        { name: 'Horóscopos', path: '/horoscopos' },
+        { name: 'Horóscopos', path: '/horoscopo-personal-2027' },
         { name: `Nacidos el ${dia} de ${mes}` }
       ]}
     >
@@ -88,7 +88,7 @@ export function BirthdateView({ dia, mes, numero }: Props) {
         <div className="rounded-[1.5rem] border border-dashed border-primary/30 bg-[hsl(var(--secondary)/0.4)] p-5 sm:p-6">
           <p className="font-display text-lg font-semibold text-primary">¿Quieres más?</p>
           <p className="mt-2 text-base leading-7 text-foreground/78">
-            Consulta tu <Link href="/horoscopos" className="font-semibold text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary">horóscopo mensual del Año Personal</Link>{' '}
+            Consulta tu <Link href="/horoscopo-personal-2027" className="font-semibold text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary">horóscopo mensual del Año Personal</Link>{' '}
             o revisa el{' '}
             <Link href="/significado-los-numeros" className="font-semibold text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary">significado completo de los números</Link>.
           </p>
