@@ -310,8 +310,8 @@ export async function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-card/70 backdrop-blur-xl backdrop-saturate-150 supports-[backdrop-filter]:bg-card/60">
-      <div className="mx-auto hidden max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-3 px-6 py-2 md:grid">
-        <nav className="hidden items-center gap-5 text-sm font-medium md:flex">
+      <div className="mx-auto hidden max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-3 px-6 py-2 xl:grid">
+        <nav className="hidden items-center gap-5 text-sm font-medium xl:flex">
           {renderDesktopNav(NAV_ITEMS, menuContext)}
         </nav>
 
@@ -357,7 +357,7 @@ export async function SiteHeader() {
         </div>
       </div>
 
-      <details className="group md:hidden">
+      <details className="group xl:hidden">
         <summary className="mx-auto grid max-w-7xl list-none grid-cols-[44px_1fr_44px] items-center gap-3 px-4 py-3">
           <span className="header-chip flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-primary">
             <MenuIcon width={22} height={22} />
