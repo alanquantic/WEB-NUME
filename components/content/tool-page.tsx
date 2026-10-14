@@ -13,6 +13,7 @@ type ToolPageProps = {
   toolKey?: string
   breadcrumbs?: Crumb[]
   header?: ReactNode
+  footer?: ReactNode
   /** Categoría de la tienda para filtrar productos relacionados al final. */
   productCategory?: string | null
   /** Si es false, no se muestra la sección de productos relacionados. */
@@ -28,6 +29,7 @@ export function ToolPage({
   toolKey,
   breadcrumbs,
   header,
+  footer,
   productCategory,
   showRelatedProducts = true
 }: ToolPageProps) {
@@ -64,6 +66,7 @@ export function ToolPage({
       {showRelatedProducts ? (
         <RelatedProducts categoryName={productCategory ?? null} layout="grid" />
       ) : null}
+      {footer}
     </div>
   )
 }
