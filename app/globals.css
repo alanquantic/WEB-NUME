@@ -261,6 +261,8 @@ a {
 
 /* Theming del editor Puck para alinearlo con la marca (púrpura NUME) */
 .nume-puck {
+    --puck-user-sidebar-left-width: 200px;
+    --puck-user-sidebar-right-width: 240px;
     --puck-font-family: 'Inter', system-ui, sans-serif;
     /* Acento (Puck usa la escala azure como color primario) → púrpura marca */
     --puck-color-azure-03: hsl(308 37% 24%);
@@ -278,6 +280,32 @@ a {
     --puck-iconbutton-radius: 0.7rem;
     --puck-canvas-color-bg: hsl(270 60% 98%);
     height: 100%;
+}
+
+/* Keep editor navigation above the workspace on phones. */
+@media (max-width: 767px) {
+    .dashboard-editor-nav > .grid,
+    .dashboard-editor-nav > .grid > .grid,
+    .dashboard-editor-nav nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .dashboard-editor-nav > .grid > .grid {
+        flex-shrink: 0;
+    }
+    .dashboard-editor-nav .h-px {
+        width: 1px;
+        height: 24px;
+        margin: 0 4px;
+    }
+}
+
+@media (min-width: 768px) {
+    .editor-actions {
+        position: sticky;
+        top: 80px;
+    }
 }
 /* El item de bloque en el panel izquierdo, un poco más “tarjeta” */
 .nume-puck [class*='PuckDrawerItem'] {

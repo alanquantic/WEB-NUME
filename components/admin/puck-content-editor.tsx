@@ -1,6 +1,6 @@
 'use client'
 
-import { Puck, type Data } from '@puckeditor/core'
+import { Puck, usePuck, type Data } from '@puckeditor/core'
 import '@puckeditor/core/puck.css'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -96,6 +96,35 @@ type PuckContentEditorProps = {
 type MediaTarget =
   | { kind: 'featured' }
   | { kind: 'puck-image'; currentValue: string; onSelect: (url: string) => void }
+
+function EditorPanels() {
+  const { selectedItem, dispatch } = usePuck()
+  const selectedId = selectedItem?.props.id
+
+  useEffect(() => {
+    if (!selectedId) return
+    function revealFields() {
+      if (window.innerWidth < 638) return
+      // On tablets, make room for the selected block and its fields.
+      dispatch({
+        type: 'setUi',
+        ui: {
+          rightSideBarVisible: true,
+          ...(window.innerWidth < 1100 ? { leftSideBarVisible: false } : {})
+        }
+      })
+    }
+    revealFields()
+    window.addEventListener('resize', revealFields)
+    return () => window.removeEventListener('resize', revealFields)
+  }, [selectedId, dispatch])
+
+  return null
+}
+
+function EditorWorkspace({ children }: { children: React.ReactNode }) {
+  return <><EditorPanels />{children}</>
+}
 
 export function PuckContentEditor({ kind, categories, tags, initial }: PuckContentEditorProps) {
   const router = useRouter()
@@ -331,9 +360,9 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
           : 'Publicar'
 
   return (
-    <div className="grid gap-5">
+    <div className="content-editor grid min-w-0 gap-4 sm:gap-5">
       {/* Barra de acción superior */}
-      <div className="sticky top-4 z-30 flex flex-wrap items-center justify-between gap-3 rounded-[1.5rem] border border-[hsl(var(--border))] bg-white/90 px-4 py-3 shadow-panel backdrop-blur">
+      <div className="editor-actions z-30 flex min-w-0 flex-wrap items-center justify-between gap-3 rounded-[1.5rem] border border-[hsl(var(--border))] bg-white/95 px-3 py-3 shadow-panel backdrop-blur sm:px-4">
         <div className="flex items-center gap-3">
           <Link
             href={listHref}
@@ -347,11 +376,11 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
               {isPost ? 'Post' : 'Página'}
             </p>
             <h1 className="font-display text-lg font-semibold leading-tight">
-              {isEdit ? `Editar ${singular}` : `Nuevo ${singular}`}
+              {isEdit ? `Editar ${singular}` : isPost ? 'Nuevo post' : 'Nueva página'}
             </h1>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
           <span className={cn('rounded-full px-3 py-1.5 text-xs font-semibold', statusPill[status])}>
             {statusLabel}
           </span>
@@ -366,6 +395,7 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
             variant="secondary"
             onClick={() => router.push(listHref)}
             disabled={isPending}
+            className="shrink-0 px-3 sm:px-5"
           >
             Cancelar
           </Button>
@@ -374,6 +404,7 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
             variant="secondary"
             onClick={() => handleSave(true)}
             disabled={isPending}
+            className="shrink-0 whitespace-nowrap px-3 sm:px-5"
           >
             {isPending ? 'Guardando…' : 'Guardar borrador'}
           </Button>
@@ -384,12 +415,13 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
       </div>
 
       {/* Título grande + slug */}
-      <div className="rounded-[2rem] bg-white p-6 shadow-panel">
+      <div className="min-w-0 rounded-3xl bg-white p-4 shadow-panel sm:p-6">
         <input
           value={title}
           onChange={(event) => setTitle(event.target.value)}
           placeholder={`Añade el título de la ${singular}…`}
-          className="w-full border-none bg-transparent font-display text-3xl font-semibold leading-tight outline-none placeholder:text-[hsl(var(--foreground))/0.3]"
+          aria-label="Título"
+          className="min-w-0 w-full border-none bg-transparent font-display text-2xl font-semibold leading-tight outline-none placeholder:text-[hsl(var(--foreground))/0.3] sm:text-3xl"
         />
         <div className="mt-3 flex items-center gap-1 text-sm text-[hsl(var(--foreground))/0.55]">
           <span className="shrink-0">{publicPrefix}</span>
@@ -400,19 +432,20 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
               setSlug(slugify(event.target.value))
             }}
             placeholder="slug"
-            className="w-full border-none bg-transparent font-medium text-[hsl(var(--primary))] outline-none"
+            aria-label="Slug"
+            className="min-w-0 w-full border-none bg-transparent font-medium text-[hsl(var(--primary))] outline-none"
           />
         </div>
       </div>
 
       {/* Ajustes de publicación (colapsable) */}
-      <details className="group rounded-[2rem] bg-white px-6 py-4 shadow-panel" open>
+      <details className="group min-w-0 rounded-3xl bg-white px-4 py-4 shadow-panel sm:px-6" open>
         <summary className="flex cursor-pointer list-none items-center justify-between text-sm font-semibold">
           <span>Ajustes de publicación</span>
           <span className="text-[hsl(var(--foreground))/0.5] transition group-open:rotate-180">⌄</span>
         </summary>
 
-        <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-5 grid min-w-0 gap-4 md:grid-cols-2 xl:grid-cols-3 [&>div]:min-w-0">
           <div className="grid gap-2">
             <label className="text-sm font-semibold" htmlFor="status">
               Estado
@@ -453,6 +486,7 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
               <div className="flex gap-2">
                 <Input
                   id="featured_image_url"
+                  className="min-w-0 flex-1"
                   type="url"
                   value={featuredImageUrl}
                   onChange={(event) => {
@@ -464,6 +498,7 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
                 <Button
                   type="button"
                   variant="secondary"
+                  className="shrink-0 whitespace-nowrap"
                   onClick={() => {
                     setMediaTarget({ kind: 'featured' })
                     setSelectedMediaUrl(featuredImageUrl)
@@ -553,29 +588,30 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
 
       {/* Constructor de bloques (Puck) */}
       <div className="grid gap-2">
-        <div className="flex items-center justify-between px-1">
+        <div className="flex flex-wrap items-center justify-between gap-2 px-1">
           <span className="text-sm font-semibold">Contenido</span>
           <span className="text-xs text-[hsl(var(--foreground))/0.5]">
-            Arrastra bloques desde la izquierda al lienzo
+            Añade bloques al lienzo y selecciónalos para editar
           </span>
         </div>
-        <div className="nume-puck overflow-hidden rounded-[2rem] border border-[hsl(var(--border))] bg-white shadow-panel">
-          <div className="h-[74vh] min-h-[560px]">
-            <Puck
-              config={puckConfig}
-              data={data}
-              onChange={setData}
-              iframe={{ enabled: false }}
-              overrides={{ header: () => <></> }}
-            />
-          </div>
+        <div className="nume-puck min-w-0 overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white shadow-panel">
+          <Puck
+            config={puckConfig}
+            data={data}
+            onChange={setData}
+            iframe={{ enabled: false }}
+            height="clamp(560px, 74dvh, 1000px)"
+            headerTitle="Contenido"
+            ui={{ rightSideBarVisible: false }}
+            overrides={{ headerActions: () => <></>, puck: EditorWorkspace }}
+          />
         </div>
       </div>
 
       {isMediaModalOpen ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4">
           <div className="flex max-h-[88vh] w-full max-w-6xl flex-col overflow-hidden rounded-[2rem] bg-white shadow-2xl">
-            <div className="flex items-center justify-between border-b border-[hsl(var(--border))] px-6 py-4">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[hsl(var(--border))] px-4 py-4 sm:px-6">
               <div>
                 <h2 className="font-display text-xl font-semibold">Biblioteca de medios</h2>
                 <p className="text-sm text-[hsl(var(--foreground))/0.6]">
@@ -615,7 +651,7 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
               >
                 {isLoadingMedia ? 'Cargando…' : 'Recargar'}
               </Button>
-              <div className="min-w-[260px] flex-1 rounded-2xl border border-dashed border-[hsl(var(--border))] px-4 py-3 text-sm text-[hsl(var(--foreground))/0.6]">
+              <div className="min-w-0 basis-full break-all rounded-2xl border border-dashed border-[hsl(var(--border))] px-4 py-3 text-sm text-[hsl(var(--foreground))/0.6] sm:flex-1 sm:basis-auto">
                 {selectedMediaUrl ? selectedMediaUrl : 'Aún no has seleccionado una imagen.'}
               </div>
               <Button

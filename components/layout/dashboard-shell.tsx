@@ -63,6 +63,7 @@ export function DashboardShell({
   children
 }: DashboardShellProps) {
   const pathname = usePathname()
+  const isContentEditor = /^\/perfil\/(pages|posts)\/(nuevo|[^/]+\/editar)\/?$/.test(pathname)
   const [collapsed, setCollapsed] = useState(false)
 
   const resolvedSections: NavSection[] = sections ?? (items ? [{ items }] : [])
@@ -70,17 +71,20 @@ export function DashboardShell({
   return (
     <div
       className={cn(
-        'mx-auto grid max-w-7xl grid-cols-[76px_minmax(0,1fr)] gap-3 px-3 py-10 sm:gap-8 sm:px-6',
-        collapsed ? 'lg:grid-cols-[76px_minmax(0,1fr)]' : 'lg:grid-cols-[240px_minmax(0,1fr)]'
+        'mx-auto grid gap-3 px-3 sm:px-6',
+        isContentEditor ? 'py-6 sm:gap-6 sm:py-8' : 'py-10 sm:gap-8',
+        isContentEditor ? 'w-full max-w-[1920px] grid-cols-1 md:grid-cols-[76px_minmax(0,1fr)]' : 'max-w-7xl grid-cols-[76px_minmax(0,1fr)]',
+        (collapsed || isContentEditor) ? 'lg:grid-cols-[76px_minmax(0,1fr)]' : 'lg:grid-cols-[240px_minmax(0,1fr)]'
       )}
     >
       <aside
         className={cn(
           'h-fit w-[76px] space-y-4 rounded-[2rem] border border-[hsl(var(--border))] bg-white p-4 text-[hsl(263_35%_18%)] shadow-panel lg:sticky lg:top-6',
-          !collapsed && 'lg:w-[240px]'
+          !collapsed && !isContentEditor && 'lg:w-[240px]',
+          isContentEditor && 'dashboard-editor-nav w-full overflow-x-auto rounded-2xl p-2 md:w-[76px] md:overflow-visible md:rounded-[2rem] md:p-4'
         )}
       >
-        <div className={cn('hidden items-center lg:flex', collapsed ? 'justify-center' : 'justify-end')}>
+        <div className={cn('hidden items-center', !isContentEditor && 'lg:flex', collapsed ? 'justify-center' : 'justify-end')}>
           <button
             type="button"
             onClick={() => setCollapsed((current) => !current)}
@@ -98,13 +102,13 @@ export function DashboardShell({
             <div key={section.title ?? `section-${index}`} className="grid gap-1.5">
               {section.title ? (
                 <>
-                  {!collapsed ? (
+                  {!collapsed && !isContentEditor ? (
                     <span className="hidden px-3 text-xs font-semibold uppercase tracking-wide text-[hsl(263_35%_18%/0.72)] lg:block">
                       {section.title}
                     </span>
                   ) : null}
                   {index > 0 ? (
-                    <span className={cn('mx-auto my-1 h-px w-8 bg-[hsl(var(--border))]', !collapsed && 'lg:hidden')} />
+                    <span className={cn('mx-auto my-1 h-px w-8 bg-[hsl(var(--border))]', !collapsed && !isContentEditor && 'lg:hidden')} />
                   ) : null}
                 </>
               ) : null}
@@ -119,8 +123,8 @@ export function DashboardShell({
                       title={item.label}
                       aria-label={item.label}
                       className={cn(
-                        'flex h-11 w-11 items-center justify-center rounded-2xl text-sm font-medium transition',
-                        !collapsed && 'lg:w-full lg:justify-start lg:gap-3 lg:px-3',
+                        'relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-sm font-medium transition',
+                        !collapsed && !isContentEditor && 'lg:w-full lg:justify-start lg:gap-3 lg:px-3',
                         active
                           ? 'bg-[hsl(263_67%_35%)] text-white shadow-panel'
                           : 'text-[hsl(263_35%_18%)] hover:bg-[hsl(270_100%_96%)] hover:text-[hsl(263_35%_18%)]'
@@ -131,7 +135,7 @@ export function DashboardShell({
                           <Icon width={19} height={19} />
                         </span>
                       ) : null}
-                      <span className={cn('sr-only', !collapsed && 'lg:not-sr-only lg:truncate')}>
+                      <span className={cn('sr-only', !collapsed && !isContentEditor && 'lg:not-sr-only lg:truncate')}>
                         {item.label}
                       </span>
                     </Link>
