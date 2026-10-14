@@ -87,7 +87,7 @@ const CARD_STYLES: Record<ResultCard['tone'], string> = {
 }
 
 const ENERGY_CARD_TONES = {
-  'Día': 'text-[hsl(var(--accent))]',
+  'Día': 'text-[hsl(var(--royal-blue))]',
   Semana: 'text-white',
   Mes: 'text-[hsl(var(--fuchsia))]'
 } as const
@@ -243,6 +243,7 @@ export function NumerologyMapSection() {
   const clearStore = useNumerologyMapStore((state) => state.clear)
 
   const [results, setResults] = useState(INITIAL_RESULTS)
+  const [currentDate, setCurrentDate] = useState<Date | null>(null)
   const [isCalculated, setIsCalculated] = useState(false)
   const [activePinnacleTooltip, setActivePinnacleTooltip] = useState<PinnacleLetter | null>(null)
   const [isPending, startTransition] = useTransition()
@@ -251,6 +252,12 @@ export function NumerologyMapSection() {
   const formState: FormState = { fullName, birthDate }
 
   const isFormComplete = fullName.trim().length > 0 && birthDate.trim().length > 0
+
+  useEffect(() => {
+    setCurrentDate(new Date())
+    const timer = window.setInterval(() => setCurrentDate(new Date()), 60_000)
+    return () => window.clearInterval(timer)
+  }, [])
 
   useEffect(() => {
     if (!fullName && defaults.fullName) setField('fullName', defaults.fullName)
@@ -415,9 +422,24 @@ export function NumerologyMapSection() {
               data-result="energia-hoy"
               className="group flex h-full min-h-[13rem] flex-col rounded-[2rem] bg-[url('/images/numerology-card-energy-today.png')] bg-cover bg-center px-5 py-6 text-[hsl(263_35%_18%)] shadow-[0_24px_60px_hsl(var(--accent)/0.18)] transition hover:-translate-y-1 dark:bg-[url('/images/numerology-card-energy-today-dark.png')] dark:bg-[hsl(var(--royal-blue)/0.58)] dark:text-white dark:shadow-[0_24px_60px_hsl(var(--royal-blue)/0.16)] sm:min-h-[15rem] sm:px-6 sm:py-7"
             >
-              <h3 className="font-display text-[1.2rem] font-semibold uppercase tracking-[0.03em] sm:text-[1.55rem]">
-                Mi energía de hoy
-              </h3>
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                <h3 className="font-display text-[1.2rem] font-semibold uppercase tracking-[0.03em] sm:text-[1.55rem]">
+                  Mi energía de hoy
+                </h3>
+                {currentDate ? (
+                    <time
+                      dateTime={currentDate.toISOString()}
+                      className="rounded-full bg-white/40 px-3 py-1 text-xs font-medium dark:bg-white/10"
+                    >
+                      {new Intl.DateTimeFormat('es-MX', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                        timeZone: 'America/Mexico_City'
+                      }).format(currentDate)}
+                    </time>
+                ) : null}
+              </div>
               <div className="mt-5 grid grid-cols-3 gap-2 text-center sm:mt-6 sm:gap-3">
                 {([
                   { label: 'Día', value: results.personalDay },
