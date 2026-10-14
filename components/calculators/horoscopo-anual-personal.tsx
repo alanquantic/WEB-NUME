@@ -28,10 +28,14 @@ function computePersonalYear(birthDate: string, yearToCalculate: string): number
   }
 }
 
-export function HoroscopoAnualPersonal() {
+export function HoroscopoAnualPersonal({
+  defaultYear
+}: {
+  defaultYear?: number
+} = {}) {
   useCalculatorView('annual-horoscope')
   const yearOptions = buildYearOptions()
-  const currentYear = String(new Date().getFullYear())
+  const currentYear = String(defaultYear ?? new Date().getFullYear())
 
   const [birthDate, setBirthDate] = useState('')
   const [yearToCalculate, setYearToCalculate] = useState(currentYear)
