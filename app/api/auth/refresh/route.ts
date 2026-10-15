@@ -9,6 +9,7 @@ import {
   REFRESH_COOKIE
 } from '@/lib/auth/cookies'
 import { refreshWithToken } from '@/lib/auth/session'
+import { ApiError } from '@/lib/api/errors'
 
 export async function POST() {
   const cookieStore = cookies()
@@ -27,7 +28,10 @@ export async function POST() {
     response.cookies.set(createAccessCookie(session.access_token))
     response.cookies.set(createRefreshCookie(session.refresh_token))
     return response
-  } catch {
+  } catch (error) {
+    if (!(error instanceof ApiError) || error.status !== 401) {
+      return NextResponse.json({ message: 'Session temporarily unavailable' }, { status: 503 })
+    }
     const response = NextResponse.json({ message: 'Refresh failed' }, { status: 401 })
     response.cookies.set(clearAccessCookie())
     response.cookies.set(clearRefreshCookie())

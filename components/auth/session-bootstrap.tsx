@@ -14,6 +14,22 @@ export function SessionBootstrap() {
     }
   }, [isHydrated, loadSession])
 
+  useEffect(() => {
+    const refresh = () => {
+      if (document.visibilityState === 'visible' && !useSessionStore.getState().isLoading) {
+        void loadSession()
+      }
+    }
+    const timer = window.setInterval(refresh, 5 * 60_000)
+    window.addEventListener('focus', refresh)
+    document.addEventListener('visibilitychange', refresh)
+    return () => {
+      window.clearInterval(timer)
+      window.removeEventListener('focus', refresh)
+      document.removeEventListener('visibilitychange', refresh)
+    }
+  }, [loadSession])
+
   return null
 }
 
