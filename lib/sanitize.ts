@@ -3,7 +3,7 @@ import 'server-only'
 import sanitizeHtmlLib from 'sanitize-html'
 
 const APP_URL = (
-  process.env.NEXT_PUBLIC_APP_URL ?? 'https://numerologia-cotidiana.com'
+  process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.numerologia-cotidiana.com'
 ).replace(/\/$/, '')
 const STORE_API_URL = (
   process.env.STORE_API_URL ?? 'https://tienda.numerologia-cotidiana.com'
@@ -18,7 +18,11 @@ const LEGACY_APP_ORIGINS = [
   'https://numerologia-cotidiana.com',
   'http://numerologia-cotidiana.com',
   'https://www.numerologia-cotidiana.com',
-  'http://www.numerologia-cotidiana.com'
+  'http://www.numerologia-cotidiana.com',
+  'https://stage.numerologia-cotidiana.com',
+  'http://stage.numerologia-cotidiana.com',
+  'https://app.numerologia-cotidiana.com',
+  'http://app.numerologia-cotidiana.com'
 ]
 
 function rewriteContentUrls(dirty: string): string {

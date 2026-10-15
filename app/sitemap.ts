@@ -74,7 +74,7 @@ async function loadBlogRoutes(): Promise<string[]> {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base =
-    process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, '') ?? 'https://numerologia-cotidiana.com'
+    process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, '') ?? 'https://www.numerologia-cotidiana.com'
 
   const lastModified = new Date()
 

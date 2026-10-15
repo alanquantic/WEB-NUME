@@ -8,7 +8,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { track } from '@/lib/analytics'
 import banner1 from '@/public/images/slider/1.png'
 import banner2 from '@/public/images/slider/2.png'
-import banner3 from '@/public/images/slider/3.png'
+import bannerAgenda2027 from '@/public/images/slider/agenda-2027.webp'
 
 type Banner = {
   src: StaticImageData
@@ -20,18 +20,18 @@ type Banner = {
 const BANNERS: Banner[] = [
   {
     src: banner1,
-    href: 'https://tienda-nume-chi.vercel.app/productos/libro-numerologia-cotidiana',
+    href: 'https://tienda.numerologia-cotidiana.com/productos/libro-numerologia-cotidiana',
     alt: 'Nuevo libro Numerología Cotidiana, edición limitada: un libro para reconectar con la sabiduría de los números'
   },
   {
     src: banner2,
-    href: 'https://tienda-nume-chi.vercel.app/productos/taller-numerologia-de-parejas',
+    href: 'https://tienda.numerologia-cotidiana.com/productos/taller-numerologia-de-parejas',
     alt: 'Taller online Numerología de Parejas: ¿qué tipo de relación estás construyendo?'
   },
   {
-    src: banner3,
-    href: 'https://tienda-nume-chi.vercel.app/productos/numerathum-oraculo-365-agenda-numerologica-2026-digital-pdf',
-    alt: 'Numerathum, mi brújula del tiempo: planeador numerológico 2026 en plataforma digital'
+    src: bannerAgenda2027,
+    href: 'https://tienda.numerologia-cotidiana.com/productos/agenda-numerologica-2027',
+    alt: 'Agenda Numerológica 2027 física en preventa a $890 más gastos de envío, del 10 al 31 de octubre'
   }
 ]
 

@@ -143,7 +143,7 @@ export default function Page() {
             El
             <a
               title="Significado del Nombre"
-              href="http://stage.numerologia-cotidiana.com/significado-del-nombre/"
+              href="https://www.numerologia-cotidiana.com/significado-del-nombre/"
               className="text-primary"
             >
               {" "}
