@@ -15,7 +15,7 @@ type OutboundLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
 
 // Enlace externo que dispara outbound_click en GA4 y, si se pasan datos de
 // promo, también select_promotion. Sirve para trackear clicks a la tienda
-// externa (tienda-nume-chi.vercel.app) desde este sitio.
+// externa (tienda.numerologia-cotidiana.com) desde este sitio.
 export function OutboundLink({
   href,
   children,

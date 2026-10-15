@@ -247,7 +247,7 @@ export default function Page() {
               <a
                 title="Número de la Personalidad"
                 className="text-primary"
-                href="http://stage.numerologia-cotidiana.com/numero-de-la-personalidad/"
+                href="https://www.numerologia-cotidiana.com/numero-de-la-personalidad/"
               >
                 Número de personalidad
               </a>
@@ -257,7 +257,7 @@ export default function Page() {
               <a
                 title="Significado del Nombre"
                 className="text-primary"
-                href="http://stage.numerologia-cotidiana.com/significado-del-nombre/"
+                href="https://www.numerologia-cotidiana.com/significado-del-nombre/"
               >
                 Número del Poder del Nombre
               </a>

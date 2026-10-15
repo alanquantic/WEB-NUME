@@ -46,7 +46,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
         description: 'La página dedicada con todo el detalle.'
       }
     ],
-    sourceUrl: 'https://numerologia-cotidiana.com/numerologia-de-pareja',
+    sourceUrl: 'https://www.numerologia-cotidiana.com/numerologia-de-pareja',
     html: `
 <p>La numerología de pareja —o sinastría numerológica— compara los números de dos personas para revelar su afinidad: qué energías comparten, dónde fluye la relación y dónde conviene poner conciencia.</p>
 <p>No se trata de saber si una relación va a "funcionar" o no, sino de entenderla mejor: conocer las fortalezas del vínculo y los retos que pide trabajar. Es una de las consultas más buscadas en numerología.</p>
@@ -68,7 +68,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
       { href: '/mi-camino-de-vida', title: 'Calcula tu camino de vida', description: 'El propósito con el que llegaste.' },
       { href: '/numerologia', title: 'Explora la numerología', description: 'Todas las herramientas en un lugar.' }
     ],
-    sourceUrl: 'https://numerologia-cotidiana.com/para-que-sirve-la-numerologia/',
+    sourceUrl: 'https://www.numerologia-cotidiana.com/para-que-sirve-la-numerologia/',
     html: `
 <p>La numerología es como un mapa de carreteras: te muestra los caminos posibles, pero nunca decide por ti. Es una herramienta para redescubrir las claves que rigen tu desarrollo personal y darte un marco de referencia propio.</p>
 <h2>Una brújula para reconectar contigo</h2>
@@ -98,7 +98,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
       { href: '/significado-numero-del-alma', title: 'Calcula tu Número del Alma', description: 'Lo que tu corazón anhela.' },
       { href: '/calculadoras/expresion', title: 'Tus números del nombre', description: 'Expresión, alma y personalidad.' }
     ],
-    sourceUrl: 'https://numerologia-cotidiana.com/como-calcular-el-numero-de-nuestra-alma/',
+    sourceUrl: 'https://www.numerologia-cotidiana.com/como-calcular-el-numero-de-nuestra-alma/',
     html: `
 <p>Las vocales de tu nombre guardan una de las informaciones más valiosas de tu numerología: revelan lo que tu alma vino a experimentar en esta vida. El número que resulta de sumarlas se conoce como el Anhelo del Alma.</p>
 <h2>Qué es el Número del Alma</h2>
@@ -127,7 +127,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
       { href: '/ano-personal', title: 'Calcula tu Año Personal', description: 'El tema central de tu año.' },
       { href: '/la-brujula-numerologica', title: 'La Brújula Numerológica', description: 'Tu año, mes, semana y día.' }
     ],
-    sourceUrl: 'https://numerologia-cotidiana.com/numerologia-cotidiana-horoscopo-ano-personal/',
+    sourceUrl: 'https://www.numerologia-cotidiana.com/numerologia-cotidiana-horoscopo-ano-personal/',
     html: `
 <p>El Año Personal es la vibración numerológica que te acompaña durante todo un año, del 1 de enero al 31 de diciembre. Saber cuál es te permite anticipar tus decisiones y avanzar con dirección, en lugar de ser "vivido por la vida".</p>
 <h2>Qué es el Año Personal</h2>
@@ -156,7 +156,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
       { href: '/significado-los-numeros', title: 'Significado de los números', description: 'La esencia de cada vibración.' },
       { href: '/pinaculo', title: 'Calcula tu pináculo', description: 'Tu mapa numerológico completo.' }
     ],
-    sourceUrl: 'https://numerologia-cotidiana.com/la-diferencia-de-nacer-un-dia-11-o-29/',
+    sourceUrl: 'https://www.numerologia-cotidiana.com/la-diferencia-de-nacer-un-dia-11-o-29/',
     html: `
 <p>Nacer un día 11 o un día 29 no es lo mismo, aunque ambos reduzcan al número 2. La diferencia está en la energía que cada uno carga y en la forma en que la expresas.</p>
 <h2>El número 11: inteligencia y sensibilidad</h2>
@@ -183,7 +183,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
       { href: '/compatibilidad-numerologica', title: 'Calcula tu compatibilidad', description: 'La afinidad entre dos personas.' },
       { href: '/mi-camino-de-vida', title: 'Tu camino de vida', description: 'El punto de partida de tu carta.' }
     ],
-    sourceUrl: 'https://numerologia-cotidiana.com/como-se-relacionan-los-numeros-en-pareja/',
+    sourceUrl: 'https://www.numerologia-cotidiana.com/como-se-relacionan-los-numeros-en-pareja/',
     html: `
 <p>La sinastría numerológica estudia la compatibilidad entre dos personas. Aunque se usa sobre todo en el amor, sirve para cualquier vínculo: padres e hijos, socios, jefe y colaborador o amistades.</p>
 <h2>Cómo se calcula el número de pareja</h2>
@@ -212,7 +212,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
       { href: '/significado-de-tu-nombre', title: 'Número del nombre', description: 'La vibración de un nombre.' },
       { href: '/pinaculo', title: 'Calcula tu pináculo', description: 'Tu mapa de fortalezas.' }
     ],
-    sourceUrl: 'https://numerologia-cotidiana.com/como-volver-tu-negocio-un-exito/',
+    sourceUrl: 'https://www.numerologia-cotidiana.com/como-volver-tu-negocio-un-exito/',
     html: `
 <p>Hay personas que trabajan sin descanso, con inteligencia y disciplina, y aun así no alcanzan la estabilidad que buscan. ¿Qué falta para que el esfuerzo se convierta en resultados?</p>
 <h2>La numerología como herramienta de negocio</h2>
@@ -241,7 +241,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
       { href: '/vibraciones-colectivas', title: 'Vibraciones colectivas', description: 'La energía universal de hoy.' },
       { href: '/ano-personal', title: 'Tu año personal', description: 'Tu energía dentro del año.' }
     ],
-    sourceUrl: 'https://numerologia-cotidiana.com/2026-ano-universal-1/',
+    sourceUrl: 'https://www.numerologia-cotidiana.com/2026-ano-universal-1/',
     html: `
 <p>Además de tu Año Personal, existe una energía que vivimos todos a la vez: el Año Universal. En 2026 es un 1, el número de los comienzos.</p>
 <h2>Qué es un Año Universal</h2>
@@ -270,7 +270,7 @@ export const SAMPLE_POSTS: SamplePost[] = [
       { href: '/mi-camino-de-vida', title: 'Tu camino de vida', description: 'Tu propósito esencial.' },
       { href: '/la-brujula-numerologica', title: 'La Brújula Numerológica', description: 'Tus vibraciones de tiempo.' }
     ],
-    sourceUrl: 'https://numerologia-cotidiana.com/numerologia-personal/',
+    sourceUrl: 'https://www.numerologia-cotidiana.com/numerologia-personal/',
     html: `
 <p>El número personal revela tu verdadera esencia: esas características que solo conocen quienes están muy cerca de ti, tu identidad sin máscaras. Es el director de orquesta de todos los números de tu carta.</p>
 <h2>Qué es el número personal</h2>

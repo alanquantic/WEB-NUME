@@ -76,7 +76,7 @@ const NAV_ITEMS: readonly NavItem[] = [
       }
     ]
   },
-  { label: 'Tienda', href: 'https://tienda-nume-chi.vercel.app/' },
+  { label: 'Tienda', href: 'https://tienda.numerologia-cotidiana.com/' },
   { label: 'Blog', href: '/blog' },
   {
     label: 'Horóscopos',

@@ -2,12 +2,12 @@ import { SOCIAL_LINKS } from '@/lib/site-config'
 
 export const SITE = {
   name: 'Numerología Cotidiana',
-  url: 'https://numerologia-cotidiana.com',
+  url: 'https://www.numerologia-cotidiana.com',
   description:
     'Descubre tu mapa numerológico, tu pináculo personal y las energías del día con Numerología Cotidiana de Laura L. Rodríguez.',
-  logo: 'https://numerologia-cotidiana.com/images/logo_favicon.png',
+  logo: 'https://www.numerologia-cotidiana.com/images/logo_favicon.png',
   author: 'Laura L. Rodríguez',
-  authorImage: 'https://numerologia-cotidiana.com/images/mini-laura.png',
+  authorImage: 'https://www.numerologia-cotidiana.com/images/mini-laura.png',
   authorRole: 'Numeróloga y autora de Numerología Cotidiana'
 }
 
