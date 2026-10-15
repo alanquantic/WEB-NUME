@@ -8,6 +8,12 @@ type ClientApiInit = RequestInit & {
 
 let refreshPromise: Promise<void> | null = null
 
+export class ClientApiError extends Error {
+  constructor(public readonly status: number) {
+    super(`Request failed with status ${status}`)
+  }
+}
+
 async function runRefresh() {
   const response = await fetch(apiRoute('/api/auth/refresh'), {
     method: 'POST',
@@ -15,7 +21,7 @@ async function runRefresh() {
   })
 
   if (!response.ok) {
-    throw new Error('refresh_failed')
+    throw new ClientApiError(response.status)
   }
 }
 
@@ -44,7 +50,7 @@ export async function clientApiFetch<T>(
   }
 
   if (!response.ok) {
-    throw new Error(`Request failed with status ${response.status}`)
+    throw new ClientApiError(response.status)
   }
 
   if (response.status === 204) {

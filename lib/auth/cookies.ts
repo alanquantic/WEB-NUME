@@ -10,10 +10,23 @@ const baseCookie: Partial<ResponseCookie> = {
   path: '/'
 }
 
+/** Cookie lifetime follows the JWT; persisting it must not extend the session. */
+export function tokenMaxAge(token: string, fallback = 0): number {
+  try {
+    const payload = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')
+    const { exp } = JSON.parse(atob(payload)) as { exp?: unknown }
+    if (typeof exp === 'number' && Number.isFinite(exp)) {
+      return Math.max(0, Math.floor(exp - Date.now() / 1000))
+    }
+  } catch { /* Invalid tokens are still rejected by the API. */ }
+  return fallback
+}
+
 export function createAccessCookie(value: string): ResponseCookie {
   return {
     name: ACCESS_COOKIE,
     value,
+    maxAge: tokenMaxAge(value, 15 * 60),
     ...baseCookie
   } as ResponseCookie
 }
@@ -22,6 +35,7 @@ export function createRefreshCookie(value: string): ResponseCookie {
   return {
     name: REFRESH_COOKIE,
     value,
+    maxAge: tokenMaxAge(value, 7 * 24 * 60 * 60),
     ...baseCookie
   } as ResponseCookie
 }
