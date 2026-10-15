@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 import seoRedirects from '@/lib/seo/redirects.generated.json'
+import {
+  ACCESS_COOKIE,
+  REFRESH_COOKIE,
+  createAccessCookie,
+  createRefreshCookie,
+  clearAccessCookie,
+  clearRefreshCookie,
+  tokenMaxAge
+} from '@/lib/auth/cookies'
 
 const API_BASE_URL = (
   process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://api-nume-production.up.railway.app/api/v1'
@@ -16,8 +25,6 @@ const GONE = new Set<string>(seoRedirects.gone)
 const GONE_HTML =
   '<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Contenido eliminado</title></head>' +
   '<body><h1>Este contenido ya no existe</h1><p><a href="/">Ir a Numerología Cotidiana</a></p></body></html>'
-const ACCESS_COOKIE = process.env.AUTH_ACCESS_COOKIE ?? 'nume_at'
-const REFRESH_COOKIE = process.env.AUTH_REFRESH_COOKIE ?? 'nume_rt'
 
 type MeResponse = {
   id: string
@@ -63,37 +70,13 @@ async function refreshTokens(refreshToken: string) {
 }
 
 function setSessionCookies(response: NextResponse, payload: AuthSessionResponse) {
-  response.cookies.set({
-    name: ACCESS_COOKIE,
-    value: payload.access_token,
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    path: '/'
-  })
-  response.cookies.set({
-    name: REFRESH_COOKIE,
-    value: payload.refresh_token,
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    path: '/'
-  })
+  response.cookies.set(createAccessCookie(payload.access_token))
+  response.cookies.set(createRefreshCookie(payload.refresh_token))
 }
 
 function clearSessionCookies(response: NextResponse) {
-  response.cookies.set({
-    name: ACCESS_COOKIE,
-    value: '',
-    maxAge: 0,
-    path: '/'
-  })
-  response.cookies.set({
-    name: REFRESH_COOKIE,
-    value: '',
-    maxAge: 0,
-    path: '/'
-  })
+  response.cookies.set(clearAccessCookie())
+  response.cookies.set(clearRefreshCookie())
 }
 
 // Subrutas de /perfil reservadas a admins (gestión de contenido y usuarios).
@@ -141,77 +124,51 @@ export async function middleware(request: NextRequest) {
   const isProfilePath = pathname.startsWith('/perfil')
   const isAdminOnlyPath = ADMIN_ONLY_PREFIXES.some((prefix) => pathname.startsWith(prefix))
 
-  if (!isProfilePath) {
-    return NextResponse.next()
-  }
-
   const accessToken = request.cookies.get(ACCESS_COOKIE)?.value
   const refreshToken = request.cookies.get(REFRESH_COOKIE)?.value
-
-  if (!accessToken && !refreshToken) {
-    return redirectToLogin(request)
+  const unauthorized = (clear = false) => {
+    const response = isProfilePath ? redirectToLogin(request) : NextResponse.next()
+    if (clear) clearSessionCookies(response)
+    return response
   }
+  const unavailable = () => isProfilePath
+    ? NextResponse.json({ message: 'No se pudo validar la sesión. Inténtalo de nuevo.' }, { status: 503 })
+    : NextResponse.next()
 
-  let meResponse: Response | null = null
+  if (!accessToken && !refreshToken) return unauthorized()
+  // Public pages also renew expired sessions before rendering their header.
+  if (!isProfilePath && accessToken && tokenMaxAge(accessToken) > 60) return NextResponse.next()
 
-  if (accessToken) {
-    meResponse = await fetchMe(accessToken)
-  }
+  try {
+    let meResponse = accessToken ? await fetchMe(accessToken) : null
+    if (meResponse && !meResponse.ok && meResponse.status !== 401) return unavailable()
+    let refreshed: AuthSessionResponse | null = null
 
-  if (!meResponse || meResponse.status === 401) {
-    if (!refreshToken) {
-      return redirectToLogin(request)
+    if (!meResponse || meResponse.status === 401) {
+      if (!refreshToken) return unauthorized()
+      const refreshResponse = await refreshTokens(refreshToken)
+      if (!refreshResponse.ok) {
+        return refreshResponse.status === 401 ? unauthorized(true) : unavailable()
+      }
+      refreshed = (await refreshResponse.json()) as AuthSessionResponse
+      meResponse = await fetchMe(refreshed.access_token)
     }
 
-    const refreshResponse = await refreshTokens(refreshToken)
-    if (!refreshResponse.ok) {
-      const redirect = redirectToLogin(request)
-      clearSessionCookies(redirect)
-      return redirect
-    }
-
-    const refreshed = (await refreshResponse.json()) as AuthSessionResponse
-    meResponse = await fetchMe(refreshed.access_token)
-
-    if (!meResponse.ok) {
-      const redirect = redirectToLogin(request)
-      clearSessionCookies(redirect)
-      return redirect
-    }
-
+    if (!meResponse.ok) return meResponse.status === 401 ? unauthorized(true) : unavailable()
     const me = (await meResponse.json()) as MeResponse
-
-    // Propaga los tokens nuevos al MISMO request para que los Server Components
-    // (y sus fetch al backend) usen el access token fresco en este render, en
-    // lugar del expirado. Sin esto, la petición del borde de expiración
-    // renderizaría con 401 y rompería la página.
-    request.cookies.set(ACCESS_COOKIE, refreshed.access_token)
-    request.cookies.set(REFRESH_COOKIE, refreshed.refresh_token)
-    const nextResponse = NextResponse.next({
-      request: { headers: request.headers }
-    })
-    setSessionCookies(nextResponse, refreshed)
-
-    if (isAdminOnlyPath && me.role !== 'admin') {
-      return redirectToHome(request)
+    if (refreshed) {
+      request.cookies.set(ACCESS_COOKIE, refreshed.access_token)
+      request.cookies.set(REFRESH_COOKIE, refreshed.refresh_token)
     }
-
-    return nextResponse
+    const response = isAdminOnlyPath && me.role !== 'admin'
+      ? redirectToHome(request)
+      : NextResponse.next({ request: { headers: request.headers } })
+    if (refreshed) setSessionCookies(response, refreshed)
+    return response
+  } catch {
+    // Network failures and 5xx/429 responses must not erase a valid refresh token.
+    return unavailable()
   }
-
-  if (!meResponse.ok) {
-    const redirect = redirectToLogin(request)
-    clearSessionCookies(redirect)
-    return redirect
-  }
-
-  const me = (await meResponse.json()) as MeResponse
-
-  if (isAdminOnlyPath && me.role !== 'admin') {
-    return redirectToHome(request)
-  }
-
-  return NextResponse.next()
 }
 
 export const config = {

@@ -3,7 +3,7 @@
 import { create } from 'zustand'
 
 import type { SafeUser } from '@/lib/api/contracts'
-import { clientApiFetch } from '@/lib/api/client'
+import { ClientApiError, clientApiFetch } from '@/lib/api/client'
 
 type SessionState = {
   user: SafeUser | null
@@ -26,8 +26,12 @@ export const useSessionStore = create<SessionState>((set) => ({
     try {
       const user = await clientApiFetch<SafeUser>('/auth/me')
       set({ user, isHydrated: true, isLoading: false })
-    } catch {
-      set({ user: null, isHydrated: true, isLoading: false })
+    } catch (error) {
+      if (error instanceof ClientApiError && error.status === 401) {
+        set({ user: null, isHydrated: true, isLoading: false })
+      } else {
+        set({ isHydrated: true, isLoading: false })
+      }
     }
   }
 }))
