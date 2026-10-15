@@ -7,7 +7,7 @@ import { OutboundLink } from '@/components/analytics/outbound-link'
 import { apiRoute } from '@/lib/api/route-url'
 import { cn } from '@/lib/utils'
 
-const TIENDA_URL = 'https://tienda-nume-chi.vercel.app/'
+const TIENDA_URL = 'https://tienda.numerologia-cotidiana.com/'
 
 type Bloque = { titulo?: string; tipo: 'parrafos' | 'lista'; contenido: string[] }
 

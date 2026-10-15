@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { ToolPage } from '@/components/content/tool-page'
 import type { HoroscopoMesContenido } from '@/lib/horoscopos/data'
 
-const TIENDA_URL = 'https://tienda-nume-chi.vercel.app/'
+const TIENDA_URL = 'https://tienda.numerologia-cotidiana.com/'
 
 type Props = {
   numero: string

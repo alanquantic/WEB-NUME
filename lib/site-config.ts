@@ -1,4 +1,4 @@
-export const STORE_URL = 'https://tienda-nume-chi.vercel.app/'
+export const STORE_URL = 'https://tienda.numerologia-cotidiana.com/'
 
 export type SocialId = 'facebook' | 'instagram' | 'youtube' | 'tiktok'
 
