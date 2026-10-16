@@ -5,6 +5,7 @@ import { UserEditForm } from '@/components/admin/user-edit-form'
 import { MembershipTierBadge } from '@/components/memberships/membership-tier-badge'
 import { Badge } from '@/components/ui/badge'
 import { ApiError } from '@/lib/api/errors'
+import { getServerSessionUser } from '@/lib/auth/session'
 import { getUserById } from '@/lib/api/users.server'
 
 export default async function ProfileUserDetailPage({
@@ -24,6 +25,13 @@ export default async function ProfileUserDetailPage({
 
     throw error
   }
+
+  // El middleware ya exige rol admin para /perfil/usuarios; esto es defensa
+  // en profundidad para que el UI oculte el reset de contraseña si por alguna
+  // razón se llegó sin rol admin, y para distinguir "self vs otro usuario".
+  const sessionUser = await getServerSessionUser()
+  const canChangePassword =
+    sessionUser?.role === 'admin' && sessionUser.id !== user.id
 
   return (
     <div className="grid gap-6">
@@ -49,7 +57,7 @@ export default async function ProfileUserDetailPage({
         </p>
       </div>
 
-      <UserEditForm user={user} />
+      <UserEditForm user={user} canChangePassword={canChangePassword} />
     </div>
   )
 }

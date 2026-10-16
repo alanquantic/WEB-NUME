@@ -29,3 +29,12 @@ export async function deleteUser(id: string): Promise<void> {
     method: 'DELETE'
   })
 }
+
+// Reset de contraseña hecho por un admin sobre otro usuario. El backend valida
+// rol admin y rechaza el intento de usarlo sobre la propia cuenta del admin.
+export async function adminSetUserPassword(id: string, password: string): Promise<void> {
+  await clientApiFetch<{ message: string }>(`/users/${id}/password`, {
+    method: 'PATCH',
+    body: JSON.stringify({ password })
+  })
+}
