@@ -13,7 +13,7 @@ export default function HomePage() {
   return (
     <div className="pb-4">
       <HeroBannerSlider />
-      <ScrollReveal>
+      <ScrollReveal className="home-calculator-reveal">
         <NumerologyMapSection />
       </ScrollReveal>
       <ScrollReveal delay={80}>

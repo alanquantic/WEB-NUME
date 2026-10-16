@@ -19,9 +19,9 @@ type Banner = {
 // Banners 1920x600 de public/images/slider. El orden define el orden del slider.
 const BANNERS: Banner[] = [
   {
-    src: banner1,
-    href: 'https://tienda.numerologia-cotidiana.com/productos/libro-numerologia-cotidiana',
-    alt: 'Nuevo libro Numerología Cotidiana, edición limitada: un libro para reconectar con la sabiduría de los números'
+    src: bannerAgenda2027,
+    href: 'https://tienda.numerologia-cotidiana.com/productos/agenda-numerologica-2027',
+    alt: 'Agenda Numerológica 2027 física en preventa a $890 más gastos de envío, del 10 al 31 de octubre'
   },
   {
     src: banner2,
@@ -29,9 +29,9 @@ const BANNERS: Banner[] = [
     alt: 'Taller online Numerología de Parejas: ¿qué tipo de relación estás construyendo?'
   },
   {
-    src: bannerAgenda2027,
-    href: 'https://tienda.numerologia-cotidiana.com/productos/agenda-numerologica-2027',
-    alt: 'Agenda Numerológica 2027 física en preventa a $890 más gastos de envío, del 10 al 31 de octubre'
+    src: banner1,
+    href: 'https://tienda.numerologia-cotidiana.com/productos/libro-numerologia-cotidiana',
+    alt: 'Nuevo libro Numerología Cotidiana, edición limitada: un libro para reconectar con la sabiduría de los números'
   }
 ]
 
