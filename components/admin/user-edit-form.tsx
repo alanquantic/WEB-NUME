@@ -23,10 +23,18 @@ import type {
   SafeUser,
   UpdateUserInput
 } from '@/lib/api/contracts'
-import { deleteUser, updateUser } from '@/lib/api/users.client'
+import { adminSetUserPassword, deleteUser, updateUser } from '@/lib/api/users.client'
 import { cn } from '@/lib/utils'
 
-type UserEditFormProps = { user: SafeUser }
+type UserEditFormProps = {
+  user: SafeUser
+  // Verdadero solo cuando el usuario en sesión es admin y editamos a otro
+  // usuario (nunca a sí mismo). El middleware ya restringe /perfil/usuarios
+  // a admins; este flag solo decide si mostramos el reset de contraseña.
+  canChangePassword?: boolean
+}
+
+const passwordMinLength = 8
 
 type FormState = {
   email: string
@@ -110,13 +118,60 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   )
 }
 
-export function UserEditForm({ user }: UserEditFormProps) {
+export function UserEditForm({ user, canChangePassword = false }: UserEditFormProps) {
   const router = useRouter()
   const [form, setForm] = useState<FormState>(() => buildInitialState(user))
   const [feedback, setFeedback] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
   const [isDeleting, startDeleting] = useTransition()
+
+  // Reset de contraseña (admin -> otro usuario). Vive aparte del form principal
+  // para no mezclar su submit con el PATCH de perfil.
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [passwordError, setPasswordError] = useState<string | null>(null)
+  const [passwordFeedback, setPasswordFeedback] = useState<string | null>(null)
+  const [isResettingPassword, startResetPassword] = useTransition()
+
+  function handleResetPassword() {
+    setPasswordError(null)
+    setPasswordFeedback(null)
+
+    if (newPassword.length < passwordMinLength) {
+      setPasswordError(`La contraseña debe tener al menos ${passwordMinLength} caracteres.`)
+      return
+    }
+    if (newPassword !== confirmPassword) {
+      setPasswordError('Las contraseñas no coinciden.')
+      return
+    }
+    if (
+      !window.confirm(
+        `¿Cambiar la contraseña de ${user.email}? Esto cerrará sus sesiones activas.`
+      )
+    ) {
+      return
+    }
+
+    startResetPassword(async () => {
+      try {
+        await adminSetUserPassword(user.id, newPassword)
+        setNewPassword('')
+        setConfirmPassword('')
+        setPasswordFeedback('Contraseña actualizada. Las sesiones activas del usuario se cerraron.')
+      } catch (caught) {
+        const message = caught instanceof Error ? caught.message : ''
+        if (message.includes('403')) {
+          setPasswordError('No tienes permisos para cambiar la contraseña de este usuario.')
+        } else if (message.includes('400')) {
+          setPasswordError('No puedes cambiar tu propia contraseña por aquí. Usa el flujo con código desde "Mi cuenta".')
+        } else {
+          setPasswordError('No fue posible actualizar la contraseña. Inténtalo de nuevo.')
+        }
+      }
+    })
+  }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -179,6 +234,68 @@ export function UserEditForm({ user }: UserEditFormProps) {
             onChange={(e) => setForm((p) => ({ ...p, membership_expires_at: e.target.value }))} />
         </div>
       </Section>
+
+      {canChangePassword ? (
+        <div className="grid gap-4 rounded-[2rem] border border-[hsl(var(--border))] bg-white p-6 shadow-panel">
+          <div className="grid gap-1">
+            <h2 className="font-display text-xl font-semibold">Contraseña</h2>
+            <p className="text-sm text-[hsl(var(--foreground))/0.6]">
+              Solo administradores. Al guardar se cerrarán las sesiones activas del usuario y se le notificará por correo.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-2">
+              <label className="text-sm font-semibold" htmlFor="new_password">
+                Nueva contraseña
+              </label>
+              <Input
+                id="new_password"
+                type="password"
+                autoComplete="new-password"
+                value={newPassword}
+                minLength={passwordMinLength}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
+              <span className="text-xs text-[hsl(var(--foreground))/0.6]">
+                Mínimo {passwordMinLength} caracteres.
+              </span>
+            </div>
+            <div className="grid gap-2">
+              <label className="text-sm font-semibold" htmlFor="new_password_confirm">
+                Confirmar contraseña
+              </label>
+              <Input
+                id="new_password_confirm"
+                type="password"
+                autoComplete="new-password"
+                value={confirmPassword}
+                minLength={passwordMinLength}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
+          </div>
+          {passwordFeedback ? (
+            <p className="rounded-2xl bg-[hsl(var(--secondary))] px-4 py-3 text-sm font-medium text-white">
+              {passwordFeedback}
+            </p>
+          ) : null}
+          {passwordError ? (
+            <p className="rounded-2xl bg-[hsl(var(--danger))/0.12] px-4 py-3 text-sm font-medium text-[hsl(var(--danger))]">
+              {passwordError}
+            </p>
+          ) : null}
+          <div>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={handleResetPassword}
+              disabled={isResettingPassword || !newPassword || !confirmPassword}
+            >
+              {isResettingPassword ? 'Actualizando…' : 'Actualizar contraseña'}
+            </Button>
+          </div>
+        </div>
+      ) : null}
 
       <Section title="Datos personales">
         <ProfileFields value={form.profile} onChange={(profile) => setForm((p) => ({ ...p, profile }))} />
