@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { OutboundLink } from '@/components/analytics/outbound-link'
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
 import { STORE_URL } from '@/lib/site-config'
-import storeBanner from '@/public/images/main-banner/conoce-nuestra-tienda.png'
+import storeBanner from '@/public/images/main-banner/agenda-numerologica-2027-preventa.png'
 
 export function StoreSection() {
   return (
@@ -19,7 +19,7 @@ export function StoreSection() {
           >
             <Image
               src={storeBanner}
-              alt="Conoce nuestra tienda: agendas, membresías, software de numerología, reportes numerológicos, cursos online y grabados. Compras seguras en línea."
+              alt="Agenda numerológica 2027 física. Preventa por $890 más gastos de envío, del 10 al 31 de octubre."
               sizes="(min-width: 1280px) 1168px, 100vw"
               className="mx-auto h-auto w-full"
             />

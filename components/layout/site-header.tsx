@@ -295,7 +295,7 @@ function Brand() {
       <span className="leading-tight">
         <span className="block text-gradient-brand">numerologia</span>
         <span className="block text-xs font-medium text-foreground/60">
-          cotidiana
+          cotidiana®
         </span>
       </span>
     </Link>
