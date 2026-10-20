@@ -10,6 +10,7 @@ import {
   BagIcon,
   ChevronLeftIcon,
   FileTextIcon,
+  GiftIcon,
   HomeIcon,
   LayersIcon,
   SidebarIcon,
@@ -30,6 +31,7 @@ export type NavIconName =
   | 'taxonomy'
   | 'users'
   | 'banner'
+  | 'promo'
 
 export type NavItem = { href: Route; label: string; icon?: NavIconName }
 export type NavSection = { title?: string; items: NavItem[] }
@@ -43,7 +45,8 @@ const iconMap: Record<NavIconName, ComponentType<SVGProps<SVGSVGElement>>> = {
   pages: LayersIcon,
   taxonomy: TagIcon,
   users: UsersIcon,
-  banner: SidebarIcon
+  banner: SidebarIcon,
+  promo: GiftIcon
 }
 
 function isActive(pathname: string, href: string): boolean {

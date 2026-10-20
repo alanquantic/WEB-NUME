@@ -7,6 +7,7 @@ import { SessionBootstrap } from '@/components/auth/session-bootstrap'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { SiteHeader } from '@/components/layout/site-header'
 import { TopBar } from '@/components/layout/top-bar'
+import { PromoProductToast } from '@/components/promo/promo-product-toast'
 import { JsonLd } from '@/components/seo/json-ld'
 import { organizationJsonLd, websiteJsonLd } from '@/lib/seo'
 import '@/app/globals.css'
@@ -70,6 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteHeader />
         <main>{children}</main>
         <SiteFooter />
+        <PromoProductToast />
         <ConsentBanner />
       </body>
     </html>
