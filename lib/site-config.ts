@@ -1,5 +1,9 @@
 export const STORE_URL = 'https://tienda.numerologia-cotidiana.com/'
 
+export function storeProductUrl(slug: string): string {
+  return `${STORE_URL}productos/${encodeURIComponent(slug)}`
+}
+
 export type SocialId = 'facebook' | 'instagram' | 'youtube' | 'tiktok'
 
 export type SocialLink = {

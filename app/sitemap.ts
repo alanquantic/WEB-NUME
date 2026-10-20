@@ -50,7 +50,8 @@ const STATIC_ROUTES = [
   '/blog',
   '/categorias',
   '/directorio',
-  '/membresias'
+  '/membresias',
+  '/paginas/aviso-de-privacidad'
 ]
 
 // Se regenera cada hora para incluir los posts nuevos del blog.
