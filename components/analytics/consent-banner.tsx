@@ -47,7 +47,7 @@ export function ConsentBanner() {
           <p className="mt-1 leading-6">
             Utilizamos cookies para analizar el uso del sitio y mejorar tu experiencia.
             Puedes aceptarlas o rechazar las opcionales.{' '}
-            <a href="/paginas/politica-de-privacidad" className="underline">
+            <a href="/paginas/aviso-de-privacidad" className="underline">
               Más información
             </a>
             .

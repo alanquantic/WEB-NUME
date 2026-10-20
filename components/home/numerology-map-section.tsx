@@ -353,14 +353,14 @@ export function NumerologyMapSection() {
                     type="button"
                     onClick={handleCalculate}
                     disabled={!isFormComplete || isPending}
-                    className="inline-flex h-11 flex-1 items-center justify-center rounded-full bg-gradient-brand px-5 text-sm font-semibold text-white shadow-[0_14px_30px_hsl(var(--primary)/0.24)] transition hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:scale-100"
+                    className="inline-flex h-11 shrink-0 items-center justify-center rounded-full bg-gradient-brand px-5 text-sm font-semibold text-white shadow-[0_14px_30px_hsl(var(--primary)/0.24)] transition hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:scale-100 sm:flex-1"
                   >
                     {isPending ? 'Calculando...' : 'Calcular'}
                   </button>
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="inline-flex h-11 items-center justify-center rounded-full border border-primary/25 bg-white/55 px-6 text-sm font-semibold text-primary transition hover:bg-white/75 dark:border-white/34 dark:bg-white/10 dark:text-white/84 dark:hover:bg-white/16"
+                    className="inline-flex h-11 shrink-0 items-center justify-center rounded-full border border-primary/25 bg-white/55 px-6 text-sm font-semibold text-primary transition hover:bg-white/75 dark:border-white/34 dark:bg-white/10 dark:text-white/84 dark:hover:bg-white/16"
                   >
                     Borrar
                   </button>
@@ -368,8 +368,6 @@ export function NumerologyMapSection() {
                 {isCalculated && calculated ? (
                   <a
                     href={`/mi-mapa-numerologico?nombre=${encodeURIComponent(calculated.fullName)}&nacimiento=${encodeURIComponent(calculated.birthDate)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="animate-result-pop inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[hsl(var(--accent))] px-5 text-[0.95rem] font-bold uppercase tracking-[0.04em] text-[hsl(263_35%_16%)] shadow-[0_0_0_3px_hsl(var(--accent)/0.28),0_16px_38px_hsl(var(--accent)/0.45)] transition hover:scale-[1.03] hover:bg-[hsl(var(--accent)/0.9)]"
                   >
                     <Sparkles size={18} aria-hidden /> Quiero saber más
@@ -484,7 +482,10 @@ export function NumerologyMapSection() {
                 Identidad, ciclos y retos en un solo mapa
               </p>
             </div>
-            <div className="mt-5 rounded-[1.65rem] border border-border/60 bg-[hsl(var(--primary-soft)/0.45)] p-3 shadow-[0_16px_38px_hsl(var(--primary)/0.09)] transition duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_22px_46px_hsl(var(--primary)/0.14)]">
+            <p className="mt-5 rounded-2xl bg-primary/10 px-4 py-3 text-center text-sm font-bold leading-relaxed text-primary">
+              Toca o pasa el cursor sobre cada número para conocer su significado.
+            </p>
+            <div className="mt-3 rounded-[1.65rem] border border-border/60 bg-[hsl(var(--primary-soft)/0.45)] p-3 shadow-[0_16px_38px_hsl(var(--primary)/0.09)] transition duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_22px_46px_hsl(var(--primary)/0.14)]">
               <div className="relative rounded-[1.35rem] bg-white">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -492,7 +493,7 @@ export function NumerologyMapSection() {
                   alt="Vista del pináculo"
                   className="h-full w-full rounded-[1.35rem] object-cover"
                 />
-                <div className="absolute inset-0">
+                <div className="absolute inset-0 isolate">
                     {(
                       Object.entries(PINNACLE_POSITIONS) as Array<[PinnacleLetter, string]>
                     ).map(([letter, positionClassName]) => {
@@ -517,7 +518,7 @@ export function NumerologyMapSection() {
                           onFocus={() => setActivePinnacleTooltip(letter)}
                           onBlur={() => setActivePinnacleTooltip(null)}
                           onClick={() => setActivePinnacleTooltip(letter)}
-                          className={`absolute inline-flex h-[1.85rem] w-[1.85rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full font-display text-[0.55rem] font-semibold leading-none text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)] outline-none focus-visible:ring-2 focus-visible:ring-white sm:h-[2.1rem] sm:w-[2.1rem] sm:text-[1.08rem] ${positionClassName}`}
+                          className={`absolute inline-flex h-[1.85rem] w-[1.85rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full font-display text-[0.55rem] font-semibold leading-none text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)] outline-none focus-visible:ring-2 focus-visible:ring-white sm:h-[2.1rem] sm:w-[2.1rem] sm:text-[1.08rem] ${tooltipIsActive ? 'z-20' : 'z-0'} ${positionClassName}`}
                         >
                           {isCalculated ? results.pinnacleValues[letter] ?? '' : (
                             <span className="sr-only">{letter}</span>
@@ -544,9 +545,6 @@ export function NumerologyMapSection() {
                   </div>
               </div>
             </div>
-            <p className="mt-3 text-xs text-[hsl(var(--gray))]">
-              Pasa el cursor sobre cada número para conocer su significado.
-            </p>
             <div className="mt-4 flex flex-wrap justify-center gap-2 text-[0.65rem] font-semibold text-[#693061]">
               {[
                 ['Identidad', 'bg-[rgb(181,148,176)]'],
@@ -561,7 +559,7 @@ export function NumerologyMapSection() {
             </div>
             <Link
               href="/pinaculo"
-              className="mt-auto inline-flex items-center justify-center gap-2 pt-5 text-sm font-semibold text-[#693061] underline-offset-4 transition hover:gap-3 hover:underline"
+              className="mt-5 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-gradient-brand px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_20px_hsl(var(--primary)/0.2)] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               {isCalculated ? 'Interpretar mi pináculo' : 'Explorar mi pináculo'}
               <ArrowRight size={16} aria-hidden />

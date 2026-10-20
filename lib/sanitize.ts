@@ -1,13 +1,12 @@
 import 'server-only'
 
 import sanitizeHtmlLib from 'sanitize-html'
+import { STORE_URL } from '@/lib/site-config'
 
 const APP_URL = (
   process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.numerologia-cotidiana.com'
 ).replace(/\/$/, '')
-const STORE_API_URL = (
-  process.env.STORE_API_URL ?? 'https://tienda.numerologia-cotidiana.com'
-).replace(/\/$/, '')
+const STORE_ORIGIN = STORE_URL.replace(/\/$/, '')
 const LEGACY_STORE_ORIGINS = [
   'https://tienda.numerologia-cotidiana.com',
   'http://tienda.numerologia-cotidiana.com',
@@ -29,14 +28,16 @@ function rewriteContentUrls(dirty: string): string {
   let rewritten = dirty
 
   for (const origin of LEGACY_STORE_ORIGINS) {
-    rewritten = rewritten.replaceAll(origin, STORE_API_URL)
+    rewritten = rewritten.replaceAll(origin, STORE_ORIGIN)
   }
 
   for (const origin of LEGACY_APP_ORIGINS) {
     rewritten = rewritten.replaceAll(origin, APP_URL)
   }
 
-  return rewritten.replaceAll(`${STORE_API_URL}/product/`, `${STORE_API_URL}/productos/`)
+  return rewritten
+    .replaceAll(`${STORE_ORIGIN}/product/`, `${STORE_ORIGIN}/productos/`)
+    .replaceAll(`${STORE_ORIGIN}/producto/`, `${STORE_ORIGIN}/productos/`)
 }
 
 // Allowlist pensada para contenido editorial (posts/pages del API). Solo se
