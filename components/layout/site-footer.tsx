@@ -16,7 +16,7 @@ export function SiteFooter() {
           </Link>
           <p className="text-sm font-medium text-white/80">¡Una brújula para guiar tu vida!</p>
           <Link href="/paginas/aviso-de-privacidad" className="text-sm text-white/60 transition hover:text-white">
-            Aviso de Privacidad Integral
+            Aviso de Privacidad
           </Link>
         </div>
 

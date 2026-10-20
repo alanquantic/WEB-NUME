@@ -1,5 +1,6 @@
 import { getRelatedProducts, type RelatedProduct } from '@/lib/api/products'
 import { extractProductKeywords, resolveStoreCategories } from '@/lib/blog/related-store'
+import { storeProductUrl } from '@/lib/site-config'
 
 function formatPrice(price: string | null, currency: string): string | null {
   if (!price) return null
@@ -21,7 +22,7 @@ function ProductCardCompact({ product }: { product: RelatedProduct }) {
 
   return (
     <a
-      href={product.url}
+      href={storeProductUrl(product.slug)}
       target="_blank"
       rel="noopener noreferrer"
       className="group flex flex-col overflow-hidden rounded-[1.4rem] border border-border/70 bg-card shadow-panel transition hover:-translate-y-0.5 hover:shadow-glow"
@@ -53,7 +54,7 @@ function ProductCardGrid({ product }: { product: RelatedProduct }) {
 
   return (
     <a
-      href={product.url}
+      href={storeProductUrl(product.slug)}
       target="_blank"
       rel="noopener noreferrer"
       className="group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-border/70 bg-card shadow-panel transition hover:-translate-y-1 hover:shadow-glow"
