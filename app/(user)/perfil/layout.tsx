@@ -21,6 +21,7 @@ const adminSection: NavSection = {
     { href: '/perfil/pages', label: 'Páginas', icon: 'pages' },
     { href: '/perfil/taxonomias', label: 'Taxonomías', icon: 'taxonomy' },
     { href: '/perfil/banners', label: 'Banner de página', icon: 'banner' },
+    { href: '/perfil/productos-promo', label: 'Productos promo', icon: 'promo' },
     { href: '/perfil/usuarios', label: 'Usuarios', icon: 'users' }
   ]
 }

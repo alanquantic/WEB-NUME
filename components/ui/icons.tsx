@@ -85,6 +85,16 @@ export function BagIcon(props: IconProps) {
   )
 }
 
+export function GiftIcon(props: IconProps) {
+  return (
+    <svg {...base(props)} fill="none" stroke="currentColor" strokeWidth={2}>
+      <path d="M4 11h16v9H4v-9ZM3 7h18v4H3V7Z" strokeLinejoin="round" />
+      <path d="M12 7v13" strokeLinecap="round" />
+      <path d="M12 7c-1.5-3-5-3.5-5-1.5S10 7 12 7Zm0 0c1.5-3 5-3.5 5-1.5S14 7 12 7Z" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
 export function StarIcon(props: IconProps) {
   return (
     <svg {...base(props)} fill="none" stroke="currentColor" strokeWidth={2}>
