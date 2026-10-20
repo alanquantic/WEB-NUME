@@ -289,15 +289,15 @@ function Brand() {
   return (
     <Link
       href="/"
-      className="header-link-float group flex items-center justify-center gap-2 font-display text-xl font-semibold"
+      aria-label="Numerología Cotidiana, ir al inicio"
+      className="header-link-float group flex items-center justify-center"
     >
-      <img src="/images/logo_favicon.png" alt="" className="h-9 w-9" />
-      <span className="leading-tight">
-        <span className="block text-gradient-brand">numerologia</span>
-        <span className="block text-xs font-medium text-foreground/60">
-          cotidiana
-        </span>
-      </span>
+      {/* El SVG se usa como máscara para pintarlo con --primary (morado en
+          claro, lila en oscuro) sin duplicar el archivo por tema. */}
+      <span
+        aria-hidden
+        className="block aspect-[330/81] h-9 bg-primary [mask:url('/images/logo-numerologia-cotidiana.svg')_center/contain_no-repeat] [-webkit-mask:url('/images/logo-numerologia-cotidiana.svg')_center/contain_no-repeat] sm:h-10"
+      />
     </Link>
   )
 }
