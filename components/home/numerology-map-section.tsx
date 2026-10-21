@@ -2,6 +2,9 @@
 
 import { useEffect, useState, useTransition } from 'react'
 import Link from 'next/link'
+import type { Route } from 'next'
+
+import { personalPagePath, type PersonalCategoriaKey } from '@/lib/personales/routes'
 
 import { ArrowRight, Sparkles } from 'lucide-react'
 
@@ -17,6 +20,8 @@ type ResultCard = {
   heading: string
   subtitle: string
   tone: 'essence' | 'mission' | 'year'
+  category: PersonalCategoriaKey
+  fallback: string
 }
 
 type FormState = {
@@ -61,18 +66,24 @@ const RESULT_CARDS: readonly ResultCard[] = [
     id: 'personal-number',
     heading: 'Mi esencia',
     subtitle: 'Número Personal',
+    category: 'numero-personal',
+    fallback: '/mi-camino-de-vida',
     tone: 'essence'
   },
   {
     id: 'soul-number',
     heading: 'Mi misión',
     subtitle: 'Número del Alma',
+    category: 'alma',
+    fallback: '/significado-numero-del-alma',
     tone: 'mission'
   },
   {
     id: 'personal-year',
     heading: 'Mi año 2026',
     subtitle: 'Año Personal',
+    category: 'ano-personal',
+    fallback: '/ano-personal',
     tone: 'year'
   }
 ] as const
@@ -410,6 +421,15 @@ export function NumerologyMapSection() {
                   <span className="mt-5 font-display text-5xl font-semibold leading-none sm:mt-6 sm:text-6xl">
                     {value}
                   </span>
+                  {isCalculated ? (
+                    <Link
+                      href={(personalPagePath(card.category, value) ?? card.fallback) as Route}
+                      aria-label={`Ver más sobre ${card.subtitle}: ${value}`}
+                      className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[hsl(var(--accent))] px-5 py-2 text-sm font-bold text-[#693061] shadow-md transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                    >
+                      Ver más <ArrowRight size={16} aria-hidden />
+                    </Link>
+                  ) : null}
                 </article>
               </ScrollReveal>
             )
@@ -440,12 +460,14 @@ export function NumerologyMapSection() {
               </div>
               <div className="mt-5 grid grid-cols-3 gap-2 text-center sm:mt-6 sm:gap-3">
                 {([
-                  { label: 'Día', value: results.personalDay },
-                  { label: 'Semana', value: results.personalWeek },
-                  { label: 'Mes', value: results.personalMonth }
+                  { label: 'Día', value: results.personalDay, category: 'dia-personal', fallback: '/dia-personal' },
+                  { label: 'Semana', value: results.personalWeek, category: 'semana', fallback: '/semana-personal-ok' },
+                  { label: 'Mes', value: results.personalMonth, category: 'mes-personal', fallback: '/mespersonal' }
                 ] as Array<{
                   label: EnergyLabel
                   value: number | string
+                  category: PersonalCategoriaKey
+                  fallback: string
                 }>).map((item) => (
                   <div
                     key={item.label}
@@ -459,6 +481,15 @@ export function NumerologyMapSection() {
                     <span className="mt-2 block text-[0.56rem] font-semibold uppercase tracking-[0.04em] text-[hsl(263_35%_18%)]/72 dark:text-white/72 sm:text-[0.6rem] sm:tracking-[0.06em]">
                       {item.label}
                     </span>
+                    {isCalculated ? (
+                      <Link
+                        href={(personalPagePath(item.category, item.value) ?? item.fallback) as Route}
+                        aria-label={`Ver más sobre tu ${item.label.toLowerCase()} personal: ${item.value}`}
+                        className="mt-3 inline-flex min-h-11 items-center justify-center rounded-xl bg-[hsl(var(--accent))] px-2 py-2 text-xs font-bold text-[#693061] shadow-md transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                      >
+                        Ver más
+                      </Link>
+                    ) : null}
                   </div>
                 ))}
               </div>
