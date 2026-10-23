@@ -6,7 +6,6 @@ import Image, { type StaticImageData } from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 import { track } from '@/lib/analytics'
-import banner1 from '@/public/images/slider/1.png'
 import banner2 from '@/public/images/slider/2.png'
 import bannerAgenda2027 from '@/public/images/slider/agenda-2027.webp'
 
@@ -27,11 +26,6 @@ const BANNERS: Banner[] = [
     src: banner2,
     href: 'https://tienda.numerologia-cotidiana.com/productos/taller-numerologia-de-parejas',
     alt: 'Taller online Numerología de Parejas: ¿qué tipo de relación estás construyendo?'
-  },
-  {
-    src: banner1,
-    href: 'https://tienda.numerologia-cotidiana.com/productos/libro-numerologia-cotidiana',
-    alt: 'Nuevo libro Numerología Cotidiana, edición limitada: un libro para reconectar con la sabiduría de los números'
   }
 ]
 
