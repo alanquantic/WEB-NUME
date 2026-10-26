@@ -60,7 +60,15 @@ export function TopBar() {
     <div className="bg-gradient-brand text-white">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-3 px-4 py-3 text-center sm:flex-row sm:justify-between sm:gap-4 sm:px-6 sm:py-2 sm:text-left">
         <h2 className="text-2xl font-medium tracking-wide text-white/85 sm:text-3xl">
-          Energía Colectiva
+          <a
+            href={UNIVERSAL_ENERGY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Ver su significado en Numerathum"
+            className="rounded-lg underline-offset-4 outline-none transition-colors hover:text-white hover:underline focus-visible:ring-2 focus-visible:ring-white"
+          >
+            Energía Colectiva
+          </a>
         </h2>
 
         <div
