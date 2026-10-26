@@ -1,16 +1,23 @@
 import type { Metadata } from 'next'
 import type { Route } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 
 import { ArrowRight, Sparkles } from 'lucide-react'
 
+import { OutboundLink } from '@/components/analytics/outbound-link'
 import { StoreProductsSlider } from '@/components/content/store-products-slider'
 import { SparkleField } from '@/components/ui/sparkle-field'
 import { getRelatedProducts } from '@/lib/api/products'
 import { getMeaning } from '@/lib/numerology/meanings'
 import { getPersonalResumen } from '@/lib/personales/data'
 import type { PersonalCategoriaKey } from '@/lib/personales/routes'
+import bannerAgenda2027 from '@/public/images/slider/agenda-2027.webp'
 import Person from '@/resources/person'
+
+const AGENDA_2027_URL = 'https://tienda.numerologia-cotidiana.com/productos/agenda-numerologica-2027'
+const AGENDA_2027_ALT =
+  'Agenda Numerológica 2027 física en preventa a $890 más gastos de envío, del 10 al 31 de octubre'
 
 // Landing personalizada: los datos llegan por query desde el botón
 // "Quiero saber más" del home, así que no debe indexarse.
@@ -112,16 +119,25 @@ function SaberMasLink({
   )
 }
 
-function BannerPlaceholder() {
-  // Espacio reservado para un banner horizontal 1920x600; la imagen se
-  // integrará después. Mantener la proporción para evitar saltos de layout.
+function AgendaBanner() {
+  // Mismo banner 1920x600 de la Agenda 2027 que usa el slider del home.
   return (
-    <section aria-label="Espacio publicitario">
-      <div className="flex aspect-[1920/600] w-full items-center justify-center rounded-[2rem] border-2 border-dashed border-border bg-secondary/40">
-        <span className="px-4 text-center text-xs font-semibold uppercase tracking-[0.2em] text-foreground/40">
-          Espacio para banner · 1920 × 600
-        </span>
-      </div>
+    <section aria-label="Agenda Numerológica 2027">
+      <OutboundLink
+        href={AGENDA_2027_URL}
+        aria-label={`${AGENDA_2027_ALT} (abre la tienda en una pestaña nueva)`}
+        promotionId="mi_mapa_agenda_2027"
+        promotionName={AGENDA_2027_ALT}
+        creativeSlot="mi_mapa_banner"
+        className="block overflow-hidden rounded-[2rem] shadow-[0_22px_55px_hsl(var(--primary)/0.12)] outline-none transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_28px_65px_hsl(var(--primary)/0.2)] focus-visible:ring-4 focus-visible:ring-primary/60"
+      >
+        <Image
+          src={bannerAgenda2027}
+          alt={AGENDA_2027_ALT}
+          sizes="(min-width: 1024px) 976px, 100vw"
+          className="h-auto w-full"
+        />
+      </OutboundLink>
     </section>
   )
 }
@@ -267,7 +283,7 @@ export default async function Page({
           </div>
         </section>
 
-        <BannerPlaceholder />
+        <AgendaBanner />
 
         {/* ── Mi esencia ────────────────────────────────────────────────── */}
         <section
