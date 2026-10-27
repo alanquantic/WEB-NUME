@@ -114,6 +114,7 @@ infiere por el nombre.
 
 | Método | Ruta | Acceso | Uso |
 |---|---|---|---|
+| GET | `/promo-products/recommendations` | público | **Para otros sitios**: datos listos para pintar (ver abajo) |
 | GET | `/promo-products?active_only=true` | público | Lista para el aviso |
 | GET | `/promo-products` | público | Lista completa para el admin |
 | POST | `/promo-products` | admin | Upsert por `store_product_id` |
@@ -131,6 +132,83 @@ Body de POST:
   "product_url": "https://tienda.numerologia-cotidiana.com/productos/agenda-numerologica-2027",
   "product_type": "agenda", "is_active": true
 }
+```
+
+### Endpoint para consumir desde otros sitios
+
+`GET https://<api>/api/v1/promo-products/recommendations`
+
+Público, sin token, CORS abierto y con `Cache-Control: public, max-age=60`.
+Devuelve solo productos activos, en orden aleatorio, con el tipo ya resuelto
+(el elegido en el admin o, si no hay, el inferido por el nombre) y los precios
+ya formateados. El sitio que lo consume no necesita lógica propia.
+
+Parámetros opcionales:
+
+- `type`: filtra por uno o varios tipos separados por coma, p. ej.
+  `?type=reporte,reporte_ia`. Un tipo desconocido responde 400.
+- `limit`: máximo de productos (1–50), p. ej. `?limit=3`.
+
+Respuesta:
+
+```json
+{
+  "laura": {
+    "name": "Laura",
+    "title": "Laura te recomienda",
+    "avatar_url": "https://www.numerologia-cotidiana.com/images/mini-laura.png"
+  },
+  "data": [
+    {
+      "id": "bbf5f8a0-…",
+      "name": "Numerología en el amor",
+      "type": "reporte_ia",
+      "type_label": "Reporte con IA",
+      "image_url": "https://res.cloudinary.com/…/amor.jpg",
+      "price": "350.00",
+      "regular_price": "450.00",
+      "currency": "MXN",
+      "price_label": "$350",
+      "regular_price_label": "$450",
+      "url": "https://tienda.numerologia-cotidiana.com/productos/numerologia-en-el-amor"
+    }
+  ]
+}
+```
+
+- `type_label` es `null` cuando el tipo es `otro` (no mostrar etiqueta).
+- `regular_price` / `regular_price_label` son `null` si no hay oferta; si
+  vienen, mostrarlos tachados.
+- `avatar_url` se arma con `APP_URL` de la API (el sitio de NUME).
+
+Ejemplo mínimo en cualquier página (sin framework):
+
+```html
+<div id="laura-recomienda"></div>
+<script>
+  fetch('https://<api>/api/v1/promo-products/recommendations?limit=1')
+    .then((res) => res.json())
+    .then(({ laura, data }) => {
+      const item = data[0]
+      if (!item) return
+      const box = document.getElementById('laura-recomienda')
+      const link = document.createElement('a')
+      link.href = item.url
+      link.target = '_blank'
+      link.rel = 'noopener noreferrer'
+      link.innerHTML = `
+        <img src="${laura.avatar_url}" alt="Laura" width="56" height="56">
+        <strong></strong> <span class="tipo"></span>
+        <p class="nombre"></p> <p class="precio"></p>`
+      // textContent para no inyectar HTML que venga en los datos.
+      link.querySelector('strong').textContent = laura.title
+      link.querySelector('.tipo').textContent = item.type_label ?? ''
+      link.querySelector('.nombre').textContent = item.name
+      link.querySelector('.precio').textContent = item.price_label ?? ''
+      box.append(link)
+    })
+    .catch(() => {})
+</script>
 ```
 
 ### Tienda (externa)
@@ -178,17 +256,20 @@ handler que exige sesión de admin (no se expone el buscador al público).
 
 ### Opción B — sitio sin backend propio (estático, WordPress, landing)
 
-El aviso solo necesita una lista JSON con la forma de `/api/promo-products`.
-Se puede apuntar a la API de NUME (`GET /api/v1/promo-products?active_only=true`
-es público) y administrar los productos desde el panel de NUME, o servir un
-JSON estático. En ese caso:
+Lo más simple: consumir `GET /api/v1/promo-products/recommendations` de la API
+de NUME (sección 4) y administrar los productos desde el panel de NUME. Así
+todos los sitios muestran las mismas recomendaciones sin base de datos propia.
 
-- Cambiar el `fetch(apiRoute('/api/promo-products'))` del componente por la URL
-  del JSON (y quitar `apiRoute`, que solo existe por `trailingSlash` de Next).
-- Si se consume la API de NUME desde otro dominio, **agregar ese dominio a
-  CORS** en la API.
+- En el componente React, cambiar el `fetch(apiRoute('/api/promo-products'))`
+  por esa URL (y quitar `apiRoute`, que solo existe por `trailingSlash` de
+  Next). Los campos cambian de nombre: `url` en vez de `product_url`, y ya
+  vienen `type_label`, `price_label` y `regular_price_label`, así que se puede
+  quitar `formatPrice` y `promoProductTypeLabel`.
+- Hoy la API tiene CORS abierto (`app.enableCors()`). Si algún día se
+  restringe, **agregar el dominio del sitio** a la lista permitida.
 - Fuera de React, el componente se puede reescribir en vanilla JS: la lógica
-  es un `fetch` + `setTimeout` aleatorio + un contador en `sessionStorage`.
+  es un `fetch` + `setTimeout` aleatorio + un contador en `sessionStorage`
+  (ver el ejemplo mínimo de la sección 4).
 
 ### Dependencias del componente
 
