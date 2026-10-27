@@ -138,7 +138,27 @@ Body de POST:
 
 `GET https://<api>/api/v1/promo-products/recommendations`
 
-Público, sin token, CORS abierto y con `Cache-Control: public, max-age=60`.
+Sin token y con `Cache-Control: public, max-age=60`. **Solo responde a los
+sitios de la lista blanca** cuando la petición viene de un navegador:
+
+| Origen permitido |
+|---|
+| `https://numerathum.numerologia-cotidiana.com` |
+| `https://arithmax.numerologia-cotidiana.com` |
+
+- La lista vive en la variable `PROMO_RECOMMENDATIONS_ORIGINS` de la API
+  (orígenes separados por coma; la barra final se ignora). Para sumar un
+  sitio basta con agregarlo ahí y reiniciar la API, sin cambiar código.
+- Desde un origen permitido la API responde con
+  `Access-Control-Allow-Origin: <ese origen>`. Desde cualquier otro responde
+  **403** y sin cabeceras CORS, así que el navegador también lo bloquea.
+- Las peticiones **sin** cabecera `Origin` (servidor a servidor, curl) sí
+  pasan: `Origin` solo la manda el navegador y fuera de él se puede
+  falsificar, así que la lista blanca evita que otras páginas web muestren
+  las recomendaciones, pero no es autenticación. Si se necesitara cerrarlo
+  del todo, habría que añadir una API key.
+- El resto de la API mantiene CORS abierto; la lista solo aplica a este
+  endpoint.
 Devuelve solo productos activos, en orden aleatorio, con el tipo ya resuelto
 (el elegido en el admin o, si no hay, el inferido por el nombre) y los precios
 ya formateados. El sitio que lo consume no necesita lógica propia.
@@ -232,6 +252,7 @@ handler que exige sesión de admin (no se expone el buscador al público).
 | Variable | Dónde | Para qué |
 |---|---|---|
 | `STORE_API_URL` | WEB | Base de la tienda (default `https://tienda.numerologia-cotidiana.com`) |
+| `PROMO_RECOMMENDATIONS_ORIGINS` | API | Lista blanca de sitios para `/promo-products/recommendations` (default: Numerathum y Arithmax) |
 | `NEXT_PUBLIC_API_BASE_URL` | WEB | URL de la API propia (con `/api/v1`), leída en `lib/auth/session.ts` |
 | `DATABASE_URL` | API | Conexión a la BD donde vive `promo_products` |
 
@@ -265,8 +286,8 @@ todos los sitios muestran las mismas recomendaciones sin base de datos propia.
   Next). Los campos cambian de nombre: `url` en vez de `product_url`, y ya
   vienen `type_label`, `price_label` y `regular_price_label`, así que se puede
   quitar `formatPrice` y `promoProductTypeLabel`.
-- Hoy la API tiene CORS abierto (`app.enableCors()`). Si algún día se
-  restringe, **agregar el dominio del sitio** a la lista permitida.
+- **Agregar el dominio del sitio a `PROMO_RECOMMENDATIONS_ORIGINS`** en la API;
+  si no está en la lista, el navegador recibe 403.
 - Fuera de React, el componente se puede reescribir en vanilla JS: la lógica
   es un `fetch` + `setTimeout` aleatorio + un contador en `sessionStorage`
   (ver el ejemplo mínimo de la sección 4).
