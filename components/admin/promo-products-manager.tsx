@@ -5,7 +5,15 @@ import { useEffect, useState, useTransition } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { formatPrice, type PromoProduct, type StoreProduct } from '@/lib/api/promo-products'
+import {
+  formatPrice,
+  inferPromoProductType,
+  isPromoProductType,
+  PROMO_PRODUCT_TYPE_LABELS,
+  PROMO_PRODUCT_TYPES,
+  type PromoProduct,
+  type StoreProduct
+} from '@/lib/api/promo-products'
 import {
   addPromoProduct,
   deletePromoProduct,
@@ -58,7 +66,7 @@ function StoreSearch({
     setPendingId(product.id)
     setError(null)
     try {
-      await addPromoProduct(product)
+      await addPromoProduct(product, { isNew: !selectedIds.has(product.id) })
       onAdded()
     } catch {
       setError('No se pudo agregar el producto.')
@@ -149,6 +157,19 @@ function SelectedRow({ product, onChanged }: { product: PromoProduct; onChanged:
     })
   }
 
+  function changeType(value: string) {
+    if (!isPromoProductType(value)) return
+    setError(null)
+    startTransition(async () => {
+      try {
+        await updatePromoProduct(product.id, { product_type: value })
+        onChanged()
+      } catch {
+        setError('No se pudo guardar el tipo.')
+      }
+    })
+  }
+
   function handleDelete() {
     if (!window.confirm(`¿Quitar "${product.name}" de los productos promocionados?`)) return
     startTransition(async () => {
@@ -180,6 +201,22 @@ function SelectedRow({ product, onChanged }: { product: PromoProduct; onChanged:
           <p className="text-xs font-medium text-[hsl(var(--danger))]">{error}</p>
         ) : null}
       </div>
+      <label className="inline-flex items-center gap-2 text-sm">
+        Tipo
+        <select
+          value={product.product_type ?? inferPromoProductType(product.name)}
+          disabled={isPending}
+          onChange={(event) => changeType(event.target.value)}
+          title="Etiqueta que se muestra en “Laura te recomienda”"
+          className="h-9 rounded-xl border border-[hsl(var(--border))] bg-white px-2 text-sm"
+        >
+          {PROMO_PRODUCT_TYPES.map((type) => (
+            <option key={type} value={type}>
+              {PROMO_PRODUCT_TYPE_LABELS[type]}
+            </option>
+          ))}
+        </select>
+      </label>
       <label className="inline-flex items-center gap-2 text-sm">
         <input
           type="checkbox"
@@ -219,8 +256,9 @@ export function PromoProductsManager({ initialProducts }: { initialProducts: Pro
           Productos seleccionados ({activeCount} activos)
         </h2>
         <p className="mt-1 text-sm text-[hsl(var(--foreground))/0.7]">
-          En cada aviso se muestra uno de los productos activos al azar. Los
-          cambios pueden tardar hasta un minuto en verse en el sitio.
+          En cada aviso se muestra uno de los productos activos al azar, con su
+          tipo como etiqueta. Los cambios pueden tardar hasta un minuto en verse
+          en el sitio.
         </p>
         <ul className="mt-4 grid gap-3">
           {initialProducts.length === 0 ? (
