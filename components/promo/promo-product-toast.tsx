@@ -3,14 +3,21 @@
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { formatPrice, type PromoProduct } from '@/lib/api/promo-products'
+import { formatPrice, promoProductTypeLabel, type PromoProduct } from '@/lib/api/promo-products'
 import { apiRoute } from '@/lib/api/route-url'
 import { safeHref } from '@/lib/safe-url'
 import { cn } from '@/lib/utils'
 
 type ToastProduct = Pick<
   PromoProduct,
-  'id' | 'name' | 'image_url' | 'price' | 'regular_price' | 'currency' | 'product_url'
+  | 'id'
+  | 'name'
+  | 'image_url'
+  | 'price'
+  | 'regular_price'
+  | 'currency'
+  | 'product_url'
+  | 'product_type'
 >
 
 // Tiempos en ms. El primer aviso sale poco después de entrar; los siguientes,
@@ -133,11 +140,12 @@ export function PromoProductToast() {
   const href = safeHref(current.product_url)
   const price = formatPrice(current.price, current.currency)
   const regularPrice = formatPrice(current.regular_price, current.currency)
+  const typeLabel = promoProductTypeLabel(current)
 
   return (
     <div
       role="complementary"
-      aria-label="Producto recomendado"
+      aria-label={typeLabel ? `Producto recomendado: ${typeLabel}` : 'Producto recomendado'}
       aria-hidden={!visible}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -167,6 +175,11 @@ export function PromoProductToast() {
             <p className="text-[11px] font-semibold uppercase tracking-wide text-[hsl(263_67%_35%)]">
               Laura te recomienda
             </p>
+            {typeLabel ? (
+              <span className="mt-1 inline-flex rounded-full bg-[hsl(270_100%_96%)] px-2 py-0.5 text-[11px] font-semibold leading-4 text-[hsl(263_67%_35%)]">
+                {typeLabel}
+              </span>
+            ) : null}
             <p className="mt-0.5 line-clamp-2 text-sm font-semibold leading-snug">
               {current.name}
             </p>

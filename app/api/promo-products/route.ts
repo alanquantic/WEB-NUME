@@ -21,7 +21,8 @@ export async function GET() {
       price: product.price,
       regular_price: product.regular_price,
       currency: product.currency,
-      product_url: product.product_url
+      product_url: product.product_url,
+      product_type: product.product_type ?? null
     }))
     return NextResponse.json({ data })
   } catch {
