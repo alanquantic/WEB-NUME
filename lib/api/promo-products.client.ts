@@ -1,7 +1,12 @@
 'use client'
 
 import { clientApiFetch } from '@/lib/api/client'
-import type { PromoProduct, StoreProduct } from '@/lib/api/promo-products'
+import {
+  inferPromoProductType,
+  type PromoProduct,
+  type PromoProductType,
+  type StoreProduct
+} from '@/lib/api/promo-products'
 import { apiRoute } from '@/lib/api/route-url'
 
 export async function searchStoreProducts(query: string): Promise<StoreProduct[]> {
@@ -15,7 +20,9 @@ export async function searchStoreProducts(query: string): Promise<StoreProduct[]
   return json.data ?? []
 }
 
-export async function addPromoProduct(product: StoreProduct) {
+// `productType` solo se manda al agregar: al pulsar "Actualizar" se omite para
+// conservar el tipo que el admin eligió.
+export async function addPromoProduct(product: StoreProduct, options: { isNew: boolean }) {
   return clientApiFetch<PromoProduct>('/promo-products', {
     method: 'POST',
     body: JSON.stringify({
@@ -27,12 +34,18 @@ export async function addPromoProduct(product: StoreProduct) {
       regular_price: product.regular_price,
       currency: product.currency,
       product_url: product.url,
+      ...(options.isNew
+        ? { product_type: inferPromoProductType(product.name, product.category) }
+        : {}),
       is_active: true
     })
   })
 }
 
-export async function updatePromoProduct(id: string, input: { is_active: boolean }) {
+export async function updatePromoProduct(
+  id: string,
+  input: { is_active?: boolean; product_type?: PromoProductType | null }
+) {
   return clientApiFetch<PromoProduct>(`/promo-products/${id}`, {
     method: 'PATCH',
     body: JSON.stringify(input)
