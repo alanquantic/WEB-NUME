@@ -302,6 +302,14 @@ export type OrderItem = {
   plan_id: string | null
   sku: string | null
   name: string
+  category?: string | null
+  /** Internal costs for this entire order item, in cost_currency. Admin only. */
+  token_cost?: string | number | null
+  production_cost?: string | number | null
+  cost_currency?: string | null
+  /** URL supplied once this item's report is generated. */
+  report_url?: string | null
+  resend_email_id?: string | null
   description: string | null
   quantity: number
   unit_amount: string
@@ -312,6 +320,8 @@ export type OrderItem = {
 
 export type Order = {
   id: string
+  coupon_code?: string | null
+  resend_email_id?: string | null
   user_id: string | null
   subscription_id: string | null
   plan_id: string | null
