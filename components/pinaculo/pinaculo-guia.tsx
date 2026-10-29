@@ -212,11 +212,11 @@ export function PinaculoGuia() {
       <Section eyebrow="El origen" title="Pináculo Numerológico">
         <div className="grid gap-6 md:grid-cols-2 md:items-start">
           <Diagrama
-            src="/images/pinaculo/pinnacle.png"
-            alt="Diagrama del Pináculo Numerológico con las posiciones A a S"
-            w={565}
-            h={671}
-            caption="Estructura del Pináculo (posiciones A–S)"
+            src="/images/pinaculo/pinaculo-numeros.png"
+            alt="Ejemplo del Pináculo Numerológico con sus números"
+            w={309}
+            h={501}
+            caption="Ejemplo de un Pináculo Numerológico"
           />
           <div className="space-y-5">
             <Quote autor="Pitágoras">
