@@ -49,29 +49,27 @@ const LETTERS: Record<
   W: { nombre: 'Número de triplicidad', concepto: 'triplicidad', color: 'red' },
 }
 
-// Posición de cada letra sobre pinnacle.png (% del ancho/alto). Coordenadas
-// detectadas por análisis de píxeles de la imagen.
+// Posición de cada número sobre pinaculo-numeros.png (% del ancho/alto).
 const NODES: { key: string; x: number; y: number }[] = [
-  { key: 'H', x: 38.1, y: 11.9 },
-  { key: 'G', x: 38.1, y: 28.5 },
-  { key: 'J', x: 74.3, y: 31.2 },
-  { key: 'E', x: 24.1, y: 37.0 },
-  { key: 'I', x: 38.1, y: 39.4 },
-  { key: 'F', x: 52.1, y: 37.1 },
-  { key: 'A', x: 9.9, y: 48.5 },
-  { key: 'B', x: 38.1, y: 48.2 },
-  { key: 'C', x: 66.0, y: 48.1 },
-  { key: 'D', x: 93.6, y: 47.8 },
-  { key: 'K', x: 23.9, y: 60.0 },
-  { key: 'O', x: 38.1, y: 60.0 },
-  { key: 'L', x: 52.4, y: 60.0 },
-  { key: 'W', x: 6.2, y: 70.5 },
-  { key: 'M', x: 38.2, y: 70.6 },
-  { key: 'P', x: 15.0, y: 79.4 },
-  { key: 'N', x: 38.1, y: 79.3 },
-  { key: 'Q', x: 23.9, y: 87.9 },
-  { key: 'R', x: 38.1, y: 87.9 },
-  { key: 'S', x: 52.3, y: 87.9 },
+  { key: 'H', x: 51.13, y: 8.38 },
+  { key: 'G', x: 51.13, y: 19.16 },
+  { key: 'J', x: 82.52, y: 25.35 },
+  { key: 'E', x: 36.25, y: 31.34 },
+  { key: 'I', x: 51.13, y: 31.34 },
+  { key: 'F', x: 65.70, y: 31.34 },
+  { key: 'A', x: 21.68, y: 44.51 },
+  { key: 'B', x: 51.13, y: 44.51 },
+  { key: 'C', x: 79.94, y: 44.51 },
+  { key: 'D', x: 94.82, y: 44.51 },
+  { key: 'K', x: 36.25, y: 57.68 },
+  { key: 'O', x: 51.13, y: 57.68 },
+  { key: 'L', x: 65.70, y: 57.68 },
+  { key: 'M', x: 51.13, y: 69.66 },
+  { key: 'P', x: 21.68, y: 69.66 },
+  { key: 'N', x: 51.13, y: 80.44 },
+  { key: 'Q', x: 36.25, y: 91.42 },
+  { key: 'R', x: 51.13, y: 91.42 },
+  { key: 'S', x: 65.70, y: 91.42 },
 ]
 
 const RESULT_GROUPS: Record<
@@ -317,10 +315,10 @@ export function PinnacleCalculator({ isMember = false }: { isMember?: boolean })
             <div className="relative mx-auto w-full max-w-[380px] [container-type:inline-size]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/pinaculo/pinnacle.png"
+                src="/images/pinaculo/pinaculo-numeros.png"
                 alt="Diagrama de tu Pináculo Personal con tus números"
-                width={565}
-                height={671}
+                width={309}
+                height={501}
                 className="block h-auto w-full"
               />
               {NODES.map((node) => {
@@ -339,10 +337,10 @@ export function PinnacleCalculator({ isMember = false }: { isMember?: boolean })
                       left: `${node.x}%`,
                       top: `${node.y}%`,
                       backgroundColor: active ? undefined : NODE_COLORS[LETTERS[node.key].color],
-                      fontSize: '3.7cqw',
+                      fontSize: '4.5cqw',
                     }}
                     className={cn(
-                      'absolute flex aspect-square w-[9%] -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full font-display font-semibold leading-none text-white ring-2 transition',
+                      'absolute flex aspect-square w-[9.8%] -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full font-display font-semibold leading-none text-white ring-2 transition',
                       active ? 'z-10 scale-110 bg-[#693061] ring-white' : 'ring-white/70',
                     )}
                   >
