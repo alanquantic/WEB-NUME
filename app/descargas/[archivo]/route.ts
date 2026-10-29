@@ -14,7 +14,10 @@ export function GET(_request: Request, { params }: { params: { archivo: string }
     return new NextResponse('Archivo no encontrado', { status: 404 })
   }
 
-  const response = NextResponse.redirect(getDescargaUrl(descarga), 302)
+  const destino = descarga.rutaLocal
+    ? new URL(descarga.rutaLocal, _request.url)
+    : getDescargaUrl(descarga)
+  const response = NextResponse.redirect(destino, 302)
   response.headers.set('Cache-Control', 'no-store')
   return response
 }

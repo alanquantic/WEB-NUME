@@ -1,11 +1,13 @@
 // Descargas públicas con URL fija: /{slug}.pdf (rewrite en next.config.mjs) y
 // /descargas/{slug}.pdf redirigen al archivo actual en Cloudinary. Para reemplazar un PDF, súbelo en Cloudinary con el
 // MISMO public_id marcando "Overwrite" + "Invalidate": la URL del sitio no
-// cambia y este archivo no se toca. Para publicar uno nuevo, agrega una entrada.
+// cambia y este archivo no se toca. Los PDFs locales se guardan en public y
+// se indican con rutaLocal. Para publicar uno nuevo, agrega una entrada.
 
 const CLOUDINARY_CLOUD_NAME = 'du66hxu3k'
 
 export type Descarga = {
+  rutaLocal?: string
   // public_id en Cloudinary, sin extensión (ej. 'nume-media/descargas/guia').
   publicId: string
   // Nombre con el que se guarda el archivo en el equipo del usuario (sin .pdf).
@@ -14,6 +16,7 @@ export type Descarga = {
 
 export const DESCARGAS: Record<string, Descarga> = {
   'binomios-generales': {
+    rutaLocal: '/binomios-generales.pdf',
     publicId: 'nume-media/descargas/binomios-generales',
     nombreArchivo: 'Binomios-Generales'
   }
