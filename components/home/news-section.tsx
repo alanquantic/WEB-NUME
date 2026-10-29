@@ -87,12 +87,12 @@ export async function NewsSection() {
             {news.map((item, index) => (
               <ScrollReveal key={item.id} delay={80 + index * 70}>
                 <article className="group flex h-full flex-col overflow-hidden rounded-[1.9rem] border border-border/80 bg-card shadow-panel transition hover:-translate-y-1 hover:shadow-glow">
-                  <div className="aspect-[16/10] overflow-hidden bg-secondary/70">
+                  <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-secondary/70">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={item.imageSrc}
                       alt={item.imageAlt}
-                      className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                      className="absolute inset-0 block h-full w-full object-contain object-center p-3"
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-5">
