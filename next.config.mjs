@@ -23,6 +23,12 @@ const nextConfig = {
   // URLs con barra final, igual que el WordPress original (Next redirige
   // /ruta → /ruta/ y genera los <Link> con barra).
   trailingSlash: true,
+  async redirects() {
+    return [
+      // Carpeta de subidas del WordPress original.
+      { source: '/wp-content/uploads/', destination: '/binomios-generales.pdf', permanent: true }
+    ]
+  },
   async rewrites() {
     // Paginación del blog con la misma forma que el WordPress original.
     return [
