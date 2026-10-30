@@ -311,7 +311,7 @@ export function PinnacleCalculator({ isMember = false }: { isMember?: boolean })
 
           <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
           {/* Diagrama con los números del pináculo */}
-          <figure className="rounded-[1.5rem] border border-border/60 bg-white p-4 sm:p-6">
+          <figure className="min-w-0 rounded-[1.5rem] border border-border/60 bg-white p-4 sm:p-6">
             <div className="relative mx-auto w-full max-w-[380px] [container-type:inline-size]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -319,7 +319,7 @@ export function PinnacleCalculator({ isMember = false }: { isMember?: boolean })
                 alt="Diagrama de tu Pináculo Personal con tus números"
                 width={309}
                 height={501}
-                className="block h-auto w-full"
+                className="block h-auto w-full object-contain object-center"
               />
               {NODES.map((node) => {
                 const active = hoverKey === node.key

@@ -147,7 +147,7 @@ function Diagrama({
   caption?: string
 }) {
   return (
-    <figure className="rounded-[1.5rem] border border-border/60 bg-white p-5">
+    <figure className="min-w-0 rounded-[1.5rem] border border-border/60 bg-white p-4 sm:p-5">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
@@ -155,7 +155,7 @@ function Diagrama({
         width={w}
         height={h}
         loading="lazy"
-        className="mx-auto h-auto w-full max-w-[300px]"
+        className="mx-auto block h-auto w-full max-w-[300px] object-contain object-center"
       />
       {caption ? (
         <figcaption className="mt-3 text-center text-sm font-medium text-slate-500">

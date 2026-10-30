@@ -5,7 +5,8 @@ import Link from 'next/link'
 import { EmptyState } from '@/components/ui/empty-state'
 import { SearchIcon } from '@/components/ui/icons'
 import { searchContent, type SearchResultItem } from '@/lib/api/search'
-import { excerptFromHtml, formatDate } from '@/lib/format'
+import { searchResultHref } from '@/lib/search/suggestions'
+import { formatDate } from '@/lib/format'
 
 export const metadata: Metadata = {
   title: 'Búsqueda',
@@ -15,8 +16,7 @@ export const metadata: Metadata = {
 const LIMIT = 12
 
 function resultHref(item: SearchResultItem): Route {
-  const base = item.type === 'page' ? '/paginas' : '/blog'
-  return `${base}/${item.slug}` as Route
+  return searchResultHref(item) as Route
 }
 
 function pageHref(query: string, page: number): Route {
@@ -110,7 +110,7 @@ export default async function SearchPage({
                     <h2 className="mt-1 font-display text-xl font-semibold">{item.title}</h2>
                     {item.excerpt ? (
                       <p className="mt-2 text-sm leading-6 text-foreground/70">
-                        {excerptFromHtml(item.excerpt, 180)}
+                        {item.excerpt}
                       </p>
                     ) : null}
                   </Link>

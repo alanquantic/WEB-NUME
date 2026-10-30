@@ -88,14 +88,14 @@ export function StoreProductsSlider({
               rel="noopener noreferrer"
               className="group flex w-[15rem] shrink-0 snap-start flex-col overflow-hidden rounded-[1.5rem] border border-border/70 bg-card shadow-panel transition hover:-translate-y-1 hover:shadow-glow sm:w-[16.5rem]"
             >
-              <div className="aspect-[4/3] overflow-hidden bg-secondary/70">
+              <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-secondary/70">
                 {product.image ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={product.image}
                     alt={product.name}
                     loading="lazy"
-                    className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]"
+                    className="absolute inset-0 block h-full w-full object-contain object-center p-3"
                   />
                 ) : null}
               </div>

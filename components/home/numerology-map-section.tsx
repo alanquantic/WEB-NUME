@@ -522,7 +522,7 @@ export function NumerologyMapSection() {
                 <img
                   src={isCalculated ? '/images/pinnacle.png' : '/images/pinnacle-pre.webp'}
                   alt="Vista del pináculo"
-                  className="h-full w-full rounded-[1.35rem] object-cover"
+                  className="block h-auto w-full rounded-[1.35rem] object-contain object-center"
                 />
                 <div className="absolute inset-0 isolate">
                     {(

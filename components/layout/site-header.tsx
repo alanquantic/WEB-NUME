@@ -3,7 +3,8 @@ import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-import { ChevronDownIcon, MenuIcon, SearchIcon } from '@/components/ui/icons'
+import { ChevronDownIcon, MenuIcon } from '@/components/ui/icons'
+import { SearchModal, SearchTrigger } from '@/components/layout/search-modal'
 import { SocialLinks } from '@/components/ui/social-links'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { getToolIcon } from '@/components/ui/tool-icon'
@@ -327,13 +328,7 @@ export async function SiteHeader() {
             iconSize={16}
           />
           <ThemeToggle className="header-chip flex h-9 w-9 items-center justify-center rounded-full border border-border text-primary hover:bg-primary-soft" />
-          <Link
-            href="/busqueda"
-            aria-label="Buscar"
-            className="header-chip flex h-9 w-9 items-center justify-center rounded-full border border-border text-primary hover:bg-primary-soft"
-          >
-            <SearchIcon width={18} height={18} className="relative z-10 transition duration-200 hover:scale-105" />
-          </Link>
+          <SearchTrigger className="header-chip flex h-9 w-9 items-center justify-center rounded-full border border-border text-primary hover:bg-primary-soft" />
           {user?.role === 'admin' ? (
             <Link href="/perfil" className="header-link-float text-sm font-medium hover:text-primary">
               Admin
@@ -366,13 +361,7 @@ export async function SiteHeader() {
             <Brand />
           </span>
           <span className="flex justify-end">
-            <Link
-              href="/busqueda"
-              aria-label="Buscar"
-              className="header-chip flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-primary"
-            >
-              <SearchIcon width={20} height={20} />
-            </Link>
+            <SearchTrigger className="header-chip flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-primary" />
           </span>
         </summary>
 
@@ -412,6 +401,7 @@ export async function SiteHeader() {
           </div>
         </div>
       </details>
+      <SearchModal />
     </header>
   )
 }
