@@ -15,13 +15,13 @@ export function PostCard({ post }: { post: ContentItem }) {
       <Link
         href={href}
         aria-label={post.title}
-        className="block aspect-[16/10] overflow-hidden bg-secondary/70"
+        className="relative block aspect-[16/10] w-full shrink-0 overflow-hidden bg-secondary/70"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={post.featured_image_url ?? '/images/preview-bk.png'}
           alt={post.title}
-          className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+          className="absolute inset-0 block h-full w-full object-contain object-center p-3"
         />
       </Link>
       <div className="flex flex-1 flex-col p-5">

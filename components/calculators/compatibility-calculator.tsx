@@ -3,6 +3,8 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 
+import { apiRoute } from '@/lib/api/route-url'
+import { validBirthDate } from '@/lib/email/compatibility'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { trackCalculatorSubmit, useCalculatorView } from '@/lib/analytics/calculator'
@@ -43,6 +45,9 @@ export function CompatibilityCalculator() {
   const [error, setError] = useState<string | null>(null)
   const [result, setResult] = useState<CompatibilityResult | null>(null)
   const [isCalculating, setIsCalculating] = useState(false)
+  const [isSending, setIsSending] = useState(false)
+  const [emailStatus, setEmailStatus] = useState<string | null>(null)
+  const [emailFailed, setEmailFailed] = useState(false)
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const defaults = useUserDefaults()
   const sessionUser = useSessionStore((state) => state.user)
@@ -70,6 +75,7 @@ export function CompatibilityCalculator() {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setError(null)
+    if (isCalculating || isSending) return
 
     if (!name.trim()) {
       setError('Escribe tu nombre.')
@@ -84,6 +90,11 @@ export function CompatibilityCalculator() {
       return
     }
 
+    if (!validBirthDate(dateA) || !validBirthDate(dateB)) {
+      setError('Ingresa dos fechas de nacimiento válidas, entre 1900 y hoy.')
+      return
+    }
+
     void trackCalculatorSubmit('compatibility', {
       birthDate: dateA,
       birthDateSecondary: dateB,
@@ -91,11 +102,30 @@ export function CompatibilityCalculator() {
     })
 
     setResult(null)
+    setEmailStatus(null)
+    setEmailFailed(false)
     setIsCalculating(true)
     if (timeoutRef.current) clearTimeout(timeoutRef.current)
-    timeoutRef.current = setTimeout(() => {
+    timeoutRef.current = setTimeout(async () => {
       setResult(calculateCompatibility(dateA, dateB))
       setIsCalculating(false)
+      setIsSending(true)
+      setEmailStatus('Enviando tu resultado por correo…')
+      try {
+        const response = await fetch(apiRoute('/api/calculators/compatibility/email'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, dateA, dateB, acceptTerms }),
+        })
+        const data = await response.json()
+        if (!response.ok) throw new Error(data.message || 'No pudimos enviar el correo.')
+        setEmailStatus(`Enviamos tu resultado a ${email.trim()}. Revisa también la carpeta de spam.`)
+      } catch (error) {
+        setEmailFailed(true)
+        setEmailStatus(error instanceof Error ? error.message : 'No pudimos enviar el correo. Tu resultado sigue disponible aquí.')
+      } finally {
+        setIsSending(false)
+      }
     }, CALCULATION_DURATION_MS)
   }
 
@@ -179,11 +209,14 @@ export function CompatibilityCalculator() {
         ) : null}
 
         <div className="sm:col-span-2">
-          <Button type="submit" disabled={isCalculating}>
-            {isCalculating ? 'Calculando…' : 'Calcular compatibilidad'}
+          <Button type="submit" disabled={isCalculating || isSending}>
+            {isCalculating ? 'Calculando…' : isSending ? 'Enviando correo…' : 'Calcular compatibilidad'}
           </Button>
         </div>
+        <p className="text-xs text-foreground/60 sm:col-span-2">Al calcular, también enviaremos una copia de tu resultado al correo indicado.</p>
       </form>
+
+      {emailStatus ? <p role={emailFailed ? 'alert' : 'status'} className="mt-4 text-sm text-foreground/75">{emailStatus}</p> : null}
 
       {isCalculating ? (
         <CalculatingState />

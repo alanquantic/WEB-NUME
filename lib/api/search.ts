@@ -1,10 +1,11 @@
+import { searchExcerpt } from '@/lib/search/excerpt'
 import type { Pagination } from '@/lib/api/contracts'
 import { serverApiFetch } from '@/lib/api/server'
 
 // Espeja la salida de GET /search del API (search.service.ts):
 // full-text en posts/pages publicados. `excerpt` es un recorte crudo de HTML.
 export type SearchResultItem = {
-  id: number
+  id: number | string
   type: 'post' | 'page'
   title: string
   slug: string
@@ -35,5 +36,13 @@ export async function searchContent(params: SearchParams) {
   if (params.page) query.set('page', String(params.page))
   if (params.limit) query.set('limit', String(params.limit))
 
-  return serverApiFetch<SearchResponse>(`/search?${query.toString()}`)
+  const response = await serverApiFetch<SearchResponse>(`/search?${query.toString()}`)
+  return {
+    ...response,
+    data: response.data.map((item) => ({
+      ...item,
+      title: searchExcerpt(item.title, 200),
+      excerpt: searchExcerpt(item.excerpt),
+    })),
+  }
 }

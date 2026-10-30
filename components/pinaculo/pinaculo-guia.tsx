@@ -147,7 +147,7 @@ function Diagrama({
   caption?: string
 }) {
   return (
-    <figure className="rounded-[1.5rem] border border-border/60 bg-white p-5">
+    <figure className="min-w-0 rounded-[1.5rem] border border-border/60 bg-white p-4 sm:p-5">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
@@ -155,7 +155,7 @@ function Diagrama({
         width={w}
         height={h}
         loading="lazy"
-        className="mx-auto h-auto w-full max-w-[300px]"
+        className="mx-auto block h-auto w-full max-w-[300px] object-contain object-center"
       />
       {caption ? (
         <figcaption className="mt-3 text-center text-sm font-medium text-slate-500">
@@ -212,11 +212,11 @@ export function PinaculoGuia() {
       <Section eyebrow="El origen" title="Pináculo Numerológico">
         <div className="grid gap-6 md:grid-cols-2 md:items-start">
           <Diagrama
-            src="/images/pinaculo/pinnacle.png"
-            alt="Diagrama del Pináculo Numerológico con las posiciones A a S"
-            w={565}
-            h={671}
-            caption="Estructura del Pináculo (posiciones A–S)"
+            src="/images/pinaculo/pinaculo-numeros.png"
+            alt="Ejemplo del Pináculo Numerológico con sus números"
+            w={309}
+            h={501}
+            caption="Ejemplo de un Pináculo Numerológico"
           />
           <div className="space-y-5">
             <Quote autor="Pitágoras">
