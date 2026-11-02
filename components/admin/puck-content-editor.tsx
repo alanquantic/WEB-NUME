@@ -17,7 +17,7 @@ import type {
   Tag
 } from '@/lib/api/contracts'
 import { createContent, updateContent, type ContentKind } from '@/lib/api/content.client'
-import { getMediaImages, MEDIA_IMAGE_ACCEPT, uploadMediaImage } from '@/lib/api/media'
+import { getMediaImages, MEDIA_IMAGE_ACCEPT, uploadMediaImage, uploadMediaPdf } from '@/lib/api/media'
 import {
   createPuckConfig,
   emptyPuckData,
@@ -191,7 +191,8 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
           setMediaTarget({ kind: 'puck-image', currentValue, onSelect })
           setSelectedMediaUrl(currentValue)
           setIsMediaModalOpen(true)
-        }
+        },
+        uploadPdf: uploadMediaPdf
       }),
     []
   )

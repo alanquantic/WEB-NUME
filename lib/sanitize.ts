@@ -7,6 +7,9 @@ const APP_URL = (
   process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.numerologia-cotidiana.com'
 ).replace(/\/$/, '')
 const STORE_ORIGIN = STORE_URL.replace(/\/$/, '')
+// Único iframe permitido: PDFs de nuestro CDN (bloque PDF del editor).
+const PDF_IFRAME_HOST = 'cdn.tienda.numerologia-cotidiana.com'
+const PDF_IFRAME_SRC = /^https:\/\/cdn\.tienda\.numerologia-cotidiana\.com\/[^?#]+\.pdf$/i
 const LEGACY_STORE_ORIGINS = [
   'https://tienda.numerologia-cotidiana.com',
   'http://tienda.numerologia-cotidiana.com',
@@ -51,12 +54,16 @@ const ARTICLE_OPTIONS: sanitizeHtmlLib.IOptions = {
     'strong', 'em', 'b', 'i', 'u', 's', 'small', 'sub', 'sup',
     'img', 'figure', 'figcaption',
     'table', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td',
-    'code', 'pre'
+    'code', 'pre', 'iframe'
   ],
   allowedAttributes: {
     a: ['href', 'name', 'target', 'rel'],
-    img: ['src', 'alt', 'title', 'width', 'height', 'loading']
+    img: ['src', 'alt', 'title', 'width', 'height', 'loading'],
+    iframe: ['src', 'title', 'loading']
   },
+  allowedIframeHostnames: [PDF_IFRAME_HOST],
+  exclusiveFilter: (frame) =>
+    frame.tag === 'iframe' && !PDF_IFRAME_SRC.test(frame.attribs.src ?? ''),
   allowedSchemes: ['http', 'https', 'mailto', 'tel'],
   allowedSchemesByTag: { img: ['http', 'https', 'data'] },
   // Fuerza enlaces seguros: se abren en nueva pestaña sin filtrar referrer y
