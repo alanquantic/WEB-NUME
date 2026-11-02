@@ -1,24 +1,22 @@
 // Descargas públicas con URL fija: /{slug}.pdf (rewrite en next.config.mjs) y
-// /descargas/{slug}.pdf redirigen al archivo actual en Cloudinary. Para reemplazar un PDF, súbelo en Cloudinary con el
-// MISMO public_id marcando "Overwrite" + "Invalidate": la URL del sitio no
-// cambia y este archivo no se toca. Los PDFs locales se guardan en public y
-// se indican con rutaLocal. Para publicar uno nuevo, agrega una entrada.
+// /descargas/{slug}.pdf redirigen al archivo actual en R2. Para reemplazar un
+// PDF, súbelo a R2 con la MISMA key y Content-Disposition: attachment (fuerza la
+// descarga con su nombre): la URL del sitio no cambia y este archivo no se toca.
+// Los PDFs locales se guardan en public y se indican con rutaLocal. Para
+// publicar uno nuevo, agrega una entrada.
 
-const CLOUDINARY_CLOUD_NAME = 'du66hxu3k'
+const R2_MEDIA_URL = 'https://cdn.tienda.numerologia-cotidiana.com/webnume'
 
 export type Descarga = {
   rutaLocal?: string
-  // public_id en Cloudinary, sin extensión (ej. 'nume-media/descargas/guia').
-  publicId: string
-  // Nombre con el que se guarda el archivo en el equipo del usuario (sin .pdf).
-  nombreArchivo: string
+  // Key en R2 sin el prefijo webnume/ (ej. 'nume-media/descargas/guia.pdf').
+  key: string
 }
 
 export const DESCARGAS: Record<string, Descarga> = {
   'binomios-generales': {
     rutaLocal: '/binomios-generales.pdf',
-    publicId: 'nume-media/descargas/binomios-generales',
-    nombreArchivo: 'Binomios-Generales'
+    key: 'nume-media/descargas/binomios-generales.pdf'
   }
 }
 
@@ -30,8 +28,6 @@ export function getDescarga(archivo: string): Descarga | null {
   return Object.hasOwn(DESCARGAS, slug) ? DESCARGAS[slug] : null
 }
 
-// URL sin segmento de versión (v123...) para que siempre sirva la última
-// subida; fl_attachment fuerza la descarga en vez de abrirlo en el navegador.
-export function getDescargaUrl({ publicId, nombreArchivo }: Descarga) {
-  return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/fl_attachment:${nombreArchivo}/${publicId}.pdf`
+export function getDescargaUrl({ key }: Descarga) {
+  return `${R2_MEDIA_URL}/${key}`
 }

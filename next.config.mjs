@@ -1,5 +1,5 @@
 // Cabeceras de seguridad para todas las rutas. La CSP solo fija lo que no
-// rompe scripts de terceros (GA, Cloudinary): impide incrustar el sitio en
+// rompe scripts de terceros (GA): impide incrustar el sitio en
 // iframes ajenos (clickjacking), plugins y cambiar la base de URLs.
 const securityHeaders = [
   {
