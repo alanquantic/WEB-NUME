@@ -6,7 +6,7 @@ export type SubscriptionStatus = 'active' | 'expired' | 'cancelled' | 'pending'
 
 export type ContentType = 'post' | 'page'
 
-export type PostStatus = 'draft' | 'published' | 'scheduled' | 'archived'
+export type PostStatus = 'draft' | 'published' | 'scheduled' | 'archived' | 'protected'
 
 export type ConsultantCategory =
   | 'Numerólogo Master'
@@ -183,6 +183,7 @@ export type AdminContentDetail = {
   type: ContentType
   status: PostStatus
   requires_membership: boolean
+  has_access_password?: boolean
   comment_count: number
   published_at: string | null
   created_at: string
@@ -211,6 +212,7 @@ export type ContentMutationInput = {
   tag_ids?: number[]
   status?: PostStatus
   requires_membership?: boolean
+  access_password?: string
   published_at?: string | null
 }
 

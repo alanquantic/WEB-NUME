@@ -2,6 +2,7 @@ import type { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 
 export const ACCESS_COOKIE = process.env.AUTH_ACCESS_COOKIE ?? 'nume_at'
 export const REFRESH_COOKIE = process.env.AUTH_REFRESH_COOKIE ?? 'nume_rt'
+export const PAGE_ACCESS_COOKIE = 'nume_page_access'
 
 const baseCookie: Partial<ResponseCookie> = {
   httpOnly: true,
@@ -37,6 +38,21 @@ export function createRefreshCookie(value: string): ResponseCookie {
     value,
     maxAge: tokenMaxAge(value, 7 * 24 * 60 * 60),
     ...baseCookie
+  } as ResponseCookie
+}
+
+// Limitada al path de la página: cada página protegida guarda su propio comprobante.
+export function createPageAccessCookie(
+  pageId: string,
+  token: string,
+  expiresAt: string
+): ResponseCookie {
+  return {
+    name: PAGE_ACCESS_COOKIE,
+    value: token,
+    maxAge: Math.max(0, Math.floor((new Date(expiresAt).getTime() - Date.now()) / 1000)),
+    ...baseCookie,
+    path: `/paginas/${pageId}`
   } as ResponseCookie
 }
 
