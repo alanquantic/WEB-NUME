@@ -184,7 +184,7 @@ Respuesta:
       "name": "Numerología en el amor",
       "type": "reporte_ia",
       "type_label": "Reporte con IA",
-      "image_url": "https://res.cloudinary.com/…/amor.jpg",
+      "image_url": "https://cdn.tienda.numerologia-cotidiana.com/webnume/…/amor.jpg",
       "price": "350.00",
       "regular_price": "450.00",
       "currency": "MXN",

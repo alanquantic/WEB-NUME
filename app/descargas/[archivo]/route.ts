@@ -4,7 +4,7 @@ import { getDescarga, getDescargaUrl } from '@/lib/descargas/archivos'
 
 export const dynamic = 'force-dynamic'
 
-// Público: /descargas/{slug}.pdf -> PDF vigente en Cloudinary. Redirección
+// Público: /descargas/{slug}.pdf -> PDF vigente en R2. Redirección
 // temporal (302) y sin caché para que cambiar el destino surta efecto de
 // inmediato; un 301 quedaría guardado en los navegadores.
 export function GET(_request: Request, { params }: { params: { archivo: string } }) {
