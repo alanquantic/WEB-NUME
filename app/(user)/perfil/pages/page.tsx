@@ -2,7 +2,7 @@ import { ContentListView, type ContentListSearchParams } from '@/components/admi
 import type { PostStatus } from '@/lib/api/contracts'
 import { getAdminContentList } from '@/lib/api/content.server'
 
-const statusValues: PostStatus[] = ['draft', 'published', 'scheduled', 'archived']
+const statusValues: PostStatus[] = ['draft', 'published', 'scheduled', 'archived', 'protected']
 
 function parseStatus(value: string | undefined): PostStatus | undefined {
   return statusValues.find((status) => status === value)
