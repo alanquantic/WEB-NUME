@@ -1,5 +1,6 @@
 import type { Config, Data } from '@puckeditor/core'
 
+import { PuckPdfField } from '@/components/admin/puck-pdf-field'
 import { sanitizeHtml } from '@/lib/html/sanitize'
 
 // ── Tipos de props por bloque ──────────────────────────────────────────────
@@ -26,10 +27,11 @@ const cls = {
 
 type CreatePuckConfigOptions = {
   openImageLibrary?: (args: { currentValue: string; onSelect: (url: string) => void }) => void
+  uploadPdf?: (file: File) => Promise<string>
 }
 
 // ── Configuración del editor (canvas) ───────────────────────────────────────
-export function createPuckConfig({ openImageLibrary }: CreatePuckConfigOptions = {}): Config {
+export function createPuckConfig({ openImageLibrary, uploadPdf }: CreatePuckConfigOptions = {}): Config {
   return {
     // Sin campos en la raíz: el título/slug se gestionan fuera del canvas, así
     // el panel derecho no muestra un campo "title" redundante.
@@ -40,7 +42,7 @@ export function createPuckConfig({ openImageLibrary }: CreatePuckConfigOptions =
     // Agrupa los bloques del panel izquierdo para una navegación más clara.
     categories: {
       texto: { title: 'Texto', components: ['Titulo', 'Parrafo', 'Cita', 'Lista'] },
-      medios: { title: 'Medios', components: ['Imagen'] },
+      medios: { title: 'Medios', components: ['Imagen', 'Pdf'] },
       elementos: { title: 'Elementos', components: ['Separador', 'Boton', 'Html'] }
     },
     components: {
@@ -114,6 +116,35 @@ export function createPuckConfig({ openImageLibrary }: CreatePuckConfigOptions =
           ) : (
             <div className="my-4 rounded-2xl border border-dashed border-[hsl(var(--border))] p-6 text-center text-sm text-[hsl(var(--foreground))/0.5]">
               Define la URL de la imagen
+            </div>
+          )
+      },
+      Pdf: {
+        label: 'PDF',
+        fields: {
+          src: {
+            type: 'custom',
+            label: 'Archivo',
+            render: ({ value, onChange }) => (
+              <PuckPdfField value={String(value ?? '')} onChange={onChange} uploadPdf={uploadPdf} />
+            )
+          },
+          title: { type: 'text', label: 'Título del documento' }
+        },
+        defaultProps: { src: '', title: '' },
+        render: ({ src, title }: Record<string, any>) =>
+          src ? (
+            <div className="my-4">
+              {/* Sin eventos: el iframe se tragaría los clics con los que Puck selecciona el bloque. */}
+              <iframe
+                src={src}
+                title={title || 'Documento PDF'}
+                className="pointer-events-none h-[480px] w-full rounded-2xl border border-[hsl(var(--border))]"
+              />
+            </div>
+          ) : (
+            <div className="my-4 rounded-2xl border border-dashed border-[hsl(var(--border))] p-6 text-center text-sm text-[hsl(var(--foreground))/0.5]">
+              Selecciona este bloque y sube un PDF
             </div>
           )
       },
@@ -222,6 +253,14 @@ function blockToHtml(item: { type: string; props?: Record<string, unknown> }): s
       const src = String(p.src ?? '').trim()
       if (!src) return ''
       return `<img src="${safeUrl(src)}" alt="${escapeHtml(String(p.alt ?? ''))}" class="${cls.img}" />`
+    }
+    case 'Pdf': {
+      const src = String(p.src ?? '').trim()
+      if (!src) return ''
+      const url = safeUrl(src)
+      const title = escapeHtml(String(p.title ?? '') || 'Documento PDF')
+      // Con enlace: los navegadores móviles no siempre muestran PDFs dentro de un iframe.
+      return `<iframe src="${url}" title="${title}" loading="lazy"></iframe><p><a href="${url}">Abrir PDF en una pestaña nueva</a></p>`
     }
     case 'Lista': {
       const items = Array.isArray(p.items) ? (p.items as Array<{ text?: string }>) : []

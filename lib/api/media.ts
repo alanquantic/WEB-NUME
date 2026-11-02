@@ -28,8 +28,7 @@ export async function createMediaUploadSignature(file: File) {
 }
 
 // Sube directo a R2 con la URL firmada por la API; el archivo no pasa por el BFF.
-export async function uploadMediaImage(file: File): Promise<MediaImageItem> {
-  const signed = await createMediaUploadSignature(file)
+async function putToR2(signed: MediaUploadSignatureResponse, file: File) {
   const response = await fetch(signed.upload_url, {
     method: 'PUT',
     headers: { 'Content-Type': signed.content_type },
@@ -39,6 +38,20 @@ export async function uploadMediaImage(file: File): Promise<MediaImageItem> {
   if (!response.ok) {
     throw new Error(`Upload failed with status ${response.status}`)
   }
+}
+
+export async function uploadMediaPdf(file: File): Promise<string> {
+  const signed = await clientApiFetch<MediaUploadSignatureResponse>('/media/pdfs/sign', {
+    method: 'POST',
+    body: JSON.stringify({ filename: file.name, content_type: file.type, bytes: file.size })
+  })
+  await putToR2(signed, file)
+  return signed.public_url
+}
+
+export async function uploadMediaImage(file: File): Promise<MediaImageItem> {
+  const signed = await createMediaUploadSignature(file)
+  await putToR2(signed, file)
 
   return {
     id: signed.key,
