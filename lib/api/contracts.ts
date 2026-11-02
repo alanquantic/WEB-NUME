@@ -233,14 +233,11 @@ export type MediaLibraryResponse = {
 }
 
 export type MediaUploadSignatureResponse = {
-  api_key: string
-  cloud_name: string
-  folder: string
-  public_id: string
-  signature: string
-  tags: string
-  timestamp: number
+  key: string
   upload_url: string
+  public_url: string
+  content_type: string
+  expires_in: number
 }
 
 export type CommentItem = {

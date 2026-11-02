@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import type { MediaImageItem } from '@/lib/api/contracts'
-import { createMediaUploadSignature, getMediaImages } from '@/lib/api/media'
+import { getMediaImages, MEDIA_IMAGE_ACCEPT, uploadMediaImage } from '@/lib/api/media'
 import { cn } from '@/lib/utils'
 
 function resolveError(error: unknown): string {
@@ -73,45 +73,7 @@ export function MediaLibraryModal({
     setIsUploading(true)
     setError(null)
     try {
-      const signed = await createMediaUploadSignature(file.name)
-      const formData = new FormData()
-      formData.set('file', file)
-      formData.set('api_key', signed.api_key)
-      formData.set('folder', signed.folder)
-      formData.set('public_id', signed.public_id)
-      formData.set('signature', signed.signature)
-      formData.set('tags', signed.tags)
-      formData.set('timestamp', String(signed.timestamp))
-
-      const response = await fetch(signed.upload_url, {
-        method: 'POST',
-        body: formData
-      })
-      if (!response.ok) throw new Error(`Upload failed with status ${response.status}`)
-
-      const uploaded = (await response.json()) as {
-        asset_id?: string
-        public_id: string
-        secure_url: string
-        width?: number
-        height?: number
-        bytes?: number
-        format?: string
-        original_filename?: string
-        created_at?: string
-      }
-
-      const nextItem: MediaImageItem = {
-        id: uploaded.asset_id ?? uploaded.public_id,
-        public_id: uploaded.public_id,
-        url: uploaded.secure_url,
-        width: uploaded.width ?? null,
-        height: uploaded.height ?? null,
-        bytes: uploaded.bytes ?? null,
-        format: uploaded.format ?? null,
-        original_filename: uploaded.original_filename ?? null,
-        created_at: uploaded.created_at ?? null
-      }
+      const nextItem = await uploadMediaImage(file)
       setItems((prev) => [nextItem, ...prev])
       setSelectedUrl(nextItem.url)
     } catch (caught) {
@@ -131,7 +93,7 @@ export function MediaLibraryModal({
           <div>
             <h2 className="font-display text-xl font-semibold">Biblioteca de medios</h2>
             <p className="text-sm text-[hsl(var(--foreground))/0.6]">
-              Selecciona una imagen existente o sube una nueva a Cloudinary.
+              Selecciona una imagen existente o sube una nueva.
             </p>
           </div>
           <Button type="button" variant="secondary" onClick={onClose}>
@@ -143,7 +105,7 @@ export function MediaLibraryModal({
           <input
             ref={fileInputRef}
             type="file"
-            accept="image/*"
+            accept={MEDIA_IMAGE_ACCEPT}
             className="hidden"
             onChange={(event) => {
               const file = event.target.files?.[0]

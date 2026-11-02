@@ -3,8 +3,7 @@ import { describe, expect, it, vi } from 'vitest'
 vi.mock('@/lib/descargas/archivos', async (importOriginal) => {
   const original = await importOriginal<typeof import('@/lib/descargas/archivos')>()
   original.DESCARGAS['guia-prueba'] = {
-    publicId: 'nume-media/descargas/guia-prueba',
-    nombreArchivo: 'guia-prueba'
+    key: 'nume-media/descargas/guia-prueba.pdf'
   }
   return original
 })
@@ -16,13 +15,13 @@ function get(archivo: string) {
 }
 
 describe('GET /descargas/[archivo]', () => {
-  it('redirige (302, sin caché) al PDF vigente en Cloudinary sin versión', () => {
+  it('redirige (302, sin caché) al PDF vigente en R2', () => {
     const response = get('guia-prueba.pdf')
 
     expect(response.status).toBe(302)
     expect(response.headers.get('Cache-Control')).toBe('no-store')
     expect(response.headers.get('Location')).toBe(
-      'https://res.cloudinary.com/du66hxu3k/image/upload/fl_attachment:guia-prueba/nume-media/descargas/guia-prueba.pdf'
+      'https://cdn.tienda.numerologia-cotidiana.com/webnume/nume-media/descargas/guia-prueba.pdf'
     )
   })
 
