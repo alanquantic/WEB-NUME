@@ -33,11 +33,17 @@ const statusOptions: Array<{ value: PostStatus; label: string }> = [
   { value: 'archived', label: 'Archivado' }
 ]
 
+const protectedStatusOption: { value: PostStatus; label: string } = {
+  value: 'protected',
+  label: 'Protegido con contraseña'
+}
+
 const statusPill: Record<PostStatus, string> = {
   draft: 'bg-[hsl(var(--secondary)/0.18)] text-[hsl(var(--foreground))/0.7]',
   published: 'bg-[hsl(160_84%_39%/0.15)] text-[hsl(160_84%_28%)]',
   scheduled: 'bg-[hsl(46_64%_52%/0.18)] text-[hsl(38_70%_32%)]',
-  archived: 'bg-[hsl(var(--foreground)/0.08)] text-[hsl(var(--foreground)/0.55)]'
+  archived: 'bg-[hsl(var(--foreground)/0.08)] text-[hsl(var(--foreground)/0.55)]',
+  protected: 'bg-[hsl(263_60%_50%/0.15)] text-[hsl(263_60%_38%)]'
 }
 
 const fieldClassName = cn(
@@ -141,6 +147,7 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
   const [requiresMembership, setRequiresMembership] = useState(
     initial?.requires_membership ?? false
   )
+  const [accessPassword, setAccessPassword] = useState('')
   const [featuredImageUrl, setFeaturedImageUrl] = useState(initial?.featured_image_url ?? '')
   const [publishedAt, setPublishedAt] = useState(toLocalInput(initial?.published_at ?? null))
   const [categoryId, setCategoryId] = useState<string>(
@@ -173,7 +180,10 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
   const [isPending, startTransition] = useTransition()
 
   const effectiveSlug = slugTouched ? slug : slugify(title)
-  const statusLabel = statusOptions.find((option) => option.value === status)?.label ?? status
+  const availableStatusOptions = isPost ? statusOptions : [...statusOptions, protectedStatusOption]
+  const statusLabel =
+    availableStatusOptions.find((option) => option.value === status)?.label ?? status
+  const isLive = (value?: PostStatus) => value === 'published' || value === 'protected'
   const puckConfig = useMemo(
     () =>
       createPuckConfig({
@@ -250,12 +260,18 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
     if (nextStatus === 'scheduled' && !toIsoOrNull(publishedAt)) {
       return setError('Para programar necesitas una fecha de publicación válida.')
     }
+    if (accessPassword && accessPassword.length < 4) {
+      return setError('La contraseña debe tener al menos 4 caracteres.')
+    }
+    if (nextStatus === 'protected' && !accessPassword && !initial?.has_access_password) {
+      return setError('Define la contraseña de acceso para proteger la página.')
+    }
 
     const html = renderPuckDataToHtml(data)
     const hasBlocks = Array.isArray(data.content) && data.content.length > 0
 
     // Al actualizar algo ya publicado se conserva su fecha original (null la reinicia a "ahora").
-    const keepPublishedAt = isEdit && initial?.status === 'published' && nextStatus === 'published'
+    const keepPublishedAt = isEdit && isLive(initial?.status) && isLive(nextStatus)
 
     const payload: ContentMutationInput = {
       title: title.trim(),
@@ -273,6 +289,10 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
           : keepPublishedAt
             ? undefined
             : null
+    }
+
+    if (accessPassword) {
+      payload.access_password = accessPassword
     }
 
     if (isPost) {
@@ -294,6 +314,7 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
         }
 
         setStatus('draft')
+        setAccessPassword('')
         setSlug(effectiveSlug)
         setSlugTouched(true)
         if (isEdit) {
@@ -314,7 +335,7 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
       ? 'Programar'
       : status === 'archived'
         ? 'Guardar'
-        : isEdit && initial?.status === 'published'
+        : isEdit && isLive(initial?.status)
           ? 'Actualizar'
           : 'Publicar'
 
@@ -415,7 +436,7 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
               value={status}
               onChange={(event) => setStatus(event.target.value as PostStatus)}
             >
-              {statusOptions.map((option) => (
+              {availableStatusOptions.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -433,6 +454,26 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
                 type="datetime-local"
                 value={publishedAt}
                 onChange={(event) => setPublishedAt(event.target.value)}
+              />
+            </div>
+          ) : null}
+
+          {status === 'protected' ? (
+            <div className="grid gap-2">
+              <label className="text-sm font-semibold" htmlFor="access_password">
+                Contraseña de acceso
+              </label>
+              <Input
+                id="access_password"
+                type="text"
+                autoComplete="off"
+                value={accessPassword}
+                onChange={(event) => setAccessPassword(event.target.value)}
+                placeholder={
+                  initial?.has_access_password
+                    ? 'Déjala vacía para conservar la actual'
+                    : 'Mínimo 4 caracteres'
+                }
               />
             </div>
           ) : null}
@@ -500,15 +541,17 @@ export function PuckContentEditor({ kind, categories, tags, initial }: PuckConte
             </div>
           ) : null}
 
-          <label className="flex items-center gap-3 self-end pb-2.5 text-sm font-semibold">
-            <input
-              type="checkbox"
-              className="h-5 w-5 rounded border-[hsl(var(--border))]"
-              checked={requiresMembership}
-              onChange={(event) => setRequiresMembership(event.target.checked)}
-            />
-            Requiere membresía
-          </label>
+          {status !== 'protected' ? (
+            <label className="flex items-center gap-3 self-end pb-2.5 text-sm font-semibold">
+              <input
+                type="checkbox"
+                className="h-5 w-5 rounded border-[hsl(var(--border))]"
+                checked={requiresMembership}
+                onChange={(event) => setRequiresMembership(event.target.checked)}
+              />
+              Requiere membresía
+            </label>
+          ) : null}
         </div>
 
         {isPost && tags.length > 0 ? (

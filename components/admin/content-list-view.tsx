@@ -15,7 +15,8 @@ const statusLabels: Record<PostStatus, string> = {
   draft: 'Borrador',
   published: 'Publicado',
   scheduled: 'Programado',
-  archived: 'Archivado'
+  archived: 'Archivado',
+  protected: 'Protegido con contraseña'
 }
 
 const statusValues: PostStatus[] = ['draft', 'published', 'scheduled', 'archived']
@@ -55,6 +56,7 @@ export function ContentListView({ kind, result, searchParams }: ContentListViewP
   const heading = isPost ? 'Posts' : 'Páginas'
   const newLabel = isPost ? 'Nuevo post' : 'Nueva página'
   const publicBasePath = isPost ? '' : '/paginas'
+  const filterValues: PostStatus[] = isPost ? statusValues : [...statusValues, 'protected']
 
   const page = Number(searchParams.page) > 0 ? Number(searchParams.page) : 1
   const totalPages = Math.max(1, Math.ceil(result.pagination.total / result.pagination.limit))
@@ -81,7 +83,7 @@ export function ContentListView({ kind, result, searchParams }: ContentListViewP
           <Input name="search" placeholder="Buscar por título o slug" defaultValue={searchParams.search ?? ''} />
           <select name="status" className={selectClassName} defaultValue={searchParams.status ?? ''}>
             <option value="">Todos los estados</option>
-            {statusValues.map((value) => (
+            {filterValues.map((value) => (
               <option key={value} value={value}>
                 {statusLabels[value]}
               </option>
@@ -137,7 +139,7 @@ export function ContentListView({ kind, result, searchParams }: ContentListViewP
                               {excerptFromHtml(item.content_html, 120)}
                             </p>
                           ) : null}
-                          {item.status === 'published' ? (
+                          {item.status === 'published' || item.status === 'protected' ? (
                             <Link
                               href={`${publicBasePath}/${item.slug}` as Route}
                               target="_blank"

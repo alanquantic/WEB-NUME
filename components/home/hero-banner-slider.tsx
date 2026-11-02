@@ -7,7 +7,6 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 import { track } from '@/lib/analytics'
 import banner2 from '@/public/images/slider/2.png'
-import bannerAgenda2027 from '@/public/images/slider/agenda-2027.webp'
 
 type Banner = {
   src: StaticImageData
@@ -17,11 +16,6 @@ type Banner = {
 
 // Banners 1920x600 de public/images/slider. El orden define el orden del slider.
 const BANNERS: Banner[] = [
-  {
-    src: bannerAgenda2027,
-    href: 'https://tienda.numerologia-cotidiana.com/productos/agenda-numerologica-2027',
-    alt: 'Agenda Numerológica 2027 física en preventa a $890 más gastos de envío, del 10 al 31 de octubre'
-  },
   {
     src: banner2,
     href: 'https://tienda.numerologia-cotidiana.com/productos/taller-numerologia-de-parejas',
