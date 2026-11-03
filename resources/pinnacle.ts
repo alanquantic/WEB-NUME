@@ -62,6 +62,21 @@ class Pinnacle {
     return personalityNumber;
   }
 
+  // Valor de D que se muestra en el pináculo: suma las partes ya reducidas para
+  // conservar los números maestros. calcPersonalityNumber() sigue alimentando J y P.
+  getDCheck(): number {
+    const [yearBirthDate, monthBirthDate, dayBirthDate] = this.getBirthDateParts();
+    return this.reduceNumber(
+      this.reduceNumber(yearBirthDate) + this.reduceNumber(monthBirthDate) + this.reduceNumber(dayBirthDate),
+    );
+  }
+
+  // Valor de H que se muestra en el pináculo, con el mismo criterio que getDCheck().
+  getHCheck(): number {
+    const [yearBirthDate, monthBirthDate] = this.getBirthDateParts();
+    return this.reduceNumber(this.reduceNumber(monthBirthDate) + this.reduceNumber(yearBirthDate));
+  }
+
   calcLifeCycle(cycle = 0): number | undefined {
     const [yearBirthDate, monthBirthDate, dayBirthDate] = this.getBirthDateParts();
 
@@ -222,7 +237,7 @@ class Pinnacle {
     return latentLowerSelfNumber;
   }
 
-  calcW(): number | "" {
+  calcW(): string {
     const appearances = [
       this.calcFirstGoal(),
       this.calcNegativeUnconsciousNumber(),
@@ -240,24 +255,10 @@ class Pinnacle {
       return accumulator;
     }, {});
 
-    let w = 0;
-    let W: number | "" = "";
-
-    Object.values(occurrences).forEach((value) => {
-      if (value === 3) {
-        w += 1;
-      }
-    });
-
-    if (w === 1) {
-      Object.entries(occurrences).forEach(([key, value]) => {
-        if (value === 3) {
-          W = parseInt(key, 10) * 3;
-        }
-      });
-    }
-
-    return W;
+    return Object.entries(occurrences)
+      .filter(([, value]) => value === 3)
+      .map(([key]) => this.reduceNumber(parseInt(key, 10) * 3))
+      .join(", ");
   }
 
   reduceNumber(reduceSum: number): number {

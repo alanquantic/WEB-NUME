@@ -64,6 +64,8 @@ const NODES: { key: string; x: number; y: number }[] = [
   { key: 'K', x: 36.25, y: 57.68 },
   { key: 'O', x: 51.13, y: 57.68 },
   { key: 'L', x: 65.70, y: 57.68 },
+  // La imagen no trae círculo para W: se dibuja completo, con su letra, junto a P.
+  { key: 'W', x: 7.5, y: 69.66 },
   { key: 'M', x: 51.13, y: 69.66 },
   { key: 'P', x: 21.68, y: 69.66 },
   { key: 'N', x: 51.13, y: 80.44 },
@@ -139,13 +141,13 @@ function computeAll(birthDate: string): Valores | null {
       A: p.calcKarma(),
       B: p.calcPersonalNumber(),
       C: p.calcPastLife(),
-      D: p.calcPersonalityNumber(),
+      D: p.getDCheck(),
       E: p.calcLifeCycle(1) ?? '—',
       F: p.calcLifeCycle(2) ?? '—',
       G: p.calcLifeCycle(3) ?? '—',
-      H: p.calcLifeCycle(4) ?? '—',
-      I: p.calcSubconsciousNumber(),
-      J: p.calcUnconsciousNumber(),
+      H: p.getHCheck(),
+      I: p.calcUnconsciousNumber(),
+      J: p.calcSubconsciousNumber(),
       K: p.calcFirstGoal(),
       L: p.calcSecGoal(),
       M: p.calcThiGoal(),
@@ -345,6 +347,15 @@ export function PinnacleCalculator({ isMember = false }: { isMember?: boolean })
                     )}
                   >
                     {values[node.key]}
+                    {node.key === 'W' ? (
+                      <span
+                        aria-hidden
+                        style={{ fontSize: '2.4cqw' }}
+                        className="absolute left-1/2 top-full mt-[0.3em] -translate-x-1/2 text-foreground/70"
+                      >
+                        W
+                      </span>
+                    ) : null}
                   </button>
                 )
               })}
