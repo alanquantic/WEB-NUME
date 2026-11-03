@@ -29,7 +29,7 @@ const PINNACLE_POSITIONS: Record<PinnacleLetter, string> = {
   W: 'left-[6%] top-[67.9%]'
 }
 
-function fmt(value: number | undefined | ''): number | string {
+function fmt(value: number | string | undefined): number | string {
   if (value === undefined || value === '') return ''
   return value
 }
@@ -42,11 +42,11 @@ function compute(birthDate: string): Partial<Record<PinnacleLetter, number | str
       A: fmt(p.calcKarma()),
       B: fmt(p.calcPersonalNumber()),
       C: fmt(p.calcPastLife()),
-      D: fmt(p.calcPersonalityNumber()),
+      D: fmt(p.getDCheck()),
       E: fmt(p.calcLifeCycle(1)),
       F: fmt(p.calcLifeCycle(2)),
       G: fmt(p.calcLifeCycle(3)),
-      H: fmt(p.calcLifeCycle(4)),
+      H: fmt(p.getHCheck()),
       I: fmt(p.calcUnconsciousNumber()),
       J: fmt(p.calcSubconsciousNumber()),
       K: fmt(p.calcFirstGoal()),
