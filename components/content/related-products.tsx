@@ -33,7 +33,7 @@ function ProductCardCompact({ product }: { product: RelatedProduct }) {
           <img
             src={product.image}
             alt={product.name}
-            className="absolute inset-0 block h-full w-full object-contain object-center p-3"
+            className="absolute inset-0 block h-full w-full object-contain object-center"
           />
         ) : null}
       </div>
@@ -65,7 +65,7 @@ function ProductCardGrid({ product }: { product: RelatedProduct }) {
           <img
             src={product.image}
             alt={product.name}
-            className="absolute inset-0 block h-full w-full object-contain object-center p-3"
+            className="absolute inset-0 block h-full w-full object-contain object-center"
           />
         ) : null}
       </div>
