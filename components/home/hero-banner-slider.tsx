@@ -9,13 +9,18 @@ import { track } from '@/lib/analytics'
 import banner2 from '@/public/images/slider/2.png'
 
 type Banner = {
-  src: StaticImageData
+  src: StaticImageData | string
   href: string
   alt: string
 }
 
 // Banners 1920x600 de public/images/slider. El orden define el orden del slider.
 const BANNERS: Banner[] = [
+  {
+    src: 'https://cdn.tienda.numerologia-cotidiana.com/webnume/nume-media/422041df-58e6-4b5d-8cc8-0a47d0fcc7f8/2-1793817757.png',
+    href: 'https://tienda.numerologia-cotidiana.com/productos/agenda-numerologica-2027',
+    alt: 'Agenda Numerológica 2027'
+  },
   {
     src: banner2,
     href: 'https://tienda.numerologia-cotidiana.com/productos/taller-numerologia-de-parejas',
@@ -122,14 +127,25 @@ export function HeroBannerSlider() {
                 } catch {}
               }}
             >
-              <Image
-                src={banner.src}
-                alt={banner.alt}
-                sizes="100vw"
-                priority={position === 0}
-                draggable={false}
-                className="h-auto w-full select-none"
-              />
+              {typeof banner.src === 'string' ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={banner.src}
+                  alt={banner.alt}
+                  draggable={false}
+                  loading={position === 0 ? 'eager' : 'lazy'}
+                  className="h-auto w-full select-none"
+                />
+              ) : (
+                <Image
+                  src={banner.src}
+                  alt={banner.alt}
+                  sizes="100vw"
+                  priority={position === 0}
+                  draggable={false}
+                  className="h-auto w-full select-none"
+                />
+              )}
             </a>
           )
         })}

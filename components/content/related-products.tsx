@@ -27,13 +27,13 @@ function ProductCardCompact({ product }: { product: RelatedProduct }) {
       rel="noopener noreferrer"
       className="group flex flex-col overflow-hidden rounded-[1.4rem] border border-border/70 bg-card shadow-panel transition hover:-translate-y-0.5 hover:shadow-glow"
     >
-      <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-secondary/70">
+      <div className="relative aspect-square w-full shrink-0 overflow-hidden bg-[hsl(var(--muted))]">
         {product.image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={product.image}
             alt={product.name}
-            className="absolute inset-0 block h-full w-full object-contain object-center p-3"
+            className="h-full w-full object-cover transition-transform group-hover:scale-105"
           />
         ) : null}
       </div>
@@ -59,13 +59,13 @@ function ProductCardGrid({ product }: { product: RelatedProduct }) {
       rel="noopener noreferrer"
       className="group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-border/70 bg-card shadow-panel transition hover:-translate-y-1 hover:shadow-glow"
     >
-      <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-secondary/70">
+      <div className="relative aspect-square w-full shrink-0 overflow-hidden bg-[hsl(var(--muted))]">
         {product.image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={product.image}
             alt={product.name}
-            className="absolute inset-0 block h-full w-full object-contain object-center p-3"
+            className="h-full w-full object-cover transition-transform group-hover:scale-105"
           />
         ) : null}
       </div>

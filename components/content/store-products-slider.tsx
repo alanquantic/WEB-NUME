@@ -86,16 +86,16 @@ export function StoreProductsSlider({
               href={product.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex w-[15rem] shrink-0 snap-start flex-col overflow-hidden rounded-[1.5rem] border border-border/70 bg-card shadow-panel transition hover:-translate-y-1 hover:shadow-glow sm:w-[16.5rem]"
+              className="group flex w-[12rem] shrink-0 snap-start flex-col overflow-hidden rounded-[1.5rem] border border-border/70 bg-card shadow-panel transition hover:-translate-y-1 hover:shadow-glow sm:w-[14rem]"
             >
-              <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-secondary/70">
+              <div className="relative aspect-square w-full shrink-0 overflow-hidden bg-[hsl(var(--muted))]">
                 {product.image ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={product.image}
                     alt={product.name}
                     loading="lazy"
-                    className="absolute inset-0 block h-full w-full object-contain object-center p-3"
+                    className="h-full w-full object-cover transition-transform group-hover:scale-105"
                   />
                 ) : null}
               </div>
