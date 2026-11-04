@@ -92,7 +92,7 @@ export async function NewsSection() {
                     <img
                       src={item.imageSrc}
                       alt={item.imageAlt}
-                      className="absolute inset-0 block h-full w-full object-contain object-center p-3"
+                      className="absolute inset-0 block h-full w-full object-cover object-bottom"
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-5">
