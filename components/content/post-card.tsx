@@ -21,7 +21,7 @@ export function PostCard({ post }: { post: ContentItem }) {
         <img
           src={post.featured_image_url ?? '/images/preview-bk.png'}
           alt={post.title}
-          className="absolute inset-0 block h-full w-full object-contain object-center p-3"
+          className="absolute inset-0 block h-full w-full object-cover object-bottom"
         />
       </Link>
       <div className="flex flex-1 flex-col p-5">
