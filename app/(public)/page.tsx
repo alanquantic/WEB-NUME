@@ -1,3 +1,4 @@
+import { OutboundLink } from '@/components/analytics/outbound-link'
 import { BirthdaySection } from '@/components/home/birthday-section'
 import { CoupleNumerologySection } from '@/components/home/couple-numerology-section'
 import { FeaturedToolsSection } from '@/components/home/featured-tools-section'
@@ -22,6 +23,24 @@ export default function HomePage() {
         <FeaturedToolsSection />
       </ScrollReveal>
       <ScrollReveal delay={160}>
+        <section className="mx-auto max-w-7xl px-6 py-8">
+          <OutboundLink
+            href="https://tienda.numerologia-cotidiana.com/productos/agenda-numerologica-2027"
+            promotionId="home_agenda_2027_banner"
+            promotionName="Agenda Numerológica 2027"
+            creativeSlot="home_above_store"
+            className="block overflow-hidden rounded-[2rem] shadow-panel transition hover:-translate-y-0.5 hover:shadow-glow"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://cdn.tienda.numerologia-cotidiana.com/webnume/nume-media/422041df-58e6-4b5d-8cc8-0a47d0fcc7f8/4-1793817719.png"
+              alt="Agenda Numerológica 2027"
+              className="block h-auto w-full"
+            />
+          </OutboundLink>
+        </section>
+      </ScrollReveal>
+      <ScrollReveal delay={180}>
         <StoreHighlightSection />
       </ScrollReveal>
       <ScrollReveal delay={180}>
