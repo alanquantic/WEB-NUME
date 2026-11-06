@@ -13,22 +13,21 @@ type Props = {
   isMember: boolean
 }
 
-const TEASER_MAX = 340
-const TEASER_MIN = 180
+const TEASER_MAX = 780
+const TEASER_MIN = 420
+const TEASER_SOFT_STOP = 640
 
-function makeTeaser(parrafos?: string[]): string {
-  const first = parrafos?.[0]?.trim()
-  if (!first) return ''
-  const sentences = first.match(/[^.!?]+[.!?]+(?:\s|$)/g) ?? [first]
+function buildTeaser(text: string): { out: string; truncated: boolean } {
+  const sentences = text.match(/[^.!?]+[.!?]+(?:\s|$)/g) ?? [text]
   let out = ''
   for (const s of sentences) {
     if (out && out.length + s.length > TEASER_MAX) break
     out += s
-    if (out.length >= 240) break
+    if (out.length >= TEASER_SOFT_STOP) break
   }
   out = out.trim()
-  if (out.length < TEASER_MIN && first.length > out.length) {
-    let cut = first.slice(0, TEASER_MAX)
+  if (out.length < TEASER_MIN && text.length > out.length) {
+    let cut = text.slice(0, TEASER_MAX)
     const lastSpace = cut.lastIndexOf(' ')
     if (lastSpace > TEASER_MIN) cut = cut.slice(0, lastSpace)
     out = cut.trim()
@@ -39,8 +38,29 @@ function makeTeaser(parrafos?: string[]): string {
     if (lastSpace > TEASER_MIN) cut = cut.slice(0, lastSpace)
     out = cut.trim()
   }
-  if (out.length < first.length) out = `${out.replace(/[\s.,;:–—-]+$/, '')}…`
-  return out
+  return { out, truncated: out.length < text.length }
+}
+
+// Devuelve hasta 2 párrafos (el segundo puede quedar recortado con "…").
+function makeTeaserParrafos(parrafos?: string[]): string[] {
+  const first = parrafos?.[0]?.trim()
+  if (!first) return []
+  const firstTeaser = buildTeaser(first)
+  const result = [
+    firstTeaser.truncated
+      ? `${firstTeaser.out.replace(/[\s.,;:–—-]+$/, '')}…`
+      : firstTeaser.out
+  ]
+  const second = parrafos?.[1]?.trim()
+  if (!firstTeaser.truncated && second) {
+    const secondTeaser = buildTeaser(second)
+    result.push(
+      secondTeaser.truncated
+        ? `${secondTeaser.out.replace(/[\s.,;:–—-]+$/, '')}…`
+        : secondTeaser.out
+    )
+  }
+  return result
 }
 
 export function HoroscopoMesView({ numero, mes, anio, entrada, isMember }: Props) {
@@ -121,12 +141,14 @@ export function HoroscopoMesView({ numero, mes, anio, entrada, isMember }: Props
               <>
                 {entrada.parrafos?.length ? (
                   <div className="relative">
-                    <p className="text-base leading-8 text-foreground/78">
-                      {makeTeaser(entrada.parrafos)}
-                    </p>
+                    <div className="space-y-4 text-base leading-8 text-foreground/78">
+                      {makeTeaserParrafos(entrada.parrafos).map((parrafo, index) => (
+                        <p key={index}>{parrafo}</p>
+                      ))}
+                    </div>
                     <div
                       aria-hidden
-                      className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-b from-transparent to-card"
+                      className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent to-card"
                     />
                   </div>
                 ) : null}

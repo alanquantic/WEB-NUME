@@ -9,6 +9,11 @@ type StoreCategory = {
   title: string
   description: string
   Icon: LucideIcon
+  cardClass: string
+  titleClass: string
+  descriptionClass: string
+  iconBoxClass: string
+  ctaClass: string
 }
 
 const STORE_CATEGORIES: readonly StoreCategory[] = [
@@ -16,25 +21,49 @@ const STORE_CATEGORIES: readonly StoreCategory[] = [
     id: 'agendas',
     title: 'Agendas',
     description: 'Agenda numerológica para planear tu año con propósito.',
-    Icon: NotebookText
+    Icon: NotebookText,
+    cardClass:
+      "border border-[#b89a5a]/25 bg-[url('/images/store-card-agendas.svg')] bg-cover bg-center text-[#4b2976]",
+    titleClass: 'text-[#4b2976] group-hover:text-[#2e1a4f]',
+    descriptionClass: 'text-[#4b2976]/80',
+    iconBoxClass: 'bg-white/70 text-[#4b2976]',
+    ctaClass: 'text-[#4b2976]'
   },
   {
     id: 'reportes',
     title: 'Reportes',
     description: 'Reportes personalizados: pareja, nombre y proyección.',
-    Icon: FileText
+    Icon: FileText,
+    cardClass:
+      "border border-[#d4b26b]/35 bg-[url('/images/store-card-reportes.svg')] bg-cover bg-center text-white",
+    titleClass: 'text-white',
+    descriptionClass: 'text-white/80',
+    iconBoxClass: 'bg-white/10 text-[#e5c58a]',
+    ctaClass: 'text-[#e5c58a]'
   },
   {
     id: 'cursos',
     title: 'Cursos',
     description: 'Aprende numerología paso a paso, a tu ritmo.',
-    Icon: GraduationCap
+    Icon: GraduationCap,
+    cardClass:
+      "border border-[#d4b26b]/35 bg-[url('/images/store-card-cursos.svg')] bg-cover bg-center text-white",
+    titleClass: 'text-white',
+    descriptionClass: 'text-white/80',
+    iconBoxClass: 'bg-white/10 text-[#e5c58a]',
+    ctaClass: 'text-[#e5c58a]'
   },
   {
     id: 'certificaciones',
     title: 'Certificaciones',
     description: 'Conviértete en Consultor Numerológico certificado.',
-    Icon: Award
+    Icon: Award,
+    cardClass:
+      "border border-[#d4b26b]/35 bg-[url('/images/store-card-certificaciones.svg')] bg-cover bg-center text-white",
+    titleClass: 'text-white',
+    descriptionClass: 'text-white/80',
+    iconBoxClass: 'bg-white/10 text-[#e5c58a]',
+    ctaClass: 'text-[#e5c58a]'
   }
 ]
 
@@ -72,18 +101,20 @@ export function StoreHighlightSection() {
                 promotionId={`home_store_category_${category.id}`}
                 promotionName={category.title}
                 creativeSlot="home_store_categories"
-                className="group flex h-full flex-col rounded-[1.6rem] border border-border/80 bg-[hsl(var(--secondary)/0.14)] p-5 transition hover:-translate-y-1 hover:shadow-glow"
+                className={`group flex h-full min-h-[14rem] flex-col rounded-[1.6rem] p-5 transition hover:-translate-y-1 hover:shadow-glow ${category.cardClass}`}
               >
-                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-soft text-primary transition duration-200 group-hover:bg-gradient-brand group-hover:text-white">
+                <span
+                  className={`flex h-12 w-12 items-center justify-center rounded-2xl backdrop-blur-sm transition duration-200 ${category.iconBoxClass}`}
+                >
                   <category.Icon size={22} strokeWidth={1.75} aria-hidden />
                 </span>
-                <h3 className="mt-4 font-display text-lg font-semibold text-foreground group-hover:text-primary">
+                <h3 className={`mt-4 font-display text-lg font-semibold ${category.titleClass}`}>
                   {category.title}
                 </h3>
-                <p className="mt-2 flex-1 text-sm leading-6 text-foreground/70">
+                <p className={`mt-2 flex-1 text-sm leading-6 ${category.descriptionClass}`}>
                   {category.description}
                 </p>
-                <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary">
+                <span className={`mt-4 inline-flex items-center gap-1 text-sm font-semibold ${category.ctaClass}`}>
                   Explorar →
                 </span>
               </OutboundLink>

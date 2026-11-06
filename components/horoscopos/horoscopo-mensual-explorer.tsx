@@ -22,14 +22,7 @@ export function HoroscopoMensualExplorer({
           Elige tu Año Personal {anio}
         </h2>
         <p className="mt-2 text-base leading-8 text-foreground/72">
-          Selecciona el número de tu año personal y después el mes que quieres consultar.{' '}
-          <Link
-            href="/horoscopoanopersonal"
-            className="font-semibold text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary"
-          >
-            ¿No conoces tu número? Calcúlalo aquí
-          </Link>
-          .
+          Selecciona el número de tu año personal y después el mes que quieres consultar.
         </p>
       </div>
 

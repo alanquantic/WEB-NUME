@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 
+import { PersonalCycleCalculator } from '@/components/calculators/personal-cycle-calculator'
 import horoscopoData from '@/components/jsons/horoscopo-mensual-2027.json'
 import { ToolPage } from '@/components/content/tool-page'
 import { HoroscopoMensualExplorer } from '@/components/horoscopos/horoscopo-mensual-explorer'
@@ -41,6 +42,13 @@ export default function Page() {
               período.
             </p>
           </div>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="font-display text-2xl font-semibold text-primary">
+            ¿No conoces tu Año Personal? Calcúlalo aquí
+          </h2>
+          <PersonalCycleCalculator kind="year" />
         </section>
 
         <HoroscopoMensualExplorer anio={data.anio} numeros={data.numeros} meses={data.meses} />
