@@ -2,17 +2,45 @@ import { OutboundLink } from '@/components/analytics/outbound-link'
 import { BirthdaySection } from '@/components/home/birthday-section'
 import { CoupleNumerologySection } from '@/components/home/couple-numerology-section'
 import { FeaturedToolsSection } from '@/components/home/featured-tools-section'
-import { HeroBannerSlider } from '@/components/home/hero-banner-slider'
+import { HeroBannerSlider, type HeroBanner } from '@/components/home/hero-banner-slider'
 import { HomeSeoSection } from '@/components/home/home-seo-section'
 import { NewsSection } from '@/components/home/news-section'
 import { NumerologyMapSection } from '@/components/home/numerology-map-section'
 import { StoreHighlightSection } from '@/components/home/store-highlight-section'
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
+import { listBanners, type Banner } from '@/lib/api/banners'
 
-export default function HomePage() {
+async function loadActiveBanners(placement: 'home_hero' | 'home_above_store'): Promise<Banner[]> {
+  try {
+    const { data } = await listBanners({ activeOnly: true, placement })
+    return data
+  } catch {
+    return []
+  }
+}
+
+function pickRandom<T>(items: T[]): T | null {
+  if (items.length === 0) return null
+  return items[Math.floor(Math.random() * items.length)] ?? null
+}
+
+export default async function HomePage() {
+  const [heroBanners, aboveStoreBanners] = await Promise.all([
+    loadActiveBanners('home_hero'),
+    loadActiveBanners('home_above_store')
+  ])
+
+  const heroSlides: HeroBanner[] = heroBanners.map((banner) => ({
+    src: banner.image_url,
+    href: banner.link_url,
+    alt: 'Banner promocional'
+  }))
+
+  const aboveStore = pickRandom(aboveStoreBanners)
+
   return (
     <div className="pb-4">
-      <HeroBannerSlider />
+      <HeroBannerSlider banners={heroSlides} />
       <ScrollReveal className="home-calculator-reveal">
         <NumerologyMapSection />
       </ScrollReveal>
@@ -22,24 +50,37 @@ export default function HomePage() {
       <ScrollReveal delay={120}>
         <FeaturedToolsSection />
       </ScrollReveal>
-      <ScrollReveal delay={160}>
-        <section className="mx-auto max-w-7xl px-6 py-8">
-          <OutboundLink
-            href="https://tienda.numerologia-cotidiana.com/productos/agenda-numerologica-2027"
-            promotionId="home_agenda_2027_banner"
-            promotionName="Agenda Numerológica 2027"
-            creativeSlot="home_above_store"
-            className="block overflow-hidden rounded-[2rem] shadow-panel transition hover:-translate-y-0.5 hover:shadow-glow"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://cdn.tienda.numerologia-cotidiana.com/webnume/nume-media/422041df-58e6-4b5d-8cc8-0a47d0fcc7f8/4-1793817719.png"
-              alt="Agenda Numerológica 2027"
-              className="block h-auto w-full"
-            />
-          </OutboundLink>
-        </section>
-      </ScrollReveal>
+      {aboveStore ? (
+        <ScrollReveal delay={160}>
+          <section className="mx-auto max-w-7xl px-6 py-8">
+            {aboveStore.link_url ? (
+              <OutboundLink
+                href={aboveStore.link_url}
+                promotionId={`home_above_store_${aboveStore.id}`}
+                promotionName="Banner home arriba de tienda"
+                creativeSlot="home_above_store"
+                className="relative block aspect-[1920/600] w-full overflow-hidden rounded-[2rem] shadow-panel transition hover:-translate-y-0.5 hover:shadow-glow"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={aboveStore.image_url}
+                  alt="Banner promocional"
+                  className="absolute inset-0 block h-full w-full object-cover object-center"
+                />
+              </OutboundLink>
+            ) : (
+              <div className="relative aspect-[1920/600] w-full overflow-hidden rounded-[2rem] shadow-panel">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={aboveStore.image_url}
+                  alt="Banner promocional"
+                  className="absolute inset-0 block h-full w-full object-cover object-center"
+                />
+              </div>
+            )}
+          </section>
+        </ScrollReveal>
+      ) : null}
       <ScrollReveal delay={180}>
         <StoreHighlightSection />
       </ScrollReveal>

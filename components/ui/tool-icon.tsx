@@ -29,13 +29,17 @@ import {
   type LucideIcon
 } from 'lucide-react'
 
+import {
+  LifePathIcon,
+  PinnacleIcon,
+  YearStarIcon
+} from '@/components/ui/custom-tool-icons'
 import { cn } from '@/lib/utils'
 
-const KEY_ICONS: Record<string, LucideIcon> = {
-  'camino-de-vida': Route,
-  expresion: Sparkles,
-  compatibilidad: HeartHandshake,
-  'numerologia-de-pareja': HeartHandshake,
+type ToolIconComponent = LucideIcon | ((props: { size?: number; strokeWidth?: number }) => JSX.Element)
+
+const KEY_ICONS: Record<string, ToolIconComponent> = {
+  // calculadoras / herramientas con slug "antiguo" (sin guiones)
   calculatupinaculo: Pyramid,
   anopersonal: CalendarDays,
   mespersonal: CalendarRange,
@@ -52,20 +56,51 @@ const KEY_ICONS: Record<string, LucideIcon> = {
   numerodelamadurez: Sprout,
   significadodelosnumeros: Hash,
   significadodeletras: Languages,
-  explora: Telescope,
+  numerologianombre: Signature,
+  vibraciondeltiempo: Hourglass,
+  revisatuhoroscopomensual2026: MoonStar,
+  horoscopos: MoonStar,
+
+  // URLs reales usadas por el blog / herramientas
+  'camino-de-vida': Route,
+  'mi-camino-de-vida': LifePathIcon,
   'mi-mapa': MapIcon,
   'mi-carta': Bookmark,
+  'numerologia-de-pareja': HeartHandshake,
+  'como-se-relacionan-los-numeros-en-pareja': HeartHandshake,
+  compatibilidad: HeartHandshake,
+  pinaculo: PinnacleIcon,
+  'ano-personal': YearStarIcon,
+  'ano-personal-que-es-y-como-se-calcula': CalendarDays,
+  '2026-ano-universal-1': Globe,
+  'mes-personal': CalendarRange,
+  'semana-personal-ok': CalendarClock,
+  'semana-personal': CalendarClock,
+  'dia-personal': Sun,
+  'etapa-personal': Hourglass,
+  'la-brujula-numerologica': Compass,
+  'vibraciones-colectivas': Globe,
+  'significado-de-tu-nombre': Signature,
+  'significado-los-numeros': Hash,
+  'significado-significado-de-letras': Languages,
+  'significado-de-letras': Languages,
+  'significado-numero-del-alma': Heart,
+  'como-calcular-el-numero-del-alma': Heart,
+  'significado-numero-de-expresion': Sparkles,
+  'significado-numero-la-madurez': Sprout,
+  'numero-personal-tu-esencia': Sparkles,
+  'horoscopo-personal-2027': MoonStar,
+  'horoscopo-mensual-2027': MoonStar,
+
+  explora: Telescope,
+  expresion: Sparkles,
   numerologia: Sparkles,
-  vibraciondeltiempo: Hourglass,
-  numerologianombre: Signature,
-  horoscopos: MoonStar,
-  revisatuhoroscopomensual2026: MoonStar,
   cursos: GraduationCap,
   consultores: Users,
   instructores: Users
 }
 
-export function getToolIcon(href: string): LucideIcon {
+export function getToolIcon(href: string): ToolIconComponent {
   if (/^https?:/.test(href)) return GraduationCap
   if (href.startsWith('/blog')) return BookOpen
   const segments = href.replace(/^\//, '').split('/')

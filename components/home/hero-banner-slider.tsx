@@ -1,32 +1,16 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import Image, { type StaticImageData } from 'next/image'
 
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 import { track } from '@/lib/analytics'
-import banner2 from '@/public/images/slider/2.png'
 
-type Banner = {
-  src: StaticImageData | string
-  href: string
+export type HeroBanner = {
+  src: string
+  href: string | null
   alt: string
 }
-
-// Banners 1920x600 de public/images/slider. El orden define el orden del slider.
-const BANNERS: Banner[] = [
-  {
-    src: 'https://cdn.tienda.numerologia-cotidiana.com/webnume/nume-media/422041df-58e6-4b5d-8cc8-0a47d0fcc7f8/2-1793817757.png',
-    href: 'https://tienda.numerologia-cotidiana.com/productos/agenda-numerologica-2027',
-    alt: 'Agenda Numerológica 2027'
-  },
-  {
-    src: banner2,
-    href: 'https://tienda.numerologia-cotidiana.com/productos/taller-numerologia-de-parejas',
-    alt: 'Taller online Numerología de Parejas: ¿qué tipo de relación estás construyendo?'
-  }
-]
 
 const AUTOPLAY_MS = 5000
 const SWIPE_THRESHOLD_PX = 40
@@ -36,8 +20,8 @@ const SWIPE_THRESHOLD_PX = 40
  * mientras el cursor está encima, al enfocar un control o al tocar en móvil.
  * Respeta prefers-reduced-motion (sin autoplay) y permite swipe táctil.
  */
-export function HeroBannerSlider() {
-  const total = BANNERS.length
+export function HeroBannerSlider({ banners }: { banners: HeroBanner[] }) {
+  const total = banners.length
   const [index, setIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(false)
@@ -52,7 +36,10 @@ export function HeroBannerSlider() {
   }, [])
 
   const goTo = useCallback(
-    (target: number) => setIndex(((target % total) + total) % total),
+    (target: number) => {
+      if (total === 0) return
+      setIndex(((target % total) + total) % total)
+    },
     [total]
   )
 
@@ -61,6 +48,8 @@ export function HeroBannerSlider() {
     const id = window.setInterval(() => setIndex((current) => (current + 1) % total), AUTOPLAY_MS)
     return () => window.clearInterval(id)
   }, [isPaused, reducedMotion, total])
+
+  if (total === 0) return null
 
   const handleTouchStart = (event: React.TouchEvent) => {
     touchStartX.current = event.touches[0]?.clientX ?? null
@@ -75,6 +64,23 @@ export function HeroBannerSlider() {
     const deltaX = (event.changedTouches[0]?.clientX ?? startX) - startX
     if (Math.abs(deltaX) < SWIPE_THRESHOLD_PX) return
     goTo(deltaX < 0 ? index + 1 : index - 1)
+  }
+
+  function handleSlideClick(banner: HeroBanner, position: number) {
+    if (!banner.href) return
+    try {
+      const url = new URL(banner.href)
+      track('outbound_click', {
+        link_url: banner.href,
+        link_domain: url.hostname,
+        link_text: banner.alt
+      })
+      track('select_promotion', {
+        promotion_id: `hero_banner_${position + 1}`,
+        promotion_name: banner.alt,
+        creative_slot: 'home_hero_slider'
+      })
+    } catch {}
   }
 
   return (
@@ -98,55 +104,45 @@ export function HeroBannerSlider() {
         style={{ transform: `translateX(-${index * 100}%)` }}
         aria-live={isPaused ? 'polite' : 'off'}
       >
-        {BANNERS.map((banner, position) => {
+        {banners.map((banner, position) => {
           const isActive = position === index
-          const promoId = `hero_banner_${position + 1}`
+          const key = `${banner.src}-${position}`
+          /* eslint-disable @next/next/no-img-element */
+          const img = (
+            <img
+              src={banner.src}
+              alt={banner.alt}
+              draggable={false}
+              loading={position === 0 ? 'eager' : 'lazy'}
+              className="absolute inset-0 block h-full w-full select-none object-cover object-center"
+            />
+          )
+          /* eslint-enable @next/next/no-img-element */
+          if (banner.href) {
+            return (
+              <a
+                key={key}
+                href={banner.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-hidden={!isActive}
+                tabIndex={isActive ? 0 : -1}
+                aria-label={`${banner.alt} (abre la tienda en una pestaña nueva)`}
+                className="relative block aspect-[1920/600] w-full shrink-0 overflow-hidden outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-primary/60"
+                onClick={() => handleSlideClick(banner, position)}
+              >
+                {img}
+              </a>
+            )
+          }
           return (
-            <a
-              key={banner.href}
-              href={banner.href}
-              target="_blank"
-              rel="noopener noreferrer"
+            <div
+              key={key}
               aria-hidden={!isActive}
-              tabIndex={isActive ? 0 : -1}
-              aria-label={`${banner.alt} (abre la tienda en una pestaña nueva)`}
-              className="block w-full shrink-0 outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-primary/60"
-              onClick={() => {
-                try {
-                  const url = new URL(banner.href)
-                  track('outbound_click', {
-                    link_url: banner.href,
-                    link_domain: url.hostname,
-                    link_text: banner.alt
-                  })
-                  track('select_promotion', {
-                    promotion_id: promoId,
-                    promotion_name: banner.alt,
-                    creative_slot: 'home_hero_slider'
-                  })
-                } catch {}
-              }}
+              className="relative aspect-[1920/600] w-full shrink-0 overflow-hidden"
             >
-              {typeof banner.src === 'string' ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={banner.src}
-                  alt={banner.alt}
-                  draggable={false}
-                  loading={position === 0 ? 'eager' : 'lazy'}
-                  className="h-auto w-full select-none"
-                />
-              ) : (
-                <Image
-                  src={banner.src}
-                  alt={banner.alt}
-                  sizes="100vw"
-                  priority={position === 0}
-                  draggable={false}
-                  className="h-auto w-full select-none"
-                />
-              )}
-            </a>
+              {img}
+            </div>
           )
         })}
       </div>
@@ -175,11 +171,11 @@ export function HeroBannerSlider() {
             aria-label="Elegir banner"
             className="absolute bottom-1.5 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-black/25 px-2 py-1 backdrop-blur-sm sm:bottom-4 sm:gap-2 sm:px-2.5 sm:py-1.5"
           >
-            {BANNERS.map((banner, position) => {
+            {banners.map((banner, position) => {
               const isActive = position === index
               return (
                 <button
-                  key={banner.href}
+                  key={`${banner.src}-${position}`}
                   type="button"
                   role="tab"
                   aria-selected={isActive}
