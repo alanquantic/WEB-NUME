@@ -20,20 +20,24 @@ export async function TopBanner() {
 
   const inner = (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={banner.image_url} alt="" className="w-full object-cover" />
+    <img
+      src={banner.image_url}
+      alt=""
+      className="absolute inset-0 block h-full w-full object-cover object-center"
+    />
   )
 
   return (
     <section
       aria-label="Banner superior"
-      className="overflow-hidden rounded-[2rem] border border-border/70 bg-card shadow-panel"
+      className="relative aspect-[1920/600] w-full overflow-hidden rounded-[2rem] border border-border/70 bg-card shadow-panel"
     >
       {linkHref ? (
         <a
           href={linkHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="block"
+          className="absolute inset-0 block"
         >
           {inner}
         </a>

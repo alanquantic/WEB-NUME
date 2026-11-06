@@ -32,10 +32,22 @@ const PLACEMENT_COPY: Record<
     description:
       'Aquí puedes cargar los banners que aparecerán en el lateral del blog.',
     empty: 'Aún no hay banners laterales.'
+  },
+  home_hero: {
+    title: 'Hero del home (slider)',
+    description:
+      'Banners grandes que aparecen al inicio del home como slider automático. Tamaño recomendado 1920×600.',
+    empty: 'Aún no hay banners del hero.'
+  },
+  home_above_store: {
+    title: 'Banner arriba de "Tienda"',
+    description:
+      'Banner ancho que aparece justo antes de la sección Tienda en el home.',
+    empty: 'Aún no hay banner arriba de Tienda.'
   }
 }
 
-function NewBannerForm({
+function NewBannerInline({
   placement,
   onCreated
 }: {
@@ -48,7 +60,6 @@ function NewBannerForm({
   const [isMediaOpen, setIsMediaOpen] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
-  const copy = PLACEMENT_COPY[placement]
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -86,45 +97,39 @@ function NewBannerForm({
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="rounded-[2rem] bg-white p-6 shadow-panel">
-        <h2 className="font-display text-xl font-semibold">{copy.title}</h2>
-        <p className="mt-1 text-sm text-[hsl(var(--foreground))/0.7]">
-          {copy.description} Selecciona una imagen desde la biblioteca de medios
-          y, de forma opcional, agrega el link al que apuntará al hacer click.
-        </p>
-
-        <div className="mt-4 grid gap-4 md:grid-cols-[240px_1fr]">
-          <div>
-            <div className="flex h-40 w-full items-center justify-center overflow-hidden rounded-2xl border border-dashed border-[hsl(var(--border))] bg-[hsl(var(--muted))/0.4]">
+      <form
+        onSubmit={handleSubmit}
+        className="rounded-2xl border border-[hsl(var(--border))/0.6] bg-[hsl(var(--muted))/0.3] p-4"
+      >
+        <div className="flex flex-wrap items-start gap-3">
+          <div className="flex shrink-0 flex-col items-center gap-2">
+            <div className="flex h-16 w-24 items-center justify-center overflow-hidden rounded-lg border border-dashed border-[hsl(var(--border))] bg-white">
               {imageUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={imageUrl} alt="Vista previa" className="h-full w-full object-cover" />
               ) : (
-                <span className="text-xs text-[hsl(var(--foreground))/0.55]">Sin imagen</span>
+                <span className="text-[10px] text-[hsl(var(--foreground))/0.5]">Sin imagen</span>
               )}
             </div>
             <Button
               type="button"
               variant="secondary"
-              className="mt-3 h-9 px-4 text-xs"
+              className="h-8 px-3 text-xs"
               onClick={() => setIsMediaOpen(true)}
             >
-              {imageUrl ? 'Cambiar imagen' : 'Elegir imagen'}
+              {imageUrl ? 'Cambiar' : 'Elegir'}
             </Button>
           </div>
 
-          <div className="flex flex-col gap-3">
-            <label className="text-xs font-semibold uppercase tracking-wide text-[hsl(var(--foreground))/0.6]">
-              Link al hacer click (opcional)
-            </label>
+          <div className="flex min-w-[220px] flex-1 flex-col gap-2">
             <Input
               type="url"
-              placeholder="https://tienda.numerologia-cotidiana.com/..."
+              placeholder="Link al hacer click (opcional) — https://..."
               value={linkUrl}
               onChange={(event) => setLinkUrl(event.target.value)}
+              className="h-9"
             />
-
-            <label className="mt-2 inline-flex items-center gap-2 text-sm">
+            <label className="inline-flex items-center gap-2 text-xs">
               <input
                 type="checkbox"
                 checked={isActive}
@@ -133,16 +138,15 @@ function NewBannerForm({
               />
               Activo (visible en el sitio)
             </label>
-
             {error ? (
-              <p className="text-sm font-medium text-[hsl(var(--danger))]">{error}</p>
+              <p className="text-xs font-medium text-[hsl(var(--danger))]">{error}</p>
             ) : null}
+          </div>
 
-            <div>
-              <Button type="submit" disabled={isPending || !imageUrl}>
-                {isPending ? 'Guardando…' : 'Guardar banner'}
-              </Button>
-            </div>
+          <div className="flex shrink-0 items-center">
+            <Button type="submit" disabled={isPending || !imageUrl} className="h-9 px-4 text-xs">
+              {isPending ? 'Guardando…' : 'Agregar banner'}
+            </Button>
           </div>
         </div>
       </form>
@@ -159,7 +163,7 @@ function NewBannerForm({
   )
 }
 
-function BannerRow({
+function BannerTableRow({
   banner,
   onChanged
 }: {
@@ -217,48 +221,52 @@ function BannerRow({
 
   return (
     <>
-      <li className="rounded-2xl border border-[hsl(var(--border))/0.6] bg-white p-4">
-        <div className="grid gap-4 md:grid-cols-[180px_1fr_auto] md:items-center">
-          <div>
-            <div className="h-24 w-40 overflow-hidden rounded-xl bg-[hsl(var(--muted))/0.4]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={imageUrl} alt="Banner" className="h-full w-full object-cover" />
-            </div>
-            <Button
-              type="button"
-              variant="secondary"
-              className="mt-2 h-8 px-3 text-xs"
-              onClick={() => setIsMediaOpen(true)}
-            >
-              Cambiar
-            </Button>
-          </div>
-          <div className="flex flex-col gap-2">
-            <Input
-              type="url"
-              placeholder="https://..."
-              value={linkUrl}
-              onChange={(event) => setLinkUrl(event.target.value)}
+      <tr className="border-t border-[hsl(var(--border))/0.5]">
+        <td className="w-[88px] py-2 pr-2">
+          <button
+            type="button"
+            onClick={() => setIsMediaOpen(true)}
+            className="group block h-12 w-20 overflow-hidden rounded-md bg-[hsl(var(--muted))/0.4] ring-1 ring-[hsl(var(--border))/0.6] transition hover:ring-[hsl(var(--primary))/0.5]"
+            title="Cambiar imagen"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={imageUrl}
+              alt="Banner"
+              className="h-full w-full object-cover transition group-hover:opacity-80"
             />
-            <label className="inline-flex items-center gap-2 text-sm">
-              <input
-                type="checkbox"
-                checked={isActive}
-                onChange={(event) => setIsActive(event.target.checked)}
-                className="h-4 w-4"
-              />
-              Activo
-            </label>
-            {error ? (
-              <p className="text-xs font-medium text-[hsl(var(--danger))]">{error}</p>
-            ) : null}
-          </div>
-          <div className="flex flex-col items-end gap-2">
+          </button>
+        </td>
+        <td className="py-2 pr-2">
+          <Input
+            type="url"
+            placeholder="https://..."
+            value={linkUrl}
+            onChange={(event) => setLinkUrl(event.target.value)}
+            className="h-8 text-xs"
+          />
+          {error ? (
+            <p className="mt-1 text-[11px] font-medium text-[hsl(var(--danger))]">{error}</p>
+          ) : null}
+        </td>
+        <td className="w-20 py-2 pr-2 text-center">
+          <label className="inline-flex cursor-pointer items-center gap-1 text-xs">
+            <input
+              type="checkbox"
+              checked={isActive}
+              onChange={(event) => setIsActive(event.target.checked)}
+              className="h-4 w-4"
+            />
+            <span className="sr-only">Activo</span>
+          </label>
+        </td>
+        <td className="w-auto py-2 text-right">
+          <div className="flex justify-end gap-2">
             <Button
               type="button"
               disabled={!dirty || isPending}
               onClick={handleSave}
-              className="h-9 px-4 text-xs"
+              className="h-8 px-3 text-xs"
             >
               Guardar
             </Button>
@@ -267,13 +275,13 @@ function BannerRow({
               variant="danger"
               disabled={isPending}
               onClick={handleDelete}
-              className="h-9 px-4 text-xs"
+              className="h-8 px-3 text-xs"
             >
               Eliminar
             </Button>
           </div>
-        </div>
-      </li>
+        </td>
+      </tr>
 
       <MediaLibraryModal
         open={isMediaOpen}
@@ -285,10 +293,61 @@ function BannerRow({
   )
 }
 
+function PlacementCard({
+  placement,
+  banners,
+  onChanged,
+  rotationNote
+}: {
+  placement: BannerPlacement
+  banners: Banner[]
+  onChanged: () => void
+  rotationNote: string
+}) {
+  const copy = PLACEMENT_COPY[placement]
+  return (
+    <section className="rounded-[2rem] bg-white p-6 shadow-panel">
+      <header>
+        <h2 className="font-display text-xl font-semibold">{copy.title}</h2>
+        <p className="mt-1 text-sm text-[hsl(var(--foreground))/0.7]">{copy.description}</p>
+        <p className="mt-1 text-xs text-[hsl(var(--foreground))/0.55]">{rotationNote}</p>
+      </header>
+
+      <div className="mt-4">
+        <NewBannerInline placement={placement} onCreated={onChanged} />
+      </div>
+
+      <div className="mt-5">
+        {banners.length === 0 ? (
+          <p className="text-sm text-[hsl(var(--foreground))/0.6]">{copy.empty}</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-left text-[11px] font-semibold uppercase tracking-wide text-[hsl(var(--foreground))/0.55]">
+                  <th className="py-2 pr-2">Imagen</th>
+                  <th className="py-2 pr-2">Link</th>
+                  <th className="w-20 py-2 pr-2 text-center">Activo</th>
+                  <th className="py-2 text-right">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {banners.map((banner) => (
+                  <BannerTableRow key={banner.id} banner={banner} onChanged={onChanged} />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
 export function BannersManager({ initialBanners }: { initialBanners: Banner[] }) {
   const router = useRouter()
-  const topBanners = initialBanners.filter((banner) => banner.placement === 'top')
-  const sidebarBanners = initialBanners.filter((banner) => banner.placement === 'sidebar')
+  const byPlacement = (placement: BannerPlacement) =>
+    initialBanners.filter((banner) => banner.placement === placement)
 
   function refresh() {
     router.refresh()
@@ -296,47 +355,30 @@ export function BannersManager({ initialBanners }: { initialBanners: Banner[] })
 
   return (
     <div className="grid gap-6">
-      <section className="grid gap-6">
-        <NewBannerForm placement="top" onCreated={refresh} />
-        <div className="rounded-[2rem] bg-white p-6 shadow-panel">
-          <h2 className="font-display text-xl font-semibold">{PLACEMENT_COPY.top.title}</h2>
-          <p className="mt-1 text-sm text-[hsl(var(--foreground))/0.7]">
-            Si hay más de uno activo, se muestra uno al azar en cada visita.
-          </p>
-          <ul className="mt-4 grid gap-3">
-            {topBanners.length === 0 ? (
-              <li className="text-sm text-[hsl(var(--foreground))/0.6]">
-                {PLACEMENT_COPY.top.empty}
-              </li>
-            ) : (
-              topBanners.map((banner) => (
-                <BannerRow key={banner.id} banner={banner} onChanged={refresh} />
-              ))
-            )}
-          </ul>
-        </div>
-      </section>
-
-      <section className="grid gap-6">
-        <NewBannerForm placement="sidebar" onCreated={refresh} />
-        <div className="rounded-[2rem] bg-white p-6 shadow-panel">
-          <h2 className="font-display text-xl font-semibold">{PLACEMENT_COPY.sidebar.title}</h2>
-          <p className="mt-1 text-sm text-[hsl(var(--foreground))/0.7]">
-            Si hay más de uno activo, se muestra uno al azar en cada visita.
-          </p>
-          <ul className="mt-4 grid gap-3">
-            {sidebarBanners.length === 0 ? (
-              <li className="text-sm text-[hsl(var(--foreground))/0.6]">
-                {PLACEMENT_COPY.sidebar.empty}
-              </li>
-            ) : (
-              sidebarBanners.map((banner) => (
-                <BannerRow key={banner.id} banner={banner} onChanged={refresh} />
-              ))
-            )}
-          </ul>
-        </div>
-      </section>
+      <PlacementCard
+        placement="home_hero"
+        banners={byPlacement('home_hero')}
+        onChanged={refresh}
+        rotationNote="Todos los banners activos se muestran como slides del hero (autoplay cada 5 s)."
+      />
+      <PlacementCard
+        placement="home_above_store"
+        banners={byPlacement('home_above_store')}
+        onChanged={refresh}
+        rotationNote="Si hay más de uno activo, se muestra uno al azar en cada visita."
+      />
+      <PlacementCard
+        placement="top"
+        banners={byPlacement('top')}
+        onChanged={refresh}
+        rotationNote="Si hay más de uno activo, se muestra uno al azar en cada visita."
+      />
+      <PlacementCard
+        placement="sidebar"
+        banners={byPlacement('sidebar')}
+        onChanged={refresh}
+        rotationNote="Si hay más de uno activo, se muestra uno al azar en cada visita."
+      />
     </div>
   )
 }

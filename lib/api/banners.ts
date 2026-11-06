@@ -1,6 +1,6 @@
 import { serverApiFetch } from '@/lib/api/server'
 
-export type BannerPlacement = 'top' | 'sidebar'
+export type BannerPlacement = 'top' | 'sidebar' | 'home_hero' | 'home_above_store'
 
 export type Banner = {
   id: string
