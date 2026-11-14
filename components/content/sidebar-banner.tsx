@@ -17,12 +17,14 @@ export async function SidebarBanner() {
       ? banners[0]
       : banners[Math.floor(Math.random() * banners.length)]
   const linkHref = safeHref(banner.link_url)
+  // Con link, la imagen es el único contenido del enlace: el alt no puede ir vacío.
+  const alt = banner.alt_text?.trim() || (linkHref ? 'Banner promocional' : '')
 
   const inner = (
     // eslint-disable-next-line @next/next/no-img-element
     <img
       src={banner.image_url}
-      alt=""
+      alt={alt}
       className="h-auto w-full object-contain"
     />
   )

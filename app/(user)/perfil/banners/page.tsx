@@ -15,10 +15,11 @@ export default async function BannersAdminPage() {
       <div className="rounded-[2rem] bg-white p-6 shadow-panel">
         <h1 className="font-display text-3xl font-semibold">Banners de página</h1>
         <p className="mt-2 text-sm text-[hsl(var(--foreground))/0.72]">
-          Administra dos tipos de banners globales: los superiores y el banner
-          lateral. Cualquier admin puede crear, editar o eliminar. Si hay
-          varios activos dentro de un mismo tipo, se muestra uno al azar en
-          cada visita.
+          Administra los banners del sitio: el slider y el banner arriba de
+          Tienda en el home, y los banners superior y lateral de artículos y
+          páginas. Cualquier admin puede crear, editar o eliminar. Puedes
+          programar cada banner con fecha de inicio y de fin (hora de México)
+          y agregarle un texto alternativo.
         </p>
       </div>
       <BannersManager initialBanners={data} />
