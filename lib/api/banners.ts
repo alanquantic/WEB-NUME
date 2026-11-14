@@ -8,6 +8,11 @@ export type Banner = {
   image_url: string
   link_url: string | null
   is_active: boolean
+  // Opcionales para seguir funcionando con una API que aún no los expone.
+  alt_text?: string | null
+  sort_order?: number
+  starts_at?: string | null
+  ends_at?: string | null
   created_at: string
   updated_at: string
 }

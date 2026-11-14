@@ -33,7 +33,7 @@ export default async function HomePage() {
   const heroSlides: HeroBanner[] = heroBanners.map((banner) => ({
     src: banner.image_url,
     href: banner.link_url,
-    alt: 'Banner promocional'
+    alt: banner.alt_text?.trim() || 'Banner promocional'
   }))
 
   const aboveStore = pickRandom(aboveStoreBanners)
@@ -64,7 +64,7 @@ export default async function HomePage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={aboveStore.image_url}
-                  alt="Banner promocional"
+                  alt={aboveStore.alt_text?.trim() || 'Banner promocional'}
                   className="absolute inset-0 block h-full w-full object-cover object-center"
                 />
               </OutboundLink>
@@ -73,7 +73,7 @@ export default async function HomePage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={aboveStore.image_url}
-                  alt="Banner promocional"
+                  alt={aboveStore.alt_text?.trim() || 'Banner promocional'}
                   className="absolute inset-0 block h-full w-full object-cover object-center"
                 />
               </div>
