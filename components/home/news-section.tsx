@@ -1,4 +1,5 @@
 import type { Route } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
@@ -10,6 +11,7 @@ import { getPosts } from '@/lib/api/posts'
 import { getCategories } from '@/lib/api/taxonomy'
 import { categoryPath } from '@/lib/categorias/paths'
 import { formatDate } from '@/lib/format'
+import { isOptimizableImage } from '@/lib/images'
 
 type NewsCard = {
   id: string
@@ -88,11 +90,13 @@ export async function NewsSection() {
               <ScrollReveal key={item.id} delay={80 + index * 70}>
                 <article className="group flex h-full flex-col overflow-hidden rounded-[1.9rem] border border-border/80 bg-card shadow-panel transition hover:-translate-y-1 hover:shadow-glow">
                   <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-secondary/70">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={item.imageSrc}
                       alt={item.imageAlt}
-                      className="absolute inset-0 block h-full w-full object-cover object-bottom"
+                      fill
+                      sizes="(min-width: 1024px) 280px, (min-width: 640px) 90vw, 100vw"
+                      unoptimized={!isOptimizableImage(item.imageSrc)}
+                      className="block object-cover object-bottom"
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-5">

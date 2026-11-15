@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import type { Route } from 'next'
 import { DM_Sans, Playfair_Display } from 'next/font/google'
 import Link from 'next/link'
@@ -321,11 +322,13 @@ export function BirthdaySection() {
           </ScrollReveal>
 
           <ScrollReveal delay={160}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src="/images/birthday/polaroid.png"
               alt="Fotografía polaroid de una joven soplando las velas de su pastel de cumpleaños"
-              className="mx-auto w-full max-w-[400px] lg:max-w-[470px]"
+              width={817}
+              height={908}
+              sizes="(min-width: 1024px) 470px, 400px"
+              className="mx-auto h-auto w-full max-w-[400px] lg:max-w-[470px]"
             />
           </ScrollReveal>
         </div>
