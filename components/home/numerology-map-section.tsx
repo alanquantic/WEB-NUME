@@ -90,11 +90,11 @@ const RESULT_CARDS: readonly ResultCard[] = [
 
 const CARD_STYLES: Record<ResultCard['tone'], string> = {
   essence:
-    "border border-border/70 bg-[url('/images/numerology-card-essence.png')] bg-[hsl(var(--primary-soft))] text-primary shadow-[0_22px_55px_hsl(var(--primary)/0.08)] dark:bg-[url('/images/numerology-card-essence-dark.png')] dark:bg-[hsl(var(--primary-soft)/0.7)] dark:bg-cover sm:dark:bg-contain",
+    "border border-border/70 bg-[url('/images/numerology-card-essence.webp')] bg-[hsl(var(--primary-soft))] text-primary shadow-[0_22px_55px_hsl(var(--primary)/0.08)] dark:bg-[url('/images/numerology-card-essence-dark.webp')] dark:bg-[hsl(var(--primary-soft)/0.7)] dark:bg-cover sm:dark:bg-contain",
   mission:
-    "bg-[url('/images/numerology-card-mission.png')] bg-[hsl(var(--primary))] text-white shadow-[0_24px_60px_hsl(var(--primary)/0.18)] dark:bg-[url('/images/numerology-card-mission-dark.png')] dark:bg-[hsl(var(--primary)/0.55)]",
+    "bg-[url('/images/numerology-card-mission.webp')] bg-[hsl(var(--primary))] text-white shadow-[0_24px_60px_hsl(var(--primary)/0.18)] dark:bg-[url('/images/numerology-card-mission-dark.webp')] dark:bg-[hsl(var(--primary)/0.55)]",
   year:
-    "border border-[hsl(var(--accent)/0.14)] bg-[url('/images/numerology-card-year.png')] text-[hsl(var(--accent))] shadow-[0_22px_55px_hsl(var(--accent)/0.14)] dark:bg-[url('/images/numerology-card-year-dark.png')] dark:bg-[hsl(226_45%_10%/0.82)] dark:bg-cover sm:dark:bg-contain"
+    "border border-[hsl(var(--accent)/0.14)] bg-[url('/images/numerology-card-year.webp')] text-[hsl(var(--accent))] shadow-[0_22px_55px_hsl(var(--accent)/0.14)] dark:bg-[url('/images/numerology-card-year-dark.webp')] dark:bg-[hsl(226_45%_10%/0.82)] dark:bg-cover sm:dark:bg-contain"
 }
 
 const ENERGY_CARD_TONES = {
@@ -327,7 +327,7 @@ export function NumerologyMapSection() {
         <ScrollReveal delay={70} className="h-full">
           <div
             data-calculator-slot="mapa-form"
-            className="flex h-full min-h-[27rem] flex-col overflow-hidden rounded-[2rem] border border-border/70 bg-[url('/images/numerology-card-map.png')] bg-cover bg-center p-5 text-primary shadow-[0_24px_60px_hsl(var(--foreground)/0.12)] backdrop-blur dark:bg-[url('/images/numerology-card-map-dark.png')] dark:bg-[hsl(var(--foreground)/0.32)] dark:text-white sm:min-h-[31rem] sm:p-6"
+            className="flex h-full min-h-[27rem] flex-col overflow-hidden rounded-[2rem] border border-border/70 bg-[url('/images/numerology-card-map.webp')] bg-cover bg-center p-5 text-primary shadow-[0_24px_60px_hsl(var(--foreground)/0.12)] backdrop-blur dark:bg-[url('/images/numerology-card-map-dark.webp')] dark:bg-[hsl(var(--foreground)/0.32)] dark:text-white sm:min-h-[31rem] sm:p-6"
           >
             <h2 className="font-display text-[1.45rem] font-semibold uppercase tracking-[0.03em] text-primary dark:text-white sm:text-[1.7rem]">
               Mi Mapa <span className="block">Numerológico</span>
@@ -438,7 +438,7 @@ export function NumerologyMapSection() {
           <ScrollReveal delay={360}>
             <article
               data-result="energia-hoy"
-              className="group flex h-full min-h-[13rem] flex-col rounded-[2rem] bg-[url('/images/numerology-card-energy-today.png')] bg-cover bg-center px-5 py-6 text-[hsl(263_35%_18%)] shadow-[0_24px_60px_hsl(var(--accent)/0.18)] transition hover:-translate-y-1 dark:bg-[url('/images/numerology-card-energy-today-dark.png')] dark:bg-[hsl(var(--royal-blue)/0.58)] dark:text-white dark:shadow-[0_24px_60px_hsl(var(--royal-blue)/0.16)] sm:min-h-[15rem] sm:px-6 sm:py-7"
+              className="group flex h-full min-h-[13rem] flex-col rounded-[2rem] bg-[url('/images/numerology-card-energy-today.webp')] bg-cover bg-center px-5 py-6 text-[hsl(263_35%_18%)] shadow-[0_24px_60px_hsl(var(--accent)/0.18)] transition hover:-translate-y-1 dark:bg-[url('/images/numerology-card-energy-today-dark.webp')] dark:bg-[hsl(var(--royal-blue)/0.58)] dark:text-white dark:shadow-[0_24px_60px_hsl(var(--royal-blue)/0.16)] sm:min-h-[15rem] sm:px-6 sm:py-7"
             >
               <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                 <h3 className="font-display text-[1.2rem] font-semibold uppercase tracking-[0.03em] sm:text-[1.55rem]">
