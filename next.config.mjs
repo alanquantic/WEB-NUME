@@ -20,6 +20,16 @@ const nextConfig = {
   experimental: {
     typedRoutes: true
   },
+  // Banners y portadas viven en el R2 de la tienda. Next los redimensiona al
+  // ancho de la pantalla y los entrega en AVIF/WebP (lib/images.ts).
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'cdn.tienda.numerologia-cotidiana.com', pathname: '/webnume/**' }
+    ],
+    // Las URLs del R2 llevan marca de tiempo: nunca cambian de contenido.
+    minimumCacheTTL: 2678400
+  },
   // URLs con barra final, igual que el WordPress original (Next redirige
   // /ruta → /ruta/ y genera los <Link> con barra).
   trailingSlash: true,

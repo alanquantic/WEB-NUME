@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 import { SocialLinks } from '@/components/ui/social-links'
@@ -8,7 +9,7 @@ export function SiteFooter() {
       <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-10 md:flex-row md:items-center md:justify-between">
         <div className="space-y-2">
           <Link href="/" className="flex items-center gap-2 font-display text-xl font-semibold">
-            <img src="/images/logo_favicon.png" alt="Logo" className="h-9 w-9" />
+            <Image src="/images/logo_favicon.png" alt="Logo" width={36} height={36} className="h-9 w-9" />
             <span>
               Numerología
               <span className="block text-xs font-medium text-white/60">cotidiana®</span>
