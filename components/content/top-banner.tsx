@@ -1,4 +1,7 @@
+import Image from 'next/image'
+
 import { listBanners } from '@/lib/api/banners'
+import { isOptimizableImage } from '@/lib/images'
 import { safeHref } from '@/lib/safe-url'
 
 export async function TopBanner() {
@@ -21,11 +24,13 @@ export async function TopBanner() {
   const alt = banner.alt_text?.trim() || (linkHref ? 'Banner promocional' : '')
 
   const inner = (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
+    <Image
       src={banner.image_url}
       alt={alt}
-      className="absolute inset-0 block h-full w-full object-cover object-center"
+      fill
+      sizes="(min-width: 1280px) 1232px, 100vw"
+      unoptimized={!isOptimizableImage(banner.image_url)}
+      className="block object-cover object-center"
     />
   )
 

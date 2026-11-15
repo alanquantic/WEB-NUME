@@ -3,8 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import Image from 'next/image'
 
 import { track } from '@/lib/analytics'
+import { isOptimizableImage } from '@/lib/images'
 
 export type HeroBanner = {
   src: string
@@ -107,17 +109,20 @@ export function HeroBannerSlider({ banners }: { banners: HeroBanner[] }) {
         {banners.map((banner, position) => {
           const isActive = position === index
           const key = `${banner.src}-${position}`
-          /* eslint-disable @next/next/no-img-element */
+          // El primer banner es el elemento más grande del inicio (LCP): se
+          // precarga con prioridad alta y se pide al ancho real de la pantalla.
           const img = (
-            <img
+            <Image
               src={banner.src}
               alt={banner.alt}
+              fill
+              sizes="100vw"
+              priority={position === 0}
+              unoptimized={!isOptimizableImage(banner.src)}
               draggable={false}
-              loading={position === 0 ? 'eager' : 'lazy'}
-              className="absolute inset-0 block h-full w-full select-none object-cover object-center"
+              className="block select-none object-cover object-center"
             />
           )
-          /* eslint-enable @next/next/no-img-element */
           if (banner.href) {
             return (
               <a

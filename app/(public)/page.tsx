@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 import { OutboundLink } from '@/components/analytics/outbound-link'
 import { BirthdaySection } from '@/components/home/birthday-section'
 import { CoupleNumerologySection } from '@/components/home/couple-numerology-section'
@@ -9,6 +11,7 @@ import { NumerologyMapSection } from '@/components/home/numerology-map-section'
 import { StoreHighlightSection } from '@/components/home/store-highlight-section'
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
 import { listBanners, type Banner } from '@/lib/api/banners'
+import { isOptimizableImage } from '@/lib/images'
 
 async function loadActiveBanners(placement: 'home_hero' | 'home_above_store'): Promise<Banner[]> {
   try {
@@ -61,20 +64,24 @@ export default async function HomePage() {
                 creativeSlot="home_above_store"
                 className="relative block aspect-[1920/600] w-full overflow-hidden rounded-[2rem] shadow-panel transition hover:-translate-y-0.5 hover:shadow-glow"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={aboveStore.image_url}
                   alt={aboveStore.alt_text?.trim() || 'Banner promocional'}
-                  className="absolute inset-0 block h-full w-full object-cover object-center"
+                  fill
+                  sizes="(min-width: 1280px) 1232px, 100vw"
+                  unoptimized={!isOptimizableImage(aboveStore.image_url)}
+                  className="block object-cover object-center"
                 />
               </OutboundLink>
             ) : (
               <div className="relative aspect-[1920/600] w-full overflow-hidden rounded-[2rem] shadow-panel">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={aboveStore.image_url}
                   alt={aboveStore.alt_text?.trim() || 'Banner promocional'}
-                  className="absolute inset-0 block h-full w-full object-cover object-center"
+                  fill
+                  sizes="(min-width: 1280px) 1232px, 100vw"
+                  unoptimized={!isOptimizableImage(aboveStore.image_url)}
+                  className="block object-cover object-center"
                 />
               </div>
             )}
