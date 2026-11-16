@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { Input } from '@/components/ui/input'
 import { useCalculatorView } from '@/lib/analytics/calculator'
@@ -8,11 +8,13 @@ import Universal from '@/resources/universal'
 
 type Vibration = {
   label: string
-  value: number
+  value: number | null
 }
 
-function computeVibrations(dateValue: string): Vibration[] {
-  const base = dateValue ? new Date(`${dateValue}T12:00:00`) : new Date()
+const ETIQUETAS = ['Año universal', 'Mes universal', 'Semana universal', 'Día universal']
+
+function computeVibrations(base: Date | null): Vibration[] {
+  if (!base) return ETIQUETAS.map((label) => ({ label, value: null }))
   const universal = new Universal()
   const params = {
     day: base.getDate(),
@@ -31,7 +33,15 @@ function computeVibrations(dateValue: string): Vibration[] {
 export function CollectiveVibrations() {
   useCalculatorView('collective-vibrations')
   const [dateValue, setDateValue] = useState('')
-  const vibrations = useMemo(() => computeVibrations(dateValue), [dateValue])
+  // "Hoy" es la fecha del visitante, no la del servidor (que corre en UTC). Se
+  // toma ya en el navegador: si se calculara al dibujar, por la tarde en América
+  // el servidor mostraría el día siguiente y React fallaría al hidratar.
+  const [hoy, setHoy] = useState<Date | null>(null)
+  useEffect(() => setHoy(new Date()), [])
+  const vibrations = useMemo(
+    () => computeVibrations(dateValue ? new Date(`${dateValue}T12:00:00`) : hoy),
+    [dateValue, hoy]
+  )
 
   return (
     <div className="rounded-[2rem] border border-border/70 bg-card p-6 shadow-panel sm:p-8">
@@ -52,7 +62,7 @@ export function CollectiveVibrations() {
             className="flex flex-col items-center rounded-[1.5rem] bg-[hsl(var(--secondary)/0.2)] p-5 text-center"
           >
             <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-brand font-display text-3xl font-semibold text-white shadow-glow">
-              {vibration.value}
+              {vibration.value ?? '—'}
             </span>
             <span className="mt-3 text-sm font-semibold text-foreground/75">{vibration.label}</span>
           </div>

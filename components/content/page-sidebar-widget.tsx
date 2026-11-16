@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import type { Route } from 'next'
 import Link from 'next/link'
 
+import { inicioDeAnio } from '@/lib/personales/anio'
 import Person from '@/resources/person'
 import { useUserDefaults } from '@/stores/user-defaults'
 
@@ -84,7 +85,7 @@ function resolveCalculation(concept: string, person: Person): string {
     case 'personality':
       return normalizeValue(person.calcPersonalityNumber())
     case 'year':
-      return normalizeValue(person.calcPersonalYear(new Date()))
+      return normalizeValue(person.calcPersonalYear(inicioDeAnio(new Date().getFullYear())))
     case 'month':
       return normalizeValue(person.calcPersonalMonth(new Date(), new Date()))
     case 'week':
