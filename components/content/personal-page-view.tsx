@@ -165,12 +165,18 @@ function MembershipWall({ next }: { next: string }) {
 export function PersonalPageView({
   categoria,
   entry,
-  locked = false
+  locked = false,
+  nota,
+  calculadora
 }: {
   categoria: PersonalCategoria
   entry: PersonalNumero
   /** true → solo llega el preview del contenido y se muestra el muro de membresía. */
   locked?: boolean
+  /** Frase breve bajo el subtítulo (p. ej. a qué año aplica el contenido). */
+  nota?: string
+  /** Enlace a la calculadora del número, para quien aún no conoce el suyo. */
+  calculadora?: { href: string; texto: string }
 }) {
   return (
     <ToolPage
@@ -197,6 +203,19 @@ export function PersonalPageView({
               </h2>
               {entry.subtitulo ? (
                 <p className="text-base leading-8 text-foreground/72">{entry.subtitulo}</p>
+              ) : null}
+              {nota || calculadora ? (
+                <p className="text-sm leading-7 text-foreground/60">
+                  {nota}{' '}
+                  {calculadora ? (
+                    <Link
+                      href={calculadora.href as Route}
+                      className="font-semibold text-primary underline-offset-4 hover:underline"
+                    >
+                      {calculadora.texto}
+                    </Link>
+                  ) : null}
+                </p>
               ) : null}
             </div>
           </div>

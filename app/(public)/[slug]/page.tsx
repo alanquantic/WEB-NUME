@@ -35,6 +35,13 @@ import {
   getPersonalEntryBySlug,
   getPersonalSlugs
 } from '@/lib/personales/data'
+import {
+  descripcionAnoPersonal,
+  descripcionGuiaAnoPersonal,
+  tituloAnoPersonal,
+  tituloGuiaAnoPersonal,
+  vigenciaAnoPersonal
+} from '@/lib/personales/anio'
 import type { PersonalCategoriaKey } from '@/lib/personales/routes'
 import { getSignificadoEntry, getSignificadoParams } from '@/lib/significados/data'
 import { parseSignificadoSlug, significadoPath } from '@/lib/significados/routes'
@@ -71,6 +78,13 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const result = getPersonalEntryBySlug(params.slug)
   if (result) {
+    // Año Personal: la URL es fija y el año vigente va en título y descripción.
+    if (result.categoria.key === 'ano-personal') {
+      return {
+        title: tituloAnoPersonal(result.entry.numero),
+        description: descripcionAnoPersonal(result.entry.numero, result.entry.subtitulo)
+      }
+    }
     return {
       title: result.entry.titulo,
       description: result.entry.subtitulo || result.categoria.descripcion
@@ -79,6 +93,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const guia = getGuiaBySlug(params.slug)
   if (guia) {
+    if (GUIA_META[params.slug]?.categoria === 'ano-personal') {
+      return { title: tituloGuiaAnoPersonal(), description: descripcionGuiaAnoPersonal() }
+    }
     return {
       title: guia.titulo,
       description: GUIA_META[params.slug]?.descripcion
@@ -137,14 +154,23 @@ export default async function Page({ params }: PageProps) {
   const result = getPersonalEntryBySlug(params.slug)
   if (result) {
     let locked = false
-    if (GATED_CATEGORIES.has(result.categoria.key)) {
+    if (GATED_CATEGORIES.has(result.categoria.key) && !result.entry.abierto) {
       const user = await getServerSessionUser()
       locked = !user?.has_active_membership
     }
     const entry = locked
       ? { ...result.entry, bloques: result.entry.bloques.slice(0, PREVIEW_BLOCKS) }
       : result.entry
-    return <PersonalPageView categoria={result.categoria} entry={entry} locked={locked} />
+    const esAnoPersonal = result.categoria.key === 'ano-personal'
+    return (
+      <PersonalPageView
+        categoria={result.categoria}
+        entry={entry}
+        locked={locked}
+        nota={esAnoPersonal ? vigenciaAnoPersonal(entry.numero) : undefined}
+        calculadora={esAnoPersonal ? { href: '/ano-personal', texto: 'Calcula tu Año Personal' } : undefined}
+      />
+    )
   }
 
   const guia = getGuiaBySlug(params.slug)
@@ -158,6 +184,7 @@ export default async function Page({ params }: PageProps) {
           categoria={categoria}
           descripcion={meta.descripcion}
           toolKey={meta.toolKey}
+          calculadora={meta.calculadora}
         />
       )
     }
