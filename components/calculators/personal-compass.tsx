@@ -8,6 +8,7 @@ import { trackCalculatorSubmit, useCalculatorView } from '@/lib/analytics/calcul
 import { getMeaning } from '@/lib/numerology/meanings'
 import Person from '@/resources/person'
 import { useUserDefaults } from '@/stores/user-defaults'
+import { inicioDeAnio } from '@/lib/personales/anio'
 
 type CompassItem = {
   label: string
@@ -30,7 +31,7 @@ function compute(birthDate: string): CompassItem[] | null {
     const person = new Person({ birthDate })
     const now = new Date()
 
-    const year = toDisplay(person.calcPersonalYear(new Date(now.getFullYear(), 0, 1)))
+    const year = toDisplay(person.calcPersonalYear(inicioDeAnio(now.getFullYear())))
     const month = toDisplay(person.calcPersonalMonth(now, now))
     const week = toDisplay(person.calcPersonalWeek(now))
     const day = toDisplay(person.calcPersonalDay(now))

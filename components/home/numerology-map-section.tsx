@@ -14,6 +14,7 @@ import Person from '@/resources/person'
 import Pinnacle from '@/resources/pinnacle'
 import { useNumerologyMapStore } from '@/stores/numerology-map-store'
 import { useUserDefaults } from '@/stores/user-defaults'
+import { inicioDeAnio } from '@/lib/personales/anio'
 
 type ResultCard = {
   id: 'personal-number' | 'soul-number' | 'personal-year'
@@ -80,7 +81,8 @@ const RESULT_CARDS: readonly ResultCard[] = [
   },
   {
     id: 'personal-year',
-    heading: 'Mi año 2026',
+    // El año en curso se añade al mostrarla (el número se calcula para ese año).
+    heading: 'Mi año',
     subtitle: 'Año Personal',
     category: 'ano-personal',
     fallback: '/ano-personal',
@@ -208,7 +210,7 @@ function buildCalculationResult(formState: FormState): CalculationResult {
     birthDate
   })
 
-  const currentYearDate = new Date(new Date().getFullYear(), 0, 1)
+  const currentYearDate = inicioDeAnio(new Date().getFullYear())
   const pinnacle = new Pinnacle(formatPinnacleDate(birthDate))
 
   return {
@@ -409,7 +411,12 @@ export function NumerologyMapSection() {
                       card.tone === 'mission' ? 'text-white' : ''
                     }`}
                   >
-                    {card.heading}
+                    {/* El año se añade ya en el navegador (currentDate es null en el
+                        servidor): el servidor corre en UTC y en Nochevieja su año
+                        no coincide con el del visitante. */}
+                    {card.id === 'personal-year' && currentDate
+                      ? `${card.heading} ${currentDate.getFullYear()}`
+                      : card.heading}
                   </h3>
                   <p
                     className={`mt-1 text-[0.95rem] ${

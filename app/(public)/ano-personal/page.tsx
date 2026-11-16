@@ -140,19 +140,17 @@ export default function Page() {
               en lugar de estar luchando contra corriente todo el tiempo.
             </p>
             <p className="text-base leading-8 text-foreground/72">
-              <p>
-                La duración del <strong>año personal</strong> será del{" "}
-                <strong>1° de enero al 31 de diciembre</strong>. Mientras estén
-                activos sus poderes vibratorios atraeremos influencia en
-                concordancia con la energía disponible por el tiempo
-                establecido, que se volverán determinantes en nuestra vida,
-                provocando inicios, liberaciones, consolidaciones, esfuerzos,
-                cambios, uniones, aprendizajes, logros, éxitos, crisis,
-                confrontaciones y cierres entre muchas otras lecciones. El uso
-                adecuado de <strong>esta información te sirve de guía</strong>{" "}
-                para diseñar un año donde los logros y el éxito en los remas
-                propuestos sean alcanzables con mayor.
-              </p>
+              La duración del <strong>año personal</strong> será del{" "}
+              <strong>1° de enero al 31 de diciembre</strong>. Mientras estén
+              activos sus poderes vibratorios atraeremos influencia en
+              concordancia con la energía disponible por el tiempo
+              establecido, que se volverán determinantes en nuestra vida,
+              provocando inicios, liberaciones, consolidaciones, esfuerzos,
+              cambios, uniones, aprendizajes, logros, éxitos, crisis,
+              confrontaciones y cierres entre muchas otras lecciones. El uso
+              adecuado de <strong>esta información te sirve de guía</strong>{" "}
+              para diseñar un año donde los logros y el éxito en los remas
+              propuestos sean alcanzables con mayor.
             </p>
           </div>
         </section>
