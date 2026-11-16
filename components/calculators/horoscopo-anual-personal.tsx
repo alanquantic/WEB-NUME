@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { trackCalculatorSubmit, useCalculatorView } from '@/lib/analytics/calculator'
 import Person from '@/resources/person'
 import { useUserDefaults } from '@/stores/user-defaults'
+import { inicioDeAnio } from '@/lib/personales/anio'
 
 function buildYearOptions() {
   const currentYear = new Date().getFullYear()
@@ -19,7 +20,7 @@ function computePersonalYear(birthDate: string, yearToCalculate: string): number
   try {
     const person = new Person({ birthDate })
     const targetYear = Number(yearToCalculate)
-    const value = person.calcPersonalYear(new Date(targetYear, 0, 1))
+    const value = person.calcPersonalYear(inicioDeAnio(targetYear))
 
     if (value === false || value === undefined || value === null) return null
     return value

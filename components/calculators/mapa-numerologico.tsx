@@ -21,6 +21,7 @@ import { personalPagePath, type PersonalCategoriaKey } from '@/lib/personales/ro
 import { addSavedResult } from '@/lib/saved-results'
 import Person from '@/resources/person'
 import { useUserDefaults } from '@/stores/user-defaults'
+import { inicioDeAnio } from '@/lib/personales/anio'
 
 type MapItem = {
   label: string
@@ -93,11 +94,11 @@ function buildMap(fullName: string, birthDate: string): MapData | null {
         ]
       },
       {
-        title: 'Tu momento (2026)',
+        title: `Tu momento (${now.getFullYear()})`,
         items: [
           mapItem(
             'Año personal',
-            person.calcPersonalYear(new Date(now.getFullYear(), 0, 1)),
+            person.calcPersonalYear(inicioDeAnio(now.getFullYear())),
             '/ano-personal',
             'ano-personal'
           ),

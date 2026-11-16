@@ -11,13 +11,14 @@ import { getMeaning } from '@/lib/numerology/meanings'
 import { getPersonalResumen } from '@/lib/personales/data'
 import type { PersonalCategoriaKey } from '@/lib/personales/routes'
 import Person from '@/resources/person'
+import { inicioDeAnio } from '@/lib/personales/anio'
 
 // Landing personalizada: los datos llegan por query desde el botón
 // "Quiero saber más" del home, así que no debe indexarse.
 export const metadata: Metadata = {
   title: 'Mi mapa numerológico',
   description:
-    'Tus resultados numerológicos en un solo lugar: energía de hoy, esencia, misión y año personal 2026.',
+    'Tus resultados numerológicos en un solo lugar: energía de hoy, esencia, misión y año personal.',
   robots: { index: false }
 }
 
@@ -64,7 +65,7 @@ function calcularResultados(nombre: string, nacimiento: string): Resultados | nu
     nacimiento: birthDate,
     personalNumber: normalizeValue(person.calcPersonalNumber()),
     soulNumber: normalizeValue(person.calcSoulNumber()),
-    personalYear: normalizeValue(person.calcPersonalYear(new Date(now.getFullYear(), 0, 1))),
+    personalYear: normalizeValue(person.calcPersonalYear(inicioDeAnio(now.getFullYear()))),
     personalDay: normalizeValue(person.calcPersonalDay(now)),
     personalWeek: normalizeValue(person.calcPersonalWeek(now)),
     personalMonth: normalizeValue(person.calcPersonalMonth(now, now))
@@ -141,6 +142,7 @@ export default async function Page({
   const nacimiento = typeof searchParams.nacimiento === 'string' ? searchParams.nacimiento : ''
 
   const resultados = calcularResultados(nombre, nacimiento)
+  const anioActual = new Date().getFullYear()
   if (!resultados) return <SinDatos />
 
   const productos = await getRelatedProducts({ limit: 10 })
@@ -315,9 +317,9 @@ export default async function Page({
           products={productos}
         />
 
-        {/* ── Mi año 2026 ───────────────────────────────────────────────── */}
+        {/* ── Mi año (el año en curso) ──────────────────────────────────── */}
         <section
-          aria-label="Mi año personal 2026"
+          aria-label={`Mi año personal ${anioActual}`}
           className="rounded-[2rem] border border-[hsl(var(--accent)/0.25)] bg-[linear-gradient(180deg,hsl(var(--background)),hsl(var(--accent)/0.16))] p-6 shadow-[0_22px_55px_hsl(var(--accent)/0.14)] sm:p-10"
         >
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
@@ -329,7 +331,7 @@ export default async function Page({
                 Año Personal
               </p>
               <h2 className="mt-1 font-display text-2xl font-semibold uppercase tracking-[0.03em] text-[hsl(var(--accent))] sm:text-3xl">
-                Mi año 2026
+                Mi año {anioActual}
               </h2>
               {descripcionAno ? (
                 <p className="mt-3 text-sm leading-7 text-foreground/75">{descripcionAno}</p>
