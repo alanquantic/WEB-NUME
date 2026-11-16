@@ -5,6 +5,8 @@ import { ToolPage } from "@/components/content/tool-page";
 
 export const metadata: Metadata = {
   title: "Vibraciones Colectivas",
+  description:
+    "Consulta las vibraciones colectivas de cualquier fecha: año, mes, semana y día universal, la energía que todos compartimos.",
 };
 
 export default function Page() {

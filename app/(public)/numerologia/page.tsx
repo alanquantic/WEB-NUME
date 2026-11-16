@@ -3,7 +3,9 @@ import type { Metadata } from 'next'
 import { ConceptHub } from '@/components/content/concept-hub'
 
 export const metadata: Metadata = {
-  title: 'Numerología'
+  title: 'Numerología',
+  description:
+    'Explora tu mapa numerológico: calculadoras, vibraciones de tiempo, pináculo y el significado de cada número, todo en un solo lugar.'
 }
 
 export default function Page() {

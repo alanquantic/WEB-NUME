@@ -6,6 +6,8 @@ import { ToolPage } from "@/components/content/tool-page";
 
 export const metadata: Metadata = {
   title: "La Brújula Numerológica",
+  description:
+    "Tu Brújula Numerológica: etapa, año, mes, semana y día personal en un solo lugar, calculados a partir de tu fecha de nacimiento.",
 };
 
 export default function Page() {

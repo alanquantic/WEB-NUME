@@ -6,6 +6,8 @@ import { ToolPage } from "@/components/content/tool-page";
 
 export const metadata: Metadata = {
   title: "Mes personal",
+  description:
+    "Calcula tu Mes Personal con tu fecha de nacimiento y descubre en qué enfocarte: la prueba y la lección que trae cada mes del año.",
 };
 
 export default function Page() {

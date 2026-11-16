@@ -4,7 +4,9 @@ import { MiCarta } from '@/components/account/mi-carta'
 import { Breadcrumbs } from '@/components/content/breadcrumbs'
 
 export const metadata: Metadata = {
-  title: 'Mi carta numerológica'
+  title: 'Mi carta numerológica',
+  description:
+    'Tu carta numerológica: aquí se guardan en tu dispositivo los resultados que vas calculando, listos para cuando los necesites.'
 }
 
 export default function Page() {

@@ -10,7 +10,7 @@ import {
   webPageJsonLd
 } from '@/lib/seo'
 
-const TITLE = 'Calculadora de Compatibilidad Numerológica — Numerología Cotidiana'
+const TITLE = 'Calculadora de Compatibilidad Numerológica'
 const DESCRIPTION =
   'Compara los caminos de vida de dos personas y descubre su afinidad numerológica. Calculadora gratis con fortalezas, retos y consejos.'
 const PATH = '/compatibilidad-numerologica'

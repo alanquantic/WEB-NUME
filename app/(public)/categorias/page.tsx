@@ -8,7 +8,9 @@ import { getCategories } from '@/lib/api/taxonomy'
 import { categoryPath } from '@/lib/categorias/paths'
 
 export const metadata: Metadata = {
-  title: 'Categorías'
+  title: 'Categorías',
+  description:
+    'Explora los artículos de Numerología Cotidiana por categoría: significado de los números, amor, horóscopos numerológicos y más.'
 }
 
 async function loadCategories(): Promise<Category[]> {

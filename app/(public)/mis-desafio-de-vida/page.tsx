@@ -6,6 +6,8 @@ import { getServerSessionUser } from "@/lib/auth/session";
 
 export const metadata: Metadata = {
   title: "Mis desafíos de vida",
+  description:
+    "Calcula con tu fecha de nacimiento los 4 desafíos de vida de tu pináculo y conoce los retos que tendrás que superar en tu camino.",
 };
 
 export default async function DesafiosDeVidaPage() {

@@ -35,19 +35,21 @@ export const metadata: Metadata = {
     shortcut: '/images/logo_favicon.png',
     apple: '/images/logo_favicon.png'
   },
+  // './' se resuelve contra la ruta de cada página: todas quedan con canonical
+  // y og:url propios (con www y barra final) sin declararlo una por una. Las
+  // páginas que definen su propio `alternates` u `openGraph` lo sustituyen.
+  alternates: { canonical: './' },
+  // Sin título ni descripción aquí: Next los hereda del <title> y la
+  // descripción de cada página. Fijarlos en el layout hacía que todo el sitio
+  // se compartiera (y se leyera) con los datos de la portada.
   openGraph: {
     type: 'website',
     locale: 'es_MX',
     siteName: 'Numerología Cotidiana',
-    title: 'Numerología Cotidiana — Una brújula para guiar tu vida',
-    description:
-      'Tu mapa numerológico, tu pináculo personal y las energías diarias en un solo lugar.',
-    url: 'https://www.numerologia-cotidiana.com'
+    url: './'
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Numerología Cotidiana',
-    description: 'Tu mapa numerológico, tu pináculo personal y las energías diarias.'
+    card: 'summary_large_image'
   }
 }
 
