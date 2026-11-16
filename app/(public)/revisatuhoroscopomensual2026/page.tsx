@@ -3,7 +3,9 @@ import type { Metadata } from 'next'
 import { ConceptHub } from '@/components/content/concept-hub'
 
 export const metadata: Metadata = {
-  title: 'Revisa tu horóscopo mensual 2026'
+  title: 'Revisa tu horóscopo mensual 2026',
+  description:
+    'Tu horóscopo numerológico mensual 2026 parte de tu mes personal. Calcúlalo y descubre la energía que te acompaña este mes y todo el año.'
 }
 
 export default function Page() {

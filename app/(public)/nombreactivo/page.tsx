@@ -6,7 +6,9 @@ import { ToolPage } from '@/components/content/tool-page'
 import { getNombreActivoGuia, getPersonalCategoria } from '@/lib/personales/data'
 
 export const metadata: Metadata = {
-  title: 'Nombre Activo'
+  title: 'Nombre Activo',
+  description:
+    'Calcula tu Nombre Activo, la energía de tu primer nombre, y descubre qué dice de tu carácter y la señal que envías a los demás.'
 }
 
 export default function Page() {

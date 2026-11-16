@@ -15,7 +15,16 @@ const securityHeaders = [
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async headers() {
-    return [{ source: '/:path*', headers: securityHeaders }]
+    return [
+      { source: '/:path*', headers: securityHeaders },
+      // El alias de producción en vercel.app sirve una copia completa del
+      // sitio: que no se indexe (las vistas previas ya salen con noindex).
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: '.*\\.vercel\\.app' }],
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex' }]
+      }
+    ]
   },
   experimental: {
     typedRoutes: true
@@ -36,7 +45,16 @@ const nextConfig = {
   async redirects() {
     return [
       // Carpeta de subidas del WordPress original.
-      { source: '/wp-content/uploads/', destination: '/binomios-generales.pdf', permanent: true }
+      { source: '/wp-content/uploads/', destination: '/binomios-generales.pdf', permanent: true },
+      // Vista antigua de Año Personal por número: fallaba con error 500 y
+      // duplicaba el contenido (de miembros) de /ano-personal-N-para-2026/.
+      // Temporal (307): la URL de destino lleva el año y cambiará.
+      {
+        source: '/ano-personal/:numero(1|3|4|5|6|7|8|9|11)/',
+        destination: '/ano-personal-:numero-para-2026/',
+        permanent: false
+      },
+      { source: '/anopersonalnumbers/', destination: '/ano-personal/', permanent: false }
     ]
   },
   async rewrites() {

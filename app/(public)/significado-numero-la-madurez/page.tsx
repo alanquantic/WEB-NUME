@@ -96,6 +96,8 @@ const MATURITY_ACCORDION = [
 
 export const metadata: Metadata = {
   title: "Número de la Madurez",
+  description:
+    "Calcula tu número de la madurez con tu nombre y tu fecha de nacimiento y descubre hacia dónde madura tu propósito de vida.",
 };
 
 export default function Page() {

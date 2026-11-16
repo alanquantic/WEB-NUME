@@ -6,7 +6,9 @@ import { ToolPage } from '@/components/content/tool-page'
 import { getNumeroDelNombreGuia, getPersonalCategoria } from '@/lib/personales/data'
 
 export const metadata: Metadata = {
-  title: 'Número del Nombre'
+  title: 'Número del Nombre',
+  description:
+    'Calcula el número de tu nombre, también llamado de expresión o destino: resume tus talentos y la manera en que te muestras al mundo.'
 }
 
 export default function Page() {

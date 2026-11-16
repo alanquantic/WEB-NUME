@@ -5,6 +5,8 @@ import { ToolPage } from "@/components/content/tool-page";
 
 export const metadata: Metadata = {
   title: "Etapa personal",
+  description:
+    "Las etapas o realizaciones de vida son los grandes ciclos de tu pináculo. Descubre en cuál te encuentras y qué energía la rige.",
 };
 
 export default function Page() {

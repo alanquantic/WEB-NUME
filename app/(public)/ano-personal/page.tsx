@@ -6,6 +6,8 @@ import { ToolPage } from "@/components/content/tool-page";
 
 export const metadata: Metadata = {
   title: "Año personal",
+  description:
+    "Calcula tu Año Personal con tu fecha de nacimiento y descubre la lección, el tema y las oportunidades que marca tu ciclo de este año.",
 };
 
 export default function Page() {

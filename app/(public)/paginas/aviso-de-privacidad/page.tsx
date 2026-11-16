@@ -4,6 +4,8 @@ import { sanitizeArticleHtml } from '@/lib/sanitize'
 
 export const metadata: Metadata = {
   title: 'Aviso de Privacidad Integral',
+  description:
+    'Aviso de privacidad integral de Numerología Cotidiana: qué datos personales se recaban, para qué se usan y cómo ejercer tus derechos ARCO.',
   alternates: { canonical: '/paginas/aviso-de-privacidad' }
 }
 

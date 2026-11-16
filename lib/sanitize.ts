@@ -1,11 +1,13 @@
 import 'server-only'
 
 import sanitizeHtmlLib from 'sanitize-html'
+import { SITE } from '@/lib/seo'
 import { STORE_URL } from '@/lib/site-config'
 
-const APP_URL = (
-  process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.numerologia-cotidiana.com'
-).replace(/\/$/, '')
+// Dominio canónico (con www). No se toma de NEXT_PUBLIC_APP_URL: con esa
+// variable sin www, todos los enlaces internos del contenido salían apuntando
+// a una URL que redirige.
+const APP_URL = SITE.url
 const STORE_ORIGIN = STORE_URL.replace(/\/$/, '')
 // Único iframe permitido: PDFs de nuestro CDN (bloque PDF del editor).
 const PDF_IFRAME_HOST = 'cdn.tienda.numerologia-cotidiana.com'
@@ -66,13 +68,58 @@ const ARTICLE_OPTIONS: sanitizeHtmlLib.IOptions = {
     frame.tag === 'iframe' && !PDF_IFRAME_SRC.test(frame.attribs.src ?? ''),
   allowedSchemes: ['http', 'https', 'mailto', 'tel'],
   allowedSchemesByTag: { img: ['http', 'https', 'data'] },
-  // Fuerza enlaces seguros: se abren en nueva pestaña sin filtrar referrer y
-  // sin transmitir autoridad SEO a destinos no confiables.
   transformTags: {
-    a: sanitizeHtmlLib.simpleTransform('a', {
-      rel: 'noopener noreferrer nofollow',
-      target: '_blank'
-    })
+    // Los títulos del contenido nunca compiten con el <h1> de la página.
+    h1: 'h2',
+    a: transformLink
+  }
+}
+
+const APP_HOSTS = new Set(['www.numerologia-cotidiana.com', 'numerologia-cotidiana.com'])
+const STORE_HOST = new URL(STORE_ORIGIN).hostname
+
+// Quita lo que el editor del WordPress dejó pegado al enlace: espacios,
+// caracteres invisibles y comillas escapadas al inicio o al final.
+function cleanHref(href: string): string {
+  const cleaned = href
+    .replace(/[\u200B-\u200F\u202A-\u202E\uFEFF]/g, '')
+    .trim()
+    .replace(/^(?:\\|"|'|&quot;)+|(?:\\|"|'|&quot;)+\/?$/g, '')
+    .trim()
+  // Enlace al propio sitio escrito sin protocolo.
+  return /^(?:www\.)?numerologia-cotidiana\.com(?:\/|$)/i.test(cleaned)
+    ? `${APP_URL}/${cleaned.replace(/^[^/]*\/?/, '')}`
+    : cleaned
+}
+
+function linkHost(href: string): string | null {
+  if (!/^https?:\/\//i.test(href)) return null
+  try {
+    return new URL(href).hostname.toLowerCase()
+  } catch {
+    return null
+  }
+}
+
+// Enlaces internos: se siguen y abren en la misma pestaña (antes todos salían
+// con nofollow y target="_blank", así que el contenido no pasaba autoridad a
+// las páginas que enlaza). La tienda es nuestra: pestaña nueva, sin nofollow.
+// Cualquier otro destino externo conserva nofollow.
+function transformLink(tagName: string, attribs: sanitizeHtmlLib.Attributes) {
+  const next: sanitizeHtmlLib.Attributes = { ...attribs }
+  delete next.target
+  delete next.rel
+  const href = cleanHref(attribs.href ?? '')
+  if (href) next.href = href
+  const host = linkHost(href)
+
+  if (host === null || APP_HOSTS.has(host)) return { tagName, attribs: next }
+  if (host === STORE_HOST) {
+    return { tagName, attribs: { ...next, rel: 'noopener', target: '_blank' } }
+  }
+  return {
+    tagName,
+    attribs: { ...next, rel: 'noopener noreferrer nofollow', target: '_blank' }
   }
 }
 

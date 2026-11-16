@@ -6,6 +6,8 @@ import { ToolPage } from "@/components/content/tool-page";
 
 export const metadata: Metadata = {
   title: "Semana personal",
+  description:
+    "Calcula tu Semana Personal con tu fecha de nacimiento y obtén un enfoque más cercano para organizar tus próximos días.",
 };
 
 export default function Page() {

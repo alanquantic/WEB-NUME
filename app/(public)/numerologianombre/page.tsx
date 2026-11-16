@@ -3,7 +3,9 @@ import type { Metadata } from 'next'
 import { ConceptHub } from '@/components/content/concept-hub'
 
 export const metadata: Metadata = {
-  title: 'Numerología del Nombre'
+  title: 'Numerología del Nombre',
+  description:
+    'Numerología del nombre: calcula tu número del nombre, del alma, de expresión y de madurez, y entiende cómo se combinan en tu identidad.'
 }
 
 export default function Page() {

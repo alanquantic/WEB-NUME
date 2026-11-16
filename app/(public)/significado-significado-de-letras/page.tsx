@@ -243,6 +243,8 @@ const LETTER_MEANINGS = [
 
 export const metadata: Metadata = {
   title: "Significado de Letras",
+  description:
+    "El valor numérico de cada letra, base para calcular los números de tu nombre, y cómo influye la primera inicial en tu comportamiento.",
 };
 
 export default function Page() {

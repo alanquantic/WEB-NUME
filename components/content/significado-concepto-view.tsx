@@ -65,9 +65,10 @@ export function SignificadoConceptoView({
                   {concepto.etiqueta}
                 </p>
               ) : null}
-              <h1 className="font-display text-3xl font-semibold text-foreground sm:text-4xl">
+              {/* El <h1> de la página es el título de ToolPage. */}
+              <p className="font-display text-3xl font-semibold text-foreground sm:text-4xl">
                 {concepto.nombre}
-              </h1>
+              </p>
               {numero.titulo ? (
                 <p className="text-base leading-8 text-foreground/72">{numero.titulo}</p>
               ) : null}

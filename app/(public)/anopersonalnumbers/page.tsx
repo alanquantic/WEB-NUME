@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import anoPersonalData from "@/components/jsons/anopersonal.json";
 import { ToolPage } from "@/components/content/tool-page";
-import { sanitizeHtml } from "@/lib/html/sanitize";
+import { sanitizeArticleHtml } from "@/lib/sanitize";
 
 type AnoPersonalEntry = {
   anio: number;
@@ -27,7 +27,7 @@ export function getAnoPersonalNumbers() {
 }
 
 function HtmlBlock({ html }: { html: string }) {
-  return <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(html) }} />;
+  return <div dangerouslySetInnerHTML={{ __html: sanitizeArticleHtml(html) }} />;
 }
 
 export function AnoPersonalNumberView({ entry }: { entry: AnoPersonalEntry }) {

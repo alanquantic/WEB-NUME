@@ -1,16 +1,14 @@
 import type { MetadataRoute } from 'next'
 
-export default function robots(): MetadataRoute.Robots {
-  const base =
-    process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, '') ??
-    'https://www.numerologia-cotidiana.com'
+import { SITE } from '@/lib/seo'
 
+export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: '*',
       allow: '/',
       disallow: ['/admin', '/perfil', '/api']
     },
-    sitemap: `${base}/sitemap.xml`
+    sitemap: `${SITE.url}/sitemap.xml`
   }
 }

@@ -96,6 +96,8 @@ const SOUL_EXPRESSION_ACCORDION = [
 
 export const metadata: Metadata = {
   title: "Número de Expresión del Alma",
+  description:
+    "Calcula tu número de expresión del alma: surge de las consonantes de tu nombre y refleja la imagen que proyectas hacia afuera.",
 };
 
 export default function Page() {
