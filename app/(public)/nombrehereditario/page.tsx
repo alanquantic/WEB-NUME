@@ -6,7 +6,9 @@ import { ToolPage } from '@/components/content/tool-page'
 import { NOMBRE_HEREDITARIO } from '@/lib/content/draft-name-day'
 
 export const metadata: Metadata = {
-  title: 'Nombre Hereditario'
+  title: 'Nombre Hereditario',
+  description:
+    'Calcula tu Nombre Hereditario, la vibración de tus apellidos, y conoce la herencia familiar que te conecta con tu linaje.'
 }
 
 export default function Page() {

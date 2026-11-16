@@ -5,7 +5,9 @@ import Link from 'next/link'
 import { ToolIconTile } from '@/components/ui/tool-icon'
 
 export const metadata: Metadata = {
-  title: 'Calculadoras'
+  title: 'Calculadoras',
+  description:
+    'Calculadoras de numerología: camino de vida, números del nombre (expresión, alma y personalidad) y compatibilidad entre dos personas.'
 }
 
 const CALCULATORS = [

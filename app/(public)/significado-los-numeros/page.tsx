@@ -4,7 +4,9 @@ import { SignificadosConceptosAccordion } from '@/components/content/significado
 import { ToolPage } from '@/components/content/tool-page'
 
 export const metadata: Metadata = {
-  title: 'Significado de los Números'
+  title: 'Significado de los Números',
+  description:
+    'Un mismo número cambia de significado según su posición en tu pináculo. Explora cada concepto y lo que aporta cada número, del 1 al 22.'
 }
 
 export default function Page() {

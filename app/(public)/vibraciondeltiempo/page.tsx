@@ -3,7 +3,9 @@ import type { Metadata } from 'next'
 import { ConceptHub } from '@/components/content/concept-hub'
 
 export const metadata: Metadata = {
-  title: 'Vibraciones de Tiempo'
+  title: 'Vibraciones de Tiempo',
+  description:
+    'Las vibraciones de tiempo en numerología: tu etapa, año, mes, semana y día personal, además de las vibraciones colectivas.'
 }
 
 export default function Page() {

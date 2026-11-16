@@ -6,7 +6,9 @@ import { ToolPage } from '@/components/content/tool-page'
 import { DIA_PERSONAL } from '@/lib/content/draft-name-day'
 
 export const metadata: Metadata = {
-  title: 'Día personal'
+  title: 'Día personal',
+  description:
+    'Calcula tu Día Personal con tu fecha de nacimiento y conoce la vibración de tu jornada: el significado de cada día y cómo aprovecharlo.'
 }
 
 export default function Page() {

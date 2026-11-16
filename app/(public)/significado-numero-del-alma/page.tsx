@@ -63,6 +63,8 @@ const SOUL_NUMBER_ACCORDION = [
 
 export const metadata: Metadata = {
   title: "Número del Alma",
+  description:
+    "Calcula tu número del alma: surge de las vocales de tu nombre y revela lo que tu alma vino a hacer y lo que tu corazón anhela.",
 };
 
 export default function Page() {

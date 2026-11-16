@@ -6,7 +6,9 @@ import { PinaculoGuia } from '@/components/pinaculo/pinaculo-guia'
 import { getServerSessionUser } from '@/lib/auth/session'
 
 export const metadata: Metadata = {
-  title: 'Calcula tu Pináculo'
+  title: 'Calcula tu Pináculo',
+  description:
+    'Calcula tu pináculo numerológico con tu fecha de nacimiento: los números clave de tu mapa, como karma, ciclos de vida, metas y más.'
 }
 
 export default async function Page() {

@@ -7,6 +7,8 @@ import { HoroscopoMensualExplorer } from '@/components/horoscopos/horoscopo-mens
 
 export const metadata: Metadata = {
   title: 'Horóscopo de tu Año Personal 2027',
+  description:
+    'Horóscopo numerológico 2027, mes a mes, según tu Año Personal. Calcula tu número y consulta qué se activa, qué impulsar y qué cuidar.',
   alternates: { canonical: '/horoscopo-personal-2027/' }
 }
 

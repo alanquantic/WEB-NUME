@@ -10,7 +10,7 @@ import {
   webPageJsonLd
 } from '@/lib/seo'
 
-const TITLE = 'Calculadora de Número de Expresión — Numerología Cotidiana'
+const TITLE = 'Calculadora de Número de Expresión'
 const DESCRIPTION =
   'Calcula tu número de Expresión, del Alma y de Personalidad a partir de tu nombre completo. Interpretación numerológica gratuita.'
 const PATH = '/calculadoras/expresion'

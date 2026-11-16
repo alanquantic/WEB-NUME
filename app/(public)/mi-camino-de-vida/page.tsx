@@ -11,7 +11,7 @@ import {
   webPageJsonLd
 } from "@/lib/seo";
 
-const TITLE = "Calculadora de Camino de Vida — Numerología Cotidiana";
+const TITLE = "Calculadora de Camino de Vida";
 const DESCRIPTION =
   "Descubre tu número de camino de vida a partir de tu fecha de nacimiento. Calculadora gratis con la interpretación completa del propósito esencial de tu alma.";
 const PATH = "/mi-camino-de-vida";
