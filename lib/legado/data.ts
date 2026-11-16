@@ -1,5 +1,6 @@
 import legadoData from '@/components/jsons/legado/paginas.json'
 import type { PersonalBloque } from '@/lib/personales/data'
+import { ANO_PERSONAL_HEREDADOS } from '@/lib/personales/routes'
 
 // Páginas heredadas del WordPress original que no tenían equivalente en el
 // sitio nuevo. Se sirven en su URL original (/{slug}) para conservar el SEO.
@@ -17,7 +18,13 @@ export type LegadoPagina = {
   bloques: PersonalBloque[]
 }
 
-const PAGINAS = (legadoData as { paginas: LegadoPagina[] }).paginas
+// Los Años Personales 2 y 22 se publican con su serie en /ano-personal-N
+// (lib/personales/data.ts), no aquí.
+const EN_OTRA_SERIE = new Set(Object.values(ANO_PERSONAL_HEREDADOS))
+
+const PAGINAS = (legadoData as { paginas: LegadoPagina[] }).paginas.filter(
+  (pagina) => !EN_OTRA_SERIE.has(pagina.slug)
+)
 
 const BY_SLUG = new Map(PAGINAS.map((pagina) => [pagina.slug, pagina]))
 

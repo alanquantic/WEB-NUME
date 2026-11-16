@@ -13,15 +13,15 @@ url_vieja,sitemap_viejo,accion,pagina_nueva_que_la_sirve,nota
 /anexos-agenda-numerologia/,page-sitemap.xml,PAGINA_CREADA,/anexos-agenda-numerologia,migrada del WP (components/jsons/legado)
 /numerologia-cotidiana-horoscopo-ano-personal/,page-sitemap.xml,YA_COINCIDE,/numerologia-cotidiana-horoscopo-ano-personal,
 /cuenta-de-membresia/tipos-de-suscripcion/,page-sitemap.xml,MEMBRESIA,,página de cuenta/membresía del WP (excluida)
-/ano-personal-1-para-2026/,page-sitemap.xml,YA_COINCIDE,/ano-personal-1-para-2026,
-/ano-personal-9-para-2026/,page-sitemap.xml,YA_COINCIDE,/ano-personal-9-para-2026,
-/ano-personal-8-para-2026/,page-sitemap.xml,YA_COINCIDE,/ano-personal-8-para-2026,
-/ano-personal-7-para-2026/,page-sitemap.xml,YA_COINCIDE,/ano-personal-7-para-2026,
-/ano-personal-6-para-2026/,page-sitemap.xml,YA_COINCIDE,/ano-personal-6-para-2026,
-/ano-personal-5-para-2026/,page-sitemap.xml,YA_COINCIDE,/ano-personal-5-para-2026,
-/ano-personal-4-para-2026/,page-sitemap.xml,YA_COINCIDE,/ano-personal-4-para-2026,
-/ano-personal-3-para-2026/,page-sitemap.xml,YA_COINCIDE,/ano-personal-3-para-2026,
-/ano-personal-11-para-2026/,page-sitemap.xml,YA_COINCIDE,/ano-personal-11-para-2026,
+/ano-personal-1-para-2026/,page-sitemap.xml,301,/ano-personal-1/,URL fija sin año: el año va en el título (2026-11)
+/ano-personal-9-para-2026/,page-sitemap.xml,301,/ano-personal-9/,URL fija sin año: el año va en el título (2026-11)
+/ano-personal-8-para-2026/,page-sitemap.xml,301,/ano-personal-8/,URL fija sin año: el año va en el título (2026-11)
+/ano-personal-7-para-2026/,page-sitemap.xml,301,/ano-personal-7/,URL fija sin año: el año va en el título (2026-11)
+/ano-personal-6-para-2026/,page-sitemap.xml,301,/ano-personal-6/,URL fija sin año: el año va en el título (2026-11)
+/ano-personal-5-para-2026/,page-sitemap.xml,301,/ano-personal-5/,URL fija sin año: el año va en el título (2026-11)
+/ano-personal-4-para-2026/,page-sitemap.xml,301,/ano-personal-4/,URL fija sin año: el año va en el título (2026-11)
+/ano-personal-3-para-2026/,page-sitemap.xml,301,/ano-personal-3/,URL fija sin año: el año va en el título (2026-11)
+/ano-personal-11-para-2026/,page-sitemap.xml,301,/ano-personal-11/,URL fija sin año: el año va en el título (2026-11)
 /2026-ano-universal-1/,page-sitemap.xml,PAGINA_CREADA,/2026-ano-universal-1,migrada del WP (components/jsons/legado)
 /binomios-numerologicos/,page-sitemap.xml,PAGINA_CREADA,/binomios-numerologicos,migrada del WP (components/jsons/legado)
 /guia-numero-espejo/,page-sitemap.xml,SIN_CONTENIDO,,la página del WP está vacía o es técnica: 301 a algo cercano o 410
@@ -499,8 +499,8 @@ url_vieja,sitemap_viejo,accion,pagina_nueva_que_la_sirve,nota
 /nombre-activo-numero-4/,page-sitemap.xml,YA_COINCIDE,/nombre-activo-numero-4,
 /nombre-activo-numero-2/,page-sitemap.xml,YA_COINCIDE,/nombre-activo-numero-2,
 /dia-personal/,page-sitemap.xml,RENOMBRAR_RUTA,/diapersonal,/diapersonal pasa a servirse en /dia-personal/ y la ruta nueva hace 301 a la vieja
-/ano-personal-2-para-2015/,page-sitemap.xml,PAGINA_CREADA,/ano-personal-2-para-2015,migrada del WP (components/jsons/legado)
-/ano-personal-22-para-2015/,page-sitemap.xml,PAGINA_CREADA,/ano-personal-22-para-2015,migrada del WP (components/jsons/legado)
+/ano-personal-2-para-2015/,page-sitemap.xml,301,/ano-personal-2/,URL fija sin año: se suma a la serie de Año Personal (2026-11)
+/ano-personal-22-para-2015/,page-sitemap.xml,301,/ano-personal-22/,URL fija sin año: se suma a la serie de Año Personal (2026-11)
 /el-viaje-de-regreso-al-alma/,page-sitemap.xml,SIN_CONTENIDO,,la página del WP está vacía o es técnica: 301 a algo cercano o 410
 /cuenta-de-membresia/,page-sitemap.xml,MEMBRESIA,,página de cuenta/membresía del WP (excluida)
 /certificacion-modulo-6/,page-sitemap.xml,PAGINA_CREADA,/certificacion-modulo-6,migrada del WP (components/jsons/legado)
@@ -2473,24 +2473,24 @@ url_vieja,sitemap_viejo,accion,pagina_nueva_que_la_sirve,nota
 /dia/,auditoria-2026-11,301,/dia-personal/,destino roto enlazado desde el contenido (auditoría 2026-11)
 /el-poder-de-la-palabra-alma/,auditoria-2026-11,301,/el-poder-de-la-palabra-alma-2/,destino roto enlazado desde el contenido (auditoría 2026-11)
 /blog/el-poder-de-la-palabra-alma/,auditoria-2026-11,301,/el-poder-de-la-palabra-alma-2/,destino roto enlazado desde el contenido (auditoría 2026-11)
-/ano-personal-1-para-2015/,auditoria-2026-11,301,/ano-personal-1-para-2026/,destino roto enlazado desde el contenido (auditoría 2026-11)
-/ano-personal-1-para-el-2015/,auditoria-2026-11,301,/ano-personal-1-para-2026/,destino roto enlazado desde el contenido (auditoría 2026-11)
-/ano-personal-3-para-2015/,auditoria-2026-11,301,/ano-personal-3-para-2026/,destino roto enlazado desde el contenido (auditoría 2026-11)
-/ano-personal-3-para-el-2015/,auditoria-2026-11,301,/ano-personal-3-para-2026/,destino roto enlazado desde el contenido (auditoría 2026-11)
-/ano-personal-4-para-2015/,auditoria-2026-11,301,/ano-personal-4-para-2026/,destino roto enlazado desde el contenido (auditoría 2026-11)
-/ano-personal-4-para-el-2015/,auditoria-2026-11,301,/ano-personal-4-para-2026/,destino roto enlazado desde el contenido (auditoría 2026-11)
-/ano-personal-5-para-2015/,auditoria-2026-11,301,/ano-personal-5-para-2026/,destino roto enlazado desde el contenido (auditoría 2026-11)
-/ano-personal-5-para-el-2015/,auditoria-2026-11,301,/ano-personal-5-para-2026/,destino roto enlazado desde el contenido (auditoría 2026-11)
-/ano-personal-6-para-2015/,auditoria-2026-11,301,/ano-personal-6-para-2026/,destino roto enlazado desde el contenido (auditoría 2026-11)
-/ano-personal-6-para-el-2015/,auditoria-2026-11,301,/ano-personal-6-para-2026/,destino roto enlazado desde el contenido (auditoría 2026-11)
-/ano-personal-7-para-2015/,auditoria-2026-11,301,/ano-personal-7-para-2026/,destino roto enlazado desde el contenido (auditoría 2026-11)
-/ano-personal-7-para-el-2015/,auditoria-2026-11,301,/ano-personal-7-para-2026/,destino roto enlazado desde el contenido (auditoría 2026-11)
-/ano-personal-8-para-2015/,auditoria-2026-11,301,/ano-personal-8-para-2026/,destino roto enlazado desde el contenido (auditoría 2026-11)
-/ano-personal-8-para-el-2015/,auditoria-2026-11,301,/ano-personal-8-para-2026/,destino roto enlazado desde el contenido (auditoría 2026-11)
-/ano-personal-9-para-2015/,auditoria-2026-11,301,/ano-personal-9-para-2026/,destino roto enlazado desde el contenido (auditoría 2026-11)
-/ano-personal-9-para-el-2015/,auditoria-2026-11,301,/ano-personal-9-para-2026/,destino roto enlazado desde el contenido (auditoría 2026-11)
-/ano-personal-11-para-2015/,auditoria-2026-11,301,/ano-personal-11-para-2026/,destino roto enlazado desde el contenido (auditoría 2026-11)
-/ano-personal-11-para-el-2015/,auditoria-2026-11,301,/ano-personal-11-para-2026/,destino roto enlazado desde el contenido (auditoría 2026-11)
+/ano-personal-1-para-2015/,auditoria-2026-11,301,/ano-personal-1/,destino roto enlazado desde el contenido (auditoría 2026-11)
+/ano-personal-1-para-el-2015/,auditoria-2026-11,301,/ano-personal-1/,destino roto enlazado desde el contenido (auditoría 2026-11)
+/ano-personal-3-para-2015/,auditoria-2026-11,301,/ano-personal-3/,destino roto enlazado desde el contenido (auditoría 2026-11)
+/ano-personal-3-para-el-2015/,auditoria-2026-11,301,/ano-personal-3/,destino roto enlazado desde el contenido (auditoría 2026-11)
+/ano-personal-4-para-2015/,auditoria-2026-11,301,/ano-personal-4/,destino roto enlazado desde el contenido (auditoría 2026-11)
+/ano-personal-4-para-el-2015/,auditoria-2026-11,301,/ano-personal-4/,destino roto enlazado desde el contenido (auditoría 2026-11)
+/ano-personal-5-para-2015/,auditoria-2026-11,301,/ano-personal-5/,destino roto enlazado desde el contenido (auditoría 2026-11)
+/ano-personal-5-para-el-2015/,auditoria-2026-11,301,/ano-personal-5/,destino roto enlazado desde el contenido (auditoría 2026-11)
+/ano-personal-6-para-2015/,auditoria-2026-11,301,/ano-personal-6/,destino roto enlazado desde el contenido (auditoría 2026-11)
+/ano-personal-6-para-el-2015/,auditoria-2026-11,301,/ano-personal-6/,destino roto enlazado desde el contenido (auditoría 2026-11)
+/ano-personal-7-para-2015/,auditoria-2026-11,301,/ano-personal-7/,destino roto enlazado desde el contenido (auditoría 2026-11)
+/ano-personal-7-para-el-2015/,auditoria-2026-11,301,/ano-personal-7/,destino roto enlazado desde el contenido (auditoría 2026-11)
+/ano-personal-8-para-2015/,auditoria-2026-11,301,/ano-personal-8/,destino roto enlazado desde el contenido (auditoría 2026-11)
+/ano-personal-8-para-el-2015/,auditoria-2026-11,301,/ano-personal-8/,destino roto enlazado desde el contenido (auditoría 2026-11)
+/ano-personal-9-para-2015/,auditoria-2026-11,301,/ano-personal-9/,destino roto enlazado desde el contenido (auditoría 2026-11)
+/ano-personal-9-para-el-2015/,auditoria-2026-11,301,/ano-personal-9/,destino roto enlazado desde el contenido (auditoría 2026-11)
+/ano-personal-11-para-2015/,auditoria-2026-11,301,/ano-personal-11/,destino roto enlazado desde el contenido (auditoría 2026-11)
+/ano-personal-11-para-el-2015/,auditoria-2026-11,301,/ano-personal-11/,destino roto enlazado desde el contenido (auditoría 2026-11)
 /secretos-revelados/sabes-si-eres-un-alma-vieja-joven-o-nomada-y-lo-que-esto-implica/,auditoria-2026-11,301,/sabes-si-eres-un-alma-vieja-joven-o-nomada-y-lo-que-esto-implica/,destino roto enlazado desde el contenido (auditoría 2026-11)
 /secretos-revelados/alma-vieja/,auditoria-2026-11,301,/alma-vieja/,destino roto enlazado desde el contenido (auditoría 2026-11)
 /secretos-revelados/almas-nomadas/,auditoria-2026-11,301,/almas-nomadas/,destino roto enlazado desde el contenido (auditoría 2026-11)

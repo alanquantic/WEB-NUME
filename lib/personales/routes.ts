@@ -22,22 +22,38 @@ const SLUG_BUILDERS: Record<PersonalCategoriaKey, (numero: number) => string> = 
   'dia-personal': (numero) => `dia-personal-${numero}`,
   semana: (numero) => `semana-${numero}`,
   'mes-personal': (numero) => `mes-personal-${numero}`,
-  'ano-personal': (numero) => `ano-personal-${numero}-para-2026`,
+  // Sin año en la URL: el contenido no cambia de un año a otro y así la
+  // página conserva su posición en Google. El año va en el título (anio.ts).
+  'ano-personal': (numero) => `ano-personal-${numero}`,
   'nombre-activo': (numero) => `nombre-activo-numero-${numero}`,
   'numero-del-nombre': (numero) => `significado-${numero}-elpoderdelnombre`
 }
 
-// El sitio original no publica todas las combinaciones: mes 2 y año 2/22 no
-// existen; para esos casos se usa el fallback que decida quien enlaza.
+// El sitio original no publica todas las combinaciones: el mes 2 no existe;
+// para ese caso se usa el fallback que decida quien enlaza.
 const NUMEROS_DISPONIBLES: Record<PersonalCategoriaKey, readonly number[]> = {
   'numero-personal': [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22],
   alma: [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22],
   'dia-personal': [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22],
   semana: [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22],
   'mes-personal': [1, 3, 4, 5, 6, 7, 8, 9, 11, 22],
-  'ano-personal': [1, 3, 4, 5, 6, 7, 8, 9, 11],
+  'ano-personal': [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22],
   'nombre-activo': [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22],
   'numero-del-nombre': [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22]
+}
+
+// Los Años Personales 2 y 22 se quedaron en el WordPress con el slug de 2015
+// y llegaron como páginas heredadas (components/jsons/legado). Son la misma
+// serie: lib/personales/data.ts los suma a la categoría y lib/legado/data.ts
+// deja de publicarlos en su URL vieja (que redirige a la nueva).
+export const ANO_PERSONAL_HEREDADOS: Readonly<Record<number, string>> = {
+  2: 'ano-personal-2-para-2015',
+  22: 'ano-personal-22-para-2015'
+}
+
+/** Slug de la página de contenido de una categoría y número (sin validar). */
+export function personalSlug(categoria: PersonalCategoriaKey, numero: number): string {
+  return SLUG_BUILDERS[categoria](numero)
 }
 
 /**
@@ -51,5 +67,5 @@ export function personalPagePath(
   const parsed = typeof numero === 'string' ? Number(numero) : numero
   if (!Number.isFinite(parsed)) return null
   if (!NUMEROS_DISPONIBLES[categoria].includes(parsed)) return null
-  return `/${SLUG_BUILDERS[categoria](parsed)}`
+  return `/${personalSlug(categoria, parsed)}`
 }

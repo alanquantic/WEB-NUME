@@ -1,3 +1,4 @@
+import legadoData from '@/components/jsons/legado/paginas.json'
 import almaData from '@/components/jsons/personales/alma.json'
 import anoPersonalData from '@/components/jsons/personales/ano-personal.json'
 import diaPersonalData from '@/components/jsons/personales/dia-personal.json'
@@ -10,7 +11,11 @@ import numeroDelNombreGuiaData from '@/components/jsons/personales/numero-del-no
 import numeroPersonalData from '@/components/jsons/personales/numero-personal.json'
 import semanaData from '@/components/jsons/personales/semana.json'
 
-import type { PersonalCategoriaKey } from '@/lib/personales/routes'
+import {
+  ANO_PERSONAL_HEREDADOS,
+  personalSlug,
+  type PersonalCategoriaKey
+} from '@/lib/personales/routes'
 
 // Bloques generados por "API NUME/scripts/convert-personales.cjs" a partir del
 // contenido Elementor del sitio WordPress original. El HTML viene ya limpio
@@ -33,6 +38,8 @@ export type PersonalNumero = {
   etiqueta: string
   subtitulo: string
   bloques: PersonalBloque[]
+  /** true → se muestra completo aunque su categoría sea de miembros. */
+  abierto?: boolean
 }
 
 export type PersonalCategoria = {
@@ -45,6 +52,31 @@ export type PersonalCategoria = {
 
 const numerosDe = (data: unknown): PersonalNumero[] =>
   (data as { numeros: PersonalNumero[] }).numeros
+
+// Serie completa de Año Personal en su URL fija (/ano-personal-N). El JSON
+// trae los slugs con año del WordPress y le faltan el 2 y el 22, que llegaron
+// como páginas heredadas con el slug de 2015: aquí se suman a la serie. Esas
+// dos eran públicas y lo siguen siendo (`abierto`).
+function serieAnoPersonal(): PersonalNumero[] {
+  const heredadas = (
+    legadoData as unknown as { paginas: Omit<PersonalNumero, 'numero' | 'abierto'>[] }
+  ).paginas
+  const extra = Object.entries(ANO_PERSONAL_HEREDADOS).flatMap(([numero, slug]) => {
+    const pagina = heredadas.find((item) => item.slug === slug)
+    return pagina
+      ? [
+          {
+            ...pagina,
+            numero: Number(numero),
+            abierto: true
+          }
+        ]
+      : []
+  })
+  return [...numerosDe(anoPersonalData), ...extra]
+    .map((entry) => ({ ...entry, slug: personalSlug('ano-personal', entry.numero) }))
+    .sort((a, b) => a.numero - b.numero)
+}
 
 const CATEGORIAS: PersonalCategoria[] = [
   {
@@ -89,11 +121,11 @@ const CATEGORIAS: PersonalCategoria[] = [
   },
   {
     key: 'ano-personal',
-    nombre: 'Año Personal 2026',
-    etiqueta: 'Mi año 2026',
+    nombre: 'Año Personal',
+    etiqueta: 'Mi año',
     descripcion:
-      'La lección que te toca vivir este 2026 según tu Año Personal: claves y aprendizajes.',
-    numeros: numerosDe(anoPersonalData)
+      'La lección que te toca vivir este año según tu Año Personal: claves y aprendizajes.',
+    numeros: serieAnoPersonal()
   },
   {
     key: 'nombre-activo',
@@ -154,13 +186,20 @@ const GUIAS = (guiasData as unknown as { guias: GuiaPersonal[] }).guias
 // Metadatos por guía: descripción SEO y categoría cuyos números se enlazan.
 export const GUIA_META: Record<
   string,
-  { descripcion: string; categoria: PersonalCategoriaKey; toolKey: string }
+  {
+    descripcion: string
+    categoria: PersonalCategoriaKey
+    toolKey: string
+    /** Calculadora del número, para quien llega a la guía sin conocer el suyo. */
+    calculadora?: { href: string; texto: string }
+  }
 > = {
   'numerologia-cotidiana-horoscopo-ano-personal': {
     descripcion:
-      'Qué es el Año Personal, cómo marca los ciclos de 9 años y qué lección te acompaña este 2026.',
+      'Qué es el Año Personal, cómo marca los ciclos de 9 años y qué lección te acompaña según tu número.',
     categoria: 'ano-personal',
-    toolKey: 'personales-ano-personal'
+    toolKey: 'personales-ano-personal',
+    calculadora: { href: '/ano-personal', texto: 'Calcula tu Año Personal' }
   },
   'mes-personal': {
     descripcion:

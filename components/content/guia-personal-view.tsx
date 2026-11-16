@@ -118,17 +118,34 @@ export function GuiaPersonalView({
   guia,
   categoria,
   descripcion,
-  toolKey
+  toolKey,
+  calculadora
 }: {
   guia: GuiaPersonal
   categoria: PersonalCategoria
   descripcion: string
   toolKey: string
+  /** Enlace a la calculadora del número, para quien aún no conoce el suyo. */
+  calculadora?: { href: string; texto: string }
 }) {
   return (
     <ToolPage toolKey={toolKey} wide title={guia.titulo} description={descripcion}>
       <div className="space-y-8">
         <GuiaBloquesList bloques={guia.bloques} categoria={categoria} />
+
+        {calculadora ? (
+          <section className="flex flex-wrap items-center justify-between gap-4 rounded-[2rem] border border-primary/20 bg-[hsl(var(--primary-soft))] p-6 shadow-panel sm:p-8">
+            <p className="text-base leading-8 text-foreground/80">
+              ¿No sabes cuál es tu {categoria.nombre}? Se calcula con tu fecha de nacimiento.
+            </p>
+            <Link
+              href={calculadora.href as Route}
+              className="inline-flex items-center rounded-full bg-gradient-brand px-6 py-3 text-sm font-semibold text-white shadow-glow transition hover:opacity-95"
+            >
+              {calculadora.texto}
+            </Link>
+          </section>
+        ) : null}
 
         {/* Acceso directo a la página de cada número de la categoría */}
         <section className="space-y-4 rounded-[2rem] border border-border/70 bg-card p-6 shadow-panel sm:p-8">

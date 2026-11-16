@@ -3,12 +3,18 @@ import Link from "next/link";
 
 import { PersonalCycleCalculator } from "@/components/calculators/personal-cycle-calculator";
 import { ToolPage } from "@/components/content/tool-page";
+import {
+  descripcionCalculadoraAnoPersonal,
+  tituloCalculadoraAnoPersonal,
+} from "@/lib/personales/anio";
 
-export const metadata: Metadata = {
-  title: "Año personal",
-  description:
-    "Calcula tu Año Personal con tu fecha de nacimiento y descubre la lección, el tema y las oportunidades que marca tu ciclo de este año.",
-};
+// El año vigente va en el título y se calcula al servir la página.
+export function generateMetadata(): Metadata {
+  return {
+    title: tituloCalculadoraAnoPersonal(),
+    description: descripcionCalculadoraAnoPersonal(),
+  };
+}
 
 export default function Page() {
   return (
