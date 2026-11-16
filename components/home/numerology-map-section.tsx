@@ -411,8 +411,11 @@ export function NumerologyMapSection() {
                       card.tone === 'mission' ? 'text-white' : ''
                     }`}
                   >
-                    {card.id === 'personal-year'
-                      ? `${card.heading} ${new Date().getFullYear()}`
+                    {/* El año se añade ya en el navegador (currentDate es null en el
+                        servidor): el servidor corre en UTC y en Nochevieja su año
+                        no coincide con el del visitante. */}
+                    {card.id === 'personal-year' && currentDate
+                      ? `${card.heading} ${currentDate.getFullYear()}`
                       : card.heading}
                   </h3>
                   <p
