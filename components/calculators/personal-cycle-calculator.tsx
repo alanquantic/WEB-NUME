@@ -2,11 +2,15 @@
 
 import { startTransition, useEffect, useState } from 'react'
 
+import type { Route } from 'next'
+import Link from 'next/link'
+
 import { NumberResult } from '@/components/calculators/number-result'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { trackCalculatorSubmit, useCalculatorView } from '@/lib/analytics/calculator'
 import type { CalculatorId } from '@/lib/analytics/events'
+import { aniosVigentes, inicioDeAnio } from '@/lib/personales/anio'
 import { personalPagePath, type PersonalCategoriaKey } from '@/lib/personales/routes'
 import Person from '@/resources/person'
 import { useUserDefaults } from '@/stores/user-defaults'
@@ -89,7 +93,7 @@ function compute(kind: CycleKind, birthDate: string, targetDate: string): number
 
     switch (kind) {
       case 'year':
-        value = person.calcPersonalYear(new Date(now.getFullYear(), 0, 1))
+        value = person.calcPersonalYear(inicioDeAnio(now.getFullYear()))
         break
       case 'month':
         value = person.calcPersonalMonth(now, now)
@@ -116,12 +120,29 @@ function compute(kind: CycleKind, birthDate: string, targetDate: string): number
   }
 }
 
+type AnioSiguiente = { anio: number; numero: number }
+
+// En noviembre y diciembre la gente ya quiere saber su Año Personal del año
+// que viene: además del actual se calcula el siguiente.
+function computeAnioSiguiente(kind: CycleKind, birthDate: string): AnioSiguiente | null {
+  if (kind !== 'year') return null
+  const anio = aniosVigentes()[1]
+  if (!anio) return null
+  try {
+    const numero = new Person({ birthDate }).calcPersonalYear(inicioDeAnio(anio))
+    return typeof numero === 'number' ? { anio, numero } : null
+  } catch {
+    return null
+  }
+}
+
 export function PersonalCycleCalculator({ kind }: { kind: CycleKind }) {
   const calculatorId = KIND_CALCULATOR_ID[kind]
   useCalculatorView(calculatorId)
   const [birthDate, setBirthDate] = useState('')
   const [targetDate, setTargetDate] = useState(todayIso())
   const [result, setResult] = useState<number | string | null>(null)
+  const [anioSiguiente, setAnioSiguiente] = useState<AnioSiguiente | null>(null)
   const [submitted, setSubmitted] = useState(false)
   const defaults = useUserDefaults()
 
@@ -145,6 +166,7 @@ export function PersonalCycleCalculator({ kind }: { kind: CycleKind }) {
     setTargetDate(nextTarget)
     startTransition(() => {
       setResult(compute(kind, nacimiento, nextTarget))
+      setAnioSiguiente(computeAnioSiguiente(kind, nacimiento))
       setSubmitted(true)
     })
   }, [kind])
@@ -157,6 +179,7 @@ export function PersonalCycleCalculator({ kind }: { kind: CycleKind }) {
     void trackCalculatorSubmit(calculatorId, { birthDate: nextBirthDate })
     startTransition(() => {
       setResult(compute(kind, nextBirthDate, nextTargetDate))
+      setAnioSiguiente(computeAnioSiguiente(kind, nextBirthDate))
       setSubmitted(true)
     })
   }
@@ -164,6 +187,10 @@ export function PersonalCycleCalculator({ kind }: { kind: CycleKind }) {
   const verMasCategoria = VER_MAS_CATEGORIA[kind]
   const verMasHref =
     result !== null && verMasCategoria ? personalPagePath(verMasCategoria, result) : null
+
+  const anioSiguienteHref = anioSiguiente
+    ? personalPagePath('ano-personal', anioSiguiente.numero)
+    : null
 
   const saveDetail = birthDate
     ? [
@@ -210,15 +237,31 @@ export function PersonalCycleCalculator({ kind }: { kind: CycleKind }) {
       </form>
 
       {submitted && result !== null ? (
-        <NumberResult
-          value={result}
-          intro={KIND_HINT[kind]}
-          saveLabel={KIND_LABEL[kind]}
-          saveDetail={saveDetail}
-          saveHref={saveHref}
-          verMasHref={verMasHref}
-          calculatorId={calculatorId}
-        />
+        <>
+          <NumberResult
+            value={result}
+            intro={KIND_HINT[kind]}
+            saveLabel={KIND_LABEL[kind]}
+            saveDetail={saveDetail}
+            saveHref={saveHref}
+            verMasHref={verMasHref}
+            calculatorId={calculatorId}
+          />
+          {anioSiguiente ? (
+            <p className="mt-4 rounded-2xl border border-primary/20 bg-[hsl(var(--primary-soft))] px-5 py-4 text-base leading-7 text-foreground/80">
+              En {anioSiguiente.anio} tu Año Personal será el{' '}
+              <strong className="text-primary">{anioSiguiente.numero}</strong>.{' '}
+              {anioSiguienteHref ? (
+                <Link
+                  href={anioSiguienteHref as Route}
+                  className="font-semibold text-primary underline-offset-4 hover:underline"
+                >
+                  Ver el Año Personal {anioSiguiente.numero}
+                </Link>
+              ) : null}
+            </p>
+          ) : null}
+        </>
       ) : submitted ? (
         <p className="mt-4 text-sm text-foreground/60">
           Revisa la fecha ingresada para poder calcular este número.
