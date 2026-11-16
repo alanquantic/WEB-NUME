@@ -10,10 +10,21 @@ import { getPosts } from '@/lib/api/posts'
 import { getCategories } from '@/lib/api/taxonomy'
 import { categoryPath } from '@/lib/categorias/paths'
 
-export const metadata: Metadata = {
-  title: 'Blog',
-  description:
-    'Artículos y guías de numerología para tu día a día: nombre, año personal, números maestros y más.'
+// Cada página de la paginación (/blog/page/N/) se declara a sí misma como
+// canónica: si todas apuntaran a /blog/, Google dejaría de seguir los enlaces
+// a los artículos antiguos.
+export function generateMetadata({
+  searchParams
+}: {
+  searchParams?: { page?: string }
+}): Metadata {
+  const page = Math.max(1, Number(searchParams?.page ?? '1') || 1)
+  return {
+    title: page > 1 ? `Blog · Página ${page}` : 'Blog',
+    description:
+      'Artículos y guías de numerología para tu día a día: nombre, año personal, números maestros y más.',
+    alternates: { canonical: page > 1 ? `/blog/page/${page}` : '/blog' }
+  }
 }
 
 const PAGE_SIZE = 12
